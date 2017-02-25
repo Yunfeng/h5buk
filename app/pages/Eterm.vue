@@ -1,0 +1,111 @@
+<template>
+  <div id="eterm" class="container">
+    <div class="weui-toptips weui-toptips_warn" style="display:block" v-show="errAlert">{{errMsg}}</div>
+
+    <div class="row">
+        <div class="col-12 bg-info">
+            <span @click="back()"><i class="fa fa-angle-left weui-tabbar__icon" aria-hidden="true"></i></span>
+        </div>
+    </div>
+
+      <div class="form-group row mt-2">
+        <div class="col-9">
+          <input type="text" class="form-control" placeholder="在此输入查询指令" v-model="hostcmd" @keyup.enter="execCmd();" />
+        </div>
+        <div class="col-3">
+          <button class="btn btn-success" @click="execCmd();">执行</button>
+        </div>
+      </div>
+      <div id="eterm-result" class="weui-cell" v-if="cmdResult != null && cmdResult.length > 0 ">
+          <div v-html="'<pre>' + cmdResult + '</pre>'">
+          </div>
+      </div>  
+  
+
+    <div id="loadingToast" v-show="loading">
+      <div class="weui-mask_transparent"></div>
+      <div class="weui-toast">
+        <i class="weui-loading weui-icon_toast"></i>
+        <p class="weui-toast__content">{{loadingText}}</p>
+      </div>
+    </div>
+
+  </div>
+</template>
+
+<script>
+export default {
+  data () {
+    return {
+      errAlert: false,
+      errMsg: '',
+      loading: false,
+      loadingText: '数据加载中',
+
+      hostcmd: '',
+      cmdResult: ''
+    }
+  },
+  computed: {
+    // acityName() {return this.$store.state.searchParams.acityName},
+  },
+  mounted: function() {
+    // this.search();
+  },
+  methods: {
+    back: function() {
+      this.$router.go(-1)
+    },
+    showErrMsg: function(msg) {
+      this.errMsg = msg
+      this.errAlert = true
+      setTimeout(() => { this.errAlert = false}, 1500)
+    },
+    execCmd: function() {
+      var self = this
+
+      self.cmdResult = ''
+      
+      if (self.hostcmd.length < 6) {
+        self.showErrMsg('航班查询指令的长度不够')
+        return
+      }
+
+      self.loading = true
+      self.loadingText = '数据加载中'
+
+      $.ajax({
+        type: 'post',
+        url: '/Flight/flights/eterm.do',
+        data: {
+          'hostcmd': self.hostcmd
+        },
+        dataType: 'json',
+        success : function(jsonResult) {
+          if (jsonResult.status === 'OK') {
+            self.cmdResult = jsonResult.desc;
+          } else {
+            self.showErrMsg(jsonResult.errmsg);
+          }
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) { 
+          if (XMLHttpRequest.status === 403) {
+            self.$store.commit('jumpToLogin', self.$router)
+          }
+        },
+        complete: function (XMLHttpRequest, textStatus) {  
+          self.loading = false
+        }  
+      })
+    },
+  },
+  beforeRouteEnter (to, from, next) {
+    next(vm => {
+      // 通过 `vm` 访问组件实例
+      //console.log('i m in.');
+      
+    })
+  }
+}
+
+</script>

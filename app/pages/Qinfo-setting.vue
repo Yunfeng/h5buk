@@ -1,0 +1,289 @@
+<template>  
+	<div id="qinfo-setting" class="container">
+    <div class="weui-toptips weui-toptips_warn" style="display:block" v-show="errAlert">{{errMsg}}</div>
+
+    <div class="row" v-show="detailShowing === false">
+      <div class="col-1 bg-info">
+          <span @click="back()"><i class="fa fa-angle-left weui-tabbar__icon" aria-hidden="true"></i></span>
+      </div>         
+      <div class="col-10  bg-info text-center">
+        Q通知设置  
+      </div>         
+      <div class="col-1 bg-info">
+          
+      </div>         
+      
+      <div class="card col-12">
+        <div class="card-block">
+          <div class="form-group row">
+              <input type="textfield" class="form-control col-4" placeholder="条件值"  v-model="name">
+              <div class="col-4">
+                <button type="button" class="btn btn-primary" @click="search()">查找</button>
+              </div>
+              <div class="col-4 float-right">
+                <button class="btn btn-success" @click="newNotice()">新建</button> 
+              </div>
+          </div>
+        </div>
+
+        <table class="table table-striped table-responsive table-condensive">
+          <thead>
+              <tr>
+                  <th class="hidden-xs">条件类型</th>
+                  <th>条件值</th>
+                  <th>email</th>
+                  <th class="hidden-xs">手机</th>
+                  <th>微信id</th>
+                  <th class="hidden">生成时间</th>
+                  <th class="hidden">修改时间</th>
+                  <th class="hidden-xs"></th>
+              </tr>
+          </thead>
+          <tbody>
+            <tr v-for="(info, index) in dataList" @click="editNotice(info)">
+                <td class="hidden-xs">{{getConditionTypeDesc(info.conditionType)}}</td>
+                <td>{{info.conditionValue}}</td>
+                <td>{{info.email}}</td>
+                <td class="hidden-xs">{{info.mobile}}</td>
+                <td>{{info.weixinId}}</td>
+                <td  class="hidden">{{info.createTime}}</td>
+                <td  class="hidden">
+                    <template v-if="info.lastupdate != null">
+                        {{info.lastupdate}}
+                    </template>
+
+                </td>
+
+                <td class="hidden-xs">
+                    <a href="#" class="btn btn-info btn-sm" v-on:click="editNotice(index)">修改</a>
+                    <a href="#" class="btn btn-danger btn-xs" v-on:click="deleteNotice(index)">删除</a>
+                </td>
+            </tr>
+
+          </tbody>
+        </table>
+      
+        <div class="card-block">
+          <my-pagination :row-count="sc.rowCount" :page-total="sc.pageTotal" :page-no="sc.pageNo" @next-page="nextPage" @prev-page="prevPage" @direct-page="directPage"></my-pagination>
+        </div>
+
+
+      </div>
+
+     
+
+
+
+      <div id="loadingToast" v-show="loading">
+      <div class="weui-mask_transparent"></div>
+      <div class="weui-toast">
+        <i class="weui-loading weui-icon_toast"></i>
+        <p class="weui-toast__content">{{loadingText}}</p>
+      </div>
+      </div>
+    </div>
+    <div class="row" v-show="detailShowing">
+      <div class="col-1 bg-info">
+          <span @click="hideDetail()"><i class="fa fa-angle-left weui-tabbar__icon" aria-hidden="true"></i></span>
+      </div>         
+      <div class="col-10  bg-info text-center">
+          新建
+      </div>         
+      <div class="col-1 bg-info">
+          
+      </div>         
+
+      <div class="card col-12 card-outline-primary">
+        <div class="card-block">
+          <div class="form-group row">
+            <label class="col-4" >条件类型</label>
+            <div class="col-8">
+                <select class="form-control"  v-model="conditionType">
+                    <option value="0">Office</option>
+                    <option value="1">手机</option>
+                    <option value="2">eterm用户名</option>
+                </select>
+            </div>
+          </div>
+          <my-input label-text="条件值" placeholder="" v-model="conditionValue"></my-input>
+          <my-input label-text="电子邮件" placeholder="" v-model="email"></my-input>
+          <my-input label-text="手机" placeholder="" v-model="mobile"></my-input>
+          <my-input label-text="微信" placeholder="" v-model="weixinId"></my-input>
+        </div>
+        <div class="card-block">
+          <my-button @click="saveNotice()" type="primary">保存</my-button>
+          <my-button @click="hideDetail()" type="default">取消</my-button>
+        </div>
+      </div>      
+    </div>
+  </div>
+</template>
+
+<script>
+import MyPagination from '../components/my-pagination.vue'
+import MyButton from '../components/my-button.vue'
+import MyInput from '../components/my-input.vue'
+
+export default {
+  components:{
+    'my-pagination': MyPagination,
+    'my-button': MyButton,
+    'my-input': MyInput    
+  },
+  data () {
+    return {
+      errAlert: false,
+      errMsg: '',
+      loading: false,
+      loadingText: "数据加载中",
+      detailShowing: false,
+      pnrDetail: "",
+
+      dataList: [],
+      sc: {
+          rowCount: 0,
+          pageNo: 1,
+          pageSize: 25,
+          pageTotal: 0
+      },
+      name: "",
+
+      id: 0,
+      conditionType: 0,
+      conditionValue: "",
+      email: "",
+      mobile: "",
+      weixinId: ""
+    }
+  },
+  computed: {
+    // acityName() {return this.$store.state.searchParams.acityName},
+  },
+  mounted: function() {
+    this.search();
+  },
+  methods: {
+    back: function() {
+      this.$router.go(-1);
+    },
+    search: function() {
+      var self = this;
+      self.loading = true;
+      self.loadingText = "数据加载中";
+
+      $.ajax({
+          type : "post",
+          url : "/Flight/qinfoes/settings",
+          data : {
+            "sc.pageNo": this.sc.pageNo, 
+            "sc.pageSize": this.sc.pageSize,
+            "sc.name": this.name
+          },
+          dataType: "json",
+          success : function(jsonResult) {
+            //console.log(jsonResult);
+              self.dataList = jsonResult.dataList;
+              self.sc = jsonResult.page;
+          },
+          error: function (XMLHttpRequest, textStatus, errorThrown) { 
+            self.searching = false;
+
+            if (XMLHttpRequest.status === 403) {
+              self.$store.commit('jumpToLogin', self.$router);
+            }
+          },
+          complete: function (XMLHttpRequest, textStatus) {  
+            self.loading = false;
+          }  
+      });
+    },
+    showDetail: function() {
+      this.detailShowing = true;
+    },
+    hideDetail: function() {
+      this.detailShowing = false;
+    },
+    getConditionTypeDesc: function(type) {
+                if (type == 0) {return "Office号";}
+                else if (type == 1) {return "手机号";}
+                else if (type == 2) {return "eterm用户名";}
+            }, 
+    prevPage: function() {
+        data.sc.pageNo = data.sc.pageNo - 1;
+        if (this.sc.pageNo < 1) this.sc.pageNo = 1;
+        this.search();
+    },
+    nextPage: function() {
+        this.sc.pageNo = this.sc.pageNo + 1;
+        this.search();
+    },
+    directPage: function(pageNo) {
+        this.sc.pageNo = pageNo;
+        this.search(); 
+    },
+    reset: function() {
+        this.id = 0;
+        this.conditionType = 0;
+        this.conditionValue = "";
+        this.email = "";
+        this.mobile = "";
+        this.weixinId = "";
+    },
+    newNotice: function() {
+        this.reset();
+        this.showDetail();
+    },
+    editNotice: function(info) {
+      this.reset();
+      this.showDetail();
+
+      this.id = info.id;
+      this.conditionType = info.conditionType;
+      this.conditionValue = info.conditionValue;
+      this.email = info.email;
+      this.mobile = info.mobile;
+      this.weixinId = info.weixinId;
+    },
+    saveNotice: function() {
+      var self = this;
+        $.ajax({
+            type : "post",
+            url : "/Flight/qinfoes/settings/save",
+            data: {
+              "qinfoNotice.id": self.id,
+              "qinfoNotice.conditionType": self.conditionType,
+              "qinfoNotice.conditionValue": self.conditionValue,
+              "qinfoNotice.email": self.email,
+              "qinfoNotice.mobile": self.mobile,
+              "qinfoNotice.weixinId": self.weixinId
+            },
+            dataType: "json",
+            success : function(jsonResult) {
+                if (jsonResult !== null) {
+                    if (jsonResult.status == "OK") {
+                        self.hideDetail();
+                        self.search();
+                    } else {
+                        self.showErrMsg("拒绝： " + jsonResult.errmsg);
+                    }
+                }
+            }
+        }); 
+    },
+    showErrMsg: function(msg) {
+      this.errMsg = msg;
+      this.errAlert = true;
+      setTimeout(() => this.errAlert = false, 1500);
+    }
+
+  },
+  beforeRouteEnter (to, from, next) {
+    next(vm => {
+      // 通过 `vm` 访问组件实例
+      //console.log("i m in.");
+      
+    })
+  }
+}
+
+</script>
