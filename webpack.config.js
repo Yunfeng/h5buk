@@ -26,9 +26,18 @@ module.exports = {
       // {
       //   enforce: 'pre',
       //   test: /.vue$/,
-      //   loader: 'eslint-loader',
-      //   exclude: /node_modules/
+      //   // loader: 'eslint-loader',
+      //   exclude: /node_modules/,
+      //   use: [
+      //     'eslint-loader'
+      //   ]
       // },
+      // {
+      //   enforce: "pre",
+      //   test: /\.js$/,
+      //   exclude: /node_modules/,
+      //   use: 'eslint-loader',
+      // },      
       {
         test: /\.vue$/,
         exclude: /node_modules/,  
@@ -66,6 +75,7 @@ module.exports = {
     colors: true,//终端中输出结果为彩色
     historyApiFallback: true,//不跳转
     inline: true,//实时刷新,
+    // hot: true,
     port: 9090,
     proxy: {
       '/Flight/**': {

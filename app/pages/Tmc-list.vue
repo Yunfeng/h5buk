@@ -2,7 +2,7 @@
 	<div id="tmc-list" class="container">
     <div class="row bg-info">
       <div class="col-1">
-          <span @click="back()"><i class="fa fa-angle-left weui-tabbar__icon" aria-hidden="true"></i></span>
+          <span @click="back()"><i class="fa fa-angle-left" aria-hidden="true"></i></span>
       </div>         
       <div class="col-10 text-center">
           大客户政策
@@ -28,7 +28,9 @@
                   <td>{{info.carrier}}</td>
                   <td>{{info.subclass}}</td>
                   <td>{{info.returnPoint}}</td>
-                  <td>{{info.minPrice}}</td>
+                  <td>{{info.minPrice}} 
+                    <i class="fa fa-angle-right text-warning float-right fa-2" aria-hidden="true"></i>
+                  </td>
               </tr>
           </tbody>
         </table>

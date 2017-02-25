@@ -4,10 +4,10 @@
 
     <div class="row bg-info">
       <div class="col-1">
-          <span @click="back()"><i class="fa fa-angle-left weui-tabbar__icon" aria-hidden="true"></i></span>
+          <span @click="back()"><i class="fa fa-angle-left" aria-hidden="true"></i></span>
       </div>         
       <div class="col-10 text-center">
-          
+          采购大客户政策
       </div>         
       <div class="col-1">
           
@@ -15,19 +15,16 @@
     </div> 
 
     <div class="row">
-      <div class=" text-info weui-cells__title">编码内容</div>
-      <div class="weui-cells weui-cells_form">
-        <div class="weui-cell">
-            <div class="weui-cell__bd">
-                <textarea class="weui-textarea" placeholder="请粘帖编码内容于此" rows="6" v-model="pnrDetail"></textarea>
-                <div class="weui-textarea-counter hidden"><span>0</span>/200</div>
-            </div>
-        </div>
+      <div class="card col-12">
+        <textarea class="form-control" placeholder="请粘帖编码内容于此" rows="6" v-model="pnrDetail"></textarea>
+        <p class="form-text text-muted">
+          若无编码内容，请从航班查询开始
+        </p>
+              <div class="weui-btn-area">
+            <button type="button" class="weui-btn weui-btn_primary" @click.stop="nextStep()">下一步</button>
+            <button type="button" class="weui-btn weui-btn_detail" @click.stop="emptyPnrDetail()">清空</button>
       </div>
-      <div class="weui-cells__tips">若无编码内容，可直接<strong>下一步</strong>，然后手工录入</div>
-      <div class="weui-btn-area">
-            <button type="button" class="weui-btn weui-btn_primary" @click="nextStep()">下一步</button>
-            <button type="button" class="weui-btn weui-btn_detail" @click="emptyPnrDetail()">清空</button>
+
       </div>
     </div> 
 
@@ -47,6 +44,7 @@ export default {
   data () {
     return {
       errAlert: false,
+      errMsg: '',
       loading: false,
       loadingText: "数据加载中",
       idTypes: [
@@ -70,6 +68,11 @@ export default {
     back: function() {
       this.$router.go(-1);
     },
+    showErrMsg: function(msg) {
+      this.errMsg = msg;
+      this.errAlert = true;
+      setTimeout(() => this.errAlert = false, 2500);
+    },    
     emptyPnrDetail: function() {
       this.pnrDetail = "";
     },
@@ -101,6 +104,8 @@ export default {
               self.loading = false;
             } 
         });  
+      } else {
+        this.showErrMsg("请粘帖编码内容")
       }
     },
     prepareOrder: function(jsonResult) {
@@ -144,12 +149,13 @@ export default {
         // this.$store.commit("addPsg");
       }
 
-      
-
-      this.$store.commit("setOrderInfo", {
+      var orderInfo = {
         "pnrNo": jsonResult.pnrNo, 
         "pnrDetail": jsonResult.pnrDetail,
-        "policyId": -1});
+        "policyId": -1
+      }
+
+      this.$store.commit("setOrderInfo", orderInfo);
       this.$router.replace("/booking");
     }
     

@@ -1,60 +1,56 @@
-import Vue from 'vue';
-import Router from 'vue-router';
-import Vuex from 'vuex';
-import Tabbar from './components/my-tabbar.vue';
-import MyHome from './pages/Home.vue';
-import $ from 'jquery';
-require('./main.css');
+import Vue from 'vue'
+import Router from 'vue-router'
+import Vuex from 'vuex'
+import Tabbar from './components/my-tabbar.vue'
+import MyHome from './pages/Home.vue'
+import $ from 'jquery'
+require('./main.css')
 
-Vue.use(Router);
-Vue.use(Vuex);
+Vue.use(Router)
+Vue.use(Vuex)
 
-const MyLogin        = resolve => require(['./pages/Login.vue'], resolve);
-const MyRegister     = resolve => require(['./pages/Register.vue'], resolve);
-const MyPassword     = resolve => require(['./pages/Password.vue'], resolve);
-const MySearchForm   = resolve => require(['./pages/FlightSearchForm.vue'], resolve);
-const MySearchResult = resolve => require(['./pages/FlightSearchResult.vue'], resolve);
-const MyBookingForm  = resolve => require(['./pages/FlightBookingForm.vue'], resolve);
-const MyOrder        = resolve => require(['./pages/Order.vue'], resolve);
-const MyOrderSale    = resolve => require(['./pages/Order-sale.vue'], resolve);
-const MyOrderDetail  = resolve => require(['./pages/Order-detail.vue'], resolve);
-const MyOrderTicket  = resolve => require(['./pages/Order-ticketNo.vue'], resolve);
-const MyOrderDeny    = resolve => require(['./pages/Order-deny.vue'], resolve);
-const MyOrderRecommit= resolve => require(['./pages/Order-recommit.vue'], resolve);
-const MyQinfo        = resolve => require(['./pages/Qinfo.vue'], resolve);
-const MyQinfoList    = resolve => require(['./pages/Qinfo-list.vue'], resolve);
-const MyQinfoSetting = resolve => require(['./pages/Qinfo-setting.vue'], resolve);
-const MyTmc          = resolve => require(['./pages/Tmc.vue'], resolve);
-const MyTmcList      = resolve => require(['./pages/Tmc-list.vue'], resolve);
-const MyTmcBuy       = resolve => require(['./pages/Tmc-buy.vue'], resolve);
-const MyTmcDetail    = resolve => require(['./pages/Tmc-detail.vue'], resolve);
-const MyPnr          = resolve => require(['./pages/Pnr.vue'], resolve);
-const MyPnrList      = resolve => require(['./pages/Pnr-list.vue'], resolve);
-const MyPnrDetail    = resolve => require(['./pages/Pnr-detail.vue'], resolve);
-const MyPnrAlert1    = resolve => require(['./pages/Pnr-alert1.vue'], resolve);
-const MyPnrCtcm      = resolve => require(['./pages/Pnr-ctcm.vue'], resolve);
-const MyEterm        = resolve => require(['./pages/Eterm.vue'], resolve);
-
-// const MyPagination   = resolve => require(['./components/my-pagination.vue'], resolve);
-// const MyButton   = resolve => require(['./components/my-button.vue'], resolve);
-// const MyInput   = resolve => require(['./components/my-input.vue'], resolve);
-// const MyVcodeInput   = resolve => require(['./components/my-vcode.vue'], resolve);
+const MyLogin        = resolve => require(['./pages/Login.vue'], resolve)
+const MyRegister     = resolve => require(['./pages/Register.vue'], resolve)
+const MyPassword     = resolve => require(['./pages/Password.vue'], resolve)
+const MySearchForm   = resolve => require(['./pages/FlightSearchForm.vue'], resolve)
+const MySearchResult = resolve => require(['./pages/FlightSearchResult.vue'], resolve)
+const MyBookingForm  = resolve => require(['./pages/FlightBookingForm.vue'], resolve)
+const MyOrder        = resolve => require(['./pages/Order.vue'], resolve)
+const MyOrderSale    = resolve => require(['./pages/Order-sale.vue'], resolve)
+const MyOrderDetail  = resolve => require(['./pages/Order-detail.vue'], resolve)
+const MyOrderTicket  = resolve => require(['./pages/Order-ticketNo.vue'], resolve)
+const MyOrderDeny    = resolve => require(['./pages/Order-deny.vue'], resolve)
+const MyOrderRecommit= resolve => require(['./pages/Order-recommit.vue'], resolve)
+const MyQinfo        = resolve => require(['./pages/Qinfo.vue'], resolve)
+const MyQinfoList    = resolve => require(['./pages/Qinfo-list.vue'], resolve)
+const MyQinfoSetting = resolve => require(['./pages/Qinfo-setting.vue'], resolve)
+const MyTmc          = resolve => require(['./pages/Tmc.vue'], resolve)
+const MyTmcList      = resolve => require(['./pages/Tmc-list.vue'], resolve)
+const MyTmcBuy       = resolve => require(['./pages/Tmc-buy.vue'], resolve)
+const MyTmcDetail    = resolve => require(['./pages/Tmc-detail.vue'], resolve)
+const MyPnr          = resolve => require(['./pages/Pnr.vue'], resolve)
+const MyPnrList      = resolve => require(['./pages/Pnr-list.vue'], resolve)
+const MyPnrDetail    = resolve => require(['./pages/Pnr-detail.vue'], resolve)
+const MyPnrAlert1    = resolve => require(['./pages/Pnr-alert1.vue'], resolve)
+const MyPnrCtcm      = resolve => require(['./pages/Pnr-ctcm.vue'], resolve)
+const MyEterm        = resolve => require(['./pages/Eterm.vue'], resolve)
+const MyNav          = resolve => require(['./pages/Nav.vue'], resolve)
 
 const routes = [
-  {path: '/', redirect: '/home'},
+  {path: '/',              component: MyNav},
   {path: '/home',          component: MyHome},
   {path: '/login',         component: MyLogin},
   {path: '/register',      component: MyRegister},
-	{path: '/password',      component: MyPassword},
+  {path: '/password',      component: MyPassword},
   {path: '/search',        component: MySearchForm},
-	{path: '/searchResult',  component: MySearchResult},
+  {path: '/searchResult',  component: MySearchResult},
   {path: '/booking',       component: MyBookingForm},
   {path: '/order',         component: MyOrder},
   {path: '/order/sale',    component: MyOrderSale},
   {path: '/order/detail',  component: MyOrderDetail},
   {path: '/order/ticket',  component: MyOrderTicket},
   {path: '/order/deny',    component: MyOrderDeny},
-	{path: '/order/recommit',component: MyOrderRecommit},
+  {path: '/order/recommit',component: MyOrderRecommit},
   {path: '/qinfo',         component: MyQinfo},
   {path: '/qinfo/list',    component: MyQinfoList},
   {path: '/qinfo/setting', component: MyQinfoSetting},
@@ -71,7 +67,7 @@ const routes = [
 ]
 
 let router = new Router({
-	routes: routes
+  routes: routes
 });
 
 const store = new Vuex.Store({
@@ -79,11 +75,11 @@ const store = new Vuex.Store({
     logined: false,
     username: '',
     searchParams: {
-    	dcity: '',
-    	dcityName: '',
-    	acity: '',
-    	acityName: '',
-    	ddate: ''
+      dcity: '',
+      dcityName: '',
+      acity: '',
+      acityName: '',
+      ddate: ''
     },
     order: {
       flights: [],
@@ -137,12 +133,12 @@ const store = new Vuex.Store({
       state.userInfo.creditLimit = payload.creditLimitYuan;
     },
     setDcity(state, payload) {
-    	state.searchParams.dcity = payload.cityCode;
-    	state.searchParams.dcityName = payload.cityName;
+      state.searchParams.dcity = payload.cityCode;
+      state.searchParams.dcityName = payload.cityName;
     },
     setAcity(state, payload) {
-    	state.searchParams.acity = payload.cityCode;
-    	state.searchParams.acityName = payload.cityName;
+      state.searchParams.acity = payload.cityCode;
+      state.searchParams.acityName = payload.cityName;
     },
     setDdate(state, payload) {
       state.searchParams.ddate = payload;
@@ -199,11 +195,11 @@ const store = new Vuex.Store({
 })
 
 const app = new Vue({
-	el: '#app',
-	store,
-	components: {
-		'my-tabbar': Tabbar
-	},
-	router: router
+  el: '#app',
+  store,
+  components: {
+    'my-tabbar': Tabbar
+  },
+  router: router
 })
 
