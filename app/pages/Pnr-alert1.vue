@@ -53,99 +53,96 @@
 
 <script>
 import MyPagination from '../components/my-pagination.vue'
-// const MyPagination   = resolve => require(['../components/my-pagination.vue'], resolve)
+import $ from 'jquery'
 
 export default {
-  components:{
+  components: {
     'my-pagination': MyPagination
   },
   data () {
     return {
       errAlert: false,
       loading: false,
-      loadingText: "数据加载中",
+      loadingText: '数据加载中',
 
       dataList: [],
       sc: {
-          rowCount: 0,
-          pageNo: 1,
-          pageSize: 25,
-          pageTotal: 0
+        rowCount: 0,
+        pageNo: 1,
+        pageSize: 25,
+        pageTotal: 0
       }
     }
   },
   computed: {
     // acityName() {return this.$store.state.searchParams.acityName},
   },
-  mounted: function() {
-    this.search();
+  mounted: function () {
+    this.search()
   },
   methods: {
-    back: function() {
-      this.$router.go(-1);
+    back: function () {
+      this.$router.go(-1)
     },
-    search: function() {
-      var self = this;
-      self.loading = true;
-      self.loadingText = "数据加载中";
+    search: function () {
+      var self = this
+      self.loading = true
+      self.loadingText = '数据加载中'
 
       $.ajax({
-          type : "post",
-          url : "/Flight/pnr/searchAlert1.do",
-          data : {
-            "sc.pageNo": this.sc.pageNo, 
-            "sc.pageSize": this.sc.pageSize
-          },
-          dataType: "json",
-          success : function(jsonResult) {
-              self.dataList = jsonResult.dataList;
-              self.sc = jsonResult.page;
-          },
-          error: function (XMLHttpRequest, textStatus, errorThrown) { 
-            self.searching = false;
+        type: 'post',
+        url: '/Flight/pnr/searchAlert1.do',
+        data: {
+          'sc.pageNo': this.sc.pageNo,
+          'sc.pageSize': this.sc.pageSize
+        },
+        dataType: 'json',
+        success: function (jsonResult) {
+          self.dataList = jsonResult.dataList
+          self.sc = jsonResult.page
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+          self.searching = false
 
-            if (XMLHttpRequest.status === 403) {
-              self.$store.commit('jumpToLogin', self.$router);
-            }
-          },
-          complete: function (XMLHttpRequest, textStatus) {  
-            self.loading = false;
-          }  
-      });
+          if (XMLHttpRequest.status === 403) {
+            self.$store.commit('jumpToLogin', self.$router)
+          }
+        },
+        complete: function (XMLHttpRequest, textStatus) {
+          self.loading = false
+        }
+      })
     },
-    prevPage: function() {
-        this.sc.pageNo = this.sc.pageNo - 1;
-        if (this.sc.pageNo < 1) this.sc.pageNo = 1;
-        this.search();
+    prevPage: function () {
+      this.sc.pageNo = this.sc.pageNo - 1
+      if (this.sc.pageNo < 1) this.sc.pageNo = 1
+      this.search()
     },
-    nextPage: function() {
-        this.sc.pageNo = this.sc.pageNo + 1;
-        this.search();
+    nextPage: function () {
+      this.sc.pageNo = this.sc.pageNo + 1
+      this.search()
     },
-    directPage: function(pageNo) {
-        this.sc.pageNo = pageNo;
-        this.search(); 
+    directPage: function (pageNo) {
+      this.sc.pageNo = pageNo
+      this.search()
     },
-    convertLongToTimeDesc: function(l) {
-      return this.getFormatDate(new Date(l));  
+    convertLongToTimeDesc: function (l) {
+      return this.getFormatDate(new Date(l))
     },
-    getFormatDate: function(date, pattern) {  
-        if (date == undefined) {  
-            date = new Date();  
-        }  
-        if (pattern == undefined) {  
-            pattern = "yyyy-MM-dd hh:mm:ss";  
-        }  
-        return date.format(pattern);  
+    getFormatDate: function (date, pattern) {
+      if (date === undefined) {
+        date = new Date()
+      }
+      if (pattern === undefined) {
+        pattern = 'yyyy-MM-dd hh:mm:ss'
+      }
+      return date.format(pattern)
     }
   },
   beforeRouteEnter (to, from, next) {
     next(vm => {
       // 通过 `vm` 访问组件实例
-      //console.log("i m in.");
-      
     })
   }
 }
-
 </script>

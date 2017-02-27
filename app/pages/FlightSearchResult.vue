@@ -265,7 +265,7 @@ export default {
     search: function () {
       var self = this
 
-      if (self.dcity.length === 0) return;
+      if (self.dcity.length === 0) return
 
       self.searching = true
       $.ajax({
@@ -294,7 +294,7 @@ export default {
 
             if (jsonResult.dataList != null && jsonResult.dataList.length > 0) {
               var len1 = jsonResult.dataList.length
-              self.dataLength = len1;
+              self.dataLength = len1
               for (var i = 0; i < len1; i++) {
                 var flt = jsonResult.dataList[i]
 
@@ -317,7 +317,7 @@ export default {
 
                 if (self.carriers.length === 0 || self.carriers.indexOf(flt.carrierCode) === -1) {
                   self.carriers.push(flt.carrierCode)
-                  self.carrierInfos.push({'code': flt.carrierCode, 'name': flt.carrierName})
+                  self.carrierInfos.push({ 'code': flt.carrierCode, 'name': flt.carrierName })
                 }
               }
             }
@@ -355,7 +355,6 @@ export default {
     },
     showFlightDetail: function (fltInfo) {
       // 显示某一航班详情
-      //console.log(fltInfo)
       this.listShowing = false
       this.detailShowing = true
       // this.filterModalShowing = false

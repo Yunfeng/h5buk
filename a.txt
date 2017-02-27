@@ -1,0 +1,1218 @@
+
+> webapp@1.0.0 start /Users/gezhi/yfdai/b2c
+> webpack --progress
+
+Hash: 0917db28f135560fe722
+Version: webpack 2.2.1
+Time: 6095ms
+                        Asset       Size  Chunks                    Chunk Names
+   14-0917db28f135560fe722.js    18.7 kB      14  [emitted]         
+    0-0917db28f135560fe722.js     137 kB       0  [emitted]         
+    2-0917db28f135560fe722.js    81.6 kB       2  [emitted]         
+    3-0917db28f135560fe722.js    56.2 kB       3  [emitted]         
+    4-0917db28f135560fe722.js     162 kB       4  [emitted]         
+    5-0917db28f135560fe722.js     117 kB       5  [emitted]         
+    6-0917db28f135560fe722.js    74.5 kB       6  [emitted]         
+    7-0917db28f135560fe722.js      35 kB       7  [emitted]         
+    8-0917db28f135560fe722.js    53.1 kB       8  [emitted]         
+    9-0917db28f135560fe722.js    36.3 kB       9  [emitted]         
+   10-0917db28f135560fe722.js    52.4 kB      10  [emitted]         
+   11-0917db28f135560fe722.js    34.7 kB      11  [emitted]         
+   12-0917db28f135560fe722.js    35.1 kB      12  [emitted]         
+   13-0917db28f135560fe722.js      13 kB      13  [emitted]         
+    1-0917db28f135560fe722.js    62.1 kB       1  [emitted]         
+   15-0917db28f135560fe722.js    25.7 kB      15  [emitted]         
+   16-0917db28f135560fe722.js    27.5 kB      16  [emitted]         
+   17-0917db28f135560fe722.js    11.7 kB      17  [emitted]         
+   18-0917db28f135560fe722.js    12.5 kB      18  [emitted]         
+   19-0917db28f135560fe722.js    18.7 kB      19  [emitted]         
+   20-0917db28f135560fe722.js    22.1 kB      20  [emitted]         
+   21-0917db28f135560fe722.js    21.4 kB      21  [emitted]         
+   22-0917db28f135560fe722.js    21.5 kB      22  [emitted]         
+   23-0917db28f135560fe722.js    23.1 kB      23  [emitted]         
+   24-0917db28f135560fe722.js    19.2 kB      24  [emitted]         
+ main-0917db28f135560fe722.js     942 kB      25  [emitted]  [big]  main
+main-0917db28f135560fe722.css  500 bytes      25  [emitted]         main
+                   index.html    1.22 kB          [emitted]         
+   [4] ./app/pages/Home.vue 1.52 kB {25} [built]
+   [5] ./app/main.css 41 bytes {25} [built]
+   [6] ./~/.2.1.10@vue/dist/vue.common.js 226 kB {25} [built]
+   [7] ./~/.2.1.2@vuex/dist/vuex.js 22.3 kB {25} [built]
+   [8] ./~/.2.2.1@vue-router/dist/vue-router.common.js 56.1 kB {25} [built]
+  [12] ./app/pages/Eterm.vue 1.33 kB {24} [built]
+  [13] ./app/pages/FlightBookingForm.vue 1.38 kB {6} [built]
+  [14] ./app/pages/FlightSearchForm.vue 1.37 kB {0} [built]
+  [15] ./app/pages/FlightSearchResult.vue 1.7 kB {4} [built]
+  [16] ./app/pages/Login.vue 1.33 kB {1} [built]
+  [17] ./app/pages/Order-deny.vue 1.35 kB {12} [built]
+  [18] ./app/pages/Order-detail.vue 1.36 kB {5} [built]
+  [19] ./app/pages/Order-recommit.vue 1.37 kB {23} [built]
+  [22] ./app/pages/Order.vue 1.33 kB {21} [built]
+  [42] ./app/main.js 7.82 kB {25} [built] [1 error]
+    + 101 hidden modules
+
+ERROR in ./app/main.js
+
+/Users/gezhi/yfdai/b2c/app/main.js
+   12:22  error  Multiple spaces found before '='              no-multi-spaces
+   13:22  error  Multiple spaces found before '='              no-multi-spaces
+   14:22  error  Multiple spaces found before '='              no-multi-spaces
+   15:22  error  Multiple spaces found before '='              no-multi-spaces
+   17:22  error  Multiple spaces found before '='              no-multi-spaces
+   18:22  error  Multiple spaces found before '='              no-multi-spaces
+   19:22  error  Multiple spaces found before '='              no-multi-spaces
+   20:22  error  Multiple spaces found before '='              no-multi-spaces
+   21:22  error  Multiple spaces found before '='              no-multi-spaces
+   22:22  error  Multiple spaces found before '='              no-multi-spaces
+   23:22  error  Infix operators must be spaced                space-infix-ops
+   24:22  error  Multiple spaces found before '='              no-multi-spaces
+   25:22  error  Multiple spaces found before '='              no-multi-spaces
+   27:22  error  Multiple spaces found before '='              no-multi-spaces
+   28:22  error  Multiple spaces found before '='              no-multi-spaces
+   29:22  error  Multiple spaces found before '='              no-multi-spaces
+   30:22  error  Multiple spaces found before '='              no-multi-spaces
+   31:22  error  Multiple spaces found before '='              no-multi-spaces
+   32:22  error  Multiple spaces found before '='              no-multi-spaces
+   33:22  error  Multiple spaces found before '='              no-multi-spaces
+   34:22  error  Multiple spaces found before '='              no-multi-spaces
+   35:22  error  Multiple spaces found before '='              no-multi-spaces
+   36:22  error  Multiple spaces found before '='              no-multi-spaces
+   40:28  error  Multiple spaces found before 'component'      no-multi-spaces
+   41:28  error  Multiple spaces found before 'component'      no-multi-spaces
+   42:28  error  Multiple spaces found before 'component'      no-multi-spaces
+   43:28  error  Multiple spaces found before 'component'      no-multi-spaces
+   44:28  error  Multiple spaces found before 'component'      no-multi-spaces
+   45:28  error  Multiple spaces found before 'component'      no-multi-spaces
+   46:28  error  Multiple spaces found before 'component'      no-multi-spaces
+   47:28  error  Multiple spaces found before 'component'      no-multi-spaces
+   48:28  error  Multiple spaces found before 'component'      no-multi-spaces
+   49:28  error  Multiple spaces found before 'component'      no-multi-spaces
+   50:28  error  Multiple spaces found before 'component'      no-multi-spaces
+   51:28  error  Multiple spaces found before 'component'      no-multi-spaces
+   52:27  error  A space is required after ','                 comma-spacing
+   53:28  error  Multiple spaces found before 'component'      no-multi-spaces
+   54:28  error  Multiple spaces found before 'component'      no-multi-spaces
+   56:28  error  Multiple spaces found before 'component'      no-multi-spaces
+   57:28  error  Multiple spaces found before 'component'      no-multi-spaces
+   58:28  error  Multiple spaces found before 'component'      no-multi-spaces
+   59:28  error  Multiple spaces found before 'component'      no-multi-spaces
+   60:28  error  Multiple spaces found before 'component'      no-multi-spaces
+   61:28  error  Multiple spaces found before 'component'      no-multi-spaces
+   62:28  error  Multiple spaces found before 'component'      no-multi-spaces
+   63:28  error  Multiple spaces found before 'component'      no-multi-spaces
+   64:28  error  Multiple spaces found before 'component'      no-multi-spaces
+   65:28  error  Multiple spaces found before 'component'      no-multi-spaces
+   65:47  error  Unexpected trailing comma                     comma-dangle
+   70:3   error  Extra semicolon                               semi
+  100:20  error  Unexpected trailing comma                     comma-dangle
+  107:29  error  Extra semicolon                               semi
+  108:24  error  Strings must use singlequote                  quotes
+  108:26  error  Unexpected use of comma operator              no-sequences
+  109:28  error  Extra semicolon                               semi
+  111:48  error  Extra semicolon                               semi
+  111:49  error  Trailing spaces not allowed                   no-trailing-spaces
+  112:45  error  Extra semicolon                               semi
+  112:46  error  Trailing spaces not allowed                   no-trailing-spaces
+  114:19  error  Strings must use singlequote                  quotes
+  114:28  error  Extra semicolon                               semi
+  116:11  error  Missing space before function parentheses     space-before-function-paren
+  116:20  error  Multiple spaces found before '{'              no-multi-spaces
+  117:29  error  Extra semicolon                               semi
+  118:24  error  Strings must use singlequote                  quotes
+  118:26  error  Unexpected use of comma operator              no-sequences
+  119:28  error  Extra semicolon                               semi
+  121:48  error  Extra semicolon                               semi
+  121:49  error  Trailing spaces not allowed                   no-trailing-spaces
+  122:45  error  Extra semicolon                               semi
+  122:46  error  Trailing spaces not allowed                   no-trailing-spaces
+  125:40  error  Extra semicolon                               semi
+  126:38  error  Extra semicolon                               semi
+  128:16  error  Missing space before function parentheses     space-before-function-paren
+  129:51  error  Extra semicolon                               semi
+  130:59  error  Extra semicolon                               semi
+  131:63  error  Extra semicolon                               semi
+  132:59  error  Extra semicolon                               semi
+  134:13  error  Missing space before function parentheses     space-before-function-paren
+  135:50  error  Extra semicolon                               semi
+  136:54  error  Extra semicolon                               semi
+  138:13  error  Missing space before function parentheses     space-before-function-paren
+  139:50  error  Extra semicolon                               semi
+  140:54  error  Extra semicolon                               semi
+  142:13  error  Missing space before function parentheses     space-before-function-paren
+  143:41  error  Extra semicolon                               semi
+  144:7   error  Trailing spaces not allowed                   no-trailing-spaces
+  145:14  error  Missing space before function parentheses     space-before-function-paren
+  146:40  error  Extra semicolon                               semi
+  148:40  error  Missing space before value for key 'psgName'  key-spacing
+  148:65  error  Extra semicolon                               semi
+  151:11  error  Missing space before function parentheses     space-before-function-paren
+  152:7   error  Expected space or tab after '//' in comment   spaced-comment
+  153:1   error  Trailing spaces not allowed                   no-trailing-spaces
+  155:22  error  Missing space before value for key 'psgName'  key-spacing
+  155:46  error  Extra semicolon                               semi
+  158:31  error  Extra semicolon                               semi
+  160:14  error  Missing space before function parentheses     space-before-function-paren
+  161:49  error  Extra semicolon                               semi
+  162:50  error  Extra semicolon                               semi
+  163:46  error  Extra semicolon                               semi
+  164:7   error  Trailing spaces not allowed                   no-trailing-spaces
+  165:14  error  Missing space before function parentheses     space-before-function-paren
+  166:40  error  Extra semicolon                               semi
+  168:40  error  Missing space before value for key 'psgName'  key-spacing
+  168:65  error  Extra semicolon                               semi
+  171:14  error  Missing space before function parentheses     space-before-function-paren
+  172:43  error  Extra semicolon                               semi
+  174:17  error  Missing space before function parentheses     space-before-function-paren
+  175:40  error  Extra semicolon                               semi
+  176:48  error  Extra semicolon                               semi
+  177:46  error  Extra semicolon                               semi
+  179:15  error  Missing space before function parentheses     space-before-function-paren
+  180:31  error  Extra semicolon                               semi
+  181:25  error  Extra semicolon                               semi
+  183:19  error  Missing space before function parentheses     space-before-function-paren
+  184:34  error  Extra semicolon                               semi
+  185:33  error  Extra semicolon                               semi
+  187:20  error  Missing space before function parentheses     space-before-function-paren
+  188:35  error  Extra semicolon                               semi
+  190:17  error  Missing space before function parentheses     space-before-function-paren
+  191:32  error  Extra semicolon                               semi
+  196:7   error  'app' is assigned a value but never used      no-unused-vars
+
+✖ 123 problems (123 errors, 0 warnings)
+
+
+ERROR in ./app/domCities.js
+
+/Users/gezhi/yfdai/b2c/app/domCities.js
+    1:1   error  Expected space or tab after '//' in comment       spaced-comment
+    2:14  error  Infix operators must be spaced                    space-infix-ops
+    2:17  error  Extra semicolon                                   semi
+    3:16  error  The array literal notation [] is preferrable      no-array-constructor
+    3:31  error  A space is required after ','                     comma-spacing
+    3:36  error  A space is required after ','                     comma-spacing
+    3:47  error  A space is required after ','                     comma-spacing
+    3:53  error  Extra semicolon                                   semi
+    3:54  error  Trailing spaces not allowed                       no-trailing-spaces
+    4:16  error  The array literal notation [] is preferrable      no-array-constructor
+    4:31  error  A space is required after ','                     comma-spacing
+    4:36  error  A space is required after ','                     comma-spacing
+    4:46  error  A space is required after ','                     comma-spacing
+    4:52  error  Extra semicolon                                   semi
+    4:53  error  Trailing spaces not allowed                       no-trailing-spaces
+    5:16  error  The array literal notation [] is preferrable      no-array-constructor
+    5:31  error  A space is required after ','                     comma-spacing
+    5:36  error  A space is required after ','                     comma-spacing
+    5:47  error  A space is required after ','                     comma-spacing
+    5:53  error  Extra semicolon                                   semi
+    5:54  error  Trailing spaces not allowed                       no-trailing-spaces
+    6:16  error  The array literal notation [] is preferrable      no-array-constructor
+    6:31  error  A space is required after ','                     comma-spacing
+    6:36  error  A space is required after ','                     comma-spacing
+    6:47  error  A space is required after ','                     comma-spacing
+    6:53  error  Extra semicolon                                   semi
+    7:16  error  The array literal notation [] is preferrable      no-array-constructor
+    7:31  error  A space is required after ','                     comma-spacing
+    7:36  error  A space is required after ','                     comma-spacing
+    7:48  error  A space is required after ','                     comma-spacing
+    7:54  error  Extra semicolon                                   semi
+    7:55  error  Trailing spaces not allowed                       no-trailing-spaces
+    8:16  error  The array literal notation [] is preferrable      no-array-constructor
+    8:31  error  A space is required after ','                     comma-spacing
+    8:36  error  A space is required after ','                     comma-spacing
+    8:46  error  A space is required after ','                     comma-spacing
+    8:52  error  Extra semicolon                                   semi
+    9:16  error  The array literal notation [] is preferrable      no-array-constructor
+    9:31  error  A space is required after ','                     comma-spacing
+    9:36  error  A space is required after ','                     comma-spacing
+    9:46  error  A space is required after ','                     comma-spacing
+    9:52  error  Extra semicolon                                   semi
+   10:16  error  The array literal notation [] is preferrable      no-array-constructor
+   10:31  error  A space is required after ','                     comma-spacing
+   10:36  error  A space is required after ','                     comma-spacing
+   10:43  error  A space is required after ','                     comma-spacing
+   10:49  error  Extra semicolon                                   semi
+   11:16  error  The array literal notation [] is preferrable      no-array-constructor
+   11:31  error  A space is required after ','                     comma-spacing
+   11:36  error  A space is required after ','                     comma-spacing
+   11:44  error  A space is required after ','                     comma-spacing
+   11:50  error  Extra semicolon                                   semi
+   12:16  error  The array literal notation [] is preferrable      no-array-constructor
+   12:31  error  A space is required after ','                     comma-spacing
+   12:36  error  A space is required after ','                     comma-spacing
+   12:46  error  A space is required after ','                     comma-spacing
+   12:52  error  Extra semicolon                                   semi
+   13:1   error  More than 1 blank line not allowed                no-multiple-empty-lines
+   15:1   error  Expected space or tab after '//' in comment       spaced-comment
+   16:10  error  Infix operators must be spaced                    space-infix-ops
+   16:13  error  Extra semicolon                                   semi
+   17:12  error  The array literal notation [] is preferrable      no-array-constructor
+   17:27  error  A space is required after ','                     comma-spacing
+   17:32  error  A space is required after ','                     comma-spacing
+   17:43  error  A space is required after ','                     comma-spacing
+   17:49  error  Extra semicolon                                   semi
+   18:12  error  The array literal notation [] is preferrable      no-array-constructor
+   18:27  error  A space is required after ','                     comma-spacing
+   18:32  error  A space is required after ','                     comma-spacing
+   18:43  error  A space is required after ','                     comma-spacing
+   18:49  error  Extra semicolon                                   semi
+   19:1   error  Trailing spaces not allowed                       no-trailing-spaces
+   20:12  error  The array literal notation [] is preferrable      no-array-constructor
+   20:27  error  A space is required after ','                     comma-spacing
+   20:32  error  A space is required after ','                     comma-spacing
+   20:43  error  A space is required after ','                     comma-spacing
+   20:49  error  Extra semicolon                                   semi
+   21:1   error  Trailing spaces not allowed                       no-trailing-spaces
+   22:12  error  The array literal notation [] is preferrable      no-array-constructor
+   22:27  error  A space is required after ','                     comma-spacing
+   22:32  error  A space is required after ','                     comma-spacing
+   22:39  error  A space is required after ','                     comma-spacing
+   22:45  error  Extra semicolon                                   semi
+   23:1   error  Trailing spaces not allowed                       no-trailing-spaces
+   24:12  error  The array literal notation [] is preferrable      no-array-constructor
+   24:27  error  A space is required after ','                     comma-spacing
+   24:32  error  A space is required after ','                     comma-spacing
+   24:41  error  A space is required after ','                     comma-spacing
+   24:47  error  Extra semicolon                                   semi
+   25:1   error  Trailing spaces not allowed                       no-trailing-spaces
+   26:12  error  The array literal notation [] is preferrable      no-array-constructor
+   26:27  error  A space is required after ','                     comma-spacing
+   26:37  error  A space is required after ','                     comma-spacing
+   26:48  error  A space is required after ','                     comma-spacing
+   26:54  error  Extra semicolon                                   semi
+   27:1   error  Trailing spaces not allowed                       no-trailing-spaces
+   28:12  error  The array literal notation [] is preferrable      no-array-constructor
+   28:27  error  A space is required after ','                     comma-spacing
+   28:32  error  A space is required after ','                     comma-spacing
+   28:42  error  A space is required after ','                     comma-spacing
+   28:48  error  Extra semicolon                                   semi
+   29:1   error  Trailing spaces not allowed                       no-trailing-spaces
+   30:12  error  The array literal notation [] is preferrable      no-array-constructor
+   30:27  error  A space is required after ','                     comma-spacing
+   30:32  error  A space is required after ','                     comma-spacing
+   30:41  error  A space is required after ','                     comma-spacing
+   30:47  error  Extra semicolon                                   semi
+   31:1   error  Trailing spaces not allowed                       no-trailing-spaces
+   32:12  error  The array literal notation [] is preferrable      no-array-constructor
+   32:27  error  A space is required after ','                     comma-spacing
+   32:32  error  A space is required after ','                     comma-spacing
+   32:42  error  A space is required after ','                     comma-spacing
+   32:48  error  Extra semicolon                                   semi
+   33:1   error  Trailing spaces not allowed                       no-trailing-spaces
+   34:12  error  The array literal notation [] is preferrable      no-array-constructor
+   34:27  error  A space is required after ','                     comma-spacing
+   34:32  error  A space is required after ','                     comma-spacing
+   34:43  error  A space is required after ','                     comma-spacing
+   34:49  error  Extra semicolon                                   semi
+   35:1   error  Trailing spaces not allowed                       no-trailing-spaces
+   36:13  error  The array literal notation [] is preferrable      no-array-constructor
+   36:28  error  A space is required after ','                     comma-spacing
+   36:33  error  A space is required after ','                     comma-spacing
+   36:41  error  A space is required after ','                     comma-spacing
+   36:47  error  Extra semicolon                                   semi
+   37:1   error  Trailing spaces not allowed                       no-trailing-spaces
+   38:13  error  The array literal notation [] is preferrable      no-array-constructor
+   38:28  error  A space is required after ','                     comma-spacing
+   38:33  error  A space is required after ','                     comma-spacing
+   38:42  error  A space is required after ','                     comma-spacing
+   38:48  error  Extra semicolon                                   semi
+   39:1   error  Trailing spaces not allowed                       no-trailing-spaces
+   40:13  error  The array literal notation [] is preferrable      no-array-constructor
+   40:28  error  A space is required after ','                     comma-spacing
+   40:33  error  A space is required after ','                     comma-spacing
+   40:43  error  A space is required after ','                     comma-spacing
+   40:49  error  Extra semicolon                                   semi
+   41:1   error  Trailing spaces not allowed                       no-trailing-spaces
+   42:13  error  The array literal notation [] is preferrable      no-array-constructor
+   42:28  error  A space is required after ','                     comma-spacing
+   42:33  error  A space is required after ','                     comma-spacing
+   42:43  error  A space is required after ','                     comma-spacing
+   42:49  error  Extra semicolon                                   semi
+   43:1   error  Trailing spaces not allowed                       no-trailing-spaces
+   44:13  error  The array literal notation [] is preferrable      no-array-constructor
+   44:28  error  A space is required after ','                     comma-spacing
+   44:35  error  A space is required after ','                     comma-spacing
+   44:51  error  A space is required after ','                     comma-spacing
+   44:59  error  Extra semicolon                                   semi
+   45:1   error  Trailing spaces not allowed                       no-trailing-spaces
+   46:13  error  The array literal notation [] is preferrable      no-array-constructor
+   46:28  error  A space is required after ','                     comma-spacing
+   46:33  error  A space is required after ','                     comma-spacing
+   46:40  error  A space is required after ','                     comma-spacing
+   46:46  error  Extra semicolon                                   semi
+   47:1   error  Trailing spaces not allowed                       no-trailing-spaces
+   48:13  error  The array literal notation [] is preferrable      no-array-constructor
+   48:28  error  A space is required after ','                     comma-spacing
+   48:33  error  A space is required after ','                     comma-spacing
+   48:42  error  A space is required after ','                     comma-spacing
+   48:48  error  Extra semicolon                                   semi
+   49:1   error  Trailing spaces not allowed                       no-trailing-spaces
+   50:13  error  The array literal notation [] is preferrable      no-array-constructor
+   50:28  error  A space is required after ','                     comma-spacing
+   50:33  error  A space is required after ','                     comma-spacing
+   50:43  error  A space is required after ','                     comma-spacing
+   50:49  error  Extra semicolon                                   semi
+   51:1   error  Trailing spaces not allowed                       no-trailing-spaces
+   52:13  error  The array literal notation [] is preferrable      no-array-constructor
+   52:28  error  A space is required after ','                     comma-spacing
+   52:33  error  A space is required after ','                     comma-spacing
+   52:40  error  A space is required after ','                     comma-spacing
+   52:46  error  Extra semicolon                                   semi
+   53:1   error  Trailing spaces not allowed                       no-trailing-spaces
+   54:13  error  The array literal notation [] is preferrable      no-array-constructor
+   54:28  error  A space is required after ','                     comma-spacing
+   54:33  error  A space is required after ','                     comma-spacing
+   54:43  error  A space is required after ','                     comma-spacing
+   54:49  error  Extra semicolon                                   semi
+   55:1   error  Trailing spaces not allowed                       no-trailing-spaces
+   56:13  error  The array literal notation [] is preferrable      no-array-constructor
+   56:28  error  A space is required after ','                     comma-spacing
+   56:33  error  A space is required after ','                     comma-spacing
+   56:41  error  A space is required after ','                     comma-spacing
+   56:47  error  Extra semicolon                                   semi
+   57:1   error  Trailing spaces not allowed                       no-trailing-spaces
+   58:13  error  The array literal notation [] is preferrable      no-array-constructor
+   58:28  error  A space is required after ','                     comma-spacing
+   58:33  error  A space is required after ','                     comma-spacing
+   58:41  error  A space is required after ','                     comma-spacing
+   58:47  error  Extra semicolon                                   semi
+   59:1   error  Trailing spaces not allowed                       no-trailing-spaces
+   60:13  error  The array literal notation [] is preferrable      no-array-constructor
+   60:28  error  A space is required after ','                     comma-spacing
+   60:33  error  A space is required after ','                     comma-spacing
+   60:41  error  A space is required after ','                     comma-spacing
+   60:47  error  Extra semicolon                                   semi
+   61:1   error  Trailing spaces not allowed                       no-trailing-spaces
+   62:13  error  The array literal notation [] is preferrable      no-array-constructor
+   62:28  error  A space is required after ','                     comma-spacing
+   62:33  error  A space is required after ','                     comma-spacing
+   62:40  error  A space is required after ','                     comma-spacing
+   62:46  error  Extra semicolon                                   semi
+   63:1   error  Trailing spaces not allowed                       no-trailing-spaces
+   64:13  error  The array literal notation [] is preferrable      no-array-constructor
+   64:28  error  A space is required after ','                     comma-spacing
+   64:33  error  A space is required after ','                     comma-spacing
+   64:41  error  A space is required after ','                     comma-spacing
+   64:47  error  Extra semicolon                                   semi
+   65:1   error  Trailing spaces not allowed                       no-trailing-spaces
+   66:13  error  The array literal notation [] is preferrable      no-array-constructor
+   66:28  error  A space is required after ','                     comma-spacing
+   66:34  error  A space is required after ','                     comma-spacing
+   66:42  error  A space is required after ','                     comma-spacing
+   66:49  error  Extra semicolon                                   semi
+   67:1   error  Trailing spaces not allowed                       no-trailing-spaces
+   68:13  error  The array literal notation [] is preferrable      no-array-constructor
+   68:28  error  A space is required after ','                     comma-spacing
+   68:35  error  A space is required after ','                     comma-spacing
+   68:46  error  A space is required after ','                     comma-spacing
+   68:54  error  Extra semicolon                                   semi
+   69:1   error  Trailing spaces not allowed                       no-trailing-spaces
+   70:13  error  The array literal notation [] is preferrable      no-array-constructor
+   70:28  error  A space is required after ','                     comma-spacing
+   70:33  error  A space is required after ','                     comma-spacing
+   70:41  error  A space is required after ','                     comma-spacing
+   70:47  error  Extra semicolon                                   semi
+   71:1   error  Trailing spaces not allowed                       no-trailing-spaces
+   72:13  error  The array literal notation [] is preferrable      no-array-constructor
+   72:28  error  A space is required after ','                     comma-spacing
+   72:34  error  A space is required after ','                     comma-spacing
+   72:43  error  A space is required after ','                     comma-spacing
+   72:50  error  Extra semicolon                                   semi
+   73:1   error  Trailing spaces not allowed                       no-trailing-spaces
+   74:13  error  The array literal notation [] is preferrable      no-array-constructor
+   74:28  error  A space is required after ','                     comma-spacing
+   74:35  error  A space is required after ','                     comma-spacing
+   74:46  error  A space is required after ','                     comma-spacing
+   74:54  error  Extra semicolon                                   semi
+   75:1   error  Trailing spaces not allowed                       no-trailing-spaces
+   76:13  error  The array literal notation [] is preferrable      no-array-constructor
+   76:28  error  A space is required after ','                     comma-spacing
+   76:34  error  A space is required after ','                     comma-spacing
+   76:43  error  A space is required after ','                     comma-spacing
+   76:50  error  Extra semicolon                                   semi
+   77:1   error  Trailing spaces not allowed                       no-trailing-spaces
+   78:13  error  The array literal notation [] is preferrable      no-array-constructor
+   78:28  error  A space is required after ','                     comma-spacing
+   78:33  error  A space is required after ','                     comma-spacing
+   78:42  error  A space is required after ','                     comma-spacing
+   78:48  error  Extra semicolon                                   semi
+   79:1   error  Trailing spaces not allowed                       no-trailing-spaces
+   80:13  error  The array literal notation [] is preferrable      no-array-constructor
+   80:28  error  A space is required after ','                     comma-spacing
+   80:33  error  A space is required after ','                     comma-spacing
+   80:43  error  A space is required after ','                     comma-spacing
+   80:49  error  Extra semicolon                                   semi
+   81:1   error  Trailing spaces not allowed                       no-trailing-spaces
+   82:13  error  The array literal notation [] is preferrable      no-array-constructor
+   82:28  error  A space is required after ','                     comma-spacing
+   82:33  error  A space is required after ','                     comma-spacing
+   82:42  error  A space is required after ','                     comma-spacing
+   82:48  error  Extra semicolon                                   semi
+   83:1   error  Trailing spaces not allowed                       no-trailing-spaces
+   84:13  error  The array literal notation [] is preferrable      no-array-constructor
+   84:28  error  A space is required after ','                     comma-spacing
+   84:33  error  A space is required after ','                     comma-spacing
+   84:41  error  A space is required after ','                     comma-spacing
+   84:47  error  Extra semicolon                                   semi
+   85:1   error  Trailing spaces not allowed                       no-trailing-spaces
+   86:13  error  The array literal notation [] is preferrable      no-array-constructor
+   86:28  error  A space is required after ','                     comma-spacing
+   86:33  error  A space is required after ','                     comma-spacing
+   86:44  error  A space is required after ','                     comma-spacing
+   86:50  error  Extra semicolon                                   semi
+   87:1   error  Trailing spaces not allowed                       no-trailing-spaces
+   88:13  error  The array literal notation [] is preferrable      no-array-constructor
+   88:28  error  A space is required after ','                     comma-spacing
+   88:33  error  A space is required after ','                     comma-spacing
+   88:40  error  A space is required after ','                     comma-spacing
+   88:46  error  Extra semicolon                                   semi
+   89:1   error  Trailing spaces not allowed                       no-trailing-spaces
+   90:13  error  The array literal notation [] is preferrable      no-array-constructor
+   90:28  error  A space is required after ','                     comma-spacing
+   90:33  error  A space is required after ','                     comma-spacing
+   90:41  error  A space is required after ','                     comma-spacing
+   90:47  error  Extra semicolon                                   semi
+   91:1   error  Trailing spaces not allowed                       no-trailing-spaces
+   92:13  error  The array literal notation [] is preferrable      no-array-constructor
+   92:28  error  A space is required after ','                     comma-spacing
+   92:33  error  A space is required after ','                     comma-spacing
+   92:44  error  A space is required after ','                     comma-spacing
+   92:50  error  Extra semicolon                                   semi
+   93:1   error  Trailing spaces not allowed                       no-trailing-spaces
+   94:13  error  The array literal notation [] is preferrable      no-array-constructor
+   94:28  error  A space is required after ','                     comma-spacing
+   94:33  error  A space is required after ','                     comma-spacing
+   94:43  error  A space is required after ','                     comma-spacing
+   94:49  error  Extra semicolon                                   semi
+   95:1   error  Trailing spaces not allowed                       no-trailing-spaces
+   96:13  error  The array literal notation [] is preferrable      no-array-constructor
+   96:28  error  A space is required after ','                     comma-spacing
+   96:33  error  A space is required after ','                     comma-spacing
+   96:42  error  A space is required after ','                     comma-spacing
+   96:48  error  Extra semicolon                                   semi
+   97:1   error  Trailing spaces not allowed                       no-trailing-spaces
+   98:13  error  The array literal notation [] is preferrable      no-array-constructor
+   98:28  error  A space is required after ','                     comma-spacing
+   98:33  error  A space is required after ','                     comma-spacing
+   98:44  error  A space is required after ','                     comma-spacing
+   98:50  error  Extra semicolon                                   semi
+   99:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  100:13  error  The array literal notation [] is preferrable      no-array-constructor
+  100:28  error  A space is required after ','                     comma-spacing
+  100:33  error  A space is required after ','                     comma-spacing
+  100:41  error  A space is required after ','                     comma-spacing
+  100:47  error  Extra semicolon                                   semi
+  101:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  102:13  error  The array literal notation [] is preferrable      no-array-constructor
+  102:28  error  A space is required after ','                     comma-spacing
+  102:33  error  A space is required after ','                     comma-spacing
+  102:42  error  A space is required after ','                     comma-spacing
+  102:48  error  Extra semicolon                                   semi
+  103:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  104:13  error  The array literal notation [] is preferrable      no-array-constructor
+  104:28  error  A space is required after ','                     comma-spacing
+  104:33  error  A space is required after ','                     comma-spacing
+  104:42  error  A space is required after ','                     comma-spacing
+  104:48  error  Extra semicolon                                   semi
+  105:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  106:13  error  The array literal notation [] is preferrable      no-array-constructor
+  106:28  error  A space is required after ','                     comma-spacing
+  106:33  error  A space is required after ','                     comma-spacing
+  106:44  error  A space is required after ','                     comma-spacing
+  106:50  error  Extra semicolon                                   semi
+  107:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  108:13  error  The array literal notation [] is preferrable      no-array-constructor
+  108:28  error  A space is required after ','                     comma-spacing
+  108:33  error  A space is required after ','                     comma-spacing
+  108:41  error  A space is required after ','                     comma-spacing
+  108:47  error  Extra semicolon                                   semi
+  109:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  110:13  error  The array literal notation [] is preferrable      no-array-constructor
+  110:28  error  A space is required after ','                     comma-spacing
+  110:33  error  A space is required after ','                     comma-spacing
+  110:43  error  A space is required after ','                     comma-spacing
+  110:49  error  Extra semicolon                                   semi
+  111:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  112:13  error  The array literal notation [] is preferrable      no-array-constructor
+  112:28  error  A space is required after ','                     comma-spacing
+  112:33  error  A space is required after ','                     comma-spacing
+  112:43  error  A space is required after ','                     comma-spacing
+  112:49  error  Extra semicolon                                   semi
+  113:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  114:13  error  The array literal notation [] is preferrable      no-array-constructor
+  114:28  error  A space is required after ','                     comma-spacing
+  114:33  error  A space is required after ','                     comma-spacing
+  114:42  error  A space is required after ','                     comma-spacing
+  114:48  error  Extra semicolon                                   semi
+  115:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  116:13  error  The array literal notation [] is preferrable      no-array-constructor
+  116:28  error  A space is required after ','                     comma-spacing
+  116:33  error  A space is required after ','                     comma-spacing
+  116:44  error  A space is required after ','                     comma-spacing
+  116:50  error  Extra semicolon                                   semi
+  117:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  118:13  error  The array literal notation [] is preferrable      no-array-constructor
+  118:28  error  A space is required after ','                     comma-spacing
+  118:33  error  A space is required after ','                     comma-spacing
+  118:42  error  A space is required after ','                     comma-spacing
+  118:48  error  Extra semicolon                                   semi
+  119:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  120:13  error  The array literal notation [] is preferrable      no-array-constructor
+  120:28  error  A space is required after ','                     comma-spacing
+  120:33  error  A space is required after ','                     comma-spacing
+  120:43  error  A space is required after ','                     comma-spacing
+  120:49  error  Extra semicolon                                   semi
+  121:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  122:13  error  The array literal notation [] is preferrable      no-array-constructor
+  122:28  error  A space is required after ','                     comma-spacing
+  122:33  error  A space is required after ','                     comma-spacing
+  122:44  error  A space is required after ','                     comma-spacing
+  122:50  error  Extra semicolon                                   semi
+  123:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  124:13  error  The array literal notation [] is preferrable      no-array-constructor
+  124:28  error  A space is required after ','                     comma-spacing
+  124:33  error  A space is required after ','                     comma-spacing
+  124:41  error  A space is required after ','                     comma-spacing
+  124:47  error  Extra semicolon                                   semi
+  125:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  126:13  error  The array literal notation [] is preferrable      no-array-constructor
+  126:28  error  A space is required after ','                     comma-spacing
+  126:33  error  A space is required after ','                     comma-spacing
+  126:42  error  A space is required after ','                     comma-spacing
+  126:48  error  Extra semicolon                                   semi
+  127:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  128:13  error  The array literal notation [] is preferrable      no-array-constructor
+  128:28  error  A space is required after ','                     comma-spacing
+  128:33  error  A space is required after ','                     comma-spacing
+  128:43  error  A space is required after ','                     comma-spacing
+  128:49  error  Extra semicolon                                   semi
+  129:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  130:13  error  The array literal notation [] is preferrable      no-array-constructor
+  130:28  error  A space is required after ','                     comma-spacing
+  130:33  error  A space is required after ','                     comma-spacing
+  130:44  error  A space is required after ','                     comma-spacing
+  130:50  error  Extra semicolon                                   semi
+  131:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  132:13  error  The array literal notation [] is preferrable      no-array-constructor
+  132:28  error  A space is required after ','                     comma-spacing
+  132:34  error  A space is required after ','                     comma-spacing
+  132:46  error  A space is required after ','                     comma-spacing
+  132:53  error  Extra semicolon                                   semi
+  133:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  134:13  error  The array literal notation [] is preferrable      no-array-constructor
+  134:28  error  A space is required after ','                     comma-spacing
+  134:34  error  A space is required after ','                     comma-spacing
+  134:44  error  A space is required after ','                     comma-spacing
+  134:51  error  Extra semicolon                                   semi
+  135:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  136:13  error  The array literal notation [] is preferrable      no-array-constructor
+  136:28  error  A space is required after ','                     comma-spacing
+  136:33  error  A space is required after ','                     comma-spacing
+  136:42  error  A space is required after ','                     comma-spacing
+  136:48  error  Extra semicolon                                   semi
+  137:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  138:13  error  The array literal notation [] is preferrable      no-array-constructor
+  138:28  error  A space is required after ','                     comma-spacing
+  138:33  error  A space is required after ','                     comma-spacing
+  138:44  error  A space is required after ','                     comma-spacing
+  138:52  error  Extra semicolon                                   semi
+  139:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  140:13  error  The array literal notation [] is preferrable      no-array-constructor
+  140:28  error  A space is required after ','                     comma-spacing
+  140:33  error  A space is required after ','                     comma-spacing
+  140:44  error  A space is required after ','                     comma-spacing
+  140:50  error  Extra semicolon                                   semi
+  141:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  142:13  error  The array literal notation [] is preferrable      no-array-constructor
+  142:28  error  A space is required after ','                     comma-spacing
+  142:35  error  A space is required after ','                     comma-spacing
+  142:48  error  A space is required after ','                     comma-spacing
+  142:56  error  Extra semicolon                                   semi
+  143:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  144:13  error  The array literal notation [] is preferrable      no-array-constructor
+  144:28  error  A space is required after ','                     comma-spacing
+  144:35  error  A space is required after ','                     comma-spacing
+  144:48  error  A space is required after ','                     comma-spacing
+  144:56  error  Extra semicolon                                   semi
+  145:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  146:13  error  The array literal notation [] is preferrable      no-array-constructor
+  146:28  error  A space is required after ','                     comma-spacing
+  146:33  error  A space is required after ','                     comma-spacing
+  146:41  error  A space is required after ','                     comma-spacing
+  146:47  error  Extra semicolon                                   semi
+  147:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  148:13  error  The array literal notation [] is preferrable      no-array-constructor
+  148:28  error  A space is required after ','                     comma-spacing
+  148:33  error  A space is required after ','                     comma-spacing
+  148:44  error  A space is required after ','                     comma-spacing
+  148:50  error  Extra semicolon                                   semi
+  149:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  150:13  error  The array literal notation [] is preferrable      no-array-constructor
+  150:28  error  A space is required after ','                     comma-spacing
+  150:35  error  A space is required after ','                     comma-spacing
+  150:47  error  A space is required after ','                     comma-spacing
+  150:55  error  Extra semicolon                                   semi
+  151:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  152:13  error  The array literal notation [] is preferrable      no-array-constructor
+  152:28  error  A space is required after ','                     comma-spacing
+  152:35  error  A space is required after ','                     comma-spacing
+  152:46  error  A space is required after ','                     comma-spacing
+  152:54  error  Extra semicolon                                   semi
+  153:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  154:13  error  The array literal notation [] is preferrable      no-array-constructor
+  154:28  error  A space is required after ','                     comma-spacing
+  154:34  error  A space is required after ','                     comma-spacing
+  154:46  error  A space is required after ','                     comma-spacing
+  154:53  error  Extra semicolon                                   semi
+  155:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  156:13  error  The array literal notation [] is preferrable      no-array-constructor
+  156:28  error  A space is required after ','                     comma-spacing
+  156:34  error  A space is required after ','                     comma-spacing
+  156:44  error  A space is required after ','                     comma-spacing
+  156:51  error  Extra semicolon                                   semi
+  157:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  158:13  error  The array literal notation [] is preferrable      no-array-constructor
+  158:28  error  A space is required after ','                     comma-spacing
+  158:33  error  A space is required after ','                     comma-spacing
+  158:43  error  A space is required after ','                     comma-spacing
+  158:49  error  Extra semicolon                                   semi
+  159:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  160:13  error  The array literal notation [] is preferrable      no-array-constructor
+  160:28  error  A space is required after ','                     comma-spacing
+  160:33  error  A space is required after ','                     comma-spacing
+  160:42  error  A space is required after ','                     comma-spacing
+  160:48  error  Extra semicolon                                   semi
+  161:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  162:13  error  The array literal notation [] is preferrable      no-array-constructor
+  162:28  error  A space is required after ','                     comma-spacing
+  162:33  error  A space is required after ','                     comma-spacing
+  162:44  error  A space is required after ','                     comma-spacing
+  162:50  error  Extra semicolon                                   semi
+  163:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  164:13  error  The array literal notation [] is preferrable      no-array-constructor
+  164:28  error  A space is required after ','                     comma-spacing
+  164:33  error  A space is required after ','                     comma-spacing
+  164:44  error  A space is required after ','                     comma-spacing
+  164:50  error  Extra semicolon                                   semi
+  165:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  166:13  error  The array literal notation [] is preferrable      no-array-constructor
+  166:28  error  A space is required after ','                     comma-spacing
+  166:33  error  A space is required after ','                     comma-spacing
+  166:42  error  A space is required after ','                     comma-spacing
+  166:48  error  Extra semicolon                                   semi
+  167:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  168:13  error  The array literal notation [] is preferrable      no-array-constructor
+  168:28  error  A space is required after ','                     comma-spacing
+  168:33  error  A space is required after ','                     comma-spacing
+  168:43  error  A space is required after ','                     comma-spacing
+  168:49  error  Extra semicolon                                   semi
+  169:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  170:13  error  The array literal notation [] is preferrable      no-array-constructor
+  170:28  error  A space is required after ','                     comma-spacing
+  170:33  error  A space is required after ','                     comma-spacing
+  170:43  error  A space is required after ','                     comma-spacing
+  170:49  error  Extra semicolon                                   semi
+  171:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  172:13  error  The array literal notation [] is preferrable      no-array-constructor
+  172:28  error  A space is required after ','                     comma-spacing
+  172:33  error  A space is required after ','                     comma-spacing
+  172:42  error  A space is required after ','                     comma-spacing
+  172:48  error  Extra semicolon                                   semi
+  173:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  174:13  error  The array literal notation [] is preferrable      no-array-constructor
+  174:28  error  A space is required after ','                     comma-spacing
+  174:33  error  A space is required after ','                     comma-spacing
+  174:44  error  A space is required after ','                     comma-spacing
+  174:50  error  Extra semicolon                                   semi
+  175:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  176:13  error  The array literal notation [] is preferrable      no-array-constructor
+  176:28  error  A space is required after ','                     comma-spacing
+  176:34  error  A space is required after ','                     comma-spacing
+  176:46  error  A space is required after ','                     comma-spacing
+  176:53  error  Extra semicolon                                   semi
+  177:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  178:13  error  The array literal notation [] is preferrable      no-array-constructor
+  178:28  error  A space is required after ','                     comma-spacing
+  178:33  error  A space is required after ','                     comma-spacing
+  178:44  error  A space is required after ','                     comma-spacing
+  178:50  error  Extra semicolon                                   semi
+  179:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  180:13  error  The array literal notation [] is preferrable      no-array-constructor
+  180:28  error  A space is required after ','                     comma-spacing
+  180:33  error  A space is required after ','                     comma-spacing
+  180:43  error  A space is required after ','                     comma-spacing
+  180:49  error  Extra semicolon                                   semi
+  181:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  182:13  error  The array literal notation [] is preferrable      no-array-constructor
+  182:28  error  A space is required after ','                     comma-spacing
+  182:34  error  A space is required after ','                     comma-spacing
+  182:49  error  A space is required after ','                     comma-spacing
+  182:56  error  Extra semicolon                                   semi
+  183:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  184:13  error  The array literal notation [] is preferrable      no-array-constructor
+  184:28  error  A space is required after ','                     comma-spacing
+  184:33  error  A space is required after ','                     comma-spacing
+  184:40  error  A space is required after ','                     comma-spacing
+  184:46  error  Extra semicolon                                   semi
+  185:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  186:13  error  The array literal notation [] is preferrable      no-array-constructor
+  186:28  error  A space is required after ','                     comma-spacing
+  186:34  error  A space is required after ','                     comma-spacing
+  186:48  error  A space is required after ','                     comma-spacing
+  186:55  error  Extra semicolon                                   semi
+  187:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  188:13  error  The array literal notation [] is preferrable      no-array-constructor
+  188:28  error  A space is required after ','                     comma-spacing
+  188:33  error  A space is required after ','                     comma-spacing
+  188:42  error  A space is required after ','                     comma-spacing
+  188:48  error  Extra semicolon                                   semi
+  189:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  190:13  error  The array literal notation [] is preferrable      no-array-constructor
+  190:28  error  A space is required after ','                     comma-spacing
+  190:33  error  A space is required after ','                     comma-spacing
+  190:44  error  A space is required after ','                     comma-spacing
+  190:50  error  Extra semicolon                                   semi
+  191:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  192:13  error  The array literal notation [] is preferrable      no-array-constructor
+  192:28  error  A space is required after ','                     comma-spacing
+  192:33  error  A space is required after ','                     comma-spacing
+  192:42  error  A space is required after ','                     comma-spacing
+  192:48  error  Extra semicolon                                   semi
+  193:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  194:13  error  The array literal notation [] is preferrable      no-array-constructor
+  194:28  error  A space is required after ','                     comma-spacing
+  194:33  error  A space is required after ','                     comma-spacing
+  194:43  error  A space is required after ','                     comma-spacing
+  194:49  error  Extra semicolon                                   semi
+  195:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  196:13  error  The array literal notation [] is preferrable      no-array-constructor
+  196:28  error  A space is required after ','                     comma-spacing
+  196:33  error  A space is required after ','                     comma-spacing
+  196:43  error  A space is required after ','                     comma-spacing
+  196:49  error  Extra semicolon                                   semi
+  197:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  198:13  error  The array literal notation [] is preferrable      no-array-constructor
+  198:28  error  A space is required after ','                     comma-spacing
+  198:33  error  A space is required after ','                     comma-spacing
+  198:45  error  A space is required after ','                     comma-spacing
+  198:51  error  Extra semicolon                                   semi
+  199:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  200:13  error  The array literal notation [] is preferrable      no-array-constructor
+  200:28  error  A space is required after ','                     comma-spacing
+  200:33  error  A space is required after ','                     comma-spacing
+  200:40  error  A space is required after ','                     comma-spacing
+  200:46  error  Extra semicolon                                   semi
+  201:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  202:13  error  The array literal notation [] is preferrable      no-array-constructor
+  202:28  error  A space is required after ','                     comma-spacing
+  202:33  error  A space is required after ','                     comma-spacing
+  202:43  error  A space is required after ','                     comma-spacing
+  202:49  error  Extra semicolon                                   semi
+  203:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  204:13  error  The array literal notation [] is preferrable      no-array-constructor
+  204:28  error  A space is required after ','                     comma-spacing
+  204:33  error  A space is required after ','                     comma-spacing
+  204:41  error  A space is required after ','                     comma-spacing
+  204:47  error  Extra semicolon                                   semi
+  205:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  206:13  error  The array literal notation [] is preferrable      no-array-constructor
+  206:28  error  A space is required after ','                     comma-spacing
+  206:33  error  A space is required after ','                     comma-spacing
+  206:45  error  A space is required after ','                     comma-spacing
+  206:51  error  Extra semicolon                                   semi
+  207:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  208:13  error  The array literal notation [] is preferrable      no-array-constructor
+  208:28  error  A space is required after ','                     comma-spacing
+  208:33  error  A space is required after ','                     comma-spacing
+  208:41  error  A space is required after ','                     comma-spacing
+  208:47  error  Extra semicolon                                   semi
+  209:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  210:13  error  The array literal notation [] is preferrable      no-array-constructor
+  210:28  error  A space is required after ','                     comma-spacing
+  210:33  error  A space is required after ','                     comma-spacing
+  210:44  error  A space is required after ','                     comma-spacing
+  210:50  error  Extra semicolon                                   semi
+  211:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  212:13  error  The array literal notation [] is preferrable      no-array-constructor
+  212:28  error  A space is required after ','                     comma-spacing
+  212:34  error  A space is required after ','                     comma-spacing
+  212:48  error  A space is required after ','                     comma-spacing
+  212:55  error  Extra semicolon                                   semi
+  213:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  214:13  error  The array literal notation [] is preferrable      no-array-constructor
+  214:28  error  A space is required after ','                     comma-spacing
+  214:33  error  A space is required after ','                     comma-spacing
+  214:43  error  A space is required after ','                     comma-spacing
+  214:49  error  Extra semicolon                                   semi
+  215:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  216:14  error  The array literal notation [] is preferrable      no-array-constructor
+  216:29  error  A space is required after ','                     comma-spacing
+  216:34  error  A space is required after ','                     comma-spacing
+  216:45  error  A space is required after ','                     comma-spacing
+  216:51  error  Extra semicolon                                   semi
+  217:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  218:14  error  The array literal notation [] is preferrable      no-array-constructor
+  218:29  error  A space is required after ','                     comma-spacing
+  218:34  error  A space is required after ','                     comma-spacing
+  218:45  error  A space is required after ','                     comma-spacing
+  218:51  error  Extra semicolon                                   semi
+  219:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  220:14  error  The array literal notation [] is preferrable      no-array-constructor
+  220:29  error  A space is required after ','                     comma-spacing
+  220:34  error  A space is required after ','                     comma-spacing
+  220:41  error  A space is required after ','                     comma-spacing
+  220:47  error  Extra semicolon                                   semi
+  221:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  222:14  error  The array literal notation [] is preferrable      no-array-constructor
+  222:29  error  A space is required after ','                     comma-spacing
+  222:35  error  A space is required after ','                     comma-spacing
+  222:45  error  A space is required after ','                     comma-spacing
+  222:52  error  Extra semicolon                                   semi
+  223:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  224:14  error  The array literal notation [] is preferrable      no-array-constructor
+  224:29  error  A space is required after ','                     comma-spacing
+  224:34  error  A space is required after ','                     comma-spacing
+  224:42  error  A space is required after ','                     comma-spacing
+  224:48  error  Extra semicolon                                   semi
+  225:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  226:14  error  The array literal notation [] is preferrable      no-array-constructor
+  226:29  error  A space is required after ','                     comma-spacing
+  226:36  error  A space is required after ','                     comma-spacing
+  226:47  error  A space is required after ','                     comma-spacing
+  226:55  error  Extra semicolon                                   semi
+  227:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  228:14  error  The array literal notation [] is preferrable      no-array-constructor
+  228:29  error  A space is required after ','                     comma-spacing
+  228:35  error  A space is required after ','                     comma-spacing
+  228:45  error  A space is required after ','                     comma-spacing
+  228:52  error  Extra semicolon                                   semi
+  229:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  230:14  error  The array literal notation [] is preferrable      no-array-constructor
+  230:29  error  A space is required after ','                     comma-spacing
+  230:35  error  A space is required after ','                     comma-spacing
+  230:48  error  A space is required after ','                     comma-spacing
+  230:55  error  Extra semicolon                                   semi
+  231:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  232:14  error  The array literal notation [] is preferrable      no-array-constructor
+  232:29  error  A space is required after ','                     comma-spacing
+  232:34  error  A space is required after ','                     comma-spacing
+  232:44  error  A space is required after ','                     comma-spacing
+  232:50  error  Extra semicolon                                   semi
+  233:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  234:14  error  The array literal notation [] is preferrable      no-array-constructor
+  234:29  error  A space is required after ','                     comma-spacing
+  234:34  error  A space is required after ','                     comma-spacing
+  234:44  error  A space is required after ','                     comma-spacing
+  234:50  error  Extra semicolon                                   semi
+  235:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  236:14  error  The array literal notation [] is preferrable      no-array-constructor
+  236:29  error  A space is required after ','                     comma-spacing
+  236:34  error  A space is required after ','                     comma-spacing
+  236:46  error  A space is required after ','                     comma-spacing
+  236:52  error  Extra semicolon                                   semi
+  237:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  238:14  error  The array literal notation [] is preferrable      no-array-constructor
+  238:29  error  A space is required after ','                     comma-spacing
+  238:35  error  A space is required after ','                     comma-spacing
+  238:50  error  A space is required after ','                     comma-spacing
+  238:57  error  Extra semicolon                                   semi
+  239:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  240:14  error  The array literal notation [] is preferrable      no-array-constructor
+  240:29  error  A space is required after ','                     comma-spacing
+  240:35  error  A space is required after ','                     comma-spacing
+  240:49  error  A space is required after ','                     comma-spacing
+  240:56  error  Extra semicolon                                   semi
+  241:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  242:14  error  The array literal notation [] is preferrable      no-array-constructor
+  242:29  error  A space is required after ','                     comma-spacing
+  242:34  error  A space is required after ','                     comma-spacing
+  242:43  error  A space is required after ','                     comma-spacing
+  242:49  error  Extra semicolon                                   semi
+  243:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  244:14  error  The array literal notation [] is preferrable      no-array-constructor
+  244:29  error  A space is required after ','                     comma-spacing
+  244:34  error  A space is required after ','                     comma-spacing
+  244:43  error  A space is required after ','                     comma-spacing
+  244:49  error  Extra semicolon                                   semi
+  245:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  246:14  error  The array literal notation [] is preferrable      no-array-constructor
+  246:29  error  A space is required after ','                     comma-spacing
+  246:34  error  A space is required after ','                     comma-spacing
+  246:42  error  A space is required after ','                     comma-spacing
+  246:48  error  Extra semicolon                                   semi
+  247:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  248:14  error  The array literal notation [] is preferrable      no-array-constructor
+  248:29  error  A space is required after ','                     comma-spacing
+  248:34  error  A space is required after ','                     comma-spacing
+  248:45  error  A space is required after ','                     comma-spacing
+  248:51  error  Extra semicolon                                   semi
+  249:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  250:14  error  The array literal notation [] is preferrable      no-array-constructor
+  250:29  error  A space is required after ','                     comma-spacing
+  250:34  error  A space is required after ','                     comma-spacing
+  250:42  error  A space is required after ','                     comma-spacing
+  250:48  error  Extra semicolon                                   semi
+  251:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  252:14  error  The array literal notation [] is preferrable      no-array-constructor
+  252:29  error  A space is required after ','                     comma-spacing
+  252:34  error  A space is required after ','                     comma-spacing
+  252:44  error  A space is required after ','                     comma-spacing
+  252:50  error  Extra semicolon                                   semi
+  253:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  254:14  error  The array literal notation [] is preferrable      no-array-constructor
+  254:29  error  A space is required after ','                     comma-spacing
+  254:34  error  A space is required after ','                     comma-spacing
+  254:43  error  A space is required after ','                     comma-spacing
+  254:49  error  Extra semicolon                                   semi
+  255:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  256:14  error  The array literal notation [] is preferrable      no-array-constructor
+  256:29  error  A space is required after ','                     comma-spacing
+  256:34  error  A space is required after ','                     comma-spacing
+  256:42  error  A space is required after ','                     comma-spacing
+  256:48  error  Extra semicolon                                   semi
+  257:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  258:14  error  The array literal notation [] is preferrable      no-array-constructor
+  258:29  error  A space is required after ','                     comma-spacing
+  258:34  error  A space is required after ','                     comma-spacing
+  258:43  error  A space is required after ','                     comma-spacing
+  258:49  error  Extra semicolon                                   semi
+  259:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  260:14  error  The array literal notation [] is preferrable      no-array-constructor
+  260:29  error  A space is required after ','                     comma-spacing
+  260:34  error  A space is required after ','                     comma-spacing
+  260:44  error  A space is required after ','                     comma-spacing
+  260:50  error  Extra semicolon                                   semi
+  261:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  262:14  error  The array literal notation [] is preferrable      no-array-constructor
+  262:29  error  A space is required after ','                     comma-spacing
+  262:34  error  A space is required after ','                     comma-spacing
+  262:44  error  A space is required after ','                     comma-spacing
+  262:50  error  Extra semicolon                                   semi
+  263:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  264:14  error  The array literal notation [] is preferrable      no-array-constructor
+  264:29  error  A space is required after ','                     comma-spacing
+  264:34  error  A space is required after ','                     comma-spacing
+  264:42  error  A space is required after ','                     comma-spacing
+  264:48  error  Extra semicolon                                   semi
+  265:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  266:14  error  The array literal notation [] is preferrable      no-array-constructor
+  266:29  error  A space is required after ','                     comma-spacing
+  266:34  error  A space is required after ','                     comma-spacing
+  266:43  error  A space is required after ','                     comma-spacing
+  266:49  error  Extra semicolon                                   semi
+  267:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  268:14  error  The array literal notation [] is preferrable      no-array-constructor
+  268:29  error  A space is required after ','                     comma-spacing
+  268:34  error  A space is required after ','                     comma-spacing
+  268:43  error  A space is required after ','                     comma-spacing
+  268:49  error  Extra semicolon                                   semi
+  269:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  270:14  error  The array literal notation [] is preferrable      no-array-constructor
+  270:29  error  A space is required after ','                     comma-spacing
+  270:34  error  A space is required after ','                     comma-spacing
+  270:44  error  A space is required after ','                     comma-spacing
+  270:50  error  Extra semicolon                                   semi
+  271:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  272:14  error  The array literal notation [] is preferrable      no-array-constructor
+  272:29  error  A space is required after ','                     comma-spacing
+  272:34  error  A space is required after ','                     comma-spacing
+  272:44  error  A space is required after ','                     comma-spacing
+  272:50  error  Extra semicolon                                   semi
+  273:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  274:14  error  The array literal notation [] is preferrable      no-array-constructor
+  274:29  error  A space is required after ','                     comma-spacing
+  274:34  error  A space is required after ','                     comma-spacing
+  274:42  error  A space is required after ','                     comma-spacing
+  274:48  error  Extra semicolon                                   semi
+  275:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  276:14  error  The array literal notation [] is preferrable      no-array-constructor
+  276:29  error  A space is required after ','                     comma-spacing
+  276:34  error  A space is required after ','                     comma-spacing
+  276:43  error  A space is required after ','                     comma-spacing
+  276:49  error  Extra semicolon                                   semi
+  277:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  278:14  error  The array literal notation [] is preferrable      no-array-constructor
+  278:29  error  A space is required after ','                     comma-spacing
+  278:34  error  A space is required after ','                     comma-spacing
+  278:45  error  A space is required after ','                     comma-spacing
+  278:53  error  Extra semicolon                                   semi
+  279:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  280:14  error  The array literal notation [] is preferrable      no-array-constructor
+  280:29  error  A space is required after ','                     comma-spacing
+  280:34  error  A space is required after ','                     comma-spacing
+  280:45  error  A space is required after ','                     comma-spacing
+  280:51  error  Extra semicolon                                   semi
+  281:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  282:14  error  The array literal notation [] is preferrable      no-array-constructor
+  282:29  error  A space is required after ','                     comma-spacing
+  282:34  error  A space is required after ','                     comma-spacing
+  282:44  error  A space is required after ','                     comma-spacing
+  282:50  error  Extra semicolon                                   semi
+  283:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  284:14  error  The array literal notation [] is preferrable      no-array-constructor
+  284:29  error  A space is required after ','                     comma-spacing
+  284:35  error  A space is required after ','                     comma-spacing
+  284:47  error  A space is required after ','                     comma-spacing
+  284:54  error  Extra semicolon                                   semi
+  285:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  286:14  error  The array literal notation [] is preferrable      no-array-constructor
+  286:29  error  A space is required after ','                     comma-spacing
+  286:34  error  A space is required after ','                     comma-spacing
+  286:45  error  A space is required after ','                     comma-spacing
+  286:51  error  Extra semicolon                                   semi
+  287:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  288:14  error  The array literal notation [] is preferrable      no-array-constructor
+  288:29  error  A space is required after ','                     comma-spacing
+  288:34  error  A space is required after ','                     comma-spacing
+  288:44  error  A space is required after ','                     comma-spacing
+  288:50  error  Extra semicolon                                   semi
+  289:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  290:14  error  The array literal notation [] is preferrable      no-array-constructor
+  290:29  error  A space is required after ','                     comma-spacing
+  290:34  error  A space is required after ','                     comma-spacing
+  290:46  error  A space is required after ','                     comma-spacing
+  290:52  error  Extra semicolon                                   semi
+  291:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  292:14  error  The array literal notation [] is preferrable      no-array-constructor
+  292:29  error  A space is required after ','                     comma-spacing
+  292:34  error  A space is required after ','                     comma-spacing
+  292:44  error  A space is required after ','                     comma-spacing
+  292:50  error  Extra semicolon                                   semi
+  293:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  294:14  error  The array literal notation [] is preferrable      no-array-constructor
+  294:29  error  A space is required after ','                     comma-spacing
+  294:34  error  A space is required after ','                     comma-spacing
+  294:43  error  A space is required after ','                     comma-spacing
+  294:49  error  Extra semicolon                                   semi
+  295:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  296:14  error  The array literal notation [] is preferrable      no-array-constructor
+  296:29  error  A space is required after ','                     comma-spacing
+  296:34  error  A space is required after ','                     comma-spacing
+  296:44  error  A space is required after ','                     comma-spacing
+  296:50  error  Extra semicolon                                   semi
+  297:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  298:14  error  The array literal notation [] is preferrable      no-array-constructor
+  298:29  error  A space is required after ','                     comma-spacing
+  298:34  error  A space is required after ','                     comma-spacing
+  298:45  error  A space is required after ','                     comma-spacing
+  298:51  error  Extra semicolon                                   semi
+  299:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  300:14  error  The array literal notation [] is preferrable      no-array-constructor
+  300:29  error  A space is required after ','                     comma-spacing
+  300:34  error  A space is required after ','                     comma-spacing
+  300:46  error  A space is required after ','                     comma-spacing
+  300:52  error  Extra semicolon                                   semi
+  301:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  302:14  error  The array literal notation [] is preferrable      no-array-constructor
+  302:29  error  A space is required after ','                     comma-spacing
+  302:34  error  A space is required after ','                     comma-spacing
+  302:43  error  A space is required after ','                     comma-spacing
+  302:49  error  Extra semicolon                                   semi
+  303:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  304:14  error  The array literal notation [] is preferrable      no-array-constructor
+  304:29  error  A space is required after ','                     comma-spacing
+  304:35  error  A space is required after ','                     comma-spacing
+  304:46  error  A space is required after ','                     comma-spacing
+  304:53  error  Extra semicolon                                   semi
+  305:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  306:14  error  The array literal notation [] is preferrable      no-array-constructor
+  306:29  error  A space is required after ','                     comma-spacing
+  306:34  error  A space is required after ','                     comma-spacing
+  306:45  error  A space is required after ','                     comma-spacing
+  306:51  error  Extra semicolon                                   semi
+  307:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  308:14  error  The array literal notation [] is preferrable      no-array-constructor
+  308:29  error  A space is required after ','                     comma-spacing
+  308:34  error  A space is required after ','                     comma-spacing
+  308:46  error  A space is required after ','                     comma-spacing
+  308:52  error  Extra semicolon                                   semi
+  309:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  310:14  error  The array literal notation [] is preferrable      no-array-constructor
+  310:29  error  A space is required after ','                     comma-spacing
+  310:34  error  A space is required after ','                     comma-spacing
+  310:45  error  A space is required after ','                     comma-spacing
+  310:51  error  Extra semicolon                                   semi
+  311:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  312:14  error  The array literal notation [] is preferrable      no-array-constructor
+  312:29  error  A space is required after ','                     comma-spacing
+  312:34  error  A space is required after ','                     comma-spacing
+  312:43  error  A space is required after ','                     comma-spacing
+  312:49  error  Extra semicolon                                   semi
+  313:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  314:14  error  The array literal notation [] is preferrable      no-array-constructor
+  314:29  error  A space is required after ','                     comma-spacing
+  314:34  error  A space is required after ','                     comma-spacing
+  314:44  error  A space is required after ','                     comma-spacing
+  314:50  error  Extra semicolon                                   semi
+  315:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  316:14  error  The array literal notation [] is preferrable      no-array-constructor
+  316:29  error  A space is required after ','                     comma-spacing
+  316:34  error  A space is required after ','                     comma-spacing
+  316:46  error  A space is required after ','                     comma-spacing
+  316:52  error  Extra semicolon                                   semi
+  317:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  318:14  error  The array literal notation [] is preferrable      no-array-constructor
+  318:29  error  A space is required after ','                     comma-spacing
+  318:34  error  A space is required after ','                     comma-spacing
+  318:46  error  A space is required after ','                     comma-spacing
+  318:52  error  Extra semicolon                                   semi
+  319:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  320:14  error  The array literal notation [] is preferrable      no-array-constructor
+  320:29  error  A space is required after ','                     comma-spacing
+  320:34  error  A space is required after ','                     comma-spacing
+  320:43  error  A space is required after ','                     comma-spacing
+  320:49  error  Extra semicolon                                   semi
+  321:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  322:14  error  The array literal notation [] is preferrable      no-array-constructor
+  322:29  error  A space is required after ','                     comma-spacing
+  322:34  error  A space is required after ','                     comma-spacing
+  322:43  error  A space is required after ','                     comma-spacing
+  322:49  error  Extra semicolon                                   semi
+  323:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  324:14  error  The array literal notation [] is preferrable      no-array-constructor
+  324:29  error  A space is required after ','                     comma-spacing
+  324:34  error  A space is required after ','                     comma-spacing
+  324:42  error  A space is required after ','                     comma-spacing
+  324:48  error  Extra semicolon                                   semi
+  325:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  326:14  error  The array literal notation [] is preferrable      no-array-constructor
+  326:29  error  A space is required after ','                     comma-spacing
+  326:34  error  A space is required after ','                     comma-spacing
+  326:43  error  A space is required after ','                     comma-spacing
+  326:49  error  Extra semicolon                                   semi
+  327:1   error  Trailing spaces not allowed                       no-trailing-spaces
+  328:14  error  The array literal notation [] is preferrable      no-array-constructor
+  328:29  error  A space is required after ','                     comma-spacing
+  328:34  error  A space is required after ','                     comma-spacing
+  328:44  error  A space is required after ','                     comma-spacing
+  328:50  error  Extra semicolon                                   semi
+  329:14  error  The array literal notation [] is preferrable      no-array-constructor
+  329:29  error  A space is required after ','                     comma-spacing
+  329:34  error  A space is required after ','                     comma-spacing
+  329:42  error  A space is required after ','                     comma-spacing
+  329:48  error  Extra semicolon                                   semi
+  330:14  error  The array literal notation [] is preferrable      no-array-constructor
+  330:29  error  A space is required after ','                     comma-spacing
+  330:39  error  A space is required after ','                     comma-spacing
+  330:48  error  A space is required after ','                     comma-spacing
+  330:54  error  Extra semicolon                                   semi
+  331:14  error  The array literal notation [] is preferrable      no-array-constructor
+  331:29  error  A space is required after ','                     comma-spacing
+  331:34  error  A space is required after ','                     comma-spacing
+  331:43  error  A space is required after ','                     comma-spacing
+  331:49  error  Extra semicolon                                   semi
+  334:2   error  Expected indentation of 2 spaces but found 1 tab  indent
+  334:2   error  Unexpected tab character                          no-tabs
+
+✖ 1018 problems (1018 errors, 0 warnings)
+
+ @ ./~/.6.3.2@babel-loader/lib!./~/.11.1.2@vue-loader/lib/selector.js?type=script&index=0!./app/pages/FlightSearchForm.vue 65:0-40
+ @ ./app/pages/FlightSearchForm.vue
+ @ ./app/main.js
+Child html-webpack-plugin for "index.html":
+       [0] ./~/.4.17.4@lodash/lodash.js 540 kB {0} [built]
+       [1] (webpack)/buildin/global.js 509 bytes {0} [built]
+       [2] (webpack)/buildin/module.js 517 bytes {0} [built]
+       [3] ./~/.2.28.0@html-webpack-plugin/lib/loader.js!./app/index.tmpl.html 1.47 kB {0} [built]
+Child extract-text-webpack-plugin:
+       [0] ./~/.0.26.1@css-loader/lib/css-base.js 1.51 kB {0} [built]
+       [1] ./~/.0.26.1@css-loader!./app/main.css 660 bytes {0} [built]

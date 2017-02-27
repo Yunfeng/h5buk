@@ -62,7 +62,6 @@
 import MyButton from '../components/my-button.vue'
 import MyInput from '../components/my-input.vue'
 import MyCityPicker from '../components/my-citypicker.vue'
-import domCities from '../domCities.js'
 import $ from 'jquery'
 
 export default {
@@ -85,8 +84,8 @@ export default {
   computed: {
     dcity () { return this.$store.state.searchParams.dcity },
     acity () { return this.$store.state.searchParams.acity },
-    ddate () { 
-      var a =  this.$store.state.searchParams.ddate 
+    ddate () {
+      var a = this.$store.state.searchParams.ddate
       console.log(a)
       return a
     },
@@ -97,11 +96,11 @@ export default {
     if (this.dcity == null || this.dcity.length === 0) {
       var cityCode = $.cookie('dcity')
       var cityName = $.cookie('dcityName')
-      this.$store.commit('setDcity', {'cityCode': cityCode, 'cityName': cityName})
+      this.$store.commit('setDcity', { 'cityCode': cityCode, 'cityName': cityName })
 
       cityCode = $.cookie('acity')
       cityName = $.cookie('acityName')
-      this.$store.commit('setAcity', {'cityCode': cityCode, 'cityName': cityName})
+      this.$store.commit('setAcity', { 'cityCode': cityCode, 'cityName': cityName })
 
       var ddate = $.cookie('ddate')
 
@@ -125,13 +124,18 @@ export default {
 
     $('#ddate').datepicker({
       dateFormat: 'yy-mm-dd',
+      autoSize: true,
       showButtonPanel: false,
       showOtherMonths: false,
       selectOtherMonths: false,
       numberOfMonths: 1,
       minDate: today,
+      showOptions: { direction: 'up' },
       onSelect: function (dateText, inst) {
         self.$store.commit('setDdate', dateText)
+      },
+      beforeShow: function (input) {
+        $(input).css({ position: 'relative', zIndex: '1000' })
       }
     })
   },

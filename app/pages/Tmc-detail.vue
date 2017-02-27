@@ -52,53 +52,50 @@ export default {
     return {
       errAlert: false,
       loading: false,
-      loadingText: "数据加载中"
+      loadingText: '数据加载中'
     }
   },
   computed: {
-    detail() {return this.$store.state.policyDetail}
+    detail () { return this.$store.state.policyDetail }
   },
-  mounted: function() {
-    //this.search();
+  mounted: function () {
+    // this.search()
   },
   methods: {
-    back: function() {
-      this.$router.go(-1);
+    back: function () {
+      this.$router.go(-1)
     },
-    getIntlPolicyDesc: function(val) {
-      var desc = "国内";
-      if (val === 1) desc = "国际";
+    getIntlPolicyDesc: function (val) {
+      var desc = '国内'
+      if (val === 1) desc = '国际'
 
-      return desc;
+      return desc
     },
-    getRouteTypeDesc: function(val) {
-      var desc = "单程";
-      if (val === 1) desc = "往返";
-      return desc;
+    getRouteTypeDesc: function (val) {
+      var desc = '单程'
+      if (val === 1) desc = '往返'
+      return desc
     },
-    getStatusDesc: function(val) {
-      var desc = "启用中";
-      if (val === 0) desc = "停用";
-      return desc;
+    getStatusDesc: function (val) {
+      var desc = '启用中'
+      if (val === 0) desc = '停用'
+      return desc
     },
-    getPortDesc: function(val) {
-      if (val === undefined || val === null) return "";
+    getPortDesc: function (val) {
+      if (val === undefined || val === null) return ''
 
-      var desc = val;
-      if (val === "*") desc = "全国";
+      var desc = val
+      if (val === '*') desc = '全国'
       if (val.length > 10) {
-        desc = val.substring(0, 11) + "...";
-      } 
-      return desc;
+        desc = val.substring(0, 11) + '...'
+      }
+      return desc
     }
   },
   beforeRouteEnter (to, from, next) {
     next(vm => {
       // 通过 `vm` 访问组件实例
-      //console.log("i m in.");
-      
     })
   }
 }
-
 </script>

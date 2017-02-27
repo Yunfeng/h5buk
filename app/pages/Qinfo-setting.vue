@@ -124,166 +124,169 @@ import MyPagination from '../components/my-pagination.vue'
 import MyButton from '../components/my-button.vue'
 import MyInput from '../components/my-input.vue'
 
+import $ from 'jquery'
+
 export default {
-  components:{
+  components: {
     'my-pagination': MyPagination,
     'my-button': MyButton,
-    'my-input': MyInput    
+    'my-input': MyInput
   },
   data () {
     return {
       errAlert: false,
       errMsg: '',
       loading: false,
-      loadingText: "数据加载中",
+      loadingText: '数据加载中',
       detailShowing: false,
-      pnrDetail: "",
+      pnrDetail: '',
 
       dataList: [],
       sc: {
-          rowCount: 0,
-          pageNo: 1,
-          pageSize: 25,
-          pageTotal: 0
+        rowCount: 0,
+        pageNo: 1,
+        pageSize: 25,
+        pageTotal: 0
       },
-      name: "",
+      name: '',
 
       id: 0,
       conditionType: 0,
-      conditionValue: "",
-      email: "",
-      mobile: "",
-      weixinId: ""
+      conditionValue: '',
+      email: '',
+      mobile: '',
+      weixinId: ''
     }
   },
   computed: {
     // acityName() {return this.$store.state.searchParams.acityName},
   },
-  mounted: function() {
-    this.search();
+  mounted: function () {
+    this.search()
   },
   methods: {
-    back: function() {
-      this.$router.go(-1);
+    back: function () {
+      this.$router.go(-1)
     },
-    search: function() {
-      var self = this;
-      self.loading = true;
-      self.loadingText = "数据加载中";
+    search: function () {
+      var self = this
+      self.loading = true
+      self.loadingText = '数据加载中'
 
       $.ajax({
-          type : "post",
-          url : "/Flight/qinfoes/settings",
-          data : {
-            "sc.pageNo": this.sc.pageNo, 
-            "sc.pageSize": this.sc.pageSize,
-            "sc.name": this.name
-          },
-          dataType: "json",
-          success : function(jsonResult) {
-            //console.log(jsonResult);
-              self.dataList = jsonResult.dataList;
-              self.sc = jsonResult.page;
-          },
-          error: function (XMLHttpRequest, textStatus, errorThrown) { 
-            self.searching = false;
+        type: 'post',
+        url: '/Flight/qinfoes/settings',
+        data: {
+          'sc.pageNo': this.sc.pageNo,
+          'sc.pageSize': this.sc.pageSize,
+          'sc.name': this.name
+        },
+        dataType: 'json',
+        success: function (jsonResult) {
+          // console.log(jsonResult)
+          self.dataList = jsonResult.dataList
+          self.sc = jsonResult.page
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+          self.searching = false
 
-            if (XMLHttpRequest.status === 403) {
-              self.$store.commit('jumpToLogin', self.$router);
-            }
-          },
-          complete: function (XMLHttpRequest, textStatus) {  
-            self.loading = false;
-          }  
-      });
+          if (XMLHttpRequest.status === 403) {
+            self.$store.commit('jumpToLogin', self.$router)
+          }
+        },
+        complete: function (XMLHttpRequest, textStatus) {
+          self.loading = false
+        }
+      })
     },
-    showDetail: function() {
-      this.detailShowing = true;
+    showDetail: function () {
+      this.detailShowing = true
     },
-    hideDetail: function() {
-      this.detailShowing = false;
+    hideDetail: function () {
+      this.detailShowing = false
     },
-    getConditionTypeDesc: function(type) {
-                if (type == 0) {return "Office号";}
-                else if (type == 1) {return "手机号";}
-                else if (type == 2) {return "eterm用户名";}
-            }, 
-    prevPage: function() {
-        data.sc.pageNo = data.sc.pageNo - 1;
-        if (this.sc.pageNo < 1) this.sc.pageNo = 1;
-        this.search();
+    getConditionTypeDesc: function (type) {
+      if (type === 0) {
+        return 'Office号'
+      } else if (type === 1) {
+        return '手机号'
+      } else if (type === 2) {
+        return 'eterm用户名'
+      }
     },
-    nextPage: function() {
-        this.sc.pageNo = this.sc.pageNo + 1;
-        this.search();
+    prevPage: function () {
+      this.sc.pageNo = this.sc.pageNo - 1
+      if (this.sc.pageNo < 1) this.sc.pageNo = 1
+      this.search()
     },
-    directPage: function(pageNo) {
-        this.sc.pageNo = pageNo;
-        this.search(); 
+    nextPage: function () {
+      this.sc.pageNo = this.sc.pageNo + 1
+      this.search()
     },
-    reset: function() {
-        this.id = 0;
-        this.conditionType = 0;
-        this.conditionValue = "";
-        this.email = "";
-        this.mobile = "";
-        this.weixinId = "";
+    directPage: function (pageNo) {
+      this.sc.pageNo = pageNo
+      this.search()
     },
-    newNotice: function() {
-        this.reset();
-        this.showDetail();
+    reset: function () {
+      this.id = 0
+      this.conditionType = 0
+      this.conditionValue = ''
+      this.email = ''
+      this.mobile = ''
+      this.weixinId = ''
     },
-    editNotice: function(info) {
-      this.reset();
-      this.showDetail();
+    newNotice: function () {
+      this.reset()
+      this.showDetail()
+    },
+    editNotice: function (info) {
+      this.reset()
+      this.showDetail()
 
-      this.id = info.id;
-      this.conditionType = info.conditionType;
-      this.conditionValue = info.conditionValue;
-      this.email = info.email;
-      this.mobile = info.mobile;
-      this.weixinId = info.weixinId;
+      this.id = info.id
+      this.conditionType = info.conditionType
+      this.conditionValue = info.conditionValue
+      this.email = info.email
+      this.mobile = info.mobile
+      this.weixinId = info.weixinId
     },
-    saveNotice: function() {
-      var self = this;
-        $.ajax({
-            type : "post",
-            url : "/Flight/qinfoes/settings/save",
-            data: {
-              "qinfoNotice.id": self.id,
-              "qinfoNotice.conditionType": self.conditionType,
-              "qinfoNotice.conditionValue": self.conditionValue,
-              "qinfoNotice.email": self.email,
-              "qinfoNotice.mobile": self.mobile,
-              "qinfoNotice.weixinId": self.weixinId
-            },
-            dataType: "json",
-            success : function(jsonResult) {
-                if (jsonResult !== null) {
-                    if (jsonResult.status == "OK") {
-                        self.hideDetail();
-                        self.search();
-                    } else {
-                        self.showErrMsg("拒绝： " + jsonResult.errmsg);
-                    }
-                }
+    saveNotice: function () {
+      var self = this
+      $.ajax({
+        type: 'post',
+        url: '/Flight/qinfoes/settings/save',
+        data: {
+          'qinfoNotice.id': self.id,
+          'qinfoNotice.conditionType': self.conditionType,
+          'qinfoNotice.conditionValue': self.conditionValue,
+          'qinfoNotice.email': self.email,
+          'qinfoNotice.mobile': self.mobile,
+          'qinfoNotice.weixinId': self.weixinId
+        },
+        dataType: 'json',
+        success: function (jsonResult) {
+          if (jsonResult !== null) {
+            if (jsonResult.status === 'OK') {
+              self.hideDetail()
+              self.search()
+            } else {
+              self.showErrMsg('拒绝： ' + jsonResult.errmsg)
             }
-        }); 
+          }
+        }
+      })
     },
-    showErrMsg: function(msg) {
-      this.errMsg = msg;
-      this.errAlert = true;
-      setTimeout(() => this.errAlert = false, 1500);
+    showErrMsg: function (msg) {
+      this.errMsg = msg
+      this.errAlert = true
+      setTimeout(() => { this.errAlert = false }, 1500)
     }
 
   },
   beforeRouteEnter (to, from, next) {
     next(vm => {
       // 通过 `vm` 访问组件实例
-      //console.log("i m in.");
-      
     })
   }
 }
-
 </script>

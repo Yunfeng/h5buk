@@ -93,12 +93,12 @@ export default {
       if (username !== undefined && token !== undefined) {
         console.log(username)
         console.log(token)
-        this.$store.commit('setUsername', {'username': username, 'logined': true})
+        this.$store.commit('setUsername', { 'username': username, 'logined': true })
       }
     }
 
     if (this.logined) {
-      this.searchBalance();
+      this.searchBalance()
     } else {
       this.refreshKaptcha()
     }
@@ -108,7 +108,7 @@ export default {
       this.justLogout = false
       this.refreshKaptcha()
 
-      var self = this;
+      var self = this
       $('#kaptchaImage').click(self.refreshKaptcha)
     }
   },
@@ -119,12 +119,12 @@ export default {
       $.ajax({
         type: 'post',
         url: '/Flight/login',
-        data: {'username': this.username, 'password': this.password, 'captchaValue': this.vcode},
+        data: { 'username': this.username, 'password': this.password, 'captchaValue': this.vcode },
         dataType: 'json',
         success: function (jsonResult) {
           // console.log(jsonResult);
           if (jsonResult.status === 'OK') {
-            self.$store.commit('setUsername', {'username': jsonResult.username, 'logined': true})
+            self.$store.commit('setUsername', { 'username': jsonResult.username, 'logined': true })
 
             $.cookie('token', jsonResult.token, { expires: 30, path: '/' })
             $.cookie('username', jsonResult.username, { expires: 30, path: '/' })
@@ -191,8 +191,8 @@ export default {
     },
     refreshKaptcha: function () {
       $('#kaptchaImage').attr('src',
-        '/Flight/captcha/getCaptchaCode.do?' + Math.floor(Math.random() * 100)).fadeIn();
-    },    
+        '/Flight/captcha/getCaptchaCode.do?' + Math.floor(Math.random() * 100)).fadeIn()
+    }
   },
   beforeRouteEnter (to, from, next) {
     next(vm => {

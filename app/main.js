@@ -9,6 +9,7 @@ require('./main.css')
 Vue.use(Router)
 Vue.use(Vuex)
 
+/* eslint-disable */
 const MyLogin        = resolve => require(['./pages/Login.vue'], resolve)
 const MyRegister     = resolve => require(['./pages/Register.vue'], resolve)
 const MyPassword     = resolve => require(['./pages/Password.vue'], resolve)
@@ -24,7 +25,8 @@ const MyOrderRecommit= resolve => require(['./pages/Order-recommit.vue'], resolv
 const MyQinfo        = resolve => require(['./pages/Qinfo.vue'], resolve)
 const MyQinfoList    = resolve => require(['./pages/Qinfo-list.vue'], resolve)
 const MyQinfoSetting = resolve => require(['./pages/Qinfo-setting.vue'], resolve)
-const MyTmc          = resolve => require(['./pages/Tmc.vue'], resolve)
+// const MyTmc          = resolve => require(['./pages/Tmc.vue'], resolve)
+const MyTmc = () => System.import('./pages/Tmc.vue')
 const MyTmcList      = resolve => require(['./pages/Tmc-list.vue'], resolve)
 const MyTmcBuy       = resolve => require(['./pages/Tmc-buy.vue'], resolve)
 const MyTmcDetail    = resolve => require(['./pages/Tmc-detail.vue'], resolve)
@@ -33,6 +35,7 @@ const MyPnrList      = resolve => require(['./pages/Pnr-list.vue'], resolve)
 const MyPnrDetail    = resolve => require(['./pages/Pnr-detail.vue'], resolve)
 const MyPnrAlert1    = resolve => require(['./pages/Pnr-alert1.vue'], resolve)
 const MyPnrCtcm      = resolve => require(['./pages/Pnr-ctcm.vue'], resolve)
+const MyPnrMobile = () => System.import('./pages/Pnr-mobile.vue')
 const MyEterm        = resolve => require(['./pages/Eterm.vue'], resolve)
 const MyNav          = resolve => require(['./pages/Nav.vue'], resolve)
 
@@ -61,8 +64,10 @@ const routes = [
   {path: '/pnr',           component: MyPnr},
   {path: '/pnr/list',      component: MyPnrList},
   {path: '/pnr/detail',    component: MyPnrDetail},
+  {path: '/pnr/detail/:id',       component: MyPnrDetail},
   {path: '/pnr/alert1',    component: MyPnrAlert1},
   {path: '/pnr/ctcm',      component: MyPnrCtcm},
+  {path: '/pnr/mobile',    component: MyPnrMobile},
   {path: '/eterm',         component: MyEterm},
 ]
 

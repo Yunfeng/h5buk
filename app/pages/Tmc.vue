@@ -45,10 +45,9 @@
 
 export default {
   methods: {
-    back: function() {
-      this.$router.go(-1);
-    } 
+    back: function () {
+      this.$router.go(-1)
+    }
   }
 }
-
 </script>

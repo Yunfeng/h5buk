@@ -34,6 +34,8 @@
 </template>
 
 <script>
+import $ from 'jquery'
+
 export default {
   data () {
     return {
@@ -49,23 +51,23 @@ export default {
   computed: {
     // acityName() {return this.$store.state.searchParams.acityName},
   },
-  mounted: function() {
+  mounted: function () {
     // this.search();
   },
   methods: {
-    back: function() {
+    back: function () {
       this.$router.go(-1)
     },
-    showErrMsg: function(msg) {
+    showErrMsg: function (msg) {
       this.errMsg = msg
       this.errAlert = true
-      setTimeout(() => { this.errAlert = false}, 1500)
+      setTimeout(() => { this.errAlert = false }, 1500)
     },
-    execCmd: function() {
+    execCmd: function () {
       var self = this
 
       self.cmdResult = ''
-      
+
       if (self.hostcmd.length < 6) {
         self.showErrMsg('航班查询指令的长度不够')
         return
@@ -81,31 +83,28 @@ export default {
           'hostcmd': self.hostcmd
         },
         dataType: 'json',
-        success : function(jsonResult) {
+        success: function (jsonResult) {
           if (jsonResult.status === 'OK') {
-            self.cmdResult = jsonResult.desc;
+            self.cmdResult = jsonResult.desc
           } else {
-            self.showErrMsg(jsonResult.errmsg);
+            self.showErrMsg(jsonResult.errmsg)
           }
         },
-        error: function (XMLHttpRequest, textStatus, errorThrown) { 
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
           if (XMLHttpRequest.status === 403) {
             self.$store.commit('jumpToLogin', self.$router)
           }
         },
-        complete: function (XMLHttpRequest, textStatus) {  
+        complete: function (XMLHttpRequest, textStatus) {
           self.loading = false
-        }  
+        }
       })
-    },
+    }
   },
   beforeRouteEnter (to, from, next) {
     next(vm => {
       // 通过 `vm` 访问组件实例
-      //console.log('i m in.');
-      
     })
   }
 }
-
 </script>

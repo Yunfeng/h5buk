@@ -39,6 +39,7 @@
 </template>
 
 <script>
+import $ from 'jquery'
 
 export default {
   data () {
@@ -46,127 +47,117 @@ export default {
       errAlert: false,
       errMsg: '',
       loading: false,
-      loadingText: "数据加载中",
+      loadingText: '数据加载中',
       idTypes: [
-        {idType: 1, idName: "身份证"},
-        {idType: 2, idName: "护照"},
+        { idType: 1, idName: '身份证' },
+        { idType: 2, idName: '护照' }
       ],
-      
-
-      pnrDetail: "",
+      pnrDetail: '',
       pnr: null
-
     }
   },
   computed: {
     // acityName() {return this.$store.state.searchParams.acityName},
   },
-  mounted: function() {
-    // this.search();
+  mounted: function () {
+    // this.search()
   },
   methods: {
-    back: function() {
-      this.$router.go(-1);
+    back: function () {
+      this.$router.go(-1)
     },
-    showErrMsg: function(msg) {
-      this.errMsg = msg;
-      this.errAlert = true;
-      setTimeout(() => this.errAlert = false, 2500);
-    },    
-    emptyPnrDetail: function() {
-      this.pnrDetail = "";
+    showErrMsg: function (msg) {
+      this.errMsg = msg
+      this.errAlert = true
+      setTimeout(() => { this.errAlert = false }, 2500)
     },
-    nextStep: function() {
-        this.doJob0();
+    emptyPnrDetail: function () {
+      this.pnrDetail = ''
     },
-    doJob0: function() {
+    nextStep: function () {
+      this.doJob0()
+    },
+    doJob0: function () {
       if (this.pnrDetail !== null && this.pnrDetail.length > 10) {
-        var self = this;
-        self.loading = true;
-        self.loadingText = "编码内容处理中";
+        var self = this
+        self.loading = true
+        self.loadingText = '编码内容处理中'
 
         $.ajax({
-            type: "post",
-            url: "/Flight/pnr/processPnrDetail",
-            data: {pnrDetail: this.pnrDetail}, 
-            dataType: "json",
-            success: function(jsonResult) {
-                if (jsonResult !== null) {
-                  self.prepareOrder(jsonResult);
-                }
-            },
-            error: function (XMLHttpRequest, textStatus, errorThrown) { 
-              if (XMLHttpRequest.status === 403) {
-                self.$store.commit('jumpToLogin', self.$router);
-              }
-            },
-            complete: function (XMLHttpRequest, textStatus) {  
-              self.loading = false;
-            } 
-        });  
+          type: 'post',
+          url: '/Flight/pnr/processPnrDetail',
+          data: { pnrDetail: this.pnrDetail },
+          dataType: 'json',
+          success: function (jsonResult) {
+            if (jsonResult !== null) {
+              self.prepareOrder(jsonResult)
+            }
+          },
+          error: function (XMLHttpRequest, textStatus, errorThrown) {
+            if (XMLHttpRequest.status === 403) {
+              self.$store.commit('jumpToLogin', self.$router)
+            }
+          },
+          complete: function (XMLHttpRequest, textStatus) {
+            self.loading = false
+          }
+        })
       } else {
-        this.showErrMsg("请粘帖编码内容")
+        this.showErrMsg('请粘帖编码内容')
       }
     },
-    prepareOrder: function(jsonResult) {
-      var length = jsonResult.passengers.length;
-      for(var i = 0; i < length; i++) {
-        var psg = jsonResult.passengers[i];
+    prepareOrder: function (jsonResult) {
+      var length = jsonResult.passengers.length
+      for (var i = 0; i < length; i++) {
+        var psg = jsonResult.passengers[i]
 
-        var psgInfo = new Object();
-        //p = {psgName:'', idNo: '', idType: 1};
-        psgInfo.psgName = psg.psgName;
-        psgInfo.idNo = psg.idNo;
-        if (psg.idType === null || psg.idType === "NI"){
-          psgInfo.idType = 1;
+        var psgInfo = {}
+        psgInfo.psgName = psg.psgName
+        psgInfo.idNo = psg.idNo
+        if (psg.idType === null || psg.idType === 'NI') {
+          psgInfo.idType = 1
         } else {
-          psgInfo.idType = 2;
+          psgInfo.idType = 2
         }
 
-        this.$store.commit("addPsg", psgInfo);
+        this.$store.commit('addPsg', psgInfo)
       }
 
-      length = jsonResult.flights.length;
-      for(var i = 0; i < length; i++) {
-        var flt = jsonResult.flights[i].flight;
-      
-        var fltInfo = new Object();
+      length = jsonResult.flights.length
+      for (i = 0; i < length; i++) {
+        var flt = jsonResult.flights[i].flight
 
-        fltInfo.flightNo = flt.flightNo;
-        fltInfo.ddate = flt.departureDate;
-        fltInfo.subclass = flt.subclass;
-        fltInfo.dport = flt.departureAirport;
-        fltInfo.aport = flt.arrivalAirport;
-        fltInfo.dtime = flt.departureTime;
-        fltInfo.atime = flt.arrivalTime;
-        fltInfo.price = flt.price;
-        fltInfo.dportName = flt.departureAirport;
-        fltInfo.aportName = flt.arrivalAirport;
-        fltInfo.returnPoint = 0;
+        var fltInfo = {}
 
-        this.$store.commit("addFlight", fltInfo);
-        // 
-        // this.$store.commit("addPsg");
+        fltInfo.flightNo = flt.flightNo
+        fltInfo.ddate = flt.departureDate
+        fltInfo.subclass = flt.subclass
+        fltInfo.dport = flt.departureAirport
+        fltInfo.aport = flt.arrivalAirport
+        fltInfo.dtime = flt.departureTime
+        fltInfo.atime = flt.arrivalTime
+        fltInfo.price = flt.price
+        fltInfo.dportName = flt.departureAirport
+        fltInfo.aportName = flt.arrivalAirport
+        fltInfo.returnPoint = 0
+
+        this.$store.commit('addFlight', fltInfo)
       }
 
       var orderInfo = {
-        "pnrNo": jsonResult.pnrNo, 
-        "pnrDetail": jsonResult.pnrDetail,
-        "policyId": -1
+        'pnrNo': jsonResult.pnrNo,
+        'pnrDetail': jsonResult.pnrDetail,
+        'policyId': -1
       }
 
-      this.$store.commit("setOrderInfo", orderInfo);
-      this.$router.replace("/booking");
+      this.$store.commit('setOrderInfo', orderInfo)
+      this.$router.replace('/booking')
     }
-    
   },
   beforeRouteEnter (to, from, next) {
     next(vm => {
       // 通过 `vm` 访问组件实例
-      //console.log("i m in.");
-      
     })
   }
 }
-
 </script>

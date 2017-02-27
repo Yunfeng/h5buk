@@ -15,11 +15,14 @@
           </span>
       </div>         
 
-      <div class="card col-12">
+      <div class="card col-12" style="padding: 0">
         <ul class="list-inline bg-warning">
           <li class="list-inline-item">快速过滤</li>
-          <li class="list-inline-item"><button @click.stop='setCarrier("CA")'>CA</button></li>
-          <li class="list-inline-item"><button @click.stop='setCarrier("MU")'>MU</button></li>
+          <li class="list-inline-item"><button @click.stop='setCarrier("CA")' class="text-white">CA</button></li>
+          <li class="list-inline-item"><button @click.stop='setCarrier("CZ")' class="text-white">CZ</button></li>
+          <li class="list-inline-item"><button @click.stop='setCarrier("MU")' class="text-white">MU</button></li>
+          <li class="list-inline-item"><button @click.stop='setCarrier("FM")' class="text-white">FM</button></li>
+          <li class="list-inline-item"><button @click.stop='setCarrier("ZH")' class="text-white">ZH</button></li>
         </ul>
         <table class="table table-striped table-condensive">
           <thead>
@@ -94,9 +97,10 @@
 
 <script>
 import MyPagination from '../components/my-pagination.vue'
+import $ from 'jquery'
 
 export default {
-  components:{
+  components: {
     'my-pagination': MyPagination
   },
   data () {
@@ -104,122 +108,120 @@ export default {
       errAlert: false,
       errMsg: '',
       loading: false,
-      loadingText: "数据加载中",
+      loadingText: '数据加载中',
       filterShowing: false,
       detailShowing: false,
 
       sc: {
-          rowCount: 0,
-          pageNo: 1,
-          pageSize: 25,
-          pageTotal: 0
+        rowCount: 0,
+        pageNo: 1,
+        pageSize: 25,
+        pageTotal: 0
       },
-      carrier: "",
-      etermUsername: "",
+      carrier: '',
+      etermUsername: '',
 
       dataList: [],
-      pnrDetail: '',
+      pnrDetail: ''
     }
   },
   computed: {
     // acityName() {return this.$store.state.searchParams.acityName},
   },
-  mounted: function() {
-    this.search();
+  mounted: function () {
+    this.search()
   },
   methods: {
-    back: function() {
-      this.$router.go(-1);
+    back: function () {
+      this.$router.go(-1)
     },
-    search: function() {
-      var self = this;
-      self.loading = true;
-      self.loadingText = "数据加载中";
+    search: function () {
+      var self = this
+      self.loading = true
+      self.loadingText = '数据加载中'
 
       $.ajax({
-          type : "post",
-          url : "/Flight/pnr/searchCtcm.do",
-          data : {
-            "sc.pageNo": this.sc.pageNo, 
-            "sc.pageSize": this.sc.pageSize,
-            "carrier": this.carrier,
-            "etermUsername": this.etermUsername
-          },
-          dataType: "json",
-          success : function(jsonResult) {
-              self.dataList = jsonResult.dataList;
-              self.sc = jsonResult.page;
-          },
-          error: function (XMLHttpRequest, textStatus, errorThrown) { 
-            self.searching = false;
+        type: 'post',
+        url: '/Flight/pnr/searchCtcm.do',
+        data: {
+          'sc.pageNo': this.sc.pageNo,
+          'sc.pageSize': this.sc.pageSize,
+          'carrier': this.carrier,
+          'etermUsername': this.etermUsername
+        },
+        dataType: 'json',
+        success: function (jsonResult) {
+          self.dataList = jsonResult.dataList
+          self.sc = jsonResult.page
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+          self.searching = false
 
-            if (XMLHttpRequest.status === 403) {
-              self.$store.commit('jumpToLogin', self.$router);
-            }
-          },
-          complete: function (XMLHttpRequest, textStatus) {  
-            self.loading = false;
-          }  
-      });
+          if (XMLHttpRequest.status === 403) {
+            self.$store.commit('jumpToLogin', self.$router)
+          }
+        },
+        complete: function (XMLHttpRequest, textStatus) {
+          self.loading = false
+        }
+      })
     },
-    showDetail: function(info) {
-      //this.$store.commit("setPnrDetail", info);
-      //this.$router.push("/pnr/detail");      
-      this.pnrDetail = info.pnrDetail;
-      this.detailShowing = true;
+    showDetail: function (info) {
+      // this.pnrDetail = info.pnrDetail
+      // this.detailShowing = true
+      this.$store.commit('setPnrDetail', info)
+      var path = '/pnr/detail/' + info.id
+      this.$router.push(path)
     },
-    hideDetail: function() {
-      this.detailShowing = false;
+    hideDetail: function () {
+      this.detailShowing = false
     },
-    showFilter: function() {
-      this.filterShowing = true;
+    showFilter: function () {
+      this.filterShowing = true
     },
-    hideFilter: function() {
-      this.filterShowing = false;
-      this.search();
+    hideFilter: function () {
+      this.filterShowing = false
+      this.search()
     },
-    resetFilter: function() {
-      this.carrier = '';
-      this.etermUsername = '';
+    resetFilter: function () {
+      this.carrier = ''
+      this.etermUsername = ''
     },
     setCarrier: function (val) {
-      this.carrier = val;
-      this.search();
+      this.carrier = val
+      this.search()
     },
-    prevPage: function() {
-        this.sc.pageNo = this.sc.pageNo - 1;
-        if (this.sc.pageNo < 1) this.sc.pageNo = 1;
-        this.search();
+    prevPage: function () {
+      this.sc.pageNo = this.sc.pageNo - 1
+      if (this.sc.pageNo < 1) this.sc.pageNo = 1
+      this.search()
     },
-    nextPage: function() {
-        this.sc.pageNo = this.sc.pageNo + 1;
-        this.search();
+    nextPage: function () {
+      this.sc.pageNo = this.sc.pageNo + 1
+      this.search()
     },
-    directPage: function(pageNo) {
-        this.sc.pageNo = pageNo;
-        this.search(); 
+    directPage: function (pageNo) {
+      this.sc.pageNo = pageNo
+      this.search()
     },
-    convertLongToTimeDesc: function(l) {
-      if (l === null) return;
-      return this.getFormatDate(new Date(l)).substring(5, 16);
+    convertLongToTimeDesc: function (l) {
+      if (l === null) return ''
+      return this.getFormatDate(new Date(l)).substring(5, 16)
     },
-    getFormatDate: function(date, pattern) {  
-        if (date == undefined) {  
-            date = new Date();  
-        }  
-        if (pattern == undefined) {  
-            pattern = "yyyy-MM-dd hh:mm:ss";  
-        }  
-        return date.format(pattern);  
+    getFormatDate: function (date, pattern) {
+      if (date === undefined) {
+        date = new Date()
+      }
+      if (pattern === undefined) {
+        pattern = 'yyyy-MM-dd hh:mm:ss'
+      }
+      return date.format(pattern)
     }
   },
   beforeRouteEnter (to, from, next) {
     next(vm => {
       // 通过 `vm` 访问组件实例
-      //console.log("i m in.");
-      
     })
   }
 }
-
 </script>

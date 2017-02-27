@@ -55,110 +55,108 @@
 
 <script>
 import MyPagination from '../components/my-pagination.vue'
+import $ from 'jquery'
 
 export default {
-  components:{
+  components: {
     'my-pagination': MyPagination
   },
   data () {
     return {
       errAlert: false,
       loading: false,
-      loadingText: "数据加载中",
+      loadingText: '数据加载中',
 
       dataList: [],
       sc: {
-          rowCount: 0,
-          pageNo: 1,
-          pageSize: 25,
-          pageTotal: 0
+        rowCount: 0,
+        pageNo: 1,
+        pageSize: 25,
+        pageTotal: 0
       }
     }
   },
-  mounted: function() {
-    this.search();
+  mounted: function () {
+    this.search()
   },
   methods: {
-    back: function() {
-      this.$router.go(-1);
+    back: function () {
+      this.$router.go(-1)
     },
-    search: function() {
-      var self = this;
-      self.loading = true;
-      self.loadingText = "数据加载中";
+    search: function () {
+      var self = this
+      self.loading = true
+      self.loadingText = '数据加载中'
 
       $.ajax({
-          type : "post",
-          url : "/Flight/policies/",
-          data : {
-            "sc.pageNo": this.sc.pageNo, 
-            "sc.pageSize": this.sc.pageSize,
-            "sc.policyType": -1,
-            "sc.intlPolicy": -1
-          },
-          dataType: "json",
-          success : function(jsonResult) {
-              self.dataList = jsonResult.dataList;
-              self.sc = jsonResult.page;
-          },
-          error: function (XMLHttpRequest, textStatus, errorThrown) { 
-            self.searching = false;
+        type: 'post',
+        url: '/Flight/policies/',
+        data: {
+          'sc.pageNo': this.sc.pageNo,
+          'sc.pageSize': this.sc.pageSize,
+          'sc.policyType': -1,
+          'sc.intlPolicy': -1
+        },
+        dataType: 'json',
+        success: function (jsonResult) {
+          self.dataList = jsonResult.dataList
+          self.sc = jsonResult.page
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+          self.searching = false
 
-            if (XMLHttpRequest.status === 403) {
-              self.$store.commit('jumpToLogin', self.$router);
-            }
-          },
-          complete: function (XMLHttpRequest, textStatus) {  
-            self.loading = false;
-          }  
-      });
+          if (XMLHttpRequest.status === 403) {
+            self.$store.commit('jumpToLogin', self.$router)
+          }
+        },
+        complete: function (XMLHttpRequest, textStatus) {
+          self.loading = false
+        }
+      })
     },
-    showDetail: function(info) {
-      this.$store.commit("setPolicyDetail", info);
-      this.$router.push("/tmc/detail");
-      
+    showDetail: function (info) {
+      this.$store.commit('setPolicyDetail', info)
+      this.$router.push('/tmc/detail')
     },
-    getIntlPolicyDesc: function(val) {
-      var desc = "国内";
-      if (val === 1) desc = "国际";
+    getIntlPolicyDesc: function (val) {
+      var desc = '国内'
+      if (val === 1) desc = '国际'
 
-      return desc;
+      return desc
     },
-    getRouteTypeDesc: function(val) {
-      var desc = "单程";
-      if (val === 1) desc = "往返";
-      return desc;
+    getRouteTypeDesc: function (val) {
+      var desc = '单程'
+      if (val === 1) desc = '往返'
+      return desc
     },
-    getStatusDesc: function(val) {
-      var desc = "启用中";
-      if (val === 0) desc = "停用";
-      return desc;
+    getStatusDesc: function (val) {
+      var desc = '启用中'
+      if (val === 0) desc = '停用'
+      return desc
     },
-    getPortDesc: function(val) {
-      var desc = val;
-      if (val === "*") desc = "全国";
-      return desc;
+    getPortDesc: function (val) {
+      var desc = val
+      if (val === '*') desc = '全国'
+      return desc
     },
-    prevPage: function() {
-        data.sc.pageNo = data.sc.pageNo - 1;
-        if (this.sc.pageNo < 1) this.sc.pageNo = 1;
-        this.search();
+    prevPage: function () {
+      this.sc.pageNo = this.sc.pageNo - 1
+      if (this.sc.pageNo < 1) this.sc.pageNo = 1
+      this.search()
     },
-    nextPage: function() {
-        this.sc.pageNo = this.sc.pageNo + 1;
-        this.search();
+    nextPage: function () {
+      this.sc.pageNo = this.sc.pageNo + 1
+      this.search()
     },
-    directPage: function(pageNo) {
-        this.sc.pageNo = pageNo;
-        this.search(); 
+    directPage: function (pageNo) {
+      this.sc.pageNo = pageNo
+      this.search()
     }
   },
   beforeRouteEnter (to, from, next) {
     next(vm => {
       // 通过 `vm` 访问组件实例
-      //console.log("i m in.");      
     })
   }
 }
-
 </script>

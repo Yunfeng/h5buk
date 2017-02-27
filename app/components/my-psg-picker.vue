@@ -48,6 +48,8 @@
 </template>
 
 <script>
+import $ from 'jquery'
+
 export default {
   props: {
     show: {
@@ -57,67 +59,67 @@ export default {
   },
   data () {
     return {
-      searchWord: "",
+      searchWord: '',
       psgs: [],
       name: '',
       idno: '',
       passport: '',
       idType: 0
     }
-  }, 
+  },
   watch: {
-  	show: function(newVal, oldVal) {
-  		// console.log('new: %s, old: %s', newVal, oldVal);
-  	}
+    show: function (newVal, oldVal) {
+      // console.log('new: %s, old: %s', newVal, oldVal)
+    }
   },
-  updated: function() {
-    // console.log("updated.....")
+  updated: function () {
+    // console.log('updated.....')
   },
-  methods : {
-    ok: function() {
-      this.$emit('close', 1);
-    }, 
-    cancel: function() {
-      this.$emit('close', 0);
+  methods: {
+    ok: function () {
+      this.$emit('close', 1)
     },
-    searchPsg: function() {
-      var self = this;
-    	var searchWord = self.searchWord.toUpperCase();
+    cancel: function () {
+      this.$emit('close', 0)
+    },
+    searchPsg: function () {
+      var self = this
+      var searchWord = self.searchWord.toUpperCase()
 
       $.ajax({
-        type : "post",
-        url : "/Flight/psgs/searchPsg.do",
-        data: {"sc.name": searchWord},
-        dataType: "json",
-        success : function(jsonResult) {
-            if (jsonResult !== null) {
-                self.psgs = jsonResult.dataList;
-            }
-        },
-        error: function (XMLHttpRequest, textStatus, errorThrown) { 
-          if (XMLHttpRequest.status === 403) {
-            self.$store.commit('jumpToLogin', self.$router);
+        type: 'post',
+        url: '/Flight/psgs/searchPsg.do',
+        data: { 'sc.name': searchWord },
+        dataType: 'json',
+        success: function (jsonResult) {
+          if (jsonResult !== null) {
+            self.psgs = jsonResult.dataList
           }
         },
-        complete: function (XMLHttpRequest, textStatus) {  
-          self.loading = false;
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+          if (XMLHttpRequest.status === 403) {
+            self.$store.commit('jumpToLogin', self.$router)
+          }
+        },
+        complete: function (XMLHttpRequest, textStatus) {
+          self.loading = false
         }
-      });
+      })
     },
-    selectThisPsg: function(index) {
-      this.name = this.psgs[index].nameCn;
-      this.idno = this.psgs[index].idNo;
-      this.passport = this.psgs[index].passportNo;
-      this.idType = 0;
-      
+    selectThisPsg: function (index) {
+      this.name = this.psgs[index].nameCn
+      this.idno = this.psgs[index].idNo
+      this.passport = this.psgs[index].passportNo
+      this.idType = 0
+
       if (this.idno !== null && this.idno.length > 0) {
-          this.idType = 1;                        
-      } else if (this.passport !== null && this.passport.length > 0 ) {
-          this.idType = 2;        
-          this.idno = this.passport;                
+        this.idType = 1
+      } else if (this.passport !== null && this.passport.length > 0) {
+        this.idType = 2
+        this.idno = this.passport
       }
 
-      this.$emit('close', 1, this.name, this.idType, this.idno);
+      this.$emit('close', 1, this.name, this.idType, this.idno)
     }
   }
 }

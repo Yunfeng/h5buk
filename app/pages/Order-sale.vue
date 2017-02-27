@@ -131,15 +131,14 @@ export default {
         date = new Date()
       }
       if (pattern === undefined) {
-          pattern = 'yyyy-MM-dd hh:mm:ss'
+        pattern = 'yyyy-MM-dd hh:mm:ss'
       }
-      return date.format(pattern)  
+      return date.format(pattern)
     }
   },
   beforeRouteEnter (to, from, next) {
     next(vm => {
       // 通过 `vm` 访问组件实例
-      // console.log('i m in.');     
     })
   }
 }

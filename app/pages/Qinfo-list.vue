@@ -105,8 +105,10 @@
 <script>
 import MyPagination from '../components/my-pagination.vue'
 
+import $ from 'jquery'
+
 export default {
-  components:{
+  components: {
     MyPagination
   },
   data () {
@@ -114,20 +116,20 @@ export default {
       errAlert: false,
       errMsg: false,
       loading: false,
-      loadingText: "数据加载中",
+      loadingText: '数据加载中',
       detailShowing: false,
       filterShowing: false,
-      pnrDetail: "",
+      pnrDetail: '',
 
       qinfoes: [],
       sc: {
-          rowCount: 0,
-          pageNo: 1,
-          pageSize: 25,
-          pageTotal: 0,
+        rowCount: 0,
+        pageNo: 1,
+        pageSize: 25,
+        pageTotal: 0
       },
-      pnrNo: "",
-      username: ""
+      pnrNo: '',
+      username: ''
     }
   },
   computed: {
@@ -136,103 +138,99 @@ export default {
   beforeCreate: function () {
     this.$options.components.MyPagination = require('../components/my-pagination.vue')
   },
-  mounted: function() {
-    //console.log(this.qinfoes.length);
-    this.search();
+  mounted: function () {
+    // console.log(this.qinfoes.length);
+    this.search()
   },
   methods: {
-    back: function() {
-      this.$router.go(-1);
+    back: function () {
+      this.$router.go(-1)
     },
-    search: function() {
-      var self = this;
-      self.loading = true;
-      self.loadingText = "数据加载中";
+    search: function () {
+      var self = this
+      self.loading = true
+      self.loadingText = '数据加载中'
 
       $.ajax({
-          type : "post",
-          url : "/Flight/qinfoes/",
-          data : {
-            "sc.pageNo": self.sc.pageNo, 
-            "sc.pageSize": self.sc.pageSize,
-            "sc.pnrNo": self.pnrNo,
-            "sc.username": self.username
-          },
-          dataType: "json",
-          success : function(jsonResult) {
-            //console.log(jsonResult);
-              self.qinfoes = jsonResult.dataList;
-              self.sc = jsonResult.page;
-          },
-          error: function (XMLHttpRequest, textStatus, errorThrown) { 
-            self.searching = false;
+        type: 'post',
+        url: '/Flight/qinfoes/',
+        data: {
+          'sc.pageNo': self.sc.pageNo,
+          'sc.pageSize': self.sc.pageSize,
+          'sc.pnrNo': self.pnrNo,
+          'sc.username': self.username
+        },
+        dataType: 'json',
+        success: function (jsonResult) {
+          self.qinfoes = jsonResult.dataList
+          self.sc = jsonResult.page
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+          self.searching = false
 
-            if (XMLHttpRequest.status === 403) {
-              self.$store.commit('jumpToLogin', self.$router);
-            }
-          },
-          complete: function (XMLHttpRequest, textStatus) {  
-            self.loading = false;
-          }  
-      });
+          if (XMLHttpRequest.status === 403) {
+            self.$store.commit('jumpToLogin', self.$router)
+          }
+        },
+        complete: function (XMLHttpRequest, textStatus) {
+          self.loading = false
+        }
+      })
     },
-    showPnrDetail: function(qdetail) {
-      this.detailShowing = true;
-      this.pnrDetail = qdetail;
+    showPnrDetail: function (qdetail) {
+      this.detailShowing = true
+      this.pnrDetail = qdetail
     },
-    hideDetail: function() {
-      this.detailShowing = false;
+    hideDetail: function () {
+      this.detailShowing = false
     },
-    showFilter: function() {
-      this.filterShowing = true;
+    showFilter: function () {
+      this.filterShowing = true
     },
-    hideFilter: function() {
-      this.filterShowing = false;
-      this.search();
+    hideFilter: function () {
+      this.filterShowing = false
+      this.search()
     },
-    resetFilter: function() {
-      this.pnrNo = "";
-      this.username = "";
+    resetFilter: function () {
+      this.pnrNo = ''
+      this.username = ''
     },
-    reInform: function(index) {
-      var id = this.qinfoes[index].id;
-      var self = this;
+    reInform: function (index) {
+      var id = this.qinfoes[index].id
+      var self = this
 
       $.ajax({
-        type : "post",
-        url : "/Flight/qinfoes/reInformQinfo.do",
-        data: {id: id},
-        dataType: "json",
-        success : function(jsonResult) {
-          if (jsonResult.status === "OK") {
-              self.search();
+        type: 'post',
+        url: '/Flight/qinfoes/reInformQinfo.do',
+        data: { id: id },
+        dataType: 'json',
+        success: function (jsonResult) {
+          if (jsonResult.status === 'OK') {
+            self.search()
           } else {
-              self.showErrMsg("操作失败");
+            self.showErrMsg('操作失败')
           }
         }
-      });
+      })
     },
-    prevPage: function() {
-        this.sc.pageNo = this.sc.pageNo - 1;
-        if (this.sc.pageNo < 1) this.sc.pageNo = 1;
-        this.search();
+    prevPage: function () {
+      this.sc.pageNo = this.sc.pageNo - 1
+      if (this.sc.pageNo < 1) this.sc.pageNo = 1
+      this.search()
     },
-    nextPage: function() {
-        this.sc.pageNo = this.sc.pageNo + 1;
-        this.search();
+    nextPage: function () {
+      this.sc.pageNo = this.sc.pageNo + 1
+      this.search()
     },
-    directPage: function(pageNo) {
-        this.sc.pageNo = pageNo;
-        this.search(); 
+    directPage: function (pageNo) {
+      this.sc.pageNo = pageNo
+      this.search()
     }
   },
   beforeRouteEnter (to, from, next) {
     next(vm => {
       // 通过 `vm` 访问组件实例
-      //console.log("i m in.");
-      
     })
   }
 }
-
 </script>

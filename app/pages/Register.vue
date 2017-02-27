@@ -1,5 +1,5 @@
 <template>
-	<div id="register" class="container">
+  <div id="register" class="container">
     <div class="weui-toptips weui-toptips_warn" style="display:block" v-show="errAlert">{{errMsg}}</div>
 
     <div class="row">
@@ -51,12 +51,14 @@
 </template>
 
 <script>
+import $ from 'jquery'
+
 module.exports = {
-	data () {
-		return {
-			username: '',
-			password: '',
-			vcode : '',
+  data () {
+    return {
+      username: '',
+      password: '',
+      vcode: '',
       realname: '',
       mobile: '',
 
@@ -64,77 +66,75 @@ module.exports = {
       errAlert: false,
 
       loading: false,
-      loadingText: "数据加载中",
-		}
-	},
+      loadingText: '数据加载中'
+    }
+  },
   computed: {
-    logined() {return this.$store.state.logined},
-    sessionUsername() {return this.$store.state.username},
-    historyStep() {return this.$store.state.historyStep},
-    userInfo() {return this.$store.state.userInfo},
-    weixinCode() {return this.$store.state.weixinCode},
-    weixinState() {return this.$store.state.weixinState},
-    weixinOpenid() {return this.$store.state.weixinOpenid.substring(0, 10)},
+    logined () { return this.$store.state.logined },
+    sessionUsername () { return this.$store.state.username },
+    historyStep () { return this.$store.state.historyStep },
+    userInfo () { return this.$store.state.userInfo },
+    weixinCode () { return this.$store.state.weixinCode },
+    weixinState () { return this.$store.state.weixinState },
+    weixinOpenid () { return this.$store.state.weixinOpenid.substring(0, 10) }
   },
-  mounted: function() {
-    console.log("mounted.");
-    $('#kaptchaImage1').click(function() {
+  mounted: function () {
+    $('#kaptchaImage1').click(function () {
       $(this).attr('src',
-        '/Flight/captcha/getCaptchaCode.do?' + Math.floor(Math.random() * 100)).fadeIn();
-    });
-    $('#kaptchaImage1').click();    
+        '/Flight/captcha/getCaptchaCode.do?' + Math.floor(Math.random() * 100)).fadeIn()
+    })
+    $('#kaptchaImage1').click()
   },
-	methods: {
-		register: function() {
-			var self = this;
+  methods: {
+    register: function () {
+      var self = this
 
-      self.loading = true;
-      self.loadingText = "注册中...";
+      self.loading = true
+      self.loadingText = '注册中...'
 
-			$.ajax({
-        type: "post",
-        url: "/Flight/register",
+      $.ajax({
+        type: 'post',
+        url: '/Flight/register',
         data: {
-          "username": this.username, 
-          "realname": this.realname,
-          "mobile": this.mobile,
-          "captchaValue": this.vcode},
-        dataType: "json",
-        success: function(jsonResult) {
-          self.loading = false;
-        	//console.log(jsonResult);
-          if (jsonResult.status == "OK") {
-            self.showErrMsg("注册成功，稍后自动跳转到登录页面");
-            self.waitForJump();
+          'username': this.username,
+          'realname': this.realname,
+          'mobile': this.mobile,
+          'captchaValue': this.vcode },
+        dataType: 'json',
+        success: function (jsonResult) {
+          self.loading = false
+
+          if (jsonResult.status === 'OK') {
+            self.showErrMsg('注册成功，稍后自动跳转到登录页面')
+            self.waitForJump()
           } else {
-              if (jsonResult.errmsg !== null) {
-                  self.showErrMsg(jsonResult.errmsg);
-              } else {
-                  self.showErrMsg("注册失败");
-              }
+            if (jsonResult.errmsg !== null) {
+              self.showErrMsg(jsonResult.errmsg)
+            } else {
+              self.showErrMsg('注册失败')
+            }
           }
         },
-        error: function (XMLHttpRequest, textStatus, errorThrown) {  
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
         },
-        complete: function (XMLHttpRequest, textStatus) {  
-          self.loading = false;
-        }  
-    	});
-		},
-    showErrMsg: function(msg) {
-      this.errMsg = msg;
-      this.errAlert = true;
-      setTimeout(() => this.errAlert = false, 2500);
+        complete: function (XMLHttpRequest, textStatus) {
+          self.loading = false
+        }
+      })
     },
-    waitForJump: function() {
-      setTimeout(() => this.$router.push('/login'), 1500);
+    showErrMsg: function (msg) {
+      this.errMsg = msg
+      this.errAlert = true
+      setTimeout(() => { this.errAlert = false }, 2500)
     },
-	},
-	beforeRouteEnter (to, from, next) {
-	  next(vm => {
-	    //console.log("i m in.");
-	  })
-	}
+    waitForJump: function () {
+      setTimeout(() => this.$router.push('/login'), 1500)
+    }
+  },
+  beforeRouteEnter (to, from, next) {
+    next(vm => {
+    })
+  }
 }
 
 </script>

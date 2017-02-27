@@ -138,8 +138,8 @@ export default {
       psgSelected: -1,
 
       idTypes: [
-        {idType: 1, idName: '身份证'},
-        {idType: 2, idName: '护照'}
+        { idType: 1, idName: '身份证' },
+        { idType: 2, idName: '护照' }
       ],
       showPicker: false
     }
@@ -212,7 +212,7 @@ export default {
         // console.log(name);
         // console.log(idType);
         // console.log(idNo);
-        this.$store.commit('updatePsg', {'index': this.psgSelected, 'name': name, 'idType': idType, 'idNo': idNo})
+        this.$store.commit('updatePsg', { 'index': this.psgSelected, 'name': name, 'idType': idType, 'idNo': idNo })
       }
     }
   },

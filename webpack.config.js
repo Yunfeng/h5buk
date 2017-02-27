@@ -23,15 +23,15 @@ module.exports = {
           use: 'css-loader'
         })
       },
-      // {
-      //   enforce: 'pre',
-      //   test: /.vue$/,
-      //   // loader: 'eslint-loader',
-      //   exclude: /node_modules/,
-      //   use: [
-      //     'eslint-loader'
-      //   ]
-      // },
+      {
+        enforce: 'pre',
+        test: /.vue$/,
+        // loader: 'eslint-loader',
+        exclude: /node_modules/,
+        use: [
+          'eslint-loader'
+        ]
+      },
       // {
       //   enforce: "pre",
       //   test: /\.js$/,

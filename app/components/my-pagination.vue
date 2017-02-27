@@ -20,18 +20,17 @@ export default {
     pageNo: 0,
     pageTotal: 0
   },
-  methods : {
-    goPrevPage: function() {
-        this.$emit('prev-page');
+  methods: {
+    goPrevPage: function () {
+      this.$emit('prev-page')
     },
-    goNextPage: function() {
-        //alert('child next page');
-        this.$emit('next-page');
+    goNextPage: function () {
+      this.$emit('next-page')
     },
-    goDirectPage: function(pageNo) {
-        // alert(pageNo);
-        this.$emit('direct-page', pageNo);
+    goDirectPage: function (pageNo) {
+      this.$emit('direct-page', pageNo)
     }
   }
 }
 </script>
+

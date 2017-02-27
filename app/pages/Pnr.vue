@@ -30,6 +30,14 @@
               缺CTCM
           </p>
       </router-link>
+      <router-link to="/pnr/mobile" class="weui-grid">
+          <div class="weui-grid__icon">
+              <i class="fa fa-info fa-2" aria-hidden="true"></i>
+          </div>
+          <p class="weui-grid__label">
+              备用手机号
+          </p>
+      </router-link>
     </div>
   </div>
 </template>
@@ -38,10 +46,9 @@
 
 export default {
   methods: {
-    back: function() {
-      this.$router.go(-1);
-    } 
+    back: function () {
+      this.$router.go(-1)
+    }
   }
 }
-
 </script>

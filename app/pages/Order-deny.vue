@@ -49,85 +49,84 @@
 <script>
 import MyInput from '../components/my-input.vue'
 
+import $ from 'jquery'
+
 export default {
-  components:{
-    'my-input': MyInput    
+  components: {
+    'my-input': MyInput
   },
   data () {
     return {
       errAlert: false,
       loading: false,
-      loadingText: "数据加载中",
+      loadingText: '数据加载中',
 
       denyCode: 401,
-      denyReason: ""
+      denyReason: ''
     }
   },
   computed: {
-    info() {return this.$store.state.orderDetail},
-    orderId() {return this.$store.state.orderId}
+    info () { return this.$store.state.orderDetail },
+    orderId () { return this.$store.state.orderId }
   },
-  mounted: function() {
-    //this.search();
+  mounted: function () {
+    // this.search()
   },
   methods: {
-    close: function() {
-      this.$router.go(-1);
+    close: function () {
+      this.$router.go(-1)
     },
-    showErrMsg: function(msg) {
-      this.errMsg = msg;
-      this.errAlert = true;
-      setTimeout(() => this.errAlert = false, 1500);
+    showErrMsg: function (msg) {
+      this.errMsg = msg
+      this.errAlert = true
+      setTimeout(() => { this.errAlert = false }, 1500)
     },
-    denyOrder: function() {
-      //卖家：拒单
-      var url = "/Flight/orders/denyTmcOrder.do";
+    denyOrder: function () {
+      // 卖家：拒单
+      var url = '/Flight/orders/denyTmcOrder.do'
       var postData = {
-        "id": this.orderId,
-        "denyCode": this.denyCode,
-        "denyReason": this.denyReason
-      };
-      var successHandler = this.close;
+        'id': this.orderId,
+        'denyCode': this.denyCode,
+        'denyReason': this.denyReason
+      }
+      var successHandler = this.close
 
-      this.executeOrderOp(url, postData, successHandler);
+      this.executeOrderOp(url, postData, successHandler)
     },
-    executeOrderOp: function(url, postData, successHandler) {
-      var self = this;
+    executeOrderOp: function (url, postData, successHandler) {
+      var self = this
 
-      self.loading = true;
-      self.loadingText = "处理中......";
+      self.loading = true
+      self.loadingText = '处理中......'
 
-      var opResult = false;
+      var opResult = false
 
       $.ajax({
-          type : "post",
-          url : url,
-          data: postData,
-          dataType: "json",
-          success : function(jsonResult) {
-            if (jsonResult.status == "OK") {
-              self.showErrMsg("操作成功");
-              opResult = true;
-            } else {
-              self.showErrMsg("操作失败： " + jsonResult.errmsg);
-            }                            
-          },
-          complete: function() {
-            self.loading = false;
-            if (opResult) {
-              successHandler();
-            }
+        type: 'post',
+        url: url,
+        data: postData,
+        dataType: 'json',
+        success: function (jsonResult) {
+          if (jsonResult.status === 'OK') {
+            self.showErrMsg('操作成功')
+            opResult = true
+          } else {
+            self.showErrMsg('操作失败： ' + jsonResult.errmsg)
           }
-      });
+        },
+        complete: function () {
+          self.loading = false
+          if (opResult) {
+            successHandler()
+          }
+        }
+      })
     }
   },
   beforeRouteEnter (to, from, next) {
     next(vm => {
       // 通过 `vm` 访问组件实例
-      //console.log("i m in.");
-      
     })
   }
 }
-
 </script>
