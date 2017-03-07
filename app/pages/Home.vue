@@ -56,6 +56,14 @@
             ETERM
         </p>
     </router-link>
+    <router-link to="/recharge" class="weui-grid">
+        <div class="weui-grid__icon">
+            <i class="fa fa-info-circle fa-2" aria-hidden="true"></i>
+        </div>
+        <p class="weui-grid__label">
+            充值
+        </p>
+    </router-link>
     <a href="https://github.com/Yunfeng/h5buk" class="weui-grid hidden" target="_blank">
         <div class="weui-grid__icon">
             <i class="fa fa-book fa-2" aria-hidden="true"></i>

@@ -1,5 +1,5 @@
 <template>  
-	<div id="tmc-list" class="container">
+	<div id="tmc-list" class="container-fluid">
     <div class="row bg-info">
       <div class="col-1">
           <span @click="back()"><i class="fa fa-angle-left" aria-hidden="true"></i></span>
@@ -13,8 +13,8 @@
     </div> 
 
     <div class="row">
-      <div class="card col-12 card-outline-primary">
-        <table class="table table-striped table-condensive">
+      <div class="card col-12">
+        <table class="table table-sm table-striped table-condensive">
           <thead>
               <tr>
                   <th>航司</th>

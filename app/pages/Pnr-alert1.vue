@@ -1,5 +1,5 @@
 <template>
-	<div id="pnr-alert1" class="container">
+	<div id="pnr-alert1" class="container-fluid">
     <div class="weui-toptips weui-toptips_warn" style="display:block" v-show="errAlert">{{errMsg}}</div>
 
     <div class="row bg-info">

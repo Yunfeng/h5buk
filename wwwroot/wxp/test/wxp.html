@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+  <title>Weixin Pay demo</title>
+  <link rel="stylesheet" href="/assets/css/bootstrap.css" />
+  <link rel="stylesheet" href="/assets/css/jquery-ui.min.css" />
+  <link rel="stylesheet" href="/assets/css/weui.css" />
+  <link rel="stylesheet" href="/assets/css/font-awesome.min.css" />
+<body ontouchstart >
+
+  <p>weixin pay demo</p>
+
+  <div id="myConsole"></div>
+
+<script src="/assets/js/libs/jquery-3.1.1.min.js"></script>
+<script src="/assets/js/libs/jquery.cookie.js"></script>
+<script src="/assets/js/libs/jquery-ui.min.js"></script>
+<script src="/assets/js/libs/jquery.ui.datepicker-zh-CN.js"></script>
+<script src="/assets/js/libs/bootstrap.min.js" ></script>
+<script src="/assets/js/common.js" ></script>
+
+<script type="text/javascript">
+  var openid = ''
+  var total = 101
+
+  function appendConsole (val) {
+    $('#myConsole').append(val).append('<br />')
+  }
+
+  function callWexinPay () {
+    appendConsole('call weixinPay')
+    $.ajax({
+        type: 'post',
+        url: '/Flight/pay/generateWxPrepayOrder',
+        data: {
+          'id': '1',
+          'openid': openid,
+          'total_fee': total
+        },
+        dataType: 'json',
+        success: function (jsonResult) {
+          console.log(jsonResult)
+          if (jsonResult !== null) {
+            jsApiCall(jsonResult)
+          }
+        }
+      })    
+  }
+
+  function jsApiCall (params) {
+    appendConsole('jsApiCall')
+    appendConsole('appId: ' + params.appId)
+    appendConsole('timeStamp: ' + params.timeStamp)
+    appendConsole('nonceStr: ' + params.nonceStr)
+    appendConsole('package: ' + params.packageA)
+    appendConsole('paySign: ' + params.paySign)
+    appendConsole('signType: ' + params.signType)
+
+    WeixinJSBridge.invoke ('getBrandWCPayRequest', 
+      {
+       "appId": params.appId,     //公众号名称，由商户传入     
+       "timeStamp": params.timeStamp,         //时间戳，自1970年以来的秒数     
+       "nonceStr": params.nonceStr, //随机串     
+       "package": params.packageA,     
+       "signType": params.signType,         //微信签名方式：     
+       "paySign": "HEHEHE" //微信签名 
+      },
+      function (res) {    
+        appendConsole(res)
+        console.log(res) 
+        if(res.err_msg == "get_brand_wcpay_request：ok" ) {}     // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。 
+      }) 
+  }
+
+  $(function() {
+      var code = GetURLParameter('code')
+      var state = GetURLParameter('state')
+      appendConsole('code: ' + code)
+      appendConsole('state: ' + state)
+
+      //获取 open id
+      $.ajax({
+        type: 'post',
+        url: '/Flight/weixin/getOpenId',
+        data: { 'code': code },
+        dataType: 'json',
+        success: function (jsonResult) {
+          openid = jsonResult.openid
+          appendConsole('openid: ' + openid)
+          callWexinPay()
+        },
+        complete: function () {
+          //self.loading = false
+        }
+      })
+  })
+
+</script>
+
+</html>

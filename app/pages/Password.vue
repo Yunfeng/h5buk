@@ -1,5 +1,5 @@
 <template>
-  <div id="register" class="container">
+  <div id="register" class="container-fluid">
     <div class="weui-toptips weui-toptips_warn" style="display:block" v-show="errAlert">{{errMsg}}</div>
 
     <div class="row">

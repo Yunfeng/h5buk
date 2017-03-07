@@ -1,5 +1,5 @@
 <template>
-  <div id="login" class="container">
+  <div id="login" class="container-fluid">
     <div class="weui-toptips weui-toptips_warn" style="display:block" v-show="errAlert">{{errMsg}}</div>
 
     <div class="row ">    
@@ -35,12 +35,18 @@
                 当前用户
               </div>
             </div>
-            <dl class="row mt-2">
-              <dt class="col-4 text-center">积分</dt>
-              <dd class="col-8">{{userInfo.freeBalance}}</dd>
-              <dt class="col-4 text-center">现金账户</dt>
-              <dd class="col-8">{{userInfo.cashBalance}} <small>元</small></dd>
-            </dl> 
+            <table class="table">
+              <tr>
+                <td class="text-right">现金账户</td>
+                <td>{{userInfo.cashBalance}} <small>元</small></td>
+                <td>充值</td>
+              </tr>
+              <tr>
+                <td class="text-right">积分</td>
+                <td>{{userInfo.freeBalance}}</td>
+                <td></td>
+              </tr>
+            </table>
           <div class="card-block">
             <router-link to="/order" class="card-link">
               我的订单

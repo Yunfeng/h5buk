@@ -1,34 +1,36 @@
 <template>
-	<div id="pnr-ctcm" class="container">
+	<div id="pnr-ctcm" class="container-fluid">
     <div class="weui-toptips weui-toptips_warn" style="display:block" v-show="errAlert">{{errMsg}}</div>
 
     <div class="row" v-if="filterShowing === false && detailShowing === false">
-      <div class="col-2 bg-info">
-          <span @click="back()"><i class="fa fa-angle-left weui-tabbar__icon" aria-hidden="true"></i></span>
+      <div class="col-1 bg-info">
+          <span @click="back()"><i class="fa fa-angle-left text-white" aria-hidden="true"></i></span>
       </div>         
-      <div class="col-8 text-center bg-info">
+      <div class="col-10 text-center bg-info">
           缺CTCM列表
       </div>         
-      <div class="col-2 bg-info">
+      <div class="col-1 bg-info">
           <span @click="showFilter()">
-            <i class="fa fa-filter" aria-hidden="true"></i>
+            <i class="fa fa-filter text-white" aria-hidden="true"></i>
           </span>
       </div>         
 
       <div class="card col-12" style="padding: 0">
-        <ul class="list-inline bg-warning">
+        <ul class="list-inline bg-success">
           <li class="list-inline-item">快速过滤</li>
-          <li class="list-inline-item"><button @click.stop='setCarrier("CA")' class="text-white">CA</button></li>
-          <li class="list-inline-item"><button @click.stop='setCarrier("CZ")' class="text-white">CZ</button></li>
-          <li class="list-inline-item"><button @click.stop='setCarrier("MU")' class="text-white">MU</button></li>
-          <li class="list-inline-item"><button @click.stop='setCarrier("FM")' class="text-white">FM</button></li>
-          <li class="list-inline-item"><button @click.stop='setCarrier("ZH")' class="text-white">ZH</button></li>
+          <li class="list-inline-item"><button @click.stop='setCarrier("CA")'>CA</button></li>
+          <li class="list-inline-item"><button @click.stop='setCarrier("CZ")'>CZ</button></li>
+          <li class="list-inline-item"><button @click.stop='setCarrier("MU")'>MU</button></li>
+          <li class="list-inline-item"><button @click.stop='setCarrier("FM")'>FM</button></li>
+          <li class="list-inline-item"><button @click.stop='setCarrier("ZH")'>ZH</button></li>
+          <li class="list-inline-item"><button @click.stop='setCarrier("MF")'>MF</button></li>
         </ul>
         <table class="table table-striped table-condensive">
           <thead>
               <tr>
                   <th>编码</th>
                   <th class="hidden-sm-down">人数/ctcm</th>
+                  <th class="hidden-sm-down">状态</th>
                   <th>用户名</th>
                   <th class="hidden-sm-down">生成时间</th>
                   <th>更新时间</th>
@@ -38,6 +40,7 @@
               <tr v-for="(info, index) in dataList"  @click="showDetail(info)">
                   <td>{{info.pnrNo}}</td>
                   <td class="hidden-sm-down">{{info.psgCount}}/{{info.ctcmCount}}</td>
+                  <td class="hidden-sm-down">{{info.segStatus}}</td>
                   <td>{{info.etermUsername}}</td>
                   <td class="hidden-sm-down"><small>{{convertLongToTimeDesc(info.createTime)}}</small></td>
                   <td><small>{{convertLongToTimeDesc(info.lastUpdate)}}</small></td>
@@ -115,7 +118,7 @@ export default {
       sc: {
         rowCount: 0,
         pageNo: 1,
-        pageSize: 25,
+        pageSize: 50,
         pageTotal: 0
       },
       carrier: '',
@@ -129,6 +132,12 @@ export default {
     // acityName() {return this.$store.state.searchParams.acityName},
   },
   mounted: function () {
+    var temp = $.cookie('pnr.ctcm.sc.carrier')
+    if (temp !== undefined) this.carrier = temp
+
+    temp = $.cookie('pnr.ctcm.sc.etermUsername')
+    if (temp !== undefined) this.etermUsername = temp
+
     this.search()
   },
   methods: {
@@ -139,6 +148,9 @@ export default {
       var self = this
       self.loading = true
       self.loadingText = '数据加载中'
+
+      $.cookie('pnr.ctcm.sc.carrier', this.carrier, { expires: 1, path: '/' })
+      $.cookie('pnr.ctcm.sc.etermUsername', this.etermUsername, { expires: 1, path: '/' })
 
       $.ajax({
         type: 'post',

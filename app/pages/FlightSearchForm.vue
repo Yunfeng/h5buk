@@ -1,5 +1,5 @@
 <template>
-	<div id="searching" class="container">
+	<div id="searching" class="container-fluid">
     <div class="weui-toptips weui-toptips_warn" style="display:block" v-show="errAlert">{{errMsg}}</div>
 
     <div class="row bg-info">

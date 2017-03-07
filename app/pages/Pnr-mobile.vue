@@ -1,5 +1,5 @@
 <template>  
-	<div id="pnr-mobile" class="container">
+	<div id="pnr-mobile" class="container-fluid">
     <div class="weui-toptips weui-toptips_warn" style="display:block" v-show="errAlert">{{errMsg}}</div>
     <div id="loadingToast" v-show="loading">
       <div class="weui-mask_transparent"></div>

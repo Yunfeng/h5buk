@@ -1,5 +1,5 @@
 <template>  
-	<div id="qinfo-setting" class="container">
+	<div id="qinfo-setting" class="container-fluid">
     <div class="weui-toptips weui-toptips_warn" style="display:block" v-show="errAlert">{{errMsg}}</div>
 
     <div class="row" v-show="detailShowing === false">

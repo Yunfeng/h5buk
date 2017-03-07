@@ -1,5 +1,5 @@
 <template>
-	<div id="pnr-detail" class="container">
+	<div id="pnr-detail" class="container-fluid">
     <div id='loadingToast' v-show='loading'>
       <div class='weui-mask_transparent'></div>
       <div class='weui-toast'>
@@ -25,19 +25,19 @@
         <div class="card col-12" style="padding: 0">
           <table class="table table-sm">
             <tbody>
-              <tr><td>编码</td><td>{{detail.pnrNo}}</td></tr>
-              <tr><td>大编码</td><td>{{detail.bigPnrNo}}</td></tr>
-              <tr><td>出发机场</td><td>{{getPortDesc(detail.departurePort)}}</td></tr>
-              <tr><td>到达机场</td><td>{{getPortDesc(detail.arrivalPort)}}</td></tr>
-              <tr><td>航班号</td><td>{{detail.flightNo}}</td></tr>
-              <tr><td>出发日期</td><td>{{detail.departureDate}}</td></tr>
-              <tr><td>舱位</td><td>{{detail.subClass}}</td></tr>
-              <tr><td>航段状态</td><td>{{detail.segStatus}}</td></tr>
-              <tr><td>航段数</td><td>{{detail.segCount}}</td></tr>
-              <tr><td>乘客数</td><td>{{detail.psgCount}}</td></tr>
-              <tr><td>eterm用户名</td><td>{{detail.etermUsername}}</td></tr>
-              <tr><td>更新时间</td><td>{{detail.updateTimeDesc}}</td></tr>
-              <tr><td></td><td>{{formatTime(detail.lastUpdate)}}</td></tr>
+              <tr><td class="text-right">编码</td><td>{{detail.pnrNo}}</td></tr>
+              <tr><td class="text-right">大编码</td><td>{{detail.bigPnrNo}}</td></tr>
+              <tr><td class="text-right">出发机场</td><td>{{getPortDesc(detail.departurePort)}}</td></tr>
+              <tr><td class="text-right">到达机场</td><td>{{getPortDesc(detail.arrivalPort)}}</td></tr>
+              <tr><td class="text-right">航班号</td><td>{{detail.flightNo}}</td></tr>
+              <tr><td class="text-right">出发日期</td><td>{{detail.departureDate}}</td></tr>
+              <tr><td class="text-right">舱位</td><td>{{detail.subClass}}</td></tr>
+              <tr><td class="text-right">航段状态</td><td>{{detail.segStatus}}</td></tr>
+              <tr><td class="text-right">航段数</td><td>{{detail.segCount}}</td></tr>
+              <tr><td class="text-right">乘客数</td><td>{{detail.psgCount}}</td></tr>
+              <tr><td class="text-right">eterm用户名</td><td>{{detail.etermUsername}}</td></tr>
+              <tr><td class="text-right">更新时间</td><td>{{detail.updateTimeDesc}}</td></tr>
+              <tr><td class="text-right"></td><td>{{formatTime(detail.lastUpdate)}}</td></tr>
 
             </tbody>
           </table>

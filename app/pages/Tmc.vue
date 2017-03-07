@@ -1,5 +1,5 @@
 <template>
-  <div id="tmc-home" class="container">
+  <div id="tmc-home" class="container-fluid">
     <div class="row bg-info">
       <div class="col-1">
           <span @click="back()"><i class="fa fa-angle-left weui-tabbar__icon" aria-hidden="true"></i></span>

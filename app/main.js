@@ -35,9 +35,12 @@ const MyPnrList      = resolve => require(['./pages/Pnr-list.vue'], resolve)
 const MyPnrDetail    = resolve => require(['./pages/Pnr-detail.vue'], resolve)
 const MyPnrAlert1    = resolve => require(['./pages/Pnr-alert1.vue'], resolve)
 const MyPnrCtcm      = resolve => require(['./pages/Pnr-ctcm.vue'], resolve)
+const MyPnrCtct      = resolve => require(['./pages/Pnr-ctct.vue'], resolve)
 const MyPnrMobile = () => System.import('./pages/Pnr-mobile.vue')
+const MyPnrSyslog = () => System.import('./pages/Pnr-syslog.vue')
 const MyEterm        = resolve => require(['./pages/Eterm.vue'], resolve)
 const MyNav          = resolve => require(['./pages/Nav.vue'], resolve)
+const MyRecharge      = () => System.import('./pages/Recharge.vue')
 
 const routes = [
   {path: '/',              component: MyNav},
@@ -67,8 +70,11 @@ const routes = [
   {path: '/pnr/detail/:id',       component: MyPnrDetail},
   {path: '/pnr/alert1',    component: MyPnrAlert1},
   {path: '/pnr/ctcm',      component: MyPnrCtcm},
+  {path: '/pnr/ctct',      component: MyPnrCtct},
+  {path: '/pnr/syslog',    component: MyPnrSyslog},
   {path: '/pnr/mobile',    component: MyPnrMobile},
   {path: '/eterm',         component: MyEterm},
+  {path: '/recharge',      component: MyRecharge},
 ]
 
 let router = new Router({
