@@ -185,7 +185,9 @@ export default {
           if (jsonResult.status !== 'OK') {
             self.showErrMsg(jsonResult.errmsg)
           } else {
-            // console.log(jsonResult);
+            // 清空预定信息
+            self.$store.commit('resetOrderInfo')
+
             self.$store.commit('setOrderId', jsonResult.returnCode)
             self.$router.push('/order/detail')
           }

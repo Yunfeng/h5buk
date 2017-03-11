@@ -112,7 +112,9 @@
           </dl>
         </div>
         <div class='weui-btn-area'>
-          <button type='button' class='weui-btn weui-btn_primary' @click='payForTmcOrder(info.id)'>支付</button>
+          <button type='button' class='weui-btn weui-btn_primary' @click='payForTmcOrder(info.id)'>余额支付</button>
+
+          <button type='button' class='weui-btn weui-btn_plain-primary' @click='weixinPay1(info.id)'>微信支付</button>
 
           <button type='button' class='weui-btn weui-btn_warn' @click='cancelTmcOrder(info.id)'>取消</button>
         </div>
@@ -339,15 +341,21 @@ export default {
     this.ticketWrongConfirmTimes = 3
     this.ticketCorrectConfirmTimes = 2
 
-    if (this.info !== null) {
-      if (this.info.policyId === -1) {
-        // search tmc policy
-        this.searchPolicies()
+    var id = this.$route.params.id
+    if (id !== undefined) {
+      console.log(id)
+      this.refreshOrderDetail(parseInt(id))
+    } else {
+      if (this.info !== null) {
+        if (this.info.policyId === -1) {
+          // search tmc policy
+          this.searchPolicies()
 
-        this.ticketAmount = this.info.totalPrice
+          this.ticketAmount = this.info.totalPrice
+        }
+      } else if (this.orderId > 0) {
+        this.refreshOrderDetail(this.orderId)
       }
-    } else if (this.orderId > 0) {
-      this.refreshOrderDetail(this.orderId)
     }
   },
   methods: {
@@ -594,6 +602,43 @@ export default {
           if (opResult) {
             successHandler()
           }
+        }
+      })
+    },
+    weixinPay1: function (orderId) {
+      alert('请咨询商家是否收取支付手续费!!!')
+      this.createPayOrder(orderId)
+    },
+    createPayOrder: function (orderId) {
+      var self = this
+
+      this.loading = true
+      this.loadingText = '支付准备中...'
+
+      // get weixin appid
+      $.ajax({
+        type: 'post',
+        url: '/Flight/pay/createOrderPayOrder/' + orderId,
+        dataType: 'json',
+        success: function (jsonResult) {
+          if (jsonResult.status === 'OK') {
+            var appid = jsonResult.attach
+            var payOrderId = jsonResult.desc
+
+            var redirectUrl = DOMAIN_URL + '/wxp/wxp.html'
+            var url0 = escape(redirectUrl)
+
+            var url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + appid + '&redirect_uri=' + url0 + '&response_type=code&scope=snsapi_base&state=' + payOrderId + '#wechat_redirect'
+            window.location.href = url
+          }
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+          if (XMLHttpRequest.status === 403) {
+            self.$store.commit('jumpToLogin', self.$router)
+          }
+        },
+        complete: function () {
+          self.loading = false
         }
       })
     }

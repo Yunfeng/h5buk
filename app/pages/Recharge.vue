@@ -8,17 +8,16 @@
           充值
         </div>
         <div class="card-block">
-          <form>
-            <div class="form-group">
-              <input type="input" class="form-control" placeholder="金额，单位：分"  v-model="total">
-              <p class="form-text text-muted">
-                金额
-              </p>
-            </div>
-          </form>
+          <div class="form-group has-success">
+            <label class="form-control-label">金额</label>
+            <input type="text" class="form-control" placeholder="充值金额，元"  v-model="total0">
+            <div class="form-control-feedback">充值 {{total0}} 元</div>
+            <small class="form-text text-muted">单位元, 保留小数点后2位</small>
+          </div>
         </div>
         <div class="card-footer">
-          <button type="button" class="btn  btn-success" @click.stop="weixinPay0()">微信支付</button>
+          <button type="button" class="btn  btn-success invisible" @click.stop="weixinPay0()">微信支付(测试)</button>
+          <button type="button" class="btn  btn-success" @click.stop="weixinPay1()">微信支付</button>
         </div>
       </div>
 
@@ -40,7 +39,8 @@ import $ from 'jquery'
 export default {
   data () {
     return {
-      total: 101,
+      total: null,
+      total0: null,
 
       errMsg: '',
       errAlert: false,
@@ -48,7 +48,19 @@ export default {
       loading: false,
       loadingText: '数据加载中',
 
-      appid: ''
+      appid: '',
+      redirectUrl: '',
+      orderId: ''
+    }
+  },
+  watch: {
+    total0 (curVal, oldVal) {
+      console.log(curVal, oldVal)
+      if (curVal === null) {
+        this.total = null
+      } else {
+        this.total = parseInt(curVal * 100)
+      }
     }
   },
   mounted: function () {
@@ -63,23 +75,37 @@ export default {
       setTimeout(() => this.$router.push('/login'), 1500)
     },
     weixinPay0: function () {
+      this.redirectUrl = DOMAIN_URL + '/wxp/test/wxp.html'
+      this.createPayOrder()
+    },
+    weixinPay1: function () {
+      this.redirectUrl = DOMAIN_URL + '/wxp/wxp.html'
+      this.createPayOrder()
+    },
+    createPayOrder: function () {
       var self = this
+
+      if (this.total === null || this.total < 1) {
+        this.showErrMsg('请输入充值金额')
+        return
+      }
+
+      this.loading = true
+      this.loadingText = '支付准备中...'
+
       // get weixin appid
       $.ajax({
         type: 'post',
-        url: '/Flight/weixin/getAppid',
-        dataType: 'text',
+        url: '/Flight/pay/createRechargeOrder',
+        data: {
+          'total_fee': self.total
+        },
+        dataType: 'json',
         success: function (jsonResult) {
-          console.log(jsonResult)
-          self.appid = jsonResult
-          var url1 = 'http://b2c.90sky.com/wxp/test/wxp.html'
-          // var url1 = 'http://172.168.1.101:9090/wxp/test/wxp.html'
-          var url0 = escape(url1)
-          console.log(url0)
-
-          var url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' +
-            self.appid + '&redirect_uri=' + url0 + '&response_type=code&scope=snsapi_base&state=' + 'aaabbbccc' + '#wechat_redirect'
-          window.location.href = url
+          if (jsonResult.status === 'OK') {
+            self.orderId = jsonResult.desc
+            self.weixinPay()
+          }
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
           if (XMLHttpRequest.status === 403) {
@@ -92,26 +118,21 @@ export default {
       })
     },
     weixinPay: function () {
-      // 除被扫支付场景以外，商户系统先调用该接口在微信支付服务后台生成预支付交易单，返回正确的预支付交易回话标识后再按扫码、JSAPI、APP等不同场景生成交易串调起支付。
       var self = this
-
-      self.loading = true
-      self.loadingText = '保存中......'
-
+      // get weixin appid
       $.ajax({
         type: 'post',
-        url: '/Flight/pay/generateWxPrepayOrder',
-        data: {
-          'id': 1,
-          'openid': '123',
-          'total_fee': self.total
-        },
-        dataType: 'json',
+        url: '/Flight/weixin/getAppid',
+        dataType: 'text',
         success: function (jsonResult) {
           console.log(jsonResult)
-          if (jsonResult !== null) {
-            self.jsApiCall(jsonResult)
-          }
+          self.appid = jsonResult
+          var url1 = self.redirectUrl
+          var url0 = escape(url1)
+
+          var url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' +
+            self.appid + '&redirect_uri=' + url0 + '&response_type=code&scope=snsapi_base&state=' + self.orderId + '#wechat_redirect'
+          window.location.href = url
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
           if (XMLHttpRequest.status === 403) {
@@ -122,21 +143,6 @@ export default {
           self.loading = false
         }
       })
-    },
-    jsApiCall: function (params) {
-      WeixinJSBridge.invoke('getBrandWCPayRequest',
-        {
-          'appId': params.appid,     // 公众号名称，由商户传入
-          'timeStamp': params.timeStamp,         // 时间戳，自1970年以来的秒数
-          'nonceStr': params.nonceStr, // 随机串
-          'package': params.packageA,
-          'signType': params.signType,         // 微信签名方式
-          'paySign': params.paySign // 微信签名
-        },
-        function (res) {
-          console.log(res)
-          if (res.err_msg === 'get_brand_wcpay_request：ok') {}     // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。
-        })
     }
   },
   beforeRouteEnter (to, from, next) {

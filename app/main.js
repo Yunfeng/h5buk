@@ -41,6 +41,7 @@ const MyPnrSyslog = () => System.import('./pages/Pnr-syslog.vue')
 const MyEterm        = resolve => require(['./pages/Eterm.vue'], resolve)
 const MyNav          = resolve => require(['./pages/Nav.vue'], resolve)
 const MyRecharge      = () => System.import('./pages/Recharge.vue')
+const MyPayResult     = () => System.import('./pages/Recharge-result.vue')
 
 const routes = [
   {path: '/',              component: MyNav},
@@ -54,6 +55,7 @@ const routes = [
   {path: '/order',         component: MyOrder},
   {path: '/order/sale',    component: MyOrderSale},
   {path: '/order/detail',  component: MyOrderDetail},
+  {path: '/order/detail/:id',  component: MyOrderDetail},
   {path: '/order/ticket',  component: MyOrderTicket},
   {path: '/order/deny',    component: MyOrderDeny},
   {path: '/order/recommit',component: MyOrderRecommit},
@@ -75,6 +77,7 @@ const routes = [
   {path: '/pnr/mobile',    component: MyPnrMobile},
   {path: '/eterm',         component: MyEterm},
   {path: '/recharge',      component: MyRecharge},
+  {path: '/payresult/:id',      component: MyPayResult},
 ]
 
 let router = new Router({
@@ -115,6 +118,13 @@ const store = new Vuex.Store({
 
   },
   mutations: {
+    resetOrderInfo (state) {
+      state.order.pnrNo = ''
+      state.order.pnrDetail = ''
+      state.order.policyId = 0
+      state.order.flights.splice(0)
+      state.order.psgs.splice(0)
+    },
     jumpToLogin (state, router) {
       state.historyStep = -1;
       state.username = "",

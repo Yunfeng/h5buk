@@ -130,13 +130,12 @@ export default {
       self.loading = true
       self.loadingText = '数据加载中'
 
-
       $.ajax({
         type: 'post',
         url: '/Flight/pnr/searchCtct.do',
         data: {
           'sc.pageNo': this.sc.pageNo,
-          'sc.pageSize': this.sc.pageSize,
+          'sc.pageSize': this.sc.pageSize
         },
         dataType: 'json',
         success: function (jsonResult) {

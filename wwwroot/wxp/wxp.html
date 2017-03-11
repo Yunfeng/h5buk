@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+  <title>微信支付处理中</title>
+  <link rel="stylesheet" href="/assets/css/bootstrap.css" />
+</head>
+<body>
+微信支付处理中......
+
+<script src="/assets/js/libs/jquery-3.1.1.min.js"></script>
+<script src="/assets/js/libs/jquery.cookie.js"></script>
+<script src="/assets/js/common.js" ></script>
+<script src="/assets/js/app.config.js" ></script>
+
+<script type="text/javascript">
+  var orderId = ''
+  var code = ''
+
+  function callWexinPay () {
+    $.ajax({
+        type: 'post',
+        url: '/Flight/pay/getWxpParams',
+        data: {
+          'id': orderId,
+          'code': code
+        },
+        dataType: 'json',
+        success: function (jsonResult) {
+          if (jsonResult !== null) {
+            jsApiCall(jsonResult)
+          }
+        }
+      })    
+  }
+
+  function jsApiCall (params) {
+    WeixinJSBridge.invoke ('getBrandWCPayRequest', 
+      {
+       "appId": params.appId,     //公众号名称，由商户传入     
+       "timeStamp": params.timeStamp,         //时间戳，自1970年以来的秒数     
+       "nonceStr": params.nonceStr, //随机串     
+       "package": params.packageA,     
+       "signType": params.signType,         //微信签名方式：     
+       "paySign": params.paySign //微信签名 
+      },
+      function (res) {    
+        window.location.href = DOMAIN_URL + '/index.html?to=payresult&id=' + orderId
+      }
+    ) 
+  }
+
+  $(function() {
+      code = GetURLParameter('code')
+      orderId = GetURLParameter('state')
+
+      callWexinPay()
+  })
+
+</script>
+
+</html>
