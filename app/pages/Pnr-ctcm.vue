@@ -24,6 +24,7 @@
           <li class="list-inline-item"><button @click.stop='setCarrier("FM")'>FM</button></li>
           <li class="list-inline-item"><button @click.stop='setCarrier("ZH")'>ZH</button></li>
           <li class="list-inline-item"><button @click.stop='setCarrier("MF")'>MF</button></li>
+          <li class="list-inline-item"><button @click.stop='setCarrier("HU")'>HU</button></li>
         </ul>
         <table class="table table-striped table-condensive">
           <thead>
