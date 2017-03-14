@@ -71,7 +71,7 @@
         <p class="weui-grid__label">
             源码
         </p>
-    </a>
+    </a>    
 </div>
 </template>
 

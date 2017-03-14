@@ -4,10 +4,10 @@
 
     <div class="row bg-info">
       <div class="col-1">
-          <span @click="back()"><i class="fa fa-angle-left weui-tabbar__icon" aria-hidden="true"></i></span>
+          <span @click="back()"><i class="fa fa-angle-left text-white fa-2" aria-hidden="true"></i></span>
       </div>         
       <div class="col-10 text-center">
-          预定 
+          机票预定 
       </div>         
       <div class="col-1">
           
@@ -34,9 +34,9 @@
             <div class="weui-flex__item"><div class="text-right"><i class="fa fa-rmb"></i>{{flt.price}}</div></div>
             <div class="weui-flex__item">
               <div class="text-right text-danger">
-                <button type="button" @click.stop="removeFlightInfo(index)">
+                <a href="javascript:void(0)"  @click.stop="removeFlightInfo(index)">
                   <i class="fa fa-times" aria-hidden="true"></i>
-                </button>
+                </a>
               </div>
             </div>
         </div>
@@ -67,9 +67,9 @@
               <button type="button" @click.stop="selectPsg(index)" title="搜索并选择乘机人">
                 <i class="fa fa-users" aria-hidden="true"></i>
               </button> 
-              <button type="button" @click.stop="deletePsg(index)" class="float-right">
+              <a href="javascript:void(0)" @click.stop="deletePsg(index)" class="float-right">
                 <i class="fa fa-times" aria-hidden="true"></i>
-              </button>
+              </a>
             </div>
 
             <div class="card-block" style="padding: 0">
@@ -102,7 +102,7 @@
       </div>
 
       <div class="weui-btn-area">
-              <a class="weui-btn weui-btn_primary" @click="createFlightOrder();">保存订单</a>
+              <a class="weui-btn weui-btn_primary text-white" @click="createFlightOrder();">保存订单</a>
       </div>
     </form>
 

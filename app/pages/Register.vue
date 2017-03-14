@@ -13,12 +13,15 @@
               <input type="input" class="form-control" placeholder="登录用户名"  v-model="username">
             </div>
             <div class="form-group">
+              <input type="input" class="form-control" placeholder="密码"  v-model="password">
+            </div>
+            <div class="form-group">
               <input type="input" class="form-control" placeholder="姓名"  v-model="realname">
             </div>
             <div class="form-group">
               <input type="input" class="form-control" placeholder="手机号"  v-model="mobile">
               <p class="form-text text-muted">
-                初始密码将发送短信到此手机号
+                需要时可通过手机号找回密码
               </p>
             </div>
             <div class="form-group">
@@ -73,10 +76,7 @@ export default {
     logined () { return this.$store.state.logined },
     sessionUsername () { return this.$store.state.username },
     historyStep () { return this.$store.state.historyStep },
-    userInfo () { return this.$store.state.userInfo },
-    weixinCode () { return this.$store.state.weixinCode },
-    weixinState () { return this.$store.state.weixinState },
-    weixinOpenid () { return this.$store.state.weixinOpenid.substring(0, 10) }
+    userInfo () { return this.$store.state.userInfo }
   },
   mounted: function () {
     $('#kaptchaImage1').click(function () {
@@ -97,6 +97,7 @@ export default {
         url: '/Flight/register',
         data: {
           'username': this.username,
+          'password': this.password,
           'realname': this.realname,
           'mobile': this.mobile,
           'captchaValue': this.vcode },

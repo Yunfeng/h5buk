@@ -295,6 +295,7 @@
 </template>
 
 <script>
+import { DOMAIN_URL } from '../common/common.js'
 import MyButton from '../components/my-button.vue'
 import MyInput from '../components/my-input.vue'
 import $ from 'jquery'
@@ -606,7 +607,7 @@ export default {
       })
     },
     weixinPay1: function (orderId) {
-      alert('请咨询商家是否收取支付手续费!!!')
+      // alert('请咨询商家是否收取支付手续费!!!')
       this.createPayOrder(orderId)
     },
     createPayOrder: function (orderId) {

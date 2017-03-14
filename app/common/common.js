@@ -1,3 +1,4 @@
+export const DOMAIN_URL = 'http://b2c.90sky.com'
 /**
 * 
 */
@@ -56,6 +57,16 @@ export function getURLParameter (sParam) {
           return sParameterName[1];
       }
   }
+}
+
+export function getCabinClassDesc (cabinClass) {
+  if (cabinClass === 'F') 
+    return '头等舱'
+  else if (cabinClass === 'Y') 
+    return '经济舱'
+  else if (cabinClass === 'C') 
+    return '商务舱'
+  else return cabinClass
 }
 
 

@@ -34,6 +34,7 @@
 </template>
 
 <script>
+import { DOMAIN_URL } from '../common/common.js'
 import $ from 'jquery'
 
 export default {

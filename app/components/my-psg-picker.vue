@@ -35,7 +35,7 @@
                       <small>{{psg.passportNo}}</small>
                     </td>
                     <td>
-                        <button type="button" @click.stop="selectThisPsg(index);">√</button>
+                        <button type="button" class="btn btn-outline-info bt-sm " @click.stop="selectThisPsg(index);">√</button>
                     </td>
                 </tr>
             </tbody>

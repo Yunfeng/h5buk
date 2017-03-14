@@ -4,7 +4,7 @@
 
     <div class="row bg-info">
       <div class="col-1">
-          <span @click="back()"><i class="fa fa-angle-left weui-tabbar__icon" aria-hidden="true"></i></span>
+          <span @click="back()"><i class="fa fa-angle-left text-white" aria-hidden="true"></i></span>
       </div>         
       <div class="col-10 text-center">
           国内机票 
@@ -19,21 +19,21 @@
         <div class="card-block">
 
           <div class="form-group row">
-            <label class="col-3 col-form-label">出发</label>
+            <label class="col-3 col-form-label text-right">出发</label>
             <div class="col-9">
               <input class="form-control" type="text" placeholder="出发城市" v-model="dcityName" @focus="dcityFocusedEvent()" readonly>
             </div>
           </div>
 
           <div class="form-group row">
-            <label class="col-3 col-form-label">到达</label>
+            <label class="col-3 col-form-label text-right">到达</label>
             <div class="col-9">
               <input class="form-control" type="text" placeholder="到达城市" v-model="acityName" @focus="acityFocusedEvent()" readonly>
             </div>
           </div>
 
           <div class="form-group row">
-            <label class="col-3 col-form-label">日期</label>
+            <label class="col-3 col-form-label text-right">日期</label>
             <div class="col-9">
               <input class="form-control" type="text" placeholder="出发日期" v-model="ddate" id="ddate" readonly>
             </div>
@@ -60,35 +60,28 @@
 
 <script>
 import MyButton from '../components/my-button.vue'
-import MyInput from '../components/my-input.vue'
 import MyCityPicker from '../components/my-citypicker.vue'
 import $ from 'jquery'
 
 export default {
   components: {
     'my-button': MyButton,
-    'my-input': MyInput,
     'my-city-picker': MyCityPicker
   },
   data () {
     return {
+      errMsg: '',
+      errAlert: false,
+      searching: false,
       targetName: '',
       showDialog: false,
-      showPicker: false,
-      // cities: domCities,
-      searching: false,
-      errMsg: '',
-      errAlert: false
+      showPicker: false
     }
   },
   computed: {
     dcity () { return this.$store.state.searchParams.dcity },
     acity () { return this.$store.state.searchParams.acity },
-    ddate () {
-      var a = this.$store.state.searchParams.ddate
-      console.log(a)
-      return a
-    },
+    ddate () { return this.$store.state.searchParams.ddate },
     dcityName () { return this.$store.state.searchParams.dcityName },
     acityName () { return this.$store.state.searchParams.acityName }
   },
@@ -96,18 +89,28 @@ export default {
     if (this.dcity == null || this.dcity.length === 0) {
       var cityCode = $.cookie('dcity')
       var cityName = $.cookie('dcityName')
+      if (cityCode === undefined || cityCode === null || cityCode.length !== 3) {
+        cityCode = 'SHA'
+        cityName = '上海'
+      }
       this.$store.commit('setDcity', { 'cityCode': cityCode, 'cityName': cityName })
 
       cityCode = $.cookie('acity')
       cityName = $.cookie('acityName')
+      if (cityCode === undefined || cityCode === null || cityCode.length !== 3) {
+        cityCode = 'KHN'
+        cityName = '南昌'
+      }
       this.$store.commit('setAcity', { 'cityCode': cityCode, 'cityName': cityName })
 
       var ddate = $.cookie('ddate')
-
+      var date0
       var cookieDate = $.cookie('ddate')
-
-      if (cookieDate !== undefined && cookieDate.length === 10) {
-        var date0 = new Date()
+      if (cookieDate === undefined || cookieDate === null || cookieDate.length !== 10) {
+        date0 = new Date()
+        ddate = date0.format('yyyy-MM-dd')
+      } else if (cookieDate !== undefined && cookieDate.length === 10) {
+        date0 = new Date()
         var date1 = new Date(cookieDate)
         if (date1 < date0) {
           ddate = date0.format('yyyy-MM-dd')

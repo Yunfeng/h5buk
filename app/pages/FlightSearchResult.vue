@@ -1,9 +1,11 @@
 <template>
 	<div id="flight-result" class="container-fluid">
+    <div class="weui-toptips weui-toptips_warn" style="display:block" v-show="errAlert">{{errMsg}}</div>
+
     <template v-if="listShowing">
       <div class="row bg-info">
         <div class="col-12 text-center text-white">
-            <span @click="back()" class="float-left"><i class="fa fa-angle-left" aria-hidden="true"></i></span>
+            <span @click="back()" class="float-left"><i class="fa fa-angle-left text-white" aria-hidden="true"></i></span>
              {{dcityName}}-{{acityName}} {{ddate}}
              
 
@@ -32,15 +34,15 @@
                     </td>
                     <td class="text-center hidden-sm-down">{{flight.depPortName}}</td>
                     <td class="text-center hidden-sm-down">{{flight.arrPortName}}</td>
-                    <td class="text-center">{{flight.depTime}} <small>{{flight.arrTime}}</small></td>
+                    <td class="text-center"><span class="text-info">{{flight.showDepTime}}</span> <small>{{flight.showArrTime}}</small></td>
                     <td class="text-right">
                         <div v-if="flight.subClassList.length > 0">
                             <template v-if="flight.lowestPrice != null">
                                 <i class="fa fa-rmb"></i>
-                                <span class="text-info">
+                                <span class="text-danger">
                                   <big><strong>{{flight.lowestPrice.price}}</strong></big>
                                 </span>
-                                  <i class="fa fa-long-arrow-up" aria-hidden="true"></i>
+                                  <i class="fa fa-long-arrow-up text-success" aria-hidden="true"></i>
 
                             </template>    
                         </div>
@@ -70,9 +72,9 @@
               <div class="col-3 text-center text-nowrap time">{{flt.showDepTime}}</div>
               <div class="col-3">&nbsp;</div>
               <div class="col-3 text-center text-nowrap time">{{flt.showArrTime}}</div>
-              <div class="col-3 text-nowrap text-danger text-right lowest-price">
+              <div class="col-3 text-nowrap text-warning text-right">
                 <template v-if="flt.lowestPrice">
-                  <i class="fa fa-rmb"></i>{{flt.lowestPrice.price}}
+                  <i class="fa fa-rmb"></i> <span class="lowest-price mr-1">{{flt.lowestPrice.price}}</span>
                 </template>
               </div>
               <div class="clear"></div>
@@ -104,14 +106,14 @@
                 <td class="text-center">{{showCabinClass(info.cabinClass)}}</td>
                 <td class="hidden"><small v-if="info.returnPoint > 0">返{{info.returnPoint}}% </small></td>
                 <td class="text-center">
-                  <span :id="'tgq-' + flt.id + '-' + info.subClass" @mouseover="showTGQ(flt.id, flt.carrierCode, info.subClass);" @mouseout="hideTGQ(flt.id, flt.carrierCode, info.subClass);" tgq-cached="0"><small>退改签</small></span>
+                  <span :id="'tgq-' + flt.id + '-' + info.subClass" tgq-cached="0" @click="showTGQ(flt.carrierCode, info.subClass)"><small>退改签</small></span>
                 </td>
-                <td class="text-right"><strong>{{info.price}}</strong>/{{info.subClass}}</td>
+                <td class="text-right"><i class="fa fa-rmb"></i> <span class="text-danger">{{info.price}}</span> / {{info.subClass}}</td>
                 <td class="text-right">
                   <span v-if="info.seatCount < 10"> {{info.seatCount}} </span>
                 </td>
                 <td class="text-center">
-                  <a v-on:click="bookFlight(flt.flightNo, flt.depDate, info.subClass, flt.depPort, flt.arrPort, flt.depTime, flt.arrTime, info.price, flt.depPortName, flt.arrPortName, info.returnPoint);" v-bind:title="info.price + '元，余位' + info.seatStatus" class="btn btn-info btn-sm">预定</a>
+                  <a v-on:click="bookFlight(flt.flightNo, flt.depDate, info.subClass, flt.depPort, flt.arrPort, flt.depTime, flt.arrTime, info.price, flt.depPortName, flt.arrPortName, info.returnPoint);" v-bind:title="info.price + '元，余位' + info.seatStatus" class="btn btn-outline-info btn-sm">预定</a>
                 </td>
               </tr>
             </tbody>
@@ -207,13 +209,33 @@
       <div class="weui-mask_transparent"></div>
       <div class="weui-toast">
         <i class="weui-loading weui-icon_toast"></i>
-        <p class="weui-toast__content">数据加载中 {{dataLength}}</p>
+        <p class="weui-toast__content">航班查询中 {{dataLength}}</p>
       </div>
     </div>
+
+    <div class="modal fade" id="tgqModal">
+      <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Modal title</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <input type="text" class="form-control">
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">关闭</button>
+          </div>
+        </div>
+      </div>
+    </div>    
   </div>
 </template>
 
 <script>
+import { getCabinClassDesc } from '../common/common.js'
 import MyButton from '../components/my-button.vue'
 import MyInput from '../components/my-input.vue'
 import $ from 'jquery'
@@ -262,6 +284,14 @@ export default {
     this.search()
   },
   methods: {
+    back: function () {
+      this.$router.go(-1)
+    },
+    showErrMsg: function (msg) {
+      this.errMsg = msg
+      this.errAlert = true
+      setTimeout(() => { this.errAlert = false }, 2500)
+    },
     search: function () {
       var self = this
 
@@ -271,6 +301,7 @@ export default {
       $.ajax({
         type: 'post',
         url: '/Flight/flights/rav',
+        timeout: 10000,
         data: {
           'startPosition': self.startPosition,
           'dcity': self.dcity,
@@ -349,7 +380,11 @@ export default {
       }
 
       this.avCount = this.avCount + 1
-      if (this.avCount >= 30) return
+      if ((this.avCount > 5 && this.totalCount === 0) || this.avCount > 20) {
+        this.searching = false
+        this.showErrMsg('好像出问题了，过会再试试吧')
+        return
+      }
 
       this.search()
     },
@@ -365,11 +400,6 @@ export default {
       this.detailShowing = false
       // this.filterModalShowing = false
       this.listShowing = true
-    },
-    showErrMsg: function (msg) {
-      this.errMsg = msg
-      this.errAlert = true
-      setTimeout(() => { this.errAlert = false }, 1500)
     },
     execSort: function (searchResults) {
       var data = this.filter
@@ -469,10 +499,7 @@ export default {
       return returnedList
     },
     showCabinClass: function (cabinClass) {
-      if (cabinClass === 'F') return '头等舱'
-      else if (cabinClass === 'Y') return '经济舱'
-      else if (cabinClass === 'C') return '商务舱'
-      else return cabinClass
+      return getCabinClassDesc(cabinClass)
     },
     bookFlight: function (flightNo, ddate, subclass, dport, aport, dtime, atime, price, dportName, aportName, returnPoint) {
       var fltInfo = {}
@@ -492,9 +519,6 @@ export default {
       this.$store.commit('addFlight', fltInfo)
       this.$router.replace('/booking')
     },
-    back: function () {
-      this.$router.go(-1)
-    },
     showFilter: function () {
       this.filterModalShowing = true
       this.listShowing = false
@@ -502,6 +526,66 @@ export default {
     closeFilterDialog: function () {
       this.filterModalShowing = false
       this.listShowing = true
+    },
+    showTGQ: function (carrier, subclass) {
+      var self = this
+
+      $.ajax({
+        url: '/Flight/flights/tgq',
+        timeout: 3000,
+        data: {
+          'carrier': carrier,
+          'subclass': subclass
+        },
+        success: function (jsonResult) {
+          var tgqDetail = ''
+          if (jsonResult.dataList.length > 0) {
+            var info = jsonResult.dataList[0]
+            if (info.endorsementRule != null) {
+              tgqDetail = '签转：' + info.endorsementRule + '.<br />'
+            }
+
+            tgqDetail += '更改：起飞前'
+            if (info.rerouteRuleBefore === 0) {
+              tgqDetail += '免手续费, '
+            } else {
+              tgqDetail += info.rerouteRuleBefore + '%手续费, '
+            }
+            tgqDetail += '起飞后'
+            if (info.rerouteRuleAfter === 0) {
+              tgqDetail += '免手续费. '
+            } else {
+              tgqDetail += info.rerouteRuleAfter + '%手续费.'
+            }
+            tgqDetail += '<br />'
+
+            tgqDetail += '退票：起飞前'
+            if (info.refundRuleBefore === 0) {
+              tgqDetail += '免手续费, '
+            } else {
+              tgqDetail += info.refundRuleBefore + '%手续费, '
+            }
+            tgqDetail += '起飞后'
+            if (info.refundRuleAfter === 0) {
+              tgqDetail += '免手续费. '
+            } else {
+              tgqDetail += info.refundRuleAfter + '%手续费.'
+            }
+            tgqDetail += '<br />'
+          } else {
+            tgqDetail = '具体退改签信息请咨询客服'
+          }
+
+          self.dispalyTgqInfo(carrier, subclass, tgqDetail)
+        }
+      })
+    },
+    dispalyTgqInfo: function (carrier, subclass, tgqDetail) {
+      var modal = $('#tgqModal')
+      var title = carrier + ' ' + subclass + ' 退改签信息'
+      modal.find('.modal-title').text(title)
+      modal.find('.modal-body').html(tgqDetail)
+      modal.modal('show')
     }
   },
   beforeRouteEnter (to, from, next) {

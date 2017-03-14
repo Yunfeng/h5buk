@@ -52,6 +52,11 @@
               我的订单
             </router-link>
           </div>
+          <div class="card-block bg-info">
+            <router-link to="/home" class="card-link">
+              更多功能
+            </router-link>
+          </div>
 
             <div class="card-footer text-right">
               <button class="btn btn-danger " @click="logout()">退出</button>

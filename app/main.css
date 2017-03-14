@@ -20,6 +20,13 @@ h1, h2, h3, h4, h5, h6, p, ul {
   padding: 0;
 }
 
+a:link,a:visited{
+ text-decoration:none;
+}
+a:hover{
+ text-decoration:none;
+}
+
 .fade-enter-active, .fade-leave-active {
   transition: opacity .3s
 }
