@@ -1,5 +1,5 @@
 <template>
-<div class="weui-grids" style="padding: 0">
+<div class="weui-grids row">
     <router-link to="/search" class="weui-grid">
         <div class="weui-grid__icon">
             <i class="fa fa-plane fa-2" aria-hidden="true"></i>
@@ -48,6 +48,14 @@
             PNR管理
         </p>
     </router-link>
+    <router-link to="/tpr" class="weui-grid">
+        <div class="weui-grid__icon">
+            <i class="fa fa-info-circle fa-2" aria-hidden="true"></i>
+        </div>
+        <p class="weui-grid__label">
+            TPR
+        </p>
+    </router-link>
     <router-link to="/eterm" class="weui-grid">
         <div class="weui-grid__icon">
             <i class="fa fa-info-circle fa-2" aria-hidden="true"></i>
@@ -74,9 +82,3 @@
     </a>    
 </div>
 </template>
-
-<style>
-.fa-2 {
-    font-size: 2em
-}
-</style>

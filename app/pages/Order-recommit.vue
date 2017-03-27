@@ -1,37 +1,32 @@
 <template>  
-	<div id="order-ticket" class="container-fluid">
-    <div class="weui-toptips weui-toptips_warn" style="display:block" v-show="errAlert">{{errMsg}}</div>
-    <div id="loadingToast" v-show="loading">
-      <div class="weui-mask_transparent"></div>
-      <div class="weui-toast">
-        <i class="weui-loading weui-icon_toast"></i>
-        <p class="weui-toast__content">{{loadingText}}</p>
+	<div id="order-recommit" class="row">
+    <div class="card col-12 border-0 px-0">
+      <div class="card-header text-center">重新提交</div>
+      <div class="card-block">
+        <div class="form-group row">
+          <label class="col-4 col-form-label text-right">票款总额</label>
+          <div class="col-8">
+            <input type="text" class="form-control" placeholder="" v-model="ticketAmount" />
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-4 col-form-label text-right">备注</label>
+          <div class="col-8">
+            <input type="text" class="form-control" placeholder="" v-model="remark" />
+            <span class="form-text text-muted">
+              <small>必填</small>
+            </span>
+          </div>
+        </div>
       </div>
     </div>
 
+    <div class='card col-12 border-0 mb-2'>
+      <button type='button' class='btn btn-success w-100' @click.stop='recommitOrder()'>确定</button>
+      <button type='button' class='btn btn-outline-danger w-100 mt-3' @click.stop='close()'>取消</button>
+    </div>
 
-    <div class="weui-cells__title text-center">重新提交</div>
-    <div class="weui-cells">
-      <div class="weui-cell">
-        <div class="weui-cell__hd">
-          <label for="" class="weui-label">票款总额</label>
-        </div>
-        <div class="weui-cell__bd">
-          <input type="text" class="weui-input" placeholder="拒绝理由详细说明" v-model="ticketAmount" />
-        </div>
-      </div>
-      <div class="weui-cell">
-        <div class="weui-cell__hd"><label class="weui-label">备注</label></div>
-        <div class="weui-cell__bd">
-          <input type="text" class="weui-input" placeholder="拒绝理由详细说明" v-model="remark" />
-        </div>
-      </div>    
-      <div class="weui-cells__tips text-right">必填</div>
-    </div>
-    <div class="weui-btn-area">
-      <button type="button" class="weui-btn weui-btn_primary" @click.stop="recommitOrder()">确定</button>
-      <button type="button" class="weui-btn weui-btn_default" @click.stop="close()">取消</button>
-    </div>
   </div>
 </template>
 
@@ -61,9 +56,8 @@ export default {
       this.$router.go(-1)
     },
     showErrMsg: function (msg) {
-      this.errMsg = msg
-      this.errAlert = true
-      setTimeout(() => { this.errAlert = false }, 1500)
+      console.log(msg)
+      this.$store.dispatch('showAlertMsg', { 'errMsg': msg })
     },
     recommitOrder: function () {
       // 卖家：重新提交订单
@@ -95,7 +89,7 @@ export default {
             self.showErrMsg('操作成功')
             opResult = true
           } else {
-            self.showErrMsg('操作失败： ' + jsonResult.errmsg)
+            self.showErrMsg(jsonResult.errmsg)
           }
         },
         complete: function () {
@@ -106,11 +100,6 @@ export default {
         }
       })
     }
-  },
-  beforeRouteEnter (to, from, next) {
-    next(vm => {
-      // 通过 `vm` 访问组件实例
-    })
   }
 }
 </script>

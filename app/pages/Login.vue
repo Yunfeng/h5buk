@@ -1,69 +1,84 @@
 <template>
-  <div id="login" class="container-fluid">
-    <div class="weui-toptips weui-toptips_warn" style="display:block" v-show="errAlert">{{errMsg}}</div>
+  <div id="login" class="row">
 
-    <div class="row ">    
-      <template v-if="logined === false">
-        <div class="card col-12 mt-2 no-gutters" style="padding-left: 0; padding-right: 0;">
-          <div class="card-header">
+    <template v-if="logined === false">
+      <div class="card col-12 no-gutters px-0">
+        <div class="card-header text-center text-success"  v-if="openid.length === 0">
             登录
+        </div>
+        <div class="media card-block border-0"  v-if="openid.length > 0">
+          <img class="d-flex align-self-center mr-3" :src="headimgurl" style="width: 5rem; height: 5rem">
+          <div class="media-body">
+            <h5 class="mt-0">{{nickname}}</h5>
+            未登录
           </div>
-          <div class="card-block no-gutters">
-            <div class="form-group">
-                <input class="form-control" type="text" placeholder="用户名" v-model="username">
-            </div>
-            <div class="form-group">
-                <input class="form-control" type="password" placeholder="密码" v-model="password">
-            </div>
+        </div>        
+        <div class="card-block no-gutters">
+          <div class="form-group">
+              <input class="form-control" type="text" placeholder="用户名" v-model="username">
+          </div>
+          <div class="form-group">
+              <input class="form-control" type="password" placeholder="密码" v-model="password">
+          </div>
+          <template v-if="openid.length === 0">
             <my-vcode label-text="验证码" img-id="kaptchaImage" v-model="vcode"></my-vcode>
-          </div>
-          <div class="card-block text-center bg-faded text-white">
-            <my-button @click="login()" type="success">登录</my-button>
-          </div>
-          <div class="card-block">
-            <span><small><a href="#/password">找回密码</a></small></span>
-            <span class="float-right"><small><a href="#/register">这里注册</a></small></span>
+          </template>
+        </div>
+        <div class="card-block text-center bg-faded text-white">
+          <my-button @click="login()" type="success">登录</my-button>
+        </div>
+        <div class="card-block">
+          <span><small><a href="#/password">找回密码</a></small></span>
+          <span class="float-right"><small><a href="#/register">这里注册</a></small></span>
+        </div>
+      </div>
+    </template>
+    <template v-else>
+      <div class="card col-12 px-0">
+        <div class="media card-block border-0" v-if="openid.length === 0">
+          <img class="d-flex align-self-center mr-3" :src="headimgurl" style="width: 5rem; height: 5rem">
+          <div class="media-body">
+            <h5 class="mt-0">{{fullname}}</h5>
+            <small>当前用户：{{sessionUsername}}</small>
           </div>
         </div>
-      </template>
-      <template v-else-if="logined === true">
-        <div class="card col-12 mt-2"  style="padding-left: 0; padding-right: 0;">
-            <div class="media">
-              <img class="d-flex mr-3" src="" alt="" style="width: 5rem; height: 5rem; ">
-              <div class="media-body">
-                <h5 class="mt-0">{{sessionUsername}}</h5>              
-                当前用户
-              </div>
-            </div>
-            <table class="table">
-              <tr>
-                <td class="text-right">现金账户</td>
-                <td>{{userInfo.cashBalance}} <small>元</small></td>
-                <td>充值</td>
-              </tr>
-              <tr>
-                <td class="text-right">积分</td>
-                <td>{{userInfo.freeBalance}}</td>
-                <td></td>
-              </tr>
-            </table>
-          <div class="card-block">
-            <router-link to="/order" class="card-link">
-              我的订单
-            </router-link>
+        <div class="media card-block border-0"  v-if="openid.length > 0">
+          <img class="d-flex align-self-center mr-3" :src="headimgurl" style="width: 5rem; height: 5rem">
+          <div class="media-body">
+            <h5 class="mt-0">{{nickname}}</h5>
+            <small>当前用户：{{sessionUsername}}</small>
           </div>
-          <div class="card-block bg-info">
-            <router-link to="/home" class="card-link">
-              更多功能
-            </router-link>
-          </div>
+        </div>  
+          
+          <table class="table table-sm">
+            <tr>
+              <td class="text-right">现金账户</td>
+              <td>{{userInfo.cashBalance}} <small>元</small></td>
+              <td>充值</td>
+            </tr>
+            <tr>
+              <td class="text-right">积分</td>
+              <td>{{userInfo.freeBalance}}</td>
+              <td></td>
+            </tr>
+          </table>
+        <div class="card-block pt-0 bg-faded">
+          <router-link to="/order" class="card-link">
+            我的订单
+          </router-link>
+        </div>
+        <div class="card-block pt-0">
+          <router-link to="/home" class="card-link text-success">
+            更多功能
+          </router-link>
+        </div>
 
-            <div class="card-footer text-right">
-              <button class="btn btn-danger " @click="logout()">退出</button>
-            </div>         
-        </div>      
-      </template>
-    </div>
+          <div class="card-footer">
+            <button class="btn btn-danger w-100" @click="logout()">退出</button>
+          </div>         
+      </div>      
+    </template>
+
 
   </div>
 </template>
@@ -92,12 +107,44 @@ export default {
   },
   computed: {
     logined () { return this.$store.state.logined },
-    sessionUsername () { return this.$store.state.username },
+    sessionUsername () {
+      var username = this.$store.state.username
+      console.log(username)
+      if (username.length === 0) {
+        username = $.cookie('username')
+        if (username === undefined) username = ''
+      }
+      return username
+    },
+    fullname () { return this.$store.state.fullname },
     historyStep () { return this.$store.state.historyStep },
-    userInfo () { return this.$store.state.userInfo }
+    userInfo () { return this.$store.state.userInfo },
+    openid () {
+      var openid = this.$store.state.wxInfo.openid
+      if (openid.length === 0) {
+        openid = $.cookie('openid')
+        if (openid === undefined) openid = ''
+      }
+      return openid
+    },
+    nickname () {
+      var nickname = this.$store.state.wxInfo.nickname
+      if (nickname.length === 0) {
+        nickname = $.cookie('nickname')
+        if (nickname === undefined) nickname = ''
+      }
+      return nickname
+    },
+    headimgurl () {
+      var headimgurl = this.$store.state.wxInfo.headimgurl
+      if (headimgurl.length === 0) {
+        headimgurl = $.cookie('headimgurl')
+        if (headimgurl === undefined) headimgurl = ''
+      }
+      return headimgurl
+    }
   },
   mounted: function () {
-    // console.log('mounted.');
     if (this.logined === false) {
       var username = $.cookie('username')
       var token = $.cookie('token')
@@ -111,6 +158,7 @@ export default {
     if (this.logined) {
       this.searchBalance()
     } else {
+      this.checkLoginStatus()
       this.refreshKaptcha()
     }
   },
@@ -124,6 +172,9 @@ export default {
     }
   },
   methods: {
+    showErrMsg: function (msg) {
+      this.$store.dispatch('showAlertMsg', { 'errMsg': msg })
+    },
     login: function () {
       var self = this
 
@@ -135,15 +186,19 @@ export default {
         success: function (jsonResult) {
           // console.log(jsonResult);
           if (jsonResult.status === 'OK') {
-            self.$store.commit('setUsername', { 'username': jsonResult.username, 'logined': true })
+            var u = {
+              'username': jsonResult.username,
+              'logined': true,
+              'fullname': jsonResult.fullname
+            }
+            self.$store.commit('setUsername', u)
 
             $.cookie('token', jsonResult.token, { expires: 30, path: '/' })
             $.cookie('username', jsonResult.username, { expires: 30, path: '/' })
+            $.cookie('fullname', jsonResult.fullname, { expires: 30, path: '/' })
 
             if (self.historyStep !== 0) {
               self.$router.go(self.historyStep)
-            } else {
-              self.$router.push('order')
             }
           } else {
             if (jsonResult.errMsg !== null) {
@@ -159,12 +214,35 @@ export default {
         }
       })
     },
+    checkLoginStatus: function () {
+      var self = this
+
+      $.ajax({
+        type: 'post',
+        url: '/Flight/chklogin',
+        dataType: 'json',
+        success: function (jsonResult) {
+          if (jsonResult.status === 'OK') {
+            self.$store.commit('setUsername', { 'username': jsonResult.username, 'logined': true })
+
+            $.cookie('username', jsonResult.username, { expires: 30, path: '/' })
+            $.cookie('fullname', jsonResult.fullname, { expires: 30, path: '/' })
+
+            self.searchBalance()
+          }
+        },
+        error: function (XMLHttpRequest, textStatus, errorThrown) {
+        },
+        complete: function (XMLHttpRequest, textStatus) {
+        }
+      })
+    },
     logout: function () {
       var self = this
 
       $.ajax({
         type: 'post',
-        url: '/Flight/login/logout',
+        url: '/Flight/logout0',
         dataType: 'json',
         success: function (jsonResult) {
           if (jsonResult.status === 'OK') {
@@ -190,15 +268,13 @@ export default {
           self.$store.commit('setUserInfo', jsonResult)
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
+          if (XMLHttpRequest.status === 403) {
+            self.$store.commit('logout')
+          }
         },
         complete: function (XMLHttpRequest, textStatus) {
         }
       })
-    },
-    showErrMsg: function (msg) {
-      this.errMsg = msg
-      this.errAlert = true
-      setTimeout(() => { this.errAlert = false }, 1500)
     },
     refreshKaptcha: function () {
       $('#kaptchaImage').attr('src',

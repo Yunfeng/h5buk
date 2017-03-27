@@ -1,60 +1,101 @@
 <template>
-	<div id="searching" class="container-fluid">
-    <div class="weui-toptips weui-toptips_warn" style="display:block" v-show="errAlert">{{errMsg}}</div>
-
-    <div class="row bg-info">
-      <div class="col-1">
-          <span @click="back()"><i class="fa fa-angle-left text-white" aria-hidden="true"></i></span>
-      </div>         
-      <div class="col-10 text-center">
-          国内机票 
-      </div>         
-      <div class="col-1">
-          
-      </div>         
+	<div id="searching" class="row">
+    <div class="col-12 bg-info text-center text-white">
+      <span @click="back()" class="float-left fa-2">
+        <i class="fa fa-angle-left fa-2" aria-hidden="true"></i>
+      </span>
+      国内机票 
     </div> 
 
-    <div class="row">
-      <div class="card card-outline-info col-12 mt-2" style="padding-left: 0; padding-right: 0;">
-        <div class="card-block">
-
-          <div class="form-group row">
-            <label class="col-3 col-form-label text-right">出发</label>
-            <div class="col-9">
-              <input class="form-control" type="text" placeholder="出发城市" v-model="dcityName" @focus="dcityFocusedEvent()" readonly>
-            </div>
-          </div>
-
-          <div class="form-group row">
-            <label class="col-3 col-form-label text-right">到达</label>
-            <div class="col-9">
-              <input class="form-control" type="text" placeholder="到达城市" v-model="acityName" @focus="acityFocusedEvent()" readonly>
-            </div>
-          </div>
-
-          <div class="form-group row">
-            <label class="col-3 col-form-label text-right">日期</label>
-            <div class="col-9">
-              <input class="form-control" type="text" placeholder="出发日期" v-model="ddate" id="ddate" readonly>
-            </div>
+    <div class="card col-12 mt-2 p-0 border-0">
+      <div class="card-block">
+        <div class="form-group row">
+          <label class="col-4 col-form-label text-right">出发</label>
+          <div class="col-8">
+            <input class="form-control" type="text" placeholder="出发城市" v-model="dcityName" @focus="dcityFocusedEvent()" readonly>
           </div>
         </div>
-        <div class="card-footer text-center text-white">
-          <my-button @click="search()" type="info">查询航班</my-button>
+
+        <div class="form-group row">
+          <label class="col-4 col-form-label text-right">到达</label>
+          <div class="col-8">
+            <input class="form-control" type="text" placeholder="到达城市" v-model="acityName" @focus="acityFocusedEvent()" readonly>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-4 col-form-label text-right">日期</label>
+          <div class="col-8">
+            <input class="form-control" type="text" placeholder="出发日期" v-model="ddate" id="ddate" readonly>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-4 col-form-label text-right">航空公司</label>
+          <div class="col-8">
+            <select class="form-control" v-model="onlyCarrier">
+                <option value="">不限</option>
+                <option value="CA">中国国航-CA</option>
+                <option value="CZ">南方航空-CZ</option>
+                <option value="MU">东方航空-MU</option>
+                <option value="">——————</option>
+                <option value="BK">A-奥凯航空公司-BK</option>
+                <option value="JD">B-北京首都航空有限公司-JD</option>
+                <option value="GJ">C-长龙航空公司-GJ</option>
+                <option value="9C">C-春秋航空公司-9C</option>
+                <option value="EU">C-成都航空有限公司-EU</option>
+                <option value="CN">D-大新华航空公司-CN</option>
+                <option value="DZ">D-东海航空公司-DZ</option>
+                <option value="NS">H-河北航空公司-NS</option>
+                <option value="HU">H-海南航空公司-HU</option>
+                <option value="G5">H-华夏航空公司-G5</option>
+                <option value="HO">J-吉祥航空公司-HO</option>
+                <option value="KY">K-昆明航空有限公司-KY</option>
+                <option value="QW">Q-青岛航空公司-QW</option>
+                <option value="3U">S-四川航空公司-3U</option>
+                <option value="SC">S-山东航空公司-SC</option>
+                <option value="ZH">S-深圳航空公司-ZH</option>
+                <option value="FM">S-上海航空公司-FM</option>
+                <option value="GS">T-天津航空有限责任公司-GS</option>
+                <option value="PN">X-西部航空公司-PN</option>
+                <option value="TV">X-西藏航空公司-TV</option>
+                <option value="JR">X-幸福航空有限责任公司-JR</option>
+                <option value="MF">X-厦门航空有限公司-MF</option>
+                <option value="8L">X-祥鹏航空公司-8L</option>
+                <option value="YI">Y-英安航空公司-YI</option>
+                <option value="KN">Z-中国联合航空公司-KN</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-4 col-form-label text-right">排序方式</label>
+          <div class="col-8">
+            <select v-model="sortBy" class="form-control" >
+                    <option value="0">起飞时间升序</option>
+                    <option value="1">起飞时间降序</option>
+                    <option value="2">最低价格升序</option>
+                    <option value="3">最低价格降序</option>
+            </select>
+          </div>
         </div>
 
       </div>
-
-      <my-city-picker :show="showPicker" @close="cityPickerClosed(false)" :target="targetName"></my-city-picker>
-
-      <div id="loadingToast" v-show="searching">
-        <div class="weui-mask_transparent"></div>
-        <div class="weui-toast">
-          <i class="weui-loading weui-icon_toast"></i>
-          <p class="weui-toast__content">数据加载中</p>
-        </div>
+      <div class="card-footer text-center text-white">
+        <my-button @click="search()" type="info">查询航班</my-button>
       </div>
     </div>
+
+    <my-city-picker :show="showPicker" @close="cityPickerClosed(false)" :target="targetName"></my-city-picker>
+
+    <div id="loadingToast" v-show="searching">
+      <div class="weui-mask_transparent"></div>
+      <div class="weui-toast">
+        <i class="weui-loading weui-icon_toast"></i>
+        <p class="weui-toast__content">数据加载中</p>
+      </div>
+    </div>
+
   </div>
 </template>
 
@@ -70,12 +111,13 @@ export default {
   },
   data () {
     return {
-      errMsg: '',
-      errAlert: false,
       searching: false,
       targetName: '',
       showDialog: false,
-      showPicker: false
+      showPicker: false,
+
+      onlyCarrier: '',
+      sortBy: 0
     }
   },
   computed: {
@@ -84,6 +126,16 @@ export default {
     ddate () { return this.$store.state.searchParams.ddate },
     dcityName () { return this.$store.state.searchParams.dcityName },
     acityName () { return this.$store.state.searchParams.acityName }
+    // onlyCarrier () { return this.$store.state.searchParams.onlyCarrier },
+    // sortBy () { return this.$store.state.searchParams.sortBy }
+  },
+  watch: {
+    onlyCarrier (curVal, oldVal) {
+      this.$store.commit('setOnlyCarrier', curVal)
+    },
+    sortBy (curVal, oldVal) {
+      this.$store.commit('setSortBy', parseInt(curVal))
+    }
   },
   created: function () {
     if (this.dcity == null || this.dcity.length === 0) {
@@ -121,7 +173,6 @@ export default {
     }
   },
   mounted: function () {
-    // console.log('SearchForm.vue is mounted.');
     var self = this
     var today = new Date()
 
@@ -145,6 +196,17 @@ export default {
   methods: {
     back: function () {
       this.$router.go(-1)
+    },
+    showErrMsg: function (msg, msgType) {
+      if (msgType === undefined) {
+        msgType = 'danger'
+      }
+      var o = {
+        'errMsg': msg,
+        'errMsgType': msgType,
+        'timeout': 2500
+      }
+      this.$store.dispatch('showAlertMsg', o)
     },
     search: function () {
       if (this.dcity === undefined || this.acity === undefined || this.ddate === undefined) {
@@ -194,17 +256,7 @@ export default {
     acityFocusedEvent: function () {
       this.targetName = 'Acity'
       this.showPicker = true
-    },
-    showErrMsg: function (msg) {
-      this.errMsg = msg
-      this.errAlert = true
-      setTimeout(() => { this.errAlert = false }, 2500)
     }
-  },
-  beforeRouteEnter (to, from, next) {
-    next(vm => {
-      // 通过 `vm` 访问组件实例
-    })
   }
 }
 </script>

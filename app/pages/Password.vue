@@ -1,46 +1,43 @@
 <template>
-  <div id="register" class="container-fluid">
-    <div class="weui-toptips weui-toptips_warn" style="display:block" v-show="errAlert">{{errMsg}}</div>
+  <div id="register" class="row">
 
-    <div class="row">
-      <div class="card col-12" style="padding-left: 0; padding-right: 0;">
-        <div class="card-header text-center">
-          找回密码
-        </div>
-        <div class="card-block">
-          <form>
-            <div class="form-group">
-              <input type="input" class="form-control" placeholder="手机号"  v-model="mobile">
-              <p class="form-text text-muted">
-                注册时填写的手机号
-              </p>
-            </div>
-            <div class="form-group">
-              <div class="row no-gutters">
-                <div class="col-6">
-                  <input type="input" class="form-control" placeholder="验证码" v-model="vcode">
-                </div>
-                <div class="col-6">
-                  <img id="kaptchaImage1" class="img-fluid" alter="点击图片刷新" />                    
-                </div>
+    <div class="card col-12 px-0">
+      <div class="card-header text-center">
+        找回密码
+      </div>
+      <div class="card-block">
+        <form>
+          <div class="form-group">
+            <input type="input" class="form-control" placeholder="手机号"  v-model="mobile">
+            <p class="form-text text-muted">
+              注册时填写的手机号
+            </p>
+          </div>
+          <div class="form-group">
+            <div class="row no-gutters">
+              <div class="col-6">
+                <input type="input" class="form-control" placeholder="验证码" v-model="vcode">
+              </div>
+              <div class="col-6">
+                <img id="kaptchaImage1" class="img-fluid  pl-1" alter="点击图片刷新" />                    
               </div>
             </div>
-          </form>
-        </div>
-        <div class="card-footer">
-          <button class="btn btn-success btn-block" type="button" @click.stop="findPassword()">找回密码</button>
-        </div>
+          </div>
+        </form>
       </div>
-
-      <div id="loadingToast" v-show="loading">
-        <div class="weui-mask_transparent"></div>
-        <div class="weui-toast">
-          <i class="weui-loading weui-icon_toast"></i>
-          <p class="weui-toast__content">{{loadingText}}</p>
-        </div>
+      <div class="card-footer">
+        <button class="btn btn-success btn-block" type="button" @click.stop="findPassword()">找回密码</button>
       </div>
-
     </div>
+
+    <div id="loadingToast" v-show="loading">
+      <div class="weui-mask_transparent"></div>
+      <div class="weui-toast">
+        <i class="weui-loading weui-icon_toast"></i>
+        <p class="weui-toast__content">{{loadingText}}</p>
+      </div>
+    </div>
+
   </div>
 </template>
 
@@ -103,9 +100,7 @@ export default {
       })
     },
     showErrMsg: function (msg) {
-      this.errMsg = msg
-      this.errAlert = true
-      setTimeout(() => { this.errAlert = false }, 2500)
+      this.$store.dispatch('showAlertMsg', { 'errMsg': msg })
     },
     waitForJump: function () {
       setTimeout(() => this.$router.push('/login'), 1500)

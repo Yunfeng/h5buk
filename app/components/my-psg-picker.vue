@@ -1,24 +1,24 @@
 <template>
   <div id="searchPsg" class="weui-mask" v-show="show">
     <div class="weui-search-bar weui-search-bar_focusing" id="search_bar">
-        <a href="javascript:" class="weui-search-bar__cancel-btn" id="search_cancel" @click="cancel()">取消</a>
+        <a href="javascript:" class="weui-search-bar__cancel-btn text-danger ml-1" id="search_cancel" @click="cancel()">取消</a>
         <form class="weui-search-bar__form">
             <div class="weui-search-bar__box">
                 <i class="weui-icon-search"></i>
                 <input type="search" class="weui-search-bar__input" v-model="searchWord" ref="s"/>
                 <a href="javascript:" class="weui-icon-clear" id="search_clear"></a>
             </div>
-            <label for="search_input" class="weui-search-bar__label" id="search_text" @click="searchPsg()">
+            <label for="search_input" class="weui-search-bar__label" id="search_text" @click.stop="searchPsg()">
                 <i class="weui-icon-search"></i>
                 <span>搜索</span>
             </label>
         </form>
-        <a href="javascript:" class="weui-search-bar__cancel-btn" id="search_cancel" @click="searchPsg()">查找</a>
+        <a href="javascript:void(0)" class="weui-search-bar__cancel-btn" id="search_cancel" @click="searchPsg()">查找</a>
     </div>
     <div class="weui-cells weui-cells_access container mt-0" id="search_show">
       <div class="row">
-        <div class="card col-12" style="padding-left: 0; padding-right: 0;">
-          <table class="table table-hover">
+        <div class="card col-12 px-0">
+          <table class="table table-sm table-hover">
             <thead>
                 <tr>
                 <th>姓名</th>
@@ -35,7 +35,7 @@
                       <small>{{psg.passportNo}}</small>
                     </td>
                     <td>
-                        <button type="button" class="btn btn-outline-info bt-sm " @click.stop="selectThisPsg(index);">√</button>
+                        <button type="button" class="btn btn-outline-info btn-sm " @click.stop="selectThisPsg(index);">√</button>
                     </td>
                 </tr>
             </tbody>

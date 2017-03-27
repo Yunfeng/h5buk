@@ -1,27 +1,31 @@
 <template>
-  <div id="book-form" class="container-fluid">
-    <div class="weui-toptips weui-toptips_warn" style="display:block" v-show="errAlert">{{errMsg}}</div>
-
-    <div class="row bg-info">
-      <div class="col-1">
-          <span @click="back()"><i class="fa fa-angle-left text-white fa-2" aria-hidden="true"></i></span>
-      </div>         
-      <div class="col-10 text-center">
-          机票预定 
-      </div>         
-      <div class="col-1">
-          
-      </div>         
+  <div id="book-form" class="row">
+    <div class="col-12 bg-info text-center text-white">
+      <span @click="back()" class="float-left"><i class="fa fa-angle-left fa-2" aria-hidden="true"></i></span>
+      机票预定 
     </div> 
 
     <!-- 航班信息 -->
-    <div class="card">
-      <div class="card-block" v-for="(flt, index) in bookFlights">
-        <div class="weui-flex">
-            <div class="weui-flex__item"><div class="text-center">{{flt.ddate}} {{flt.dtime}}</div></div>
+    <div class="card col-12 px-0 border-0 ">
+      <div class="card-block pt-0 px-0" v-for="(flt, index) in bookFlights">
+        <div class="weui-flex bg-faded">
+          <div class="weui-flex__item">
+            <span class="float-right text-danger mr-2">
+                <a href="javascript:void(0)"  @click.stop="removeFlightInfo(index)">
+                  <i class="fa fa-times" aria-hidden="true"></i>
+                </a>
+            </span>
+          </div>
         </div>
         <div class="weui-flex">
-            <div class="weui-flex__item"><div class="text-center">{{flt.dportName}} 至 {{flt.aportName}}</div></div>
+            <div class="weui-flex__item"><div class="text-center">{{flt.dportName}}</div></div>
+            <div class="weui-flex__item"><div class="text-center"><small>至</small></div></div>
+            <div class="weui-flex__item"><div class="text-center">{{flt.aportName}}</div></div>
+        </div>
+        <div class="weui-flex bg-faded">
+            <div class="weui-flex__item"><div class="text-center">{{flt.ddate}}</div></div>
+            <div class="weui-flex__item"><div class="text-center">{{flt.showDtime}}</div></div>
+            <div class="weui-flex__item"><div class="text-center">{{flt.showAtime}}</div></div>
         </div>
 
         <div class="weui-flex">
@@ -31,19 +35,16 @@
             <div class="weui-flex__item text-center">
               {{flt.subclass}}
             </div>
-            <div class="weui-flex__item"><div class="text-right"><i class="fa fa-rmb"></i>{{flt.price}}</div></div>
-            <div class="weui-flex__item">
-              <div class="text-right text-danger">
-                <a href="javascript:void(0)"  @click.stop="removeFlightInfo(index)">
-                  <i class="fa fa-times" aria-hidden="true"></i>
-                </a>
-              </div>
+            <div class="weui-flex__item text-center">
+              <span class="text-danger">
+                <i class="fa fa-rmb text-warning"></i> {{flt.price}}
+              </span>
             </div>
         </div>
       </div>
     </div>
     <!-- 表单 -->
-    <form id="frmOrder" class="form-horizontal">
+    <form id="frmOrder" class="col-12 px-0">
       <input type="hidden" name="tmcPolicyApply.policyId" :value="policyId" />
       <input type="hidden" name="tmcPolicyApply.ticketAmount" value="0" />
       <template v-for="(fltInfo, index) in bookFlights">
@@ -60,21 +61,21 @@
         <input type="hidden" :name="'tmcPolicyApply.flights[' + index + '].returnPoint'" :value="fltInfo.returnPoint" />
       </template>
 
-      <div class="row" v-for="(psg, index) in psgInfos">
-        <div class="card card-outline-inf col-12">
-            <div class="card-block" style="padding: 0">
-              {{index+1}} 
+
+        <div class="card card-outline-inf col-12" v-for="(psg, index) in psgInfos">
+            <div class="card-block p-0">
+              <span class="text-faded"><small>乘客 {{index+1}}</small></span>
               <button type="button" @click.stop="selectPsg(index)" title="搜索并选择乘机人">
-                <i class="fa fa-users" aria-hidden="true"></i>
+                <i class="fa fa-search-plus text-success" aria-hidden="true"></i>
               </button> 
               <a href="javascript:void(0)" @click.stop="deletePsg(index)" class="float-right">
-                <i class="fa fa-times" aria-hidden="true"></i>
+                <i class="fa fa-times text-danger" aria-hidden="true"></i>
               </a>
             </div>
 
             <div class="card-block" style="padding: 0">
               <div class="form-group">
-                <input type="text" class="form-control" :name="'tmcPolicyApply.passengers[' + index + '].psgName'" placeholder="乘机人姓名" v-model="psg.psgName"/>
+                <input type="text" class="form-control" :name="'tmcPolicyApply.passengers[' + index + '].psgName'" placeholder="乘客姓名" v-model="psg.psgName"/>
               </div>
               <div class="form-group">
                 <input type="text" class="form-control" :name="'tmcPolicyApply.passengers[' + index + '].idNo'" placeholder="证件号" v-model="psg.idNo" />
@@ -90,15 +91,29 @@
 
             </div>
         </div>
-      </div>
-      <div class="weui-flex">
+
+      <div class="weui-flex mt-1">
         <div class="weui-flex__item">
           <div class="placeholder">
-            <button type="button" @click="addPsg()" class="btn btn-xs btn-primary">
-              <i class="fa fa-user-plus" aria-hidden="true"></i>
+            <button type="button" @click.stop="addPsg()" class="btn btn-sm btn-outline-primary">
+              <small>添加乘客</small>
             </button>
           </div>
         </div>
+      </div>
+
+
+      <div class="card col-12 bg-faded border-0">
+        <div class="card-block px-0">
+          <div class="form-group">
+            <input type="text" class="form-control" name="tmcPolicyApply.linkPhone" placeholder="联系电话"/>
+          </div>
+          <div class="form-group">
+            <input type="text" class="form-control" name="tmcPolicyApply.remark" placeholder="备注" />
+          </div>
+        </div>   
+
+
       </div>
 
       <div class="weui-btn-area">
@@ -154,9 +169,7 @@ export default {
       this.$router.go(-1)
     },
     showErrMsg: function (msg) {
-      this.errMsg = msg
-      this.errAlert = true
-      setTimeout(() => { this.errAlert = false }, 1500)
+      this.$store.dispatch('showAlertMsg', { 'errMsg': msg })
     },
     addPsg: function () {
       this.$store.commit('addPsg')
@@ -178,7 +191,7 @@ export default {
 
       $.ajax({
         type: 'post',
-        url: '/Flight/orders/createFlightOrder.do',
+        url: '/Flight/orders/createFlightOrder',
         data: $('#frmOrder').serialize(),
         dataType: 'json',
         success: function (jsonResult) {
@@ -189,7 +202,7 @@ export default {
             self.$store.commit('resetOrderInfo')
 
             self.$store.commit('setOrderId', jsonResult.returnCode)
-            self.$router.push('/order/detail')
+            self.$router.push('/order/detail/' + jsonResult.returnCode)
           }
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -205,15 +218,10 @@ export default {
     selectPsg: function (index) {
       this.psgSelected = index
       this.showPicker = true
-      // console.log('selectPsg: ' + this.psgSelected);
     },
     psgPickerClosed: function (status, name, idType, idNo) {
       this.showPicker = false
-      // console.log(status);
       if (status === 1) {
-        // console.log(name);
-        // console.log(idType);
-        // console.log(idNo);
         this.$store.commit('updatePsg', { 'index': this.psgSelected, 'name': name, 'idType': idType, 'idNo': idNo })
       }
     }
@@ -221,7 +229,7 @@ export default {
   beforeRouteEnter (to, from, next) {
     next(vm => {
       // 通过 `vm` 访问组件实例
-      // console.log('i m in.');
+      window.scroll(0, 0)
     })
   }
 }

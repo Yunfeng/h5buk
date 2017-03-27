@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Vuex from 'vuex'
 import Tabbar from './components/my-tabbar.vue'
+import TopTips from './components/my-top-tips.vue'
 import MyHome from './pages/Home.vue'
 import $ from 'jquery'
 require('./main.css')
@@ -43,6 +44,8 @@ const MyNav          = resolve => require(['./pages/Nav.vue'], resolve)
 const MyRecharge      = () => System.import('./pages/Recharge.vue')
 const MyPayResult     = () => System.import('./pages/Recharge-result.vue')
 
+const MyTpr    = resolve => require(['./pages/Tpr.vue'], resolve)
+
 const routes = [
   {path: '/',              component: MyNav},
   {path: '/home',          component: MyHome},
@@ -78,6 +81,7 @@ const routes = [
   {path: '/eterm',         component: MyEterm},
   {path: '/recharge',      component: MyRecharge},
   {path: '/payresult/:id',      component: MyPayResult},
+  {path: '/tpr',      component: MyTpr},
 ]
 
 let router = new Router({
@@ -88,12 +92,15 @@ const store = new Vuex.Store({
   state: {
     logined: false,
     username: '',
+    fullname: '',
     searchParams: {
       dcity: '',
       dcityName: '',
       acity: '',
       acityName: '',
-      ddate: ''
+      ddate: '',
+      sortBy: 0,
+      onlyCarrier: '',
     },
     order: {
       flights: [],
@@ -114,10 +121,42 @@ const store = new Vuex.Store({
     policyDetail: null,
     pnrDetail: null,
 
-    //pnr ctcm list page
+    errAlert: false,
+    errMsg: '',
+    errMsgType: 'warning',
 
+    wxInfo: {
+      code: '',
+      openid: '',
+      nickname: '',
+      headimgurl: '',
+      subscribe: 0
+    }
   },
   mutations: {
+    init (state) {
+      // 初始化，读取cookie中的数据
+      var username = $.cookie('username')
+      if (username !== undefined) {
+        state.username = username
+        state.logined = true
+      }
+
+      var openid = $.cookie('openid')
+      if (openid !== undefined) {
+        state.wxInfo.openid = openid
+
+        var nickname = $.cookie('nickname')
+        if (nickname !== undefined) {
+          state.wxInfo.nickname = nickname
+        }
+        
+        var headimgurl = $.cookie('headimgurl')
+        if (headimgurl !== undefined) {
+          state.wxInfo.headimgurl = headimgurl
+        }
+      }      
+    },
     resetOrderInfo (state) {
       state.order.pnrNo = ''
       state.order.pnrDetail = ''
@@ -137,15 +176,16 @@ const store = new Vuex.Store({
     },
     logout(state)  {
       state.historyStep = -1;
-      state.username = "",
+      state.username = ""
       state.logined = false;
 
       $.removeCookie('username', { path: '/' }); 
       $.removeCookie('token', { path: '/' }); 
     },
     setUsername (state, payload) {
-      state.username = payload.username;
-      state.logined = payload.logined;
+      state.username = payload.username
+      state.fullname = payload.fullname
+      state.logined = payload.logined
     },
     setUserInfo(state, payload) {
       state.userInfo.freeBalance = payload.balance;
@@ -164,6 +204,12 @@ const store = new Vuex.Store({
     setDdate(state, payload) {
       state.searchParams.ddate = payload;
     }, 
+    setOnlyCarrier(state, payload) {
+      state.searchParams.onlyCarrier = payload
+    },
+    setSortBy(state, payload) {
+      state.searchParams.sortBy = payload
+    },
     addFlight(state, payload) {
       state.order.flights.push(payload);
       if (state.order.psgs.length === 0) {
@@ -171,8 +217,6 @@ const store = new Vuex.Store({
       }
     },
     addPsg(state, p) {
-      //console.log(p);
-      
       if (p === undefined || p === null) {
         p = {psgName:'', idNo: '', idType: 1};
       }
@@ -212,6 +256,70 @@ const store = new Vuex.Store({
     setPnrDetail(state, payload) {
       state.pnrDetail = payload;
     }
+  },
+  actions: {
+    showAlertMsg(context, payload) {
+      console.log(payload)
+      if (payload.errMsgType === undefined) {
+        context.state.errMsgType = 'warning'
+      } else {
+        context.state.errMsgType = payload.errMsgType
+      }
+
+      context.state.errMsg = payload.errMsg
+      context.state.errAlert = true
+
+      var timeout = payload.timeout
+      if (timeout === undefined || timeout === null) timeout = 2500
+
+      setTimeout(() => { context.state.errAlert = false }, timeout)
+    },  
+    setWxCode(context, payload) {
+      context.state.wxInfo.code = payload
+      context.dispatch('getWxOpenid')
+    },
+    getWxOpenid(context) {
+      $.ajax({
+        type: 'post',
+        url: '/Flight/weixin/getOpenId',
+        data: {
+          'code': context.state.wxInfo.code
+        },
+        dataType: 'json',
+        success: function (jsonResult) {
+          if (jsonResult !== null) {
+            context.dispatch('setWxOpenid', jsonResult.openid)
+          }
+        }
+      })   
+    },
+    setWxOpenid(context, payload) {
+      context.state.wxInfo.openid = payload
+      $.cookie('openid', payload, { expires: 30, path: '/' })
+
+      context.dispatch('getWxUserInfo')
+    },
+    getWxUserInfo(context) {
+      $.ajax({
+        type: 'post',
+        url: '/Flight/weixin/getUserInfo',
+        data: {
+          'openid': context.state.wxInfo.openid
+        },
+        dataType: 'json',
+        success: function (jsonResult) {
+          if (jsonResult !== null) {
+            context.state.wxInfo.nickname = jsonResult.nickname
+            $.cookie('nickname', jsonResult.nickname, { expires: 30, path: '/' })
+
+            context.state.wxInfo.headimgurl = jsonResult.headimgurl
+            $.cookie('headimgurl', jsonResult.headimgurl, { expires: 30, path: '/' })
+
+            context.state.wxInfo.subscribe = jsonResult.subscribe
+          }
+        }
+      })   
+    }      
   }
 })
 
@@ -219,7 +327,8 @@ const app = new Vue({
   el: '#app',
   store,
   components: {
-    'my-tabbar': Tabbar
+    'my-tabbar': Tabbar,
+    'my-top-tips': TopTips
   },
   router: router
 })

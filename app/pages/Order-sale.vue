@@ -1,28 +1,19 @@
 <template>
-	<div id="order" class="container-fluid">
-    <div class="weui-toptips weui-toptips_warn" style="display:block" v-show="errAlert">{{errMsg}}</div>
-
-    <div class="row bg-info">
-      <div class="col-1">
-          <span @click="back()"><i class="fa fa-angle-left weui-tabbar__icon" aria-hidden="true"></i></span>
-      </div>         
-      <div class="col-10 text-center">
-          卖家订单
-      </div>         
-      <div class="col-1">
-          
-      </div>         
+	<div id="order" class="row">
+    <div class="col-12 bg-info text-center text-white">
+      <span @click="back()" class="float-left"><i class="fa fa-angle-left fa-2" aria-hidden="true"></i></span>
+        我的卖单      
     </div> 
 
-    <div class="row">
-      <div class="card col-12" v-for="info in orders" @click="showDetail(info)">
-        <div class="card-block"  style="padding: 0;">          
-          <p class="card-text">{{info.shortDesc}}</p>
-          <span class="float-right">总金额：{{info.totalPrice}}</span>
-          <span>订单状态：{{showStatusDesc(info.status)}}</span>
-        </div>
+
+    <div class="card col-12" v-for="info in orders" @click="showDetail(info)" :class="changeBgByStatus(info.status)">
+      <div class="card-block"  style="padding: 0;">          
+        <p class="card-text"><small>{{info.shortDesc}}</small></p>
+        <span class="float-right">总金额：{{info.totalPrice}}</span>
+        <span>订单状态：{{showStatusDesc(info.status)}}</span>
       </div>
     </div>
+
 
     <div id="loadingToast" v-show="loading">
       <div class="weui-mask_transparent"></div>
@@ -58,10 +49,13 @@ export default {
     back: function () {
       this.$router.go(-1)
     },
-    showErrMsg: function (msg) {
-      this.errMsg = msg
-      this.errAlert = true
-      setTimeout(() => { this.errAlert = false }, 1500)
+    changeBgByStatus: function (orderStatus) {
+      switch (orderStatus) {
+        case 0: return 'bg-info'
+        case 8: return 'bg-success'
+        case 12: return 'bg-warning'
+        default: return 'bg-faded'
+      }
     },
     search: function () {
       var self = this
@@ -92,9 +86,8 @@ export default {
         }
       })
     },
-    showDetail: function (orderInfo) {
-      this.$store.commit('setOrderDetail', orderInfo)
-      this.$router.push('/order/detail')
+    showDetail: function (info) {
+      this.$router.push('/order/detail/' + info.id)
     },
     showStatusDesc: function (status) {
       var desc = ''

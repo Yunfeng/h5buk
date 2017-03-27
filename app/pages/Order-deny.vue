@@ -1,6 +1,5 @@
 <template>  
-	<div id="order-ticket" class="container-fluid">
-    <div class="weui-toptips weui-toptips_warn" style="display:block" v-show="errAlert">{{errMsg}}</div>
+	<div id="order-deny" class="row">
     <div id="loadingToast" v-show="loading">
       <div class="weui-mask_transparent"></div>
       <div class="weui-toast">
@@ -9,39 +8,39 @@
       </div>
     </div>
 
-
-    <div class="weui-cells__title text-center">拒单原由</div>
-    <div class="weui-cells">
-      <div class="weui-cell weui-cell_select weui-cell_select-after">
-        <div class="weui-cell__hd">
-          <label for="" class="weui-label">理由分类</label>
+    <div class="card col-12 border-0">
+      <div class="card-header text-center">拒单理由</div>
+      <div class="card-block">
+        <div class="form-group row">
+          <label class="col-4 col-form-label text-right">理由类别</label>
+          <div class="col-8">
+            <select class="form-control" v-model="denyCode">
+              <option value="401">价格少算</option>
+              <option value="402">外放无位，请授权</option>
+              <option value="499">其它</option>
+            </select>
+            <span class="form-text text-muted">
+              <small>请准确选择</small>
+            </span>
+          </div>
         </div>
-        <div class="weui-cell__bd">
-          <select class="weui-select" v-model="denyCode">
-            <option value="401">价格少算</option>
-            <option value="402">外放无位，请授权</option>
-            <option value="499">其它</option>
-          </select>
+
+        <div class="form-group row">
+          <label class="col-4 col-form-label text-right">理由说明</label>
+          <div class="col-8">
+            <input type="text" class="form-control" placeholder="拒绝理由详细说明" v-model="denyReason" />
+            <span class="form-text text-muted">
+              <small>必填，不多于50字</small>
+            </span>
+          </div>
         </div>
       </div>
-      <div class="weui-cells__tips text-right">请准确选择</div>
-      
-      <div class="weui-cell">
-        <div class="weui-cell__hd"><label class="weui-label">理由说明</label></div>
-        <div class="weui-cell__bd">
-          <input type="text" class="weui-input" placeholder="拒绝理由详细说明" v-model="denyReason" />
-        </div>
-      </div>    
-      <div class="weui-cells__tips text-right">必填，不多于50字</div>
-    </div>
-    <div class="weui-btn-area">
-      <button type="button" class="weui-btn weui-btn_primary" @click.stop="denyOrder()">确定</button>
-      <button type="button" class="weui-btn weui-btn_default" @click.stop="close()">取消</button>
     </div>
 
-
-
-                
+    <div class='card col-12 border-0 mb-2'>
+      <button type='button' class='btn btn-success w-100' @click.stop='denyOrder()'>确定</button>
+      <button type='button' class='btn btn-outline-danger w-100 mt-3' @click.stop='close()'>取消</button>
+    </div>
     
   </div>
 </template>
@@ -57,7 +56,6 @@ export default {
   },
   data () {
     return {
-      errAlert: false,
       loading: false,
       loadingText: '数据加载中',
 
@@ -77,9 +75,7 @@ export default {
       this.$router.go(-1)
     },
     showErrMsg: function (msg) {
-      this.errMsg = msg
-      this.errAlert = true
-      setTimeout(() => { this.errAlert = false }, 1500)
+      this.$store.commit('showAlertMsg', msg)
     },
     denyOrder: function () {
       // 卖家：拒单

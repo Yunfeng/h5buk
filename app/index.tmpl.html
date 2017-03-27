@@ -10,10 +10,13 @@
   <link rel="stylesheet" href="/assets/css/font-awesome.min.css" />
 </head>
 <body ontouchstart >
-	<div id="app">
-    <transition name="fade" mode="out-in">
+	<div id="app" class="container-fluid">
+    <my-top-tips></my-top-tips>
+
+    <transition name="fade" mode="out-in" :duration="{ enter: 100, leave: 300 }">
 			<router-view></router-view>
 		</transition>
+
 		<my-tabbar></my-tabbar>
 	</div>
 

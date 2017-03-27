@@ -1,12 +1,10 @@
 <template>
-	<div class="weui-tab">
-		<div class="weui-tab__panel">
-            &nbsp;
-		</div>
+	<div class="weui-tab row clearfix">
+		<div class="weui-tab__panel"></div>
 		<div class="weui-tabbar" style="position:fixed;bottom:0px;">
       <router-link to="/search" class="weui-tabbar__item">
         <div class="weui-tabbar__icon">
-            <i class="fa fa-plane fa-2" aria-hidden="true"></i>
+            <i class="fa fa-plane fa-2 text-primary" aria-hidden="true"></i>
         </div>
         <p class="weui-tabbar__label">
             机票

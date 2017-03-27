@@ -1,6 +1,5 @@
 <template>  
-	<div id='order-ticket' class='container-fluid'>
-    <div class='weui-toptips weui-toptips_warn' style='display:block' v-show='errAlert'>{{errMsg}}</div>
+	<div id='order-ticket' class='row'>
     <div id='loadingToast' v-show='loading'>
       <div class='weui-mask_transparent'></div>
       <div class='weui-toast'>
@@ -9,34 +8,44 @@
       </div>
     </div>
     
-    <form id='frmFillTicketNo'>
-    <div class='weui-cells__title text-center'>填写票号</div>
-    <div class='weui-cells weui-cells_form'>
-      
+    <form id='frmFillTicketNo' class="col-12 px-0">
       <input type='hidden' name='tmcOrder.id' :value='info.id' />
-      <template v-for='(psg, index) in info.passengers'>
-        <input type='hidden' :name=''tmcOrder.passengers[' + index + '].id'' :value='psg.id' />
-        <input type='hidden' :name=''tmcOrder.passengers[' + index + '].psgName'' :value='psg.psgName' />
-        <div class='weui-cell'>
-          <div class='weui-cell__hd'><label class='weui-label'>姓名</label></div>
-          <div class='weui-cell__bd'>
-            {{psg.psgName}}
+    
+      <div class="card card-outline-info col-12 border-0 px-0">
+        <div class="card-header text-center">
+          填写票号
+        </div>
+        <div class="card-block" v-for="(psg, index) in info.passengers">
+          <input type='hidden' :name="'tmcOrder.passengers[' + index + '].id'" :value='psg.id' />
+          <input type='hidden' :name="'tmcOrder.passengers[' + index + '].psgName'" :value='psg.psgName' />
+
+          <div class="form-group row" >
+            <label class="col-4 col-form-label text-right">姓名</label>
+            <div class="col-8">
+              {{psg.psgName}}
+            </div>
           </div>
+
+          <div class="form-group row" >
+            <label class="col-4 col-form-label text-right">票号</label>
+            <div class="col-8">
+              <input class='form-control' :name="'tmcOrder.passengers[' + index + '].ticketNo'" v-model='psg.ticketNo' placeholder='填写票号' />
+              <div class="form-control-feedback"><strong>{{psg.ticketNo}}</strong></div>
+              <small class="form-text text-muted">请准确填写票号</small>
+            </div>
+          </div>
+
         </div>
-        <div class='weui-cell'>
-              <div class='weui-cell__hd'><label for='' class='weui-label'>票号</label></div>
-              <div class='weui-cell__bd'>
-                  <input class='weui-input' :name=''tmcOrder.passengers[' + index + '].ticketNo'' v-model='psg.ticketNo' placeholder='此处填写票号' />
-              </div>
-        </div>
-        <div class='weui-cells__tips text-right'><strong>{{psg.ticketNo}}</strong></div>
-        
-      </template>
-    </div>
-    <div class='weui-btn-area'>
-      <button type='button' class='weui-btn weui-btn_primary' @click.stop='saveTicketNoTmcOrder()'>保存票号</button>
-      <button type='button' class='weui-btn weui-btn_default' @click.stop='close()'>取消</button>
-    </div>
+
+      </div>
+      
+      
+      
+
+      <div class='weui-btn-area'>
+        <button type='button' class='weui-btn weui-btn_primary' @click.stop='saveTicketNoTmcOrder()'>保存票号</button>
+        <button type='button' class='weui-btn weui-btn_default' @click.stop='close()'>取消</button>
+      </div>
     </form>
     
 
@@ -60,7 +69,6 @@ export default {
   },
   data () {
     return {
-      errAlert: false,
       loading: false,
       loadingText: '数据加载中'
     }
@@ -68,17 +76,12 @@ export default {
   computed: {
     info () { return this.$store.state.orderDetail }
   },
-  mounted: function () {
-    // this.search();
-  },
   methods: {
     close: function () {
-      this.$router.push('/order/detail')
+      this.$router.go(-1)
     },
-    showErrMsg: function (msg) {
-      this.errMsg = msg
-      this.errAlert = true
-      setTimeout(() => { this.errAlert = false }, 1500)
+    showErrMsg: function (msg, msgType) {
+      this.$store.dispatch('showAlertMsg', { 'errMsg': msg, 'errMsgType': msgType })
     },
     saveTicketNoTmcOrder: function () {
       var self = this
@@ -88,6 +91,8 @@ export default {
 
       var opResult = false
 
+      console.log($('#frmFillTicketNo').serialize())
+
       $.ajax({
         type: 'post',
         url: '/Flight/orders/fillTicketNo.do',
@@ -95,7 +100,7 @@ export default {
         dataType: 'json',
         success: function (jsonResult) {
           if (jsonResult.status === 'OK') {
-            self.showErrMsg('操作成功')
+            self.showErrMsg('操作成功', 'success')
             opResult = true
           } else {
             self.showErrMsg('支付失败： ' + jsonResult.errmsg)
@@ -104,18 +109,12 @@ export default {
         complete: function () {
           self.loading = false
           if (opResult) {
-            self.$store.commit('setOrderId', self.info.id)
+            // self.$store.commit('setOrderId', self.info.id)
             self.close()
           }
         }
       })
     }
-  },
-  beforeRouteEnter (to, from, next) {
-    next(vm => {
-      // 通过 `vm` 访问组件实例
-      // console.log('i m in.');
-    })
   }
 }
 </script>

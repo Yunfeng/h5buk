@@ -1,209 +1,190 @@
 <template>
-	<div id="flight-result" class="container-fluid">
-    <div class="weui-toptips weui-toptips_warn" style="display:block" v-show="errAlert">{{errMsg}}</div>
-
+	<div id="flight-result" class="row">
     <template v-if="listShowing">
-      <div class="row bg-info">
-        <div class="col-12 text-center text-white">
-            <span @click="back()" class="float-left"><i class="fa fa-angle-left text-white" aria-hidden="true"></i></span>
-             {{dcityName}}-{{acityName}} {{ddate}}
-             
+      <div class="col-12 bg-info text-center text-white">
+          <span @click="back()" class="float-left">
+            <i class="fa fa-angle-left fa-2" aria-hidden="true"></i>
+          </span>
+          {{dcityName}}-{{acityName}} {{ddate}}
 
           <span @click="showFilter()" class="float-right">
             ({{showCount}}/{{totalCount}})
-            <i class="fa fa-filter" aria-hidden="true"></i>
+            <i class="fa fa-filter fa-2" aria-hidden="true">筛选</i>
           </span>   
-        </div>         
-      </div> 
+      </div>         
 
-      <div class="row">
-        <table class="table table-striped table-hover" >
-          <thead>
-              <th class="text-center">航班</th>
-              <th class="text-center hidden-sm-down">出发</th>
-              <th class="text-center hidden-sm-down">到达</th>
-              <th class="text-center">时间</th>
-              <th class="text-center">价格</th>
-          </thead>
-            <tbody>
-                <tr v-for="flight in execSort(searchFlightResults)" @click="showFlightDetail(flight)" name="flightItem">
-                    <td class="text-center">
-                      {{flight.flightNo}}
-                      <br />
-                      {{flight.carrierName}}
-                    </td>
-                    <td class="text-center hidden-sm-down">{{flight.depPortName}}</td>
-                    <td class="text-center hidden-sm-down">{{flight.arrPortName}}</td>
-                    <td class="text-center"><span class="text-info">{{flight.showDepTime}}</span> <small>{{flight.showArrTime}}</small></td>
-                    <td class="text-right">
-                        <div v-if="flight.subClassList.length > 0">
-                            <template v-if="flight.lowestPrice != null">
-                                <i class="fa fa-rmb"></i>
-                                <span class="text-danger">
-                                  <big><strong>{{flight.lowestPrice.price}}</strong></big>
-                                </span>
-                                  <i class="fa fa-long-arrow-up text-success" aria-hidden="true"></i>
+      <table class="table table-striped table-hover" >
+        <thead>
+            <th class="text-center">航班</th>
+            <th class="text-center hidden-sm-down">出发</th>
+            <th class="text-center hidden-sm-down">到达</th>
+            <th class="text-center">时间</th>
+            <th class="text-center">价格</th>
+        </thead>
+          <tbody>
+              <tr v-for="flight in execSort(searchFlightResults)" @click="showFlightDetail(flight)" name="flightItem">
+                  <td class="text-center">
+                    {{flight.flightNo}}
+                    <br />
+                    {{flight.carrierName}}
+                  </td>
+                  <td class="text-center hidden-sm-down">{{flight.depPortName}}</td>
+                  <td class="text-center hidden-sm-down">{{flight.arrPortName}}</td>
+                  <td class="text-center"><span class="text-info">{{flight.showDepTime}}</span> <small>{{flight.showArrTime}}</small></td>
+                  <td class="text-right">
+                      <div v-if="flight.subClassList.length > 0">
+                          <template v-if="flight.lowestPrice != null">
+                              <i class="fa fa-rmb"></i>
+                              <span class="text-danger">
+                                <big><strong>{{flight.lowestPrice.price}}</strong></big>
+                              </span>
+                                <i class="fa fa-long-arrow-up text-success" aria-hidden="true"></i>
 
-                            </template>    
-                        </div>
-                        <div v-else>
-                            <span class="text-danger">已售完</span>
-                        </div>
-                    </td>
-                </tr>
+                          </template>    
+                      </div>
+                      <div v-else>
+                          <span class="text-danger">已售完</span>
+                      </div>
+                  </td>
+              </tr>
 
-            </tbody>
-        </table>
-      </div>
+          </tbody>
+      </table>
     </template>
 
-    <div id="flightDetail" v-show="detailShowing">
-      <template v-if="flt">
-        <div class="row bg-info">
-          <div class="col-12 text-center text-white">
-            <span @click="closeDetail()" class="float-left"><i class="fa fa-angle-left" aria-hidden="true"></i></span>
-               {{flt.flightNo}} <small>{{flt.depDate}}</small>
-          </div>         
-        </div> 
+
+    <template v-if="detailShowing && flt">
+      <div class="col-12 bg-info text-center text-white">
+        <span @click="closeDetail()" class="float-left">
+          <i class="fa fa-angle-left fa-2" aria-hidden="true"></i>
+        </span>
+        {{flt.flightNo}} <small>{{flt.depDate}}</small>
+      </div>           
+    
+      <div class="card col-12 p-0">
+        <div class="row">
+          <div class="col-4 text-center text-nowrap time"> {{flt.showDepTime}}</div>
+          <div class="col-4 text-center text-nowrap time">{{flt.showArrTime}}</div>
+          <div class="col-4 text-nowrap text-warning text-right">
+            <template v-if="flt.lowestPrice">
+              <i class="fa fa-rmb"></i> <span class="lowest-price mr-1">{{flt.lowestPrice.price}}</span>
+            </template>
+          </div>
+          <div class="clear"></div>
+        </div>
+        <div class="row">
+          <div class="col-3 text-right text-nowrap airport"> {{flt.depPortName}} {{flt.depTerminal}}</div>
+          <div class="col-3 text-center">
+            <p v-if="flt.stopover !== '0'">{{flt.stopover}}</p>
+          </div>
+          <div class="col-3 text-left text-nowrap airport">{{flt.arrPortName}} {{flt.arrTerminal}}</div>
+          <div class="col-3 text-right">&nbsp;</div>
+          <div class="clear"></div>
+        </div>
+        <div class="row">
+          <div class="col-3 text-right text-nowrap"> {{flt.carrierName}} </div>
+          <div class="col-3 text-center text-nowrap">{{flt.planeType}} </div>
+          <div class="col-3 text-center text-nowrap">
+            <p v-if="flt.codeShared === '1'">代码共享</p>
+          </div>
+          <div class="col-3 text-center text-nowrap">{{flt.carrierFlightNo}} </div>
+          <div class="clear"></div>
+        </div>          
+      </div>
+
+      <table class="table table-striped">
+        <tbody>
+          <tr v-for="info in sortSubclass(flt.subClassList)">
+            <td class="text-right px-1"><small>{{showCabinClass(info.cabinClass, info.offset)}} {{info.subClass}}</small></td>
+            <td class="text-center">
+              <span :id="'tgq-' + flt.id + '-' + info.subClass" tgq-cached="0" @click="showTGQ(flt.carrierCode, info.subClass)"><small>退改</small></span>
+            </td>
+            <td class="text-right">
+              <template v-if="info.price > 0">
+                <i class="fa fa-rmb text-warning"></i> <span class="text-danger">{{info.price}}</span>
+              </template>
+              <template v-else>
+                <span class="text-danger"><small>浮动</small></span>
+              </template>
+            </td>
+            <td class="text-right">
+              <span v-if="info.seatCount < 10" class="text-danger"><small>{{info.seatCount}}张</small></span>
+
+              <a @click.stop="bookFlight(flt, info);" :title="info.price + '元，余位' + info.seatStatus" class="btn btn-outline-info btn-sm">预定</a>              
+            </td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="card col-12 border-0">
+        <div class="card-block text-right">
+          <small>更新时间: <span class="text-success">{{showFreshness(flt.freshness)}}</span></small>
+        </div>
+      </div>
       
-        <div class="row">
-          <div class="card col-12" style="padding-left: 0; padding-right: 0;">
-            <div class="row">
-              <div class="col-3 text-center text-nowrap time">{{flt.showDepTime}}</div>
-              <div class="col-3">&nbsp;</div>
-              <div class="col-3 text-center text-nowrap time">{{flt.showArrTime}}</div>
-              <div class="col-3 text-nowrap text-warning text-right">
-                <template v-if="flt.lowestPrice">
-                  <i class="fa fa-rmb"></i> <span class="lowest-price mr-1">{{flt.lowestPrice.price}}</span>
+    </template>
+
+
+    <template v-if="filterModalShowing">
+      <div class="col-12 bg-info text-right">
+        <button type="button" class="btn btn-success m-1" @click="closeFilterDialog()">确定</button>
+      </div>
+
+      <div class="card p-0 col-12 border-0">
+        <div class="form-group row">
+          <label class="col-4 text-right">共享航班</label>
+          <div class="col-6">
+            <div class="form-check">
+              <label class="form-check-label">
+                <input class="form-check-input" type="checkbox" v-model="filter.showCodeShare"> 显示共享航班
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-4 col-form-label text-right">排序</label>
+          <div class="col-6">
+            <select v-model="sortBy0" class="form-control" >
+              <option value="0">起飞时间升序</option>
+              <option value="1">起飞时间降序</option>
+              <option value="2">最低价格升序</option>
+              <option value="3">最低价格降序</option>
+            </select>                
+          </div>
+        </div>
+
+        <div class="form-group row">
+          <label class="col-4 col-form-label text-right">航空公司</label>
+          <div class="col-6">
+            <select v-model="filterByCarrier0" class="form-control" >
+              <option value="">全部航司</option>
+                <template v-for="carrier in carrierInfos">
+                  <option v-bind:value="carrier.code">
+                    {{carrier.code}} {{carrier.name}}
+                </option>
                 </template>
-              </div>
-              <div class="clear"></div>
-            </div>
-            <div class="row">
-              <div class="col-3 text-center text-nowrap airport">{{flt.depPortName}} {{flt.depTerminal}}</div>
-              <div class="col-3 text-center">
-                <p v-if="flt.stopover !== '0'">{{flt.stopover}}</p>
-              </div>
-              <div class="col-3 text-center text-nowrap airport">{{flt.arrPortName}} {{flt.arrTerminal}}</div>
-              <div class="col-3 text-right">&nbsp;</div>
-              <div class="clear"></div>
-            </div>
-            <div class="row">
-              <div class="col-3 text-center text-nowrap ">{{flt.carrierName}} </div>
-              <div class="col-3 text-center text-nowrap">{{flt.planeType}} </div>
-              <div class="col-3 text-center text-nowrap">
-                <p v-if="flt.codeShared === '1'">代码共享</p>
-              </div>
-              <div class="col-3 text-center text-nowrap">{{flt.carrierFlightNo}} </div>
-              <div class="clear"></div>
-            </div>          
+            </select>                
           </div>
         </div>
-        <div class="row">
-          <table class="table table-striped">
-            <tbody>
-              <tr v-for="info in sortSubclass(flt.subClassList)">
-                <td class="text-center">{{showCabinClass(info.cabinClass)}}</td>
-                <td class="hidden"><small v-if="info.returnPoint > 0">返{{info.returnPoint}}% </small></td>
-                <td class="text-center">
-                  <span :id="'tgq-' + flt.id + '-' + info.subClass" tgq-cached="0" @click="showTGQ(flt.carrierCode, info.subClass)"><small>退改签</small></span>
-                </td>
-                <td class="text-right"><i class="fa fa-rmb"></i> <span class="text-danger">{{info.price}}</span> / {{info.subClass}}</td>
-                <td class="text-right">
-                  <span v-if="info.seatCount < 10"> {{info.seatCount}} </span>
-                </td>
-                <td class="text-center">
-                  <a v-on:click="bookFlight(flt.flightNo, flt.depDate, info.subClass, flt.depPort, flt.arrPort, flt.depTime, flt.arrTime, info.price, flt.depPortName, flt.arrPortName, info.returnPoint);" v-bind:title="info.price + '元，余位' + info.seatStatus" class="btn btn-outline-info btn-sm">预定</a>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-          <div class="weui-cell">
-            <div class="weui-cell__bd text-right">
-              更新时间: {{flt.freshness}}
-            </div>
-          </div>
-        
-      </template>
-    </div>
 
-    <div id="filterModal" v-show="filterModalShowing">
-      <div class="container-fluid">
-        <div class="row" style="margin-top: 5px; margin-bottom: 5px">
-          <div class="col-xs-12 text-right">              
-            <button type="button" class="btn btn-sm btn-success" @click="closeFilterDialog()">确定</button>
+        <div class="form-group row">
+          <label class="col-4 col-form-label text-right">起飞时间</label>
+          <div class="col-6">
+            <select v-model="filter.filterByTime" class="form-control" >
+              <option value="0">所有时间</option>
+                          <option value="1">00:00-06:00</option>
+                          <option value="2">06:01-12:00</option>
+                          <option value="3">12:01-18:00</option>
+                          <option value="4">18:00-23:59</option>
+            </select>                
           </div>
         </div>
+
       </div>
 
-      <div class="weui-cells__title">共享航班</div>
-      <div class="weui-cells weui-cells_checkbox">
-        <label class="weui-cell weui-check__label">
-            <div class="weui-cell__hd">
-              <input type="checkbox" title="选中则显示共享航班" class="weui-check" v-model="filter.showCodeShare">
-                <i class="weui-icon-checked"></i>
-            </div>
-            <div class="weui-cell__bd">
-                <p>显示共享航班</p>
-            </div>
-        </label>
-      </div>  
-
-      <div class="weui-cells__title">排序</div>
-      <div class="weui-cells">
-          <div class="weui-cell">
-              <div class="weui-cell__hd">
-                  <label for="" class="weui-label">排序</label>
-              </div>
-              <div class="weui-cell__bd">
-                <select v-model="filter.sortBy" class="weui-select" >
-                    <option value="0">起飞时间升序</option>
-                    <option value="1">起飞时间降序</option>
-                    <option value="2">最低价格升序</option>
-                    <option value="3">最低价格降序</option>
-                  </select>
-              </div>
-          </div>
-      </div>
-
-      <div class="weui-cells__title">航空公司筛选</div>
-      <div class="weui-cells">
-          <div class="weui-cell">
-              <div class="weui-cell__hd">
-                  <label for="" class="weui-label">航空公司</label>
-              </div>
-              <div class="weui-cell__bd">
-                <select v-model="filter.filterByCarrier" class="weui-select" >
-                        <option value="0">全部航司</option>
-                        <template v-for="carrier in carrierInfos">
-                            <option v-bind:value="carrier.code">
-                                {{carrier.code}} {{carrier.name}}
-                            </option>
-                        </template>
-                    </select>
-              </div>
-          </div>
-      </div>
-
-      <div class="weui-cells__title">起飞时间筛选</div>
-      <div class="weui-cells">
-          <div class="weui-cell">
-              <div class="weui-cell__hd">
-                  <label for="" class="weui-label">起飞时间</label>
-              </div>
-              <div class="weui-cell__bd">
-                <select v-model="filter.filterByTime" class="weui-select" >
-                        <option value="0">所有时间</option>
-                        <option value="1">00:00-06:00</option>
-                        <option value="2">06:01-12:00</option>
-                        <option value="3">12:01-18:00</option>
-                        <option value="4">18:00-23:59</option>
-                    </select>
-              </div>
-          </div>
-      </div>        
-    </div>
+     
+    </template>
 
     <div id="loadingToast" v-show="searching">
       <div class="weui-mask_transparent"></div>
@@ -261,10 +242,12 @@ export default {
       carrierInfos: [],
       filter: {
         showCodeShare: false,
-        filterByCarrier: '0',
+        filterByCarrier: '',
         filterByTime: '0',
         sortBy: 0
       },
+      filterByCarrier0: '',
+      sortBy0: '',
       avCount: 0,
       totalCount: 0,
       showCount: 0,
@@ -277,20 +260,31 @@ export default {
     acity () { return this.$store.state.searchParams.acity },
     ddate () { return this.$store.state.searchParams.ddate },
     dcityName () { return this.$store.state.searchParams.dcityName },
-    acityName () { return this.$store.state.searchParams.acityName }
+    acityName () { return this.$store.state.searchParams.acityName },
+    onlyCarrier () { return this.$store.state.searchParams.onlyCarrier },
+    sortBy () { return this.$store.state.searchParams.sortBy }
+  },
+  watch: {
+    filterByCarrier0 (curVal, oldVal) {
+      this.filter.filterByCarrier = curVal
+    },
+    sortBy0 (curVal, oldVal) {
+      this.filter.sortBy = parseInt(curVal)
+    }
   },
   mounted: function () {
     this.avCount = 0
+    this.filter.sortBy = this.sortBy
+    this.filter.filterByCarrier = this.onlyCarrier
+
     this.search()
   },
   methods: {
     back: function () {
       this.$router.go(-1)
     },
-    showErrMsg: function (msg) {
-      this.errMsg = msg
-      this.errAlert = true
-      setTimeout(() => { this.errAlert = false }, 2500)
+    showErrMsg: function (msg, msgType) {
+      this.$store.dispatch('showAlertMsg', { 'errMsg': msg, 'errMsgType': msgType })
     },
     search: function () {
       var self = this
@@ -368,6 +362,7 @@ export default {
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
           self.searching = false
+          self.showErrMsg('search.error: ' + textStatus, 'danger')
         },
         complete: function (XMLHttpRequest, textStatus) {
           // self.searching = false
@@ -392,13 +387,10 @@ export default {
       // 显示某一航班详情
       this.listShowing = false
       this.detailShowing = true
-      // this.filterModalShowing = false
       this.flt = fltInfo
-      // console.log(fltInfo)
     },
     closeDetail: function () {
       this.detailShowing = false
-      // this.filterModalShowing = false
       this.listShowing = true
     },
     execSort: function (searchResults) {
@@ -416,7 +408,7 @@ export default {
       })
 
       returnFlights = returnFlights.filter(function (flight) {
-        if (data.filterByCarrier === '0' || data.filterByCarrier === flight.carrierCode) {
+        if (data.filterByCarrier === '' || data.filterByCarrier === flight.carrierCode) {
           return true
         } else {
           return false
@@ -498,23 +490,32 @@ export default {
 
       return returnedList
     },
-    showCabinClass: function (cabinClass) {
-      return getCabinClassDesc(cabinClass)
+    showCabinClass: function (cabinClass, offset) {
+      return getCabinClassDesc(cabinClass, offset)
     },
-    bookFlight: function (flightNo, ddate, subclass, dport, aport, dtime, atime, price, dportName, aportName, returnPoint) {
-      var fltInfo = {}
-
-      fltInfo.flightNo = flightNo
-      fltInfo.ddate = ddate
-      fltInfo.subclass = subclass
-      fltInfo.dport = dport
-      fltInfo.aport = aport
-      fltInfo.dtime = dtime
-      fltInfo.atime = atime
-      fltInfo.price = price
-      fltInfo.dportName = dportName
-      fltInfo.aportName = aportName
-      fltInfo.returnPoint = returnPoint
+    showFreshness: function (freshness) {
+      if (freshness <= 5) {
+        return '刚刚'
+      } else {
+        return freshness + ' 分钟前'
+      }
+    },
+    bookFlight: function (flt0, subclass0) {
+      var fltInfo = {
+        'flightNo': flt0.flightNo,
+        'ddate': flt0.depDate,
+        'dport': flt0.depPort,
+        'aport': flt0.arrPort,
+        'dtime': flt0.depTime,
+        'showDtime': flt0.showDepTime,
+        'atime': flt0.arrTime,
+        'showAtime': flt0.showArrTime,
+        'dportName': flt0.depPortName,
+        'aportName': flt0.arrPortName,
+        'subclass': subclass0.subClass,
+        'price': subclass0.price,
+        'returnPoint': subclass0.returnPoint
+      }
 
       this.$store.commit('addFlight', fltInfo)
       this.$router.replace('/booking')
@@ -522,6 +523,8 @@ export default {
     showFilter: function () {
       this.filterModalShowing = true
       this.listShowing = false
+      this.filterByCarrier0 = this.filter.filterByCarrier
+      this.sortBy0 = this.filter.sortBy
     },
     closeFilterDialog: function () {
       this.filterModalShowing = false

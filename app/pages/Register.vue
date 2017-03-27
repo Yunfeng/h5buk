@@ -1,55 +1,53 @@
 <template>
-  <div id="register" class="container-fluid">
-    <div class="weui-toptips weui-toptips_warn" style="display:block" v-show="errAlert">{{errMsg}}</div>
+  <div id="register" class="row">
 
-    <div class="row">
-      <div class="card col-12"  style="padding-left: 0; padding-right: 0;">
-        <div class="card-header text-center">
-          注册
-        </div>
-        <div class="card-block">
-          <form>
-            <div class="form-group">
-              <input type="input" class="form-control" placeholder="登录用户名"  v-model="username">
-            </div>
-            <div class="form-group">
-              <input type="input" class="form-control" placeholder="密码"  v-model="password">
-            </div>
-            <div class="form-group">
-              <input type="input" class="form-control" placeholder="姓名"  v-model="realname">
-            </div>
-            <div class="form-group">
-              <input type="input" class="form-control" placeholder="手机号"  v-model="mobile">
-              <p class="form-text text-muted">
-                需要时可通过手机号找回密码
-              </p>
-            </div>
-            <div class="form-group">
-              <div class="row no-gutters">
-                <div class="col-6">
-                  <input type="input" class="form-control" placeholder="验证码" v-model="vcode">
-                </div>
-                <div class="col-6">
-                  <img id="kaptchaImage1" class="img-fluid" alter="点击图片刷新" />                    
-                </div>
+    <div class="card col-12 px-0">
+      <div class="card-header text-center">
+        注册
+      </div>
+      <div class="card-block">
+        <form>
+          <div class="form-group">
+            <input type="input" class="form-control" placeholder="登录用户名"  v-model="username">
+          </div>
+          <div class="form-group">
+            <input type="input" class="form-control" placeholder="密码"  v-model="password">
+          </div>
+          <div class="form-group">
+            <input type="input" class="form-control" placeholder="姓名"  v-model="realname">
+          </div>
+          <div class="form-group">
+            <input type="input" class="form-control" placeholder="手机号"  v-model="mobile">
+            <p class="form-text text-success">
+              <small>需要时可通过手机号找回密码</small>
+            </p>
+          </div>
+          <div class="form-group" v-if="openid.length === 0">
+            <div class="row no-gutters">
+              <div class="col-6">
+                <input type="input" class="form-control" placeholder="验证码" v-model="vcode">
+              </div>
+              <div class="col-6">
+                <img id="kaptchaImage1" class="img-fluid" alter="点击图片刷新" />                    
               </div>
             </div>
-          </form>
-        </div>
-        <div class="card-footer">
-          <button class="btn btn-success btn-block" type="button" @click.stop="register()">注册</button>
-        </div>
+          </div>
+        </form>
       </div>
-
-      <div id="loadingToast" v-show="loading">
-        <div class="weui-mask_transparent"></div>
-        <div class="weui-toast">
-          <i class="weui-loading weui-icon_toast"></i>
-          <p class="weui-toast__content">{{loadingText}}</p>
-        </div>
+      <div class="card-footer">
+        <button class="btn btn-success btn-block" type="button" @click.stop="register()">注册</button>
       </div>
-
     </div>
+
+    <div id="loadingToast" v-show="loading">
+      <div class="weui-mask_transparent"></div>
+      <div class="weui-toast">
+        <i class="weui-loading weui-icon_toast"></i>
+        <p class="weui-toast__content">{{loadingText}}</p>
+      </div>
+    </div>
+
+
   </div>
 </template>
 
@@ -76,7 +74,15 @@ export default {
     logined () { return this.$store.state.logined },
     sessionUsername () { return this.$store.state.username },
     historyStep () { return this.$store.state.historyStep },
-    userInfo () { return this.$store.state.userInfo }
+    userInfo () { return this.$store.state.userInfo },
+    openid () {
+      var openid = this.$store.state.wxInfo.openid
+      if (openid.length === 0) {
+        openid = $.cookie('openid')
+        if (openid === undefined) openid = ''
+      }
+      return openid
+    }
   },
   mounted: function () {
     $('#kaptchaImage1').click(function () {
@@ -100,7 +106,9 @@ export default {
           'password': this.password,
           'realname': this.realname,
           'mobile': this.mobile,
-          'captchaValue': this.vcode },
+          'captchaValue': this.vcode,
+          'openid': this.openid
+        },
         dataType: 'json',
         success: function (jsonResult) {
           self.loading = false
@@ -124,9 +132,7 @@ export default {
       })
     },
     showErrMsg: function (msg) {
-      this.errMsg = msg
-      this.errAlert = true
-      setTimeout(() => { this.errAlert = false }, 2500)
+      this.$store.dispatch('showAlertMsg', { 'errMsg': msg })
     },
     waitForJump: function () {
       setTimeout(() => this.$router.push('/login'), 1500)

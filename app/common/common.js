@@ -28,10 +28,6 @@ Date.prototype.format = function(format){
  return format;
 }
 
-// function convertLongToTimeDesc (l) {
-//   return getFormatDate(new Date(l))
-// }
-
 export function convertLongToTimeDesc (l) {
   return getFormatDate(new Date(l))
 }
@@ -59,14 +55,62 @@ export function getURLParameter (sParam) {
   }
 }
 
-export function getCabinClassDesc (cabinClass) {
-  if (cabinClass === 'F') 
-    return '头等舱'
-  else if (cabinClass === 'Y') 
-    return '经济舱'
-  else if (cabinClass === 'C') 
-    return '商务舱'
-  else return cabinClass
+export function getCabinClassDesc (cabinClass, offset) {
+  if (cabinClass === 'F') {
+    if (offset === 100) {
+      return '头等'
+    } else if (offset > 0) {
+      return '头等' + offset + '折'  
+    } else {
+      return '头等'
+    }
+    
+  } else if (cabinClass === 'Y') {
+    if (offset === 100) {
+      return '全价'
+    } else if (offset > 0) {
+      return offset + '折'  
+    } else {
+      return ''
+    }
+  } else if (cabinClass === 'C') {
+    if (offset === 100) {
+      return '商务'
+    } else if (offset > 0) {
+      return '商务' + offset + '折'  
+    } else {
+      return '商务'
+    }
+  }
+}
+
+export function showIdTypeDesc (idType) {
+  var desc = ''
+  switch (idType) {
+    case '1': desc = '身份证'; break
+    case '2': desc = '护照'; break
+  }
+  return desc
+}
+
+export function showOrderStatusDesc (status) {
+  var desc = ''
+  switch (status) {
+    case 0: desc = '等待接单'; break
+    case 1: desc = '待支付'; break
+    case 2: desc = '付款确认中 '; break
+    case 4: desc = '已拒单'; break
+    case 8: desc = '等待开票'; break
+    case 12: desc = '开票中'; break
+    case 16: desc = '已出票'; break
+    case 32: desc = '已完成'; break
+    case 64: desc = '订单结束'; break
+    case 128: desc = '已取消'; break
+    case 1024: desc = '未提交'; break
+    default:
+      desc = status
+  }
+  return desc
 }
 
 

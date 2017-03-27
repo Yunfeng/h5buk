@@ -27,6 +27,11 @@ a:hover{
  text-decoration:none;
 }
 
+.fa-2 {
+    font-size: 1.25rem
+}
+
+
 .fade-enter-active, .fade-leave-active {
   transition: opacity .3s
 }
