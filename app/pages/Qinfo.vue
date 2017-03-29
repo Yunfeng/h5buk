@@ -1,18 +1,12 @@
 <template>
-  <div id="qinfo-home" class="container-fluid">
-    <div class="row bg-info">
-      <div class="col-1">
-          <span @click="back()"><i class="fa fa-angle-left weui-tabbar__icon" aria-hidden="true"></i></span>
-      </div>         
-      <div class="col-10 text-center">
-          
-      </div>         
-      <div class="col-1">
-          
-      </div>         
+  <div id="qinfo-home" class="row">
+    <div class="col-12 bg-info text-center text-white">
+      <span @click="back()" class="float-left">
+        <i class="fa fa-angle-left fa-2" aria-hidden="true"></i>
+      </span>
     </div> 
 
-    <div class="weui-grids mt-2">
+    <div class="weui-grids col-12 mt-2">
         <router-link to="/qinfo/list" class="weui-grid">
             <div class="weui-grid__icon">
                 <i class="fa fa-info-circle fa-2" aria-hidden="true"></i>

@@ -1,6 +1,5 @@
 <template>
-	<div id="qinfo-list" class="container-fluid">
-    <div class="weui-toptips weui-toptips_warn" style="display:block" v-show="errAlert">{{errMsg}}</div>
+	<div id="qinfo-list" class="row">
     <div id="loadingToast" v-show="loading">
       <div class="weui-mask_transparent"></div>
       <div class="weui-toast">
@@ -9,18 +8,18 @@
       </div>
     </div>
 
-    <div class="row" v-show="detailShowing === false && filterShowing == false">  
-        <div class="col-12 bg-info text-center">
-            <span @click="back()" class="float-left ml-1">
-              <i class="fa fa-angle-left" aria-hidden="true"></i>
-            </span>
-            Q 列表
-            <span @click="showFilter()" class="float-right mr-1">
-              <i class="fa fa-filter" aria-hidden="true"></i>
-            </span>   
-        </div>         
+    <template v-if="detailShowing === false && filterShowing == false">  
+      <div class="col-12 bg-info text-center text-white">
+          <span @click="back()" class="float-left">
+            <i class="fa fa-angle-left fa-2" aria-hidden="true"></i>
+          </span>
+          Q 列表
+          <span @click="showFilter()" class="float-right mr-1">
+            <i class="fa fa-filter" aria-hidden="true"></i>
+          </span>   
+      </div>         
 
-      <div class="card col-12">
+      <div class="card col-12 px-0">
         <table class="table table-striped table-condensive">
           <thead>
               <tr>
@@ -60,25 +59,24 @@
         <div class="card-block">
           <my-pagination :row-count="sc.rowCount" :page-total="sc.pageTotal" :page-no="sc.pageNo" @next-page="nextPage" @prev-page="prevPage" @direct-page="directPage"></my-pagination>
         </div>
-
       </div> 
 
-    </div>
+    </template>
 
 
-    <div class="row" v-show="detailShowing">
-      <div class="col-12 bg-info">
-          <span @click="hideDetail()"><i class="fa fa-angle-left" aria-hidden="true"></i></span>
+    <template v-if="detailShowing">
+      <div class="col-12 bg-info  text-center text-white">
+          <span @click="hideDetail()"  class="float-left"><i class="fa fa-angle-left fa-2" aria-hidden="true"></i></span>
           编码详情
       </div> 
       <div class="card col-12" v-if="pnrDetail != null ">
         <div v-html="'<pre>' + pnrDetail + '</pre>'"></div>        
       </div>  
 
-    </div>
+    </template>
 
 
-    <div class="row" v-show="filterShowing">
+    <template  v-if="filterShowing">
       <div class="col-12 text-right mt-3 mr-5">              
         <button type="button" class="btn btn-sm btn-info" @click.stop="resetFilter()">重置</button>
         <button type="button" class="btn btn-sm btn-success" @click.stop="hideFilter()">确定</button>
@@ -96,7 +94,7 @@
         </div>
       </div>
 
-    </div>
+    </template>
 
 
   </div>
@@ -135,16 +133,15 @@ export default {
   computed: {
     // acityName() {return this.$store.state.searchParams.acityName},
   },
-  beforeCreate: function () {
-    this.$options.components.MyPagination = require('../components/my-pagination.vue')
-  },
   mounted: function () {
-    // console.log(this.qinfoes.length);
     this.search()
   },
   methods: {
     back: function () {
       this.$router.go(-1)
+    },
+    showErrMsg: function (msg, msgType) {
+      this.$store.dispatch('showAlertMsg', { 'errMsg': msg, 'errMsgType': msgType })
     },
     search: function () {
       var self = this
@@ -226,11 +223,6 @@ export default {
       this.sc.pageNo = pageNo
       this.search()
     }
-  },
-  beforeRouteEnter (to, from, next) {
-    next(vm => {
-      // 通过 `vm` 访问组件实例
-    })
   }
 }
 </script>

@@ -2,7 +2,7 @@
 	<div id="order" class="row">
     <div class="col-12 bg-info text-center text-white">
       <span @click="back()" class="float-left"><i class="fa fa-angle-left fa-2" aria-hidden="true"></i></span>
-        我的卖单      
+        销售订单      
     </div> 
 
 

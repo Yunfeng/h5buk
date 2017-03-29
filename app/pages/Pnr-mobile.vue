@@ -1,6 +1,5 @@
 <template>  
-	<div id="pnr-mobile" class="container-fluid">
-    <div class="weui-toptips weui-toptips_warn" style="display:block" v-show="errAlert">{{errMsg}}</div>
+	<div id="pnr-mobile" class="row">
     <div id="loadingToast" v-show="loading">
       <div class="weui-mask_transparent"></div>
       <div class="weui-toast">
@@ -9,18 +8,16 @@
       </div>
     </div>
 
-    <div class="row  bg-info">
-      <div class="col-1">
-          <span @click="back()"><i class="fa fa-angle-left weui-tabbar__icon" aria-hidden="true"></i></span>
-      </div>         
-      <div class="col-10  bg-info text-center">
-        手机号列表 
-      </div>         
-      <div class="col-1 bg-info">
-      </div>  
-    </div>
-    <div class="row">
-      <div class="card col-12" style="padding: 0">
+    <div class="col-12 bg-info text-white text-center ">
+        <span @click='back()' class="float-left">
+          <i class='fa fa-angle-left fa-2' aria-hidden='true'></i>
+        </span>
+        手机号列表        
+      </div> 
+
+    
+
+      <div class="card col-12 px-0">
         <table class="table table-striped">
           <thead>
               <tr>
@@ -53,7 +50,7 @@
 
 
 
-      <div class="card col-12 card-outline-secondory">
+      <div class="card col-12 card-outline-secondory px-0">
         <div class="card-block">
           <input type="text" class="form-control" v-model="mobile" placeholder="手机号">
         </div>
@@ -61,7 +58,7 @@
           <button class="btn btn-success" @click.stop="savePnrMobile()">保存</button>
         </div>
       </div>      
-    </div>
+    
   </div>
 </template>
 

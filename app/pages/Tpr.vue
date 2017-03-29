@@ -9,7 +9,7 @@
     </div>
 
     <template v-if="filterShowing == false">  
-        <div class="col-12 bg-info text-center">
+        <div class="col-12 bg-info text-center text-white sticky-top">
             <span @click="back()" class="float-left ml-1">
               <i class="fa fa-angle-left" aria-hidden="true"></i>
             </span>
@@ -35,7 +35,7 @@
               <tr v-for="(flight, index) in qinfoes">
                 <td class="hidden-xs-down">{{flight.id}}</td>
                 <td><small>{{flight.sellDate.substring(5)}}</small></td>
-                <td><small>{{flight.deviceId}}</small></td>
+                <td class="hidden-sm-down"><small>{{flight.deviceId}}</small></td>
                 <td>
                     {{flight.ticketNo}}
                 </td>

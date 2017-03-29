@@ -1,6 +1,5 @@
 <template>
   <div id="register" class="row">
-
     <div class="card col-12 px-0">
       <div class="card-header text-center">
         注册

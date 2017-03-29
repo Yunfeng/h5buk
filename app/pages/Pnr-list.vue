@@ -1,8 +1,5 @@
 <template>
-	<div id='pnr-list' class='container-fluid'>
-    
-    <div class='weui-toptips weui-toptips_warn' style='display:block' v-show='errAlert'>{{errMsg}}</div>
-    
+	<div id='pnr-list' class="row">
     <div id='loadingToast' v-show='loading'>
       <div class='weui-mask_transparent'></div>
       <div class='weui-toast'>
@@ -30,23 +27,18 @@
       </div>      
     </template>
     <template v-else>
-      <div class='row bg-info'>
-        <div class='col-1'>
-            <span @click='back()'><i class='fa fa-angle-left text-white' aria-hidden='true'></i></span>
-        </div>         
-        <div class='col-10 text-center'>
-            PNR列表
-        </div>         
-        <div class='col-1'>
-            <span @click="showFilter()">
-              <i class="fa fa-filter text-white" aria-hidden="true"></i>
-            </span>
-        </div>         
+      <div class="col-12 bg-info text-white text-center ">
+        <span @click='back()' class="float-left">
+          <i class='fa fa-angle-left fa-2' aria-hidden='true'></i>
+        </span>
+        PNR列表
+        <span @click="showFilter()" class="float-right">
+          <i class="fa fa-filter fa-2" aria-hidden="true"></i>
+        </span>
       </div> 
         
-      <div class='row'>
-        <div class='card col-12' style="padding: 0">   
-          <table class='table table-sm table-striped table-condensed'>
+        <div class="card col-12 px-0">   
+          <table class='table table-sm table-striped'>
             <thead>
                 <tr>
                     <th>编码</th>
@@ -76,7 +68,6 @@
             <my-pagination name='pagination' :row-count='sc.rowCount' :page-total='sc.pageTotal' :page-no='sc.pageNo' @next-page='nextPage' @prev-page='prevPage' @direct-page='directPage'></my-pagination> 
           </div> 
         </div>      
-      </div> 
     </template>     
 
 

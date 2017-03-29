@@ -1,42 +1,35 @@
 <template>  
-	<div id="tmc-list" class="container-fluid">
-    <div class="row bg-info">
-      <div class="col-1">
-          <span @click="back()"><i class="fa fa-angle-left" aria-hidden="true"></i></span>
-      </div>         
-      <div class="col-10 text-center">
-          大客户政策
-      </div>         
-      <div class="col-1">
-          
-      </div>         
+	<div id="tmc-list" class="row">
+    <div class="col-12 bg-info text-white text-center fixed-top">
+      <span @click="back()" class="float-left">
+        <i class="fa fa-angle-left fa-2" aria-hidden="true"></i>
+      </span>
+      大客户政策
     </div> 
 
-    <div class="row">
-      <div class="card col-12">
-        <table class="table table-sm table-striped table-condensive">
-          <thead>
-              <tr>
-                  <th>航司</th>
-                  <th>舱位</th>
-                  <th>返点</th>
-                  <th>最低票面</th>
-              </tr>                        
-          </thead>
-          <tbody>
-              <tr v-for="(info, index) in dataList" @click="showDetail(info)">
-                  <td>{{info.carrier}}</td>
-                  <td>{{info.subclass}}</td>
-                  <td>{{info.returnPoint}}</td>
-                  <td>{{info.minPrice}} 
-                    <i class="fa fa-angle-right text-warning float-right fa-2" aria-hidden="true"></i>
-                  </td>
-              </tr>
-          </tbody>
-        </table>
-        <div class="card-block">
-          <my-pagination :row-count="sc.rowCount" :page-total="sc.pageTotal" :page-no="sc.pageNo" @next-page="nextPage" @prev-page="prevPage" @direct-page="directPage"></my-pagination>
-        </div>
+    <div class="card col-12 mt-4">
+      <table class="table table-sm table-striped table-condensive">
+        <thead>
+            <tr>
+                <th>航司</th>
+                <th>舱位</th>
+                <th>返点</th>
+                <th>最低票面</th>
+            </tr>                        
+        </thead>
+        <tbody>
+            <tr v-for="(info, index) in dataList" @click="showDetail(info)">
+                <td>{{info.carrier}}</td>
+                <td>{{info.subclass}}</td>
+                <td>{{info.returnPoint}}</td>
+                <td>{{info.minPrice}} 
+                  <i class="fa fa-angle-right text-warning float-right fa-2" aria-hidden="true"></i>
+                </td>
+            </tr>
+        </tbody>
+      </table>
+      <div class="card-block">
+        <my-pagination :row-count="sc.rowCount" :page-total="sc.pageTotal" :page-no="sc.pageNo" @next-page="nextPage" @prev-page="prevPage" @direct-page="directPage"></my-pagination>
       </div>
     </div>
             

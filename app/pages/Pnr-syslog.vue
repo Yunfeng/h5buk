@@ -1,18 +1,16 @@
 <template>
-	<div id="pnr-ctct" class="container-fluid">
+	<div id="pnr-ctct" class="row">
 
-    <div class="row" v-if="detailShowing === false">
-      <div class="col-1 bg-info">
-          <span @click="back()"><i class="fa fa-angle-left text-white" aria-hidden="true"></i></span>
-      </div>         
-      <div class="col-10 text-center bg-info">
-          系统日志
-      </div>         
-      <div class="col-1 bg-info">
-      </div>         
+    <template v-if="detailShowing === false">
+      <div class="col-12 bg-info text-white text-center ">
+        <span @click='back()' class="float-left">
+          <i class='fa fa-angle-left fa-2' aria-hidden='true'></i>
+        </span>
+        系统日志        
+      </div> 
 
-      <div class="card col-12" style="padding: 0">
-        <table class="table table-striped table-condensive">
+      <div class="card col-12 px-0">
+        <table class="table table-striped table-sm">
           <thead>
               <tr>
                   <th>编码</th>
@@ -35,10 +33,10 @@
         <div class="card-block">
           <my-pagination :row-count="sc.rowCount" :page-total="sc.pageTotal" :page-no="sc.pageNo" @next-page="nextPage" @prev-page="prevPage" @direct-page="directPage"></my-pagination>
         </div>
-      </div>
-      
-    </div>      
-    <div class="row" v-show="detailShowing">
+      </div>      
+    </template>      
+
+    <template v-if="detailShowing">
       <div class="col-2 bg-info">
           <span @click="hideDetail()"><i class="fa fa-angle-left text-white" aria-hidden="true"></i></span>
       </div>         
@@ -52,7 +50,7 @@
         <div v-html="'<pre>' + pnrDetail + '</pre>'"></div>        
       </div>  
 
-    </div>
+    </template>
 
     <div id="loadingToast" v-show="loading">
       <div class="weui-mask_transparent"></div>

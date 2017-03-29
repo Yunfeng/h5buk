@@ -4,7 +4,7 @@
       <span @click="back()" class="float-left fa-2">
         <i class="fa fa-angle-left fa-2" aria-hidden="true"></i>
       </span>
-      国内机票 
+      <h6>国内机票</h6>
     </div> 
 
     <div class="card col-12 mt-2 p-0 border-0">
@@ -198,15 +198,7 @@ export default {
       this.$router.go(-1)
     },
     showErrMsg: function (msg, msgType) {
-      if (msgType === undefined) {
-        msgType = 'danger'
-      }
-      var o = {
-        'errMsg': msg,
-        'errMsgType': msgType,
-        'timeout': 2500
-      }
-      this.$store.dispatch('showAlertMsg', o)
+      this.$store.dispatch('showAlertMsg', { 'errMsg': msg, 'errMsgType': msgType })
     },
     search: function () {
       if (this.dcity === undefined || this.acity === undefined || this.ddate === undefined) {

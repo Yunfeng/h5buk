@@ -45,9 +45,6 @@
             <div v-html="'<pre>' + detail.pnrDetail + '</pre>'">
             </div>
           </div>    
-          <div class="card-block text-center" v-if="detail.ctcmCount === 0">
-            <button class="btn btn-success" @click.stop="fixPnrCtcm()">填充 CTCM</button>
-          </div>    
         </div>    
         
       </template>     
@@ -131,40 +128,7 @@ export default {
           self.loading = false
         }
       })
-    },
-    fixPnrCtcm: function () {
-      var self = this
-      self.loading = true
-      self.loadingText = '数据加载中'
-
-      $.ajax({
-        type: 'post',
-        timeout: 15000,
-        url: '/Flight/pnr/ctcm/' + self.detail.id,
-        dataType: 'json',
-        success: function (info) {
-          if (info !== null) {
-            self.$store.commit('setPnrDetail', info)
-          }
-        },
-        error: function (XMLHttpRequest, textStatus, errorThrown) {
-          console.log(textStatus)
-          self.searching = false
-
-          if (XMLHttpRequest.status === 403) {
-            self.$store.commit('jumpToLogin', self.$router)
-          }
-        },
-        complete: function (XMLHttpRequest, textStatus) {
-          self.loading = false
-        }
-      })
     }
-  },
-  beforeRouteEnter (to, from, next) {
-    next(vm => {
-      // 通过 `vm` 访问组件实例
-    })
   }
 }
 </script>

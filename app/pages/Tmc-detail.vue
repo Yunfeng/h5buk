@@ -1,48 +1,38 @@
 <template>
-	<div id="tmc-detail" class="container-fluid">
+	<div id="tmc-detail" class="row">
 
-    <div class="row bg-info">
-      <div class="col-1">
-          <span @click="back()"><i class="fa fa-angle-left weui-tabbar__icon" aria-hidden="true"></i></span>
-      </div>         
-      <div class="col-10 text-center">
-          大客户政策详情
-      </div>         
-      <div class="col-1">
-          
-      </div>         
+    <div class="col-12 bg-info text-center text-white">
+      <span @click="back()" class="float-left">
+        <i class="fa fa-angle-left fa-2" aria-hidden="true"></i>
+      </span>
+      政策详情
     </div> 
 
     <template v-if="detail">
-      <div class="row">
-        <div class="card col-12">
-          <table class="table table-sm">
-            <tbody>
-              <tr><td class="text-right text-muted">航司</td><td>{{detail.carrier}}</td></tr>
-              <tr><td class="text-right text-muted">舱位</td><td>{{detail.subclass}}</td></tr>
-              <tr><td class="text-right text-muted">出发机场</td><td>{{getPortDesc(detail.dport)}}</td></tr>
-              <tr><td class="text-right text-muted">到达机场</td><td class="text-truncate">{{getPortDesc(detail.aport)}}</td></tr>
-              <tr><td class="text-right text-muted">返点</td><td>{{detail.returnPoint}}</td></tr>
-              <tr><td class="text-right text-muted">可开数量</td><td>{{detail.ticketLimit}}</td></tr>
-              <tr><td class="text-right text-muted">最低票面</td><td>{{detail.minPrice}}</td></tr>
-              <tr><td class="text-right text-muted">最早旅行日期</td><td>{{detail.minDdate}}</td></tr>
-              <tr><td class="text-right text-muted">最晚旅行日期</td><td>{{detail.maxDdate}}</td></tr>
-              <tr><td class="text-right text-muted">退票规则</td><td>{{detail.refundRule}}</td></tr>
-              <tr><td class="text-right text-muted">更改规则</td><td>{{detail.changeRule}}</td></tr>
-              <tr><td class="text-right text-muted">签转规则</td><td>{{detail.endorseRule}}</td></tr>
-              <tr><td class="text-right text-muted">政策类型</td><td>{{getIntlPolicyDesc(detail.intlPolicy)}}</td></tr>
-              <tr><td class="text-right text-muted">行程类型</td><td>{{getRouteTypeDesc(detail.routeType)}}</td></tr>
-              <tr><td class="text-right text-muted">备注</td><td>{{detail.remark}}</td></tr>
-              <tr><td class="text-right text-muted"></td><td>{{getStatusDesc(detail.status)}}</td></tr>
-            </tbody>
-          </table>
-        </div>  
-      </div>    
+      <div class="card col-12">
+        <table class="table table-sm">
+          <tbody>
+            <tr><td class="text-right text-muted">航司</td><td>{{detail.carrier}}</td></tr>
+            <tr><td class="text-right text-muted">舱位</td><td>{{detail.subclass}}</td></tr>
+            <tr><td class="text-right text-muted">出发机场</td><td>{{getPortDesc(detail.dport)}}</td></tr>
+            <tr><td class="text-right text-muted">到达机场</td><td class="text-truncate">{{getPortDesc(detail.aport)}}</td></tr>
+            <tr><td class="text-right text-muted">返点</td><td>{{detail.returnPoint}}</td></tr>
+            <tr><td class="text-right text-muted">可开数量</td><td>{{detail.ticketLimit}}</td></tr>
+            <tr><td class="text-right text-muted">最低票面</td><td>{{detail.minPrice}}</td></tr>
+            <tr><td class="text-right text-muted">最早旅行日期</td><td>{{detail.minDdate}}</td></tr>
+            <tr><td class="text-right text-muted">最晚旅行日期</td><td>{{detail.maxDdate}}</td></tr>
+            <tr><td class="text-right text-muted">退票规则</td><td>{{detail.refundRule}}</td></tr>
+            <tr><td class="text-right text-muted">更改规则</td><td>{{detail.changeRule}}</td></tr>
+            <tr><td class="text-right text-muted">签转规则</td><td>{{detail.endorseRule}}</td></tr>
+            <tr><td class="text-right text-muted">政策类型</td><td>{{getIntlPolicyDesc(detail.intlPolicy)}}</td></tr>
+            <tr><td class="text-right text-muted">行程类型</td><td>{{getRouteTypeDesc(detail.routeType)}}</td></tr>
+            <tr><td class="text-right text-muted">备注</td><td>{{detail.remark}}</td></tr>
+            <tr><td class="text-right text-muted"></td><td>{{getStatusDesc(detail.status)}}</td></tr>
+          </tbody>
+        </table>
+      </div>  
     </template>     
-
-      
-      
-
+    
   </div>
 </template>
 

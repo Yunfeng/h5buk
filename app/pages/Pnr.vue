@@ -1,25 +1,17 @@
 <template>
-  <div id="pnr-home" class="container-fluid">
-    <div class="row">
-      <div class="col-12 bg-info">
-          <span @click="back()"><i class="fa fa-angle-left weui-tabbar__icon" aria-hidden="true"></i></span>
-      </div>         
+  <div id="pnr-home" class="row">
+    <div class="col-12 bg-info text-white text-center ">
+      <span @click="back()" class="float-left">
+        <i class="fa fa-angle-left fa02" aria-hidden="true"></i>
+      </span>
     </div> 
-    <div class="weui-grids mt-2 pl-0">
+    <div class="weui-grids mt-2 col-12">
       <router-link to="/pnr/list" class="weui-grid">
           <div class="weui-grid__icon">
               <i class="fa fa-info-circle fa-2" aria-hidden="true"></i>
           </div>
           <p class="weui-grid__label">
               PNR列表
-          </p>
-      </router-link>
-      <router-link to="/pnr/alert1" class="weui-grid">
-          <div class="weui-grid__icon">
-              <i class="fa fa-info fa-2" aria-hidden="true"></i>
-          </div>
-          <p class="weui-grid__label">
-              待取消
           </p>
       </router-link>
       <router-link to="/pnr/ctcm" class="weui-grid">

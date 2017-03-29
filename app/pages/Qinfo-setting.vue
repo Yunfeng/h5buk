@@ -1,19 +1,13 @@
 <template>  
-	<div id="qinfo-setting" class="container-fluid">
-    <div class="weui-toptips weui-toptips_warn" style="display:block" v-show="errAlert">{{errMsg}}</div>
-
-    <div class="row" v-show="detailShowing === false">
-      <div class="col-1 bg-info">
-          <span @click="back()"><i class="fa fa-angle-left weui-tabbar__icon" aria-hidden="true"></i></span>
-      </div>         
-      <div class="col-10  bg-info text-center">
+	<div id="qinfo-setting" class="row">
+    <template  v-if="detailShowing === false">
+      <div class="col-12 bg-info text-center text-white">
+          <span @click="back()" class="float-left">
+            <i class="fa fa-angle-left fa-2" aria-hidden="true"></i>
+          </span>
         Q通知设置  
-      </div>         
-      <div class="col-1 bg-info">
-          
-      </div>         
-      
-      <div class="card col-12">
+      </div>               
+      <div class="card col-12 px-0">
         <div class="card-block">
           <div class="form-group row">
               <input type="textfield" class="form-control col-4" placeholder="条件值"  v-model="name">
@@ -25,36 +19,34 @@
               </div>
           </div>
         </div>
-
-        <table class="table table-striped table-responsive table-condensive">
+        <table class="table table-striped table-sm">
           <thead>
               <tr>
-                  <th class="hidden-xs">条件类型</th>
+                  <th class="hidden-md-down">条件类型</th>
                   <th>条件值</th>
                   <th>email</th>
-                  <th class="hidden-xs">手机</th>
-                  <th>微信id</th>
-                  <th class="hidden">生成时间</th>
-                  <th class="hidden">修改时间</th>
+                  <th class="hidden-md-down">手机</th>
+                  <th class="hidden-md-down">微信id</th>
+                  <th class="hidden-md-down">生成时间</th>
+                  <th class="hidden-md-down">修改时间</th>
                   <th class="hidden-xs"></th>
               </tr>
           </thead>
           <tbody>
             <tr v-for="(info, index) in dataList" @click="editNotice(info)">
-                <td class="hidden-xs">{{getConditionTypeDesc(info.conditionType)}}</td>
+                <td class="hidden-md-down">{{getConditionTypeDesc(info.conditionType)}}</td>
                 <td>{{info.conditionValue}}</td>
                 <td>{{info.email}}</td>
-                <td class="hidden-xs">{{info.mobile}}</td>
-                <td>{{info.weixinId}}</td>
-                <td  class="hidden">{{info.createTime}}</td>
-                <td  class="hidden">
+                <td class="hidden-md-down">{{info.mobile}}</td>
+                <td class="hidden-md-down">{{info.weixinId}}</td>
+                <td  class="hidden-md-down">{{info.createTime}}</td>
+                <td  class="hidden-md-down">
                     <template v-if="info.lastupdate != null">
                         {{info.lastupdate}}
                     </template>
-
                 </td>
 
-                <td class="hidden-xs">
+                <td class="hidden-md-down">
                     <a href="#" class="btn btn-info btn-sm" v-on:click="editNotice(index)">修改</a>
                     <a href="#" class="btn btn-danger btn-xs" v-on:click="deleteNotice(index)">删除</a>
                 </td>
@@ -81,8 +73,8 @@
         <p class="weui-toast__content">{{loadingText}}</p>
       </div>
       </div>
-    </div>
-    <div class="row" v-show="detailShowing">
+    </template>
+    <template v-if="detailShowing">
       <div class="col-1 bg-info">
           <span @click="hideDetail()"><i class="fa fa-angle-left weui-tabbar__icon" aria-hidden="true"></i></span>
       </div>         
@@ -115,7 +107,7 @@
           <my-button @click="hideDetail()" type="default">取消</my-button>
         </div>
       </div>      
-    </div>
+    </template>
   </div>
 </template>
 

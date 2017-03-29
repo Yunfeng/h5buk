@@ -1,17 +1,14 @@
 <template>
-	<div id="pnr-ctct" class="container-fluid">
-
-    <div class="row" v-if="filterShowing === false && detailShowing === false">
-      <div class="col-1 bg-info">
-          <span @click="back()"><i class="fa fa-angle-left text-white" aria-hidden="true"></i></span>
-      </div>         
-      <div class="col-10 text-center bg-info">
-          缺 CTCT 列表
-      </div>         
-      <div class="col-1 bg-info">
+	<div id="pnr-ctct" class="row">
+    <template v-if="filterShowing === false && detailShowing === false">
+      <div class="col-12 bg-info text-white text-center">
+        <span @click="back()" class="float-left">
+          <i class="fa fa-angle-left fa-2" aria-hidden="true"></i>
+        </span>
+        缺 CTCT 列表
       </div>         
 
-      <div class="card col-12" style="padding: 0">
+      <div class="card col-12 px-0">
         <table class="table table-striped table-condensive">
           <thead>
               <tr>
@@ -37,10 +34,10 @@
         <div class="card-block">
           <my-pagination :row-count="sc.rowCount" :page-total="sc.pageTotal" :page-no="sc.pageNo" @next-page="nextPage" @prev-page="prevPage" @direct-page="directPage"></my-pagination>
         </div>
-      </div>
-      
-    </div>      
-    <div class="row" v-show="filterShowing">
+      </div>      
+    </template>      
+
+    <template v-if="filterShowing">
       <div class="col-12 text-right mt-3 mr-5">              
         <button type="button" class="btn btn-sm btn-info" @click.stop="resetFilter()">重置</button>
         <button type="button" class="btn btn-sm btn-success" @click.stop="hideFilter()">确定</button>
@@ -57,23 +54,20 @@
           </div>
         </div>
       </div>
-    </div>
+    </template>
 
-    <div class="row" v-show="detailShowing">
-      <div class="col-2 bg-info">
-          <span @click="hideDetail()"><i class="fa fa-angle-left weui-tabbar__icon" aria-hidden="true"></i></span>
-      </div>         
-      <div class="col-8 text-center bg-info">
-          编码详情
-      </div>         
-      <div class="col-2 bg-info">
-      </div>         
+    <template v-if="detailShowing">
+      <div class="col-12 bg-info text-white text-center">
+        <span @click="hideDetail()" class="float-left">
+          <i class="fa fa-angle-left fa-2" aria-hidden="true"></i>
+        </span>
+        编码详情
+      </div> 
 
       <div class="weui-cell" v-if="pnrDetail != null ">
         <div v-html="'<pre>' + pnrDetail + '</pre>'"></div>        
       </div>  
-
-    </div>
+    </template>
 
     <div id="loadingToast" v-show="loading">
       <div class="weui-mask_transparent"></div>

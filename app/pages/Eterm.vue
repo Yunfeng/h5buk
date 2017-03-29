@@ -1,25 +1,25 @@
 <template>
-  <div id="eterm" class="container-fluid">
-    <div class="weui-toptips weui-toptips_warn" style="display:block" v-show="errAlert">{{errMsg}}</div>
-
-    <div class="row">
-        <div class="col-12 bg-info">
-            <span @click="back()"><i class="fa fa-angle-left weui-tabbar__icon" aria-hidden="true"></i></span>
-        </div>
+  <div id="eterm" class="row">
+    <div class="col-12 bg-info text-center text-white">
+      <span @click="back()" class="float-left">
+        <i class="fa fa-angle-left fa-2" aria-hidden="true"></i>
+      </span>
     </div>
 
-      <div class="form-group row mt-2">
-        <div class="col-9">
+    <div class="col-12 px-0 form-group mt-2">
+      <div class="row">
+        <div class="col-8">
           <input type="text" class="form-control" placeholder="在此输入查询指令" v-model="hostcmd" @keyup.enter="execCmd();" />
         </div>
-        <div class="col-3">
-          <button class="btn btn-success" @click="execCmd();">执行</button>
+        <div class="col-4">
+          <button class="btn btn-success" @click.stop="execCmd();">执行</button>
         </div>
       </div>
-      <div id="eterm-result" class="weui-cell" v-if="cmdResult != null && cmdResult.length > 0 ">
-          <div v-html="'<pre>' + cmdResult + '</pre>'">
-          </div>
-      </div>  
+    </div>
+    <div id="eterm-result" class="weui-cell" v-if="cmdResult != null && cmdResult.length > 0 ">
+        <div v-html="'<pre>' + cmdResult + '</pre>'">
+        </div>
+    </div>  
   
 
     <div id="loadingToast" v-show="loading">
