@@ -54,7 +54,7 @@
             <tr>
               <td class="text-right">现金账户</td>
               <td>{{userInfo.cashBalance}} <small>元</small></td>
-              <td>充值</td>
+              <td><small><router-link to="/recharge" class="text-danger">充值</router-link></small></td>
             </tr>
             <tr>
               <td class="text-right">积分</td>
@@ -109,7 +109,6 @@ export default {
     logined () { return this.$store.state.logined },
     sessionUsername () {
       var username = this.$store.state.username
-      console.log(username)
       if (username.length === 0) {
         username = $.cookie('username')
         if (username === undefined) username = ''
@@ -149,8 +148,6 @@ export default {
       var username = $.cookie('username')
       var token = $.cookie('token')
       if (username !== undefined && token !== undefined) {
-        console.log(username)
-        console.log(token)
         this.$store.commit('setUsername', { 'username': username, 'logined': true })
       }
     }

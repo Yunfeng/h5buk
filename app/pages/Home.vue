@@ -16,6 +16,14 @@
             大客户政策
         </p>
     </router-link>
+    <router-link to="/ctrp" class="weui-grid">
+        <div class="weui-grid__icon">
+            <i class="fa fa-book fa-2" aria-hidden="true"></i>
+        </div>
+        <p class="weui-grid__label">
+            携程比价
+        </p>
+    </router-link>
     <router-link to="/order" class="weui-grid">
         <div class="weui-grid__icon">
             <i class="fa fa-book fa-2" aria-hidden="true"></i>

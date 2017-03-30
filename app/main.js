@@ -46,6 +46,11 @@ const MyPayResult     = () => System.import('./pages/Recharge-result.vue')
 
 const MyTpr    = resolve => require(['./pages/Tpr.vue'], resolve)
 
+const MyCtrp    = resolve => require(['./pages/Ctrip.vue'], resolve)
+const MyCtrpPolicies    = resolve => require(['./pages/Ctrip-policies.vue'], resolve)
+const MyCtrpPrice    = resolve => require(['./pages/Ctrip-price.vue'], resolve)
+const MyCtrpSync    = resolve => require(['./pages/Ctrip-sync-policy.vue'], resolve)
+
 const routes = [
   {path: '/',              component: MyNav},
   {path: '/home',          component: MyHome},
@@ -82,6 +87,10 @@ const routes = [
   {path: '/recharge',      component: MyRecharge},
   {path: '/payresult/:id',      component: MyPayResult},
   {path: '/tpr',      component: MyTpr},
+  {path: '/ctrp',      component: MyCtrp},
+  {path: '/ctrp/policies',      component: MyCtrpPolicies},
+  {path: '/ctrp/price',      component: MyCtrpPrice},
+  {path: '/ctrp/sync',      component: MyCtrpSync},
 ]
 
 let router = new Router({
@@ -259,7 +268,7 @@ const store = new Vuex.Store({
   },
   actions: {
     showAlertMsg(context, payload) {
-      console.log(payload)
+      // console.log(payload)
       if (payload.errMsgType === undefined) {
         context.state.errMsgType = 'warning'
       } else {

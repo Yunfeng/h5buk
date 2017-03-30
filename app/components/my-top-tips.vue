@@ -11,7 +11,7 @@ export default {
     bgClassName () {
       var val
       var msgType = this.$store.state.errMsgType
-      console.log(msgType)
+      // console.log(msgType)
       if (msgType === undefined || msgType === null) {
         val = 'bg-danger'
       } else {
