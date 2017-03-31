@@ -38,3 +38,15 @@ export function searchSpecialPolicy(params, doneCb, fail, alwaysCb) {
   })
   .always( alwaysCb() )
 }
+
+export function searchSpecialPolicyDetail(id, doneCb, fail, alwaysCb) {
+  $.ajax({
+    type: "post",
+    url: "/Flight/api/policy/special/" + id,
+    dataType: "json"
+  })
+  .done( function (jsonResult) {
+    doneCb(jsonResult)
+  })
+  .always( alwaysCb() )
+}

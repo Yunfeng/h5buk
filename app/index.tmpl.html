@@ -12,10 +12,16 @@
 <body ontouchstart >
 	<div id="app" class="container-fluid">
     <my-top-tips></my-top-tips>
-
-    <transition name="fade" mode="out-in" :duration="{ enter: 100, leave: 300 }">
-			<router-view></router-view>
-		</transition>
+    <div class="row">
+      <nav class="col-sm-3 col-md-2 d-none d-sm-block bg-faded sidebar">
+        <my-sidebar></my-sidebar>
+      </nav>
+      <main class="col-sm-9 col-md-10">
+        <transition name="fade" mode="out-in" :duration="{ enter: 100, leave: 300 }">
+    			<router-view></router-view>
+    		</transition>
+      </main>
+    </div>
 
 		<my-tabbar></my-tabbar>
 	</div>

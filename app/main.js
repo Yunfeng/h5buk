@@ -4,6 +4,7 @@ import Vuex from 'vuex'
 import Tabbar from './components/my-tabbar.vue'
 import TopTips from './components/my-top-tips.vue'
 import MyHome from './pages/Home.vue'
+import MySidebar from './components/my-sidebar.vue'
 import $ from 'jquery'
 require('./main.css')
 
@@ -50,6 +51,7 @@ const MyCtrp    = resolve => require(['./pages/Ctrip.vue'], resolve)
 const MyCtrpPolicies    = resolve => require(['./pages/Ctrip-policies.vue'], resolve)
 const MyCtrpPrice    = resolve => require(['./pages/Ctrip-price.vue'], resolve)
 const MyCtrpSync    = resolve => require(['./pages/Ctrip-sync-policy.vue'], resolve)
+const MyCtrpPolicyDetail    = resolve => require(['./pages/Ctrip-policy-detail.vue'], resolve)
 
 const routes = [
   {path: '/',              component: MyNav},
@@ -89,6 +91,7 @@ const routes = [
   {path: '/tpr',      component: MyTpr},
   {path: '/ctrp',      component: MyCtrp},
   {path: '/ctrp/policies',      component: MyCtrpPolicies},
+  {path: '/ctrp/policy/:id',      component: MyCtrpPolicyDetail},
   {path: '/ctrp/price',      component: MyCtrpPrice},
   {path: '/ctrp/sync',      component: MyCtrpSync},
 ]
@@ -337,7 +340,8 @@ const app = new Vue({
   store,
   components: {
     'my-tabbar': Tabbar,
-    'my-top-tips': TopTips
+    'my-top-tips': TopTips,
+    'my-sidebar': MySidebar
   },
   router: router
 })

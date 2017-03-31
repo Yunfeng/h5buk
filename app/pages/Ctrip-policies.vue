@@ -69,7 +69,8 @@ export default {
         pageNo: 1,
         pageSize: 25,
         pageTotal: 0
-      }
+      },
+      monitoring: 1
     }
   },
   mounted: function () {
@@ -92,7 +93,8 @@ export default {
         'sc.carrier': this.carrier,
         'sc.subclass': this.subclass,
         'sc.departureAirport': this.dport,
-        'sc.arrivalAirport': this.aport
+        'sc.arrivalAirport': this.aport,
+        'sc.monitoring': this.monitoring
       }
 
       searchSpecialPolicy(params,
@@ -107,7 +109,7 @@ export default {
       )
     },
     showDetail: function (info) {
-      this.$router.push('/ctrp/policies/' + info.id)
+      this.$router.push('/ctrp/policy/' + info.id)
     },
     prevPage: function () {
       this.sc.pageNo = this.sc.pageNo - 1
