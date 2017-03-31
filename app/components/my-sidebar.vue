@@ -1,89 +1,112 @@
 <template>  
-  <div>
-    <ul class="nav nav-pills flex-column">
-      <li class="nav-item">
-        <router-link to="/search" class="nav-link">
-          航班查询
-        </router-link>
-      </li>
-    </ul>
-    <ul class="nav nav-pills flex-column">
-      <li class="nav-item">
-        <router-link to="/pnr/list" class="nav-link">
-          PNR管理(列表)
-        </router-link>
-      </li>
-      <li class="nav-item text-center">
-        <router-link to="/pnr/ctcm" class="nav-link">
-          缺 CTCM
-        </router-link>
-      </li>   
-      <li class="nav-item text-center">
-        <router-link to="/pnr/ctct" class="nav-link">
-          缺 CTCT
-        </router-link>
-      </li>   
-      <li class="nav-item text-center">
-        <router-link to="/pnr/mobile" class="nav-link">
-          备用手机号
-        </router-link>
-      </li>   
-      <li class="nav-item text-center">
-        <router-link to="/pnr/syslog" class="nav-link">
-          系统日志
-        </router-link>
-      </li>   
-    </ul>
-    <ul class="nav nav-pills flex-column">
-      <li class="nav-item">
-        <router-link to="/tmc" class="nav-link">
-          大客户政策
-        </router-link>
-      </li>
-      <li class="nav-item">
-        <router-link to="/ctrp" class="nav-link">
-          携程比价
-        </router-link>
-      </li>
-    </ul>
-    <ul class="nav nav-pills flex-column">
-      <li class="nav-item">
-        <router-link to="/order" class="nav-link">
-          买家订单
-        </router-link>
-      </li>
-    </ul>
-    <ul class="nav nav-pills flex-column">
-      <li class="nav-item">
-        <router-link to="/qinfo" class="nav-link">
-          Q管理
-        </router-link>
-      </li>
-      <li class="nav-item">
-        <router-link to="/tpr" class="nav-link">
-          TPR
-        </router-link>
-      </li>
-      <li class="nav-item">
-        <router-link to="/eterm" class="nav-link">
-          ETERM
-        </router-link>
-      </li>
-    </ul>
-    
-    <ul class="nav nav-pills flex-column">
-      <li class="nav-item">
-        <router-link to="/recharge" class="nav-link">
-          充值
-        </router-link>
-      </li>
-    </ul>
-    <ul class="nav nav-pills flex-column">
-      <li class="nav-item">
-        <a href="https://github.com/Yunfeng/h5buk" class="nav-link" target="_blank">
-          源码
-        </a>
-      </li>
-    </ul>
+  <div id="accordion" role="tablist" class="row">
+    <div class="card col-12 px-0">
+      <div class="card-header" role="tab" id="headingOne">
+          <a data-toggle="collapse" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+            PNR管理
+          </a>
+      </div>
+
+      <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item ml-3">
+            <router-link to="/pnr/list">
+              PNR列表
+            </router-link>
+          </li>
+          <li class="list-group-item ml-3">
+            <router-link to="/tpr">
+              TPR
+            </router-link>
+          </li>
+          <li class="list-group-item ml-3">
+            <router-link to="/qinfo">
+              Q管理
+            </router-link>
+          </li>                    
+          <li class="list-group-item ml-3">
+            <router-link to="/pnr/ctcm">
+              缺 CTCM
+            </router-link>              
+          </li>
+          <li class="list-group-item ml-3">
+            <router-link to="/pnr/ctct">
+              缺 CTCT
+            </router-link>
+          </li>
+          <li class="list-group-item ml-3">
+            <router-link to="/pnr/mobile">
+              备用手机号
+            </router-link>
+          </li>
+          <li class="list-group-item ml-3">
+            <router-link to="/pnr/syslog">
+              系统日志
+            </router-link>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card col-12 px-0">
+      <div class="card-header" role="tab" id="heading2">
+          <a data-toggle="collapse" href="#collapse2" aria-expanded="true" aria-controls="collapse2">
+              机票
+          </a>
+      </div>
+
+      <div id="collapse2" class="collapse show" role="tabpanel" aria-labelledby="heading2" data-parent="#accordion">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item ml-3">
+            <router-link to="/search">
+              航班查询
+            </router-link>
+          </li>
+          <li class="list-group-item ml-3">
+            <router-link to="/tmc">
+              大客户政策
+            </router-link>
+          </li>
+          <li class="list-group-item ml-3">
+            <router-link to="/order">
+              买家订单
+            </router-link>
+          </li>
+          <li class="list-group-item ml-3">
+            <router-link to="/order/sale">
+              卖家订单
+            </router-link>
+          </li>
+          <li class="list-group-item ml-3">
+            <router-link to="/eterm">
+              ETERM
+            </router-link>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card col-12 px-0">
+      <div class="card-header" role="tab" id="heading3">
+          <a data-toggle="collapse" href="#collapse3" aria-expanded="true" aria-controls="collapse3">
+              其它
+          </a>
+      </div>
+
+      <div id="collapse3" class="collapse show" role="tabpanel" aria-labelledby="heading3" data-parent="#accordion">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item ml-3">
+            <router-link to="/recharge">
+              充值
+            </router-link>
+          </li>
+          <li class="list-group-item ml-3">
+            <a href="https://github.com/Yunfeng/h5buk" target="_blank">
+              源码
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
   </div>
 </template>
