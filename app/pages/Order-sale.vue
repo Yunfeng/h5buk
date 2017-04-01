@@ -1,8 +1,10 @@
 <template>
 	<div id="order" class="row">
-    <div class="col-12 bg-info text-center text-white">
-      <span @click="back()" class="float-left"><i class="fa fa-angle-left fa-2" aria-hidden="true"></i></span>
-        销售订单      
+    <div class="col-12 bg-info text-center text-white fa-2">
+      <span @click="back()" class="float-left fa-2">
+        <i class="fa fa-angle-left fa-2" aria-hidden="true"></i>
+      </span>
+      <span class="fa-2">卖家订单</span>
     </div> 
 
 
@@ -51,10 +53,14 @@ export default {
     },
     changeBgByStatus: function (orderStatus) {
       switch (orderStatus) {
-        case 0: return 'bg-info'
-        case 8: return 'bg-success'
-        case 12: return 'bg-warning'
-        default: return 'bg-faded'
+        case 1: return 'bg-faded text-info'
+        case 4: return 'bg-white text-danger'
+        case 8: return 'bg-success text-white'
+        case 16: return 'bg-warning text-faded'
+        case 32: return 'bg-whited text-success'
+        case 128: return 'bg- text-muted'
+        case 1024: return 'bg-faded text-muted'
+        default: return 'bg-success'
       }
     },
     search: function () {

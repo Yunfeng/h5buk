@@ -45,6 +45,11 @@
         </div>
       </div>
     </div>
+    <div class="col-12 mt-1" v-if="fltCount === 1">
+        <span class="small float-right">
+          <a href="javascript:void(0)" @click.stop="searchReturn()">搜索返程</a>
+        </span>
+      </div>
     <!-- 表单 -->
     <form id="frmOrder" class="col-12 px-0">
       <input type="hidden" name="tmcPolicyApply.policyId" :value="policyId" />
@@ -64,7 +69,7 @@
       </template>
 
 
-        <div class="card card-outline-inf col-12 bg-faded mt-1" v-for="(psg, index) in psgInfos">
+        <div class="card card-outline-inf col-12 mt-1" v-for="(psg, index) in psgInfos">
             <div class="card-block p-0">
               <span class="text-faded"><small>乘客 {{index+1}}</small></span>
               <button type="button" @click.stop="selectPsg(index)" title="搜索并选择乘机人">
@@ -133,6 +138,7 @@
 </template>
 
 <script>
+import { addDate } from '../common/common.js'
 import MyPsgPicker from '../components/my-psg-picker.vue'
 import $ from 'jquery'
 
@@ -160,7 +166,9 @@ export default {
   computed: {
     bookFlights () { return this.$store.state.order.flights },
     psgInfos () { return this.$store.state.order.psgs },
-    policyId () { return this.$store.state.order.policyId }
+    policyId () { return this.$store.state.order.policyId },
+    ddate () { return this.$store.state.searchParams.ddate },
+    fltCount () { return this.bookFlights.length }
   },
   methods: {
     back: function () {
@@ -222,6 +230,13 @@ export default {
       if (status === 1) {
         this.$store.commit('updatePsg', { 'index': this.psgSelected, 'name': name, 'idType': idType, 'idNo': idNo })
       }
+    },
+    searchReturn: function () {
+      this.$store.commit('switchCity')
+
+      var newDate = addDate(this.ddate, 1)
+      this.$store.commit('setDdate', newDate)
+      this.$router.push('/search')
     }
   },
   beforeRouteEnter (to, from, next) {

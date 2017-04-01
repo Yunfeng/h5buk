@@ -17,9 +17,12 @@
         <div class="card-block py-0 bg-primary text-white">
           <small>行程信息</small>
         </div>
-        <template v-for='flt in info.flights'>
+        <template v-for='(flt, index) in info.flights'>
           <dl class='row'>
-            <dt class='col-4 text-right px-0'>出发日期</dt>
+            <dt class='col-4 text-right px-0'>
+              <span class="d-inline-block text-info">{{index+1}}.</span> 
+              出发日期
+            </dt>
             <dd class='col-8 text-info'>{{flt.departureDate}}</dd>
             <dt class='col-4 text-right px-0'>出发</dt>
             <dd class='col-8 text-info'>{{showTime(flt.departureTime)}} {{flt.departureAirportName}}</dd>
@@ -40,9 +43,12 @@
         <div class="card-block py-0 bg-primary text-white">
           <small>乘机人信息</small>
         </div>
-        <template v-for='psg in info.passengers'>
+        <template v-for='(psg, index) in info.passengers'>
           <dl class='row'>
-            <dt class='col-4 text-right px-0'>姓名</dt>
+            <dt class='col-4 text-right px-0'>
+              <span class="d-inline-block text-info">{{index+1}}.</span> 
+              姓名
+            </dt>
             <dd class='col-8'>{{psg.psgName}}</dd>
 
             <dt class='col-4 text-right px-0'>证件号</dt>

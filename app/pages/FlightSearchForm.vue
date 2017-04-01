@@ -11,7 +11,7 @@
       <div class="card-block">
         <div class="form-group row">
           <div class="col-5" style="border-bottom: 1px solid #5bc0de;">
-            <input class="form-control border-0" type="text" placeholder="出发城市" v-model="dcityName" @focus="dcityFocusedEvent()">
+              <input class="form-control border-0 " type="text" placeholder="出发城市" v-model="dcityName" @focus="dcityFocusedEvent()">
           </div>
           <div class="col-2 text-center">
             <span @click="switchCity()"><i class="fa fa-exchange align-middle" aria-hidden="true"></i></span>
@@ -249,10 +249,7 @@ export default {
       this.showPicker = true
     },
     switchCity: function () {
-      var cityCode = this.acity
-      var cityName = this.acityName
-      this.$store.commit('setAcity', { 'cityCode': this.dcity, 'cityName': this.dcityName })
-      this.$store.commit('setDcity', { 'cityCode': cityCode, 'cityName': cityName })
+      this.$store.commit('switchCity')
     }
   }
 }

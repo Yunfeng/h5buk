@@ -1,11 +1,12 @@
 <template>
 	<div id="order" class="row">
     <div class="col-12 bg-info text-center text-white">
-        <span @click="back()" class="float-left"><i class="fa fa-angle-left fa-2" aria-hidden="true"></i></span>
-        我的订单
-        <span class="float-right bg-white">
+        <span @click="back()" class="float-left fa-2">
+          <i class="fa fa-angle-left fa-2" aria-hidden="true"></i></span>
+        <span class="fa-2">我的订单</span>
+        <span class="float-right bg-white fa-2">
           <router-link to="/order/sale" class="text-danger">
-            <small>我是卖家</small>
+            <small>卖家点这</small>
           </router-link>          
         </span>
     </router-link>
@@ -15,7 +16,7 @@
         <div class="card-block mt-1 mb-2 p-0">          
           <small>{{info.shortDesc}}</small><br />
           <span class="float-right"><small>总金额：</small>{{info.totalPrice}}</span>
-          <span><small>订单状态：</small>{{showStatusDesc(info.status)}}</span>
+          <span><small>订单状态：</small>{{showStatusDesc(info.status)}},{{info.status}}</span>
         </div>
       </div>
 
@@ -54,11 +55,12 @@ export default {
     },
     changeBgByStatus: function (orderStatus) {
       switch (orderStatus) {
-        case 1: return 'bg-danger text-white'
+        case 1: return 'bg-success text-white'
         case 4: return 'bg-white text-danger'
         case 8: return 'bg-white text-faded'
         case 32: return 'bg-whited text-success'
         case 128: return 'bg-faded text-muted'
+        case 1024: return 'bg-warning text-white'
         default: return 'bg-success'
       }
     },

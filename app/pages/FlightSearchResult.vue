@@ -2,21 +2,26 @@
 	<div id="flight-result" class="row">
     <template v-if="listShowing">
       <div class="col-12 bg-info text-center text-white">
-          <span @click="back()" class="float-left">
+          <span @click="back()" class="float-left fa-2">
             <i class="fa fa-angle-left fa-2" aria-hidden="true"></i>
           </span>
           <span class="fa-2">{{dcityName}}-{{acityName}}</span> <small>{{ddate.substring(5)}}</small>
 
-          <span @click="showFilter()" class="float-right">
-            ({{totalCount}})
+          <span @click="showFilter()" class="float-right fa-2">                       
             <i class="fa fa-filter fa-2" aria-hidden="true"></i>
+            <template v-if="totalCount > 0">
+              <small>选项({{totalCount}})</small>
+            </template>
           </span>   
       </div>         
 
-      <div class="col-12 mt-1">
-        <span class="small">
+      <div class="col-12 mt-1 sticky-top text-center">
+        <span class="small float-left" v-if="isToday">
           <a href="javascript:void(0)" @click.stop="changeDdate(-1)">前一天</a>
         </span>
+        <template v-if="isReplacing">
+          <span class="text-danger small">更新中...</span>
+        </template> 
         <span class="small float-right">
           <a href="javascript:void(0)" @click.stop="changeDdate(1)">后一天</a>
         </span>
@@ -68,7 +73,7 @@
 
     <template v-if="detailShowing && flt">
       <div class="col-12 bg-info text-center text-white">
-        <span @click="closeDetail()" class="float-left">
+        <span @click="closeDetail()" class="float-left fa-2">
           <i class="fa fa-angle-left fa-2" aria-hidden="true"></i>
         </span>
         <span class="fa-2 text-danger">{{flt.flightNo}}</span> <small>{{flt.depDate.substring(5)}}</small>
@@ -268,7 +273,7 @@ export default {
       showCount: 0,
 
       dataLength: 0, // 每次来的数据长度
-      isReplacing: 0, // 航班数据是否开始替换了,
+      isReplacing: false, // 航班数据是否开始替换了,
 
       tgqCarrier: '',
       tgqSubclass: ''
@@ -281,7 +286,12 @@ export default {
     dcityName () { return this.$store.state.searchParams.dcityName },
     acityName () { return this.$store.state.searchParams.acityName },
     onlyCarrier () { return this.$store.state.searchParams.onlyCarrier },
-    sortBy () { return this.$store.state.searchParams.sortBy }
+    sortBy () { return this.$store.state.searchParams.sortBy },
+    isToday () {
+      // 判断 ddate 日期是否小于等于今天
+      var aa = new Date(this.ddate) - new Date()
+      return aa > 0
+    }
   },
   watch: {
     filterByCarrier0 (curVal, oldVal) {
@@ -307,7 +317,7 @@ export default {
     },
     readyToSearch: function () {
       this.startPosition = -1
-      this.isReplacing = 0
+      this.isReplacing = false
       this.avCount = 0
       this.dataLength = 0
       this.searchFlightResults.splice(0)
@@ -322,7 +332,7 @@ export default {
       }
 
       self.searching = true
-      if (self.isReplacing === 1) {
+      if (self.isReplacing) {
         self.searching = false // 开始替换旧的航班信息了，则关闭加载框，允许用户操作，后台更新数据
         console.log('flight is replacing...')
       }
@@ -357,7 +367,7 @@ export default {
               if (flt0.flightNo === flt.flightNo) {
                 console.log(flt0.flightNo + ': ' + flt0.id + ', ' + flt.id)
                 self.searchFlightResults.splice(j, 1)
-                self.isReplacing = 1 // 开始替换航班数据了
+                self.isReplacing = true // 开始替换航班数据了
                 break
               }
             }
@@ -380,6 +390,7 @@ export default {
           self.carriers.sort()
           self.carrierInfos.sort()
           self.searching = false
+          self.isReplacing = false
         } else if (jsonResult.status === 101) {
           self.searching = false
           self.showErrMsg('无直飞航班', 'danger')
@@ -414,6 +425,8 @@ export default {
       this.listShowing = false
       this.detailShowing = true
       this.flt = fltInfo
+
+      window.scroll(0, 0)
     },
     closeDetail: function () {
       this.detailShowing = false

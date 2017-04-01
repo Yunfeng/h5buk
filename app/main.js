@@ -216,6 +216,16 @@ const store = new Vuex.Store({
     setDdate(state, payload) {
       state.searchParams.ddate = payload;
     }, 
+    switchCity(state) {
+      var cityCode = state.searchParams.acity
+      var cityName = state.searchParams.acityName
+
+      state.searchParams.acity = state.searchParams.dcity
+      state.searchParams.acityName = state.searchParams.dcityName
+
+      state.searchParams.dcity = cityCode
+      state.searchParams.dcityName = cityName
+    },
     setOnlyCarrier(state, payload) {
       state.searchParams.onlyCarrier = payload
     },
