@@ -4,36 +4,35 @@
       <span @click="back()" class="float-left fa-2">
         <i class="fa fa-angle-left fa-2" aria-hidden="true"></i>
       </span>
-      <h6>国内机票</h6>
+      <span class="fa-2">国内机票</span>
     </div> 
 
     <div class="card col-12 mt-2 p-0 border-0">
       <div class="card-block">
         <div class="form-group row">
-          <label class="col-4 col-form-label text-right">出发</label>
-          <div class="col-8">
-            <input class="form-control" type="text" placeholder="出发城市" v-model="dcityName" @focus="dcityFocusedEvent()" readonly>
+          <div class="col-5" style="border-bottom: 1px solid #5bc0de;">
+            <input class="form-control border-0" type="text" placeholder="出发城市" v-model="dcityName" @focus="dcityFocusedEvent()">
           </div>
-        </div>
+          <div class="col-2 text-center">
+            <span @click="switchCity()"><i class="fa fa-exchange align-middle" aria-hidden="true"></i></span>
+          </div>
+          <div class="col-5" style="border-bottom: 1px solid #5bc0de;">
+            <input class="form-control text-right border-0" type="text" placeholder="到达城市" v-model="acityName" @focus="acityFocusedEvent()">
+          </div>
 
-        <div class="form-group row">
-          <label class="col-4 col-form-label text-right">到达</label>
-          <div class="col-8">
-            <input class="form-control" type="text" placeholder="到达城市" v-model="acityName" @focus="acityFocusedEvent()" readonly>
-          </div>
         </div>
 
         <div class="form-group row">
           <label class="col-4 col-form-label text-right">日期</label>
-          <div class="col-8">
-            <input class="form-control" type="text" placeholder="出发日期" v-model="ddate" id="ddate" readonly>
+          <div class="col-8" style="border-bottom: 1px solid #5bc0de;">
+            <input class="form-control border-0" type="text" placeholder="出发日期" v-model="ddate" id="ddate">
           </div>
         </div>
 
         <div class="form-group row">
           <label class="col-4 col-form-label text-right">航空公司</label>
-          <div class="col-8">
-            <select class="form-control" v-model="onlyCarrier">
+          <div class="col-8" style="border-bottom: 1px solid #5bc0de;">
+            <select class="form-control border-0" v-model="onlyCarrier">
                 <option value="">不限</option>
                 <option value="CA">中国国航-CA</option>
                 <option value="CZ">南方航空-CZ</option>
@@ -70,8 +69,8 @@
 
         <div class="form-group row">
           <label class="col-4 col-form-label text-right">排序方式</label>
-          <div class="col-8">
-            <select v-model="sortBy" class="form-control" >
+          <div class="col-8" style="border-bottom: 1px solid #5bc0de;">
+            <select v-model="sortBy" class="form-control border-0" >
                     <option value="0">起飞时间升序</option>
                     <option value="1">起飞时间降序</option>
                     <option value="2">最低价格升序</option>
@@ -81,8 +80,8 @@
         </div>
 
       </div>
-      <div class="card-footer text-center text-white">
-        <my-button @click="search()" type="info">查询航班</my-button>
+      <div class="card-footer text-center text-white border-0">
+        <button type="button" @click.stop="search()" class="btn btn-warning btn-block btn-lg">搜索</button>
       </div>
     </div>
 
@@ -248,6 +247,12 @@ export default {
     acityFocusedEvent: function () {
       this.targetName = 'Acity'
       this.showPicker = true
+    },
+    switchCity: function () {
+      var cityCode = this.acity
+      var cityName = this.acityName
+      this.$store.commit('setAcity', { 'cityCode': this.dcity, 'cityName': this.dcityName })
+      this.$store.commit('setDcity', { 'cityCode': cityCode, 'cityName': cityName })
     }
   }
 }

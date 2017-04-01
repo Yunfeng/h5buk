@@ -1,8 +1,10 @@
 <template>
   <div id="book-form" class="row">
     <div class="col-12 bg-info text-center text-white">
-      <span @click="back()" class="float-left"><i class="fa fa-angle-left fa-2" aria-hidden="true"></i></span>
-      机票预定 
+      <span @click="back()" class="float-left fa-2">
+        <i class="fa fa-angle-left fa-2" aria-hidden="true"></i>
+      </span>
+      <span class="fa-2">机票预定</span>
     </div> 
 
     <!-- 航班信息 -->
@@ -62,7 +64,7 @@
       </template>
 
 
-        <div class="card card-outline-inf col-12" v-for="(psg, index) in psgInfos">
+        <div class="card card-outline-inf col-12 bg-faded mt-1" v-for="(psg, index) in psgInfos">
             <div class="card-block p-0">
               <span class="text-faded"><small>乘客 {{index+1}}</small></span>
               <button type="button" @click.stop="selectPsg(index)" title="搜索并选择乘机人">
@@ -74,15 +76,14 @@
             </div>
 
             <div class="card-block" style="padding: 0">
-              <div class="form-group">
-                <input type="text" class="form-control" :name="'tmcPolicyApply.passengers[' + index + '].psgName'" placeholder="乘客姓名" v-model="psg.psgName"/>
+              <div class="form-group border-bottom-1">
+                <input type="text" class="form-control border-0" :name="'tmcPolicyApply.passengers[' + index + '].psgName'" placeholder="乘客姓名" v-model="psg.psgName"/>
               </div>
-              <div class="form-group">
-                <input type="text" class="form-control" :name="'tmcPolicyApply.passengers[' + index + '].idNo'" placeholder="证件号" v-model="psg.idNo" />
+              <div class="form-group border-bottom-1">
+                <input type="text" class="form-control border-0" :name="'tmcPolicyApply.passengers[' + index + '].idNo'" placeholder="证件号" v-model="psg.idNo" />
               </div>
-              <div class="form-group">
-                <label>证件类型</label>
-                <select class="form-control" :name="'tmcPolicyApply.passengers[' + index + '].idType'" v-model="psg.idType">
+              <div class="form-group border-bottom-1">
+                <select class="form-control border-0" :name="'tmcPolicyApply.passengers[' + index + '].idType'" v-model="psg.idType">
                 <option v-for="item in idTypes" :value="item.idType">
                   {{ item.idName }}
                 </option>
@@ -92,24 +93,20 @@
             </div>
         </div>
 
-      <div class="weui-flex mt-1">
-        <div class="weui-flex__item">
-          <div class="placeholder">
+      <div class="col-12 m-1">
             <button type="button" @click.stop="addPsg()" class="btn btn-sm btn-outline-primary">
               <small>添加乘客</small>
             </button>
-          </div>
-        </div>
       </div>
 
 
       <div class="card col-12 bg-faded border-0">
         <div class="card-block px-0">
-          <div class="form-group">
-            <input type="text" class="form-control" name="tmcPolicyApply.linkPhone" placeholder="联系电话"/>
+          <div class="form-group border-bottom-1">
+            <input type="text" class="form-control border-0" name="tmcPolicyApply.linkPhone" placeholder="联系电话"/>
           </div>
-          <div class="form-group">
-            <input type="text" class="form-control" name="tmcPolicyApply.remark" placeholder="备注" />
+          <div class="form-group border-bottom-1">
+            <input type="text" class="form-control border-0" name="tmcPolicyApply.remark" placeholder="备注" />
           </div>
         </div>   
 
@@ -154,7 +151,8 @@ export default {
 
       idTypes: [
         { idType: 1, idName: '身份证' },
-        { idType: 2, idName: '护照' }
+        { idType: 2, idName: '护照' },
+        { idType: 10, idName: '其它' }
       ],
       showPicker: false
     }

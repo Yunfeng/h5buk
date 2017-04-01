@@ -11,7 +11,7 @@
     </router-link>
     </div> 
 
-      <div class="card col-12"  v-for="info in orders" @click="showDetail(info)">
+      <div class="card col-12"  v-for="info in orders" @click="showDetail(info)" :class="changeBgByStatus(info.status)">
         <div class="card-block mt-1 mb-2 p-0">          
           <small>{{info.shortDesc}}</small><br />
           <span class="float-right"><small>总金额：</small>{{info.totalPrice}}</span>
@@ -51,6 +51,16 @@ export default {
   methods: {
     back: function () {
       this.$router.go(-1)
+    },
+    changeBgByStatus: function (orderStatus) {
+      switch (orderStatus) {
+        case 1: return 'bg-danger text-white'
+        case 4: return 'bg-white text-danger'
+        case 8: return 'bg-white text-faded'
+        case 32: return 'bg-whited text-success'
+        case 128: return 'bg-faded text-muted'
+        default: return 'bg-success'
+      }
     },
     search: function () {
       var self = this

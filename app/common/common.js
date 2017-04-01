@@ -42,6 +42,16 @@ export function getFormatDate (date, pattern) {
   return date.format(pattern)
 }
 
+export function addDate(d0, x) {
+  var d1 = new Date(d0)
+  
+  d1 = d1.valueOf()
+  d1 = d1 + x * 24 * 60 * 60 * 1000
+  d1 = new Date(d1)
+
+  return d1.format("yyyy-MM-dd")
+}
+
 export function getURLParameter (sParam) {
   var sPageURL = window.location.search.substring(1);
   var sURLVariables = sPageURL.split('&');

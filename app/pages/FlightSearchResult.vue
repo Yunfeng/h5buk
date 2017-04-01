@@ -5,14 +5,22 @@
           <span @click="back()" class="float-left">
             <i class="fa fa-angle-left fa-2" aria-hidden="true"></i>
           </span>
-          {{dcityName}}-{{acityName}} {{ddate}}
+          <span class="fa-2">{{dcityName}}-{{acityName}}</span> <small>{{ddate.substring(5)}}</small>
 
           <span @click="showFilter()" class="float-right">
-            ({{showCount}}/{{totalCount}})
-            <i class="fa fa-filter fa-2" aria-hidden="true">筛选</i>
+            ({{totalCount}})
+            <i class="fa fa-filter fa-2" aria-hidden="true"></i>
           </span>   
       </div>         
 
+      <div class="col-12 mt-1">
+        <span class="small">
+          <a href="javascript:void(0)" @click.stop="changeDdate(-1)">前一天</a>
+        </span>
+        <span class="small float-right">
+          <a href="javascript:void(0)" @click.stop="changeDdate(1)">后一天</a>
+        </span>
+      </div>
       <table class="table table-striped table-hover" >
         <thead>
             <th class="text-center">航班</th>
@@ -21,50 +29,55 @@
             <th class="text-center">时间</th>
             <th class="text-center">价格</th>
         </thead>
-          <tbody>
-              <tr v-for="flight in execSort(searchFlightResults)" @click="showFlightDetail(flight)" name="flightItem">
-                  <td class="text-center">
-                    {{flight.flightNo}}
-                    <br />
-                    {{flight.carrierName}}
-                  </td>
-                  <td class="text-center hidden-sm-down">{{flight.depPortName}}</td>
-                  <td class="text-center hidden-sm-down">{{flight.arrPortName}}</td>
-                  <td class="text-center"><span class="text-info">{{flight.showDepTime}}</span> <small>{{flight.showArrTime}}</small></td>
-                  <td class="text-right">
-                      <div v-if="flight.subClassList.length > 0">
-                          <template v-if="flight.lowestPrice != null">
-                              <i class="fa fa-rmb"></i>
-                              <span class="text-danger">
-                                <big><strong>{{flight.lowestPrice.price}}</strong></big>
-                              </span>
-                                <i class="fa fa-long-arrow-up text-success" aria-hidden="true"></i>
+        <tbody>
+          <tr v-for="flight in execSort(searchFlightResults)" @click="showFlightDetail(flight)" name="flightItem">
+              <td class="text-center">
+                {{flight.flightNo}}
+                <br />
+                {{flight.carrierName}}
+              </td>
+              <td class="text-center hidden-sm-down">{{flight.depPortName}}</td>
+              <td class="text-center hidden-sm-down">{{flight.arrPortName}}</td>
+              <td class="text-center">
+                <span class="text-info fa-2">{{flight.showDepTime}}</span> 
+                <small>{{flight.showArrTime}}</small>
+              </td>
+              <td class="text-right">
+                  <div v-if="flight.subClassList.length > 0">
+                      <template v-if="flight.lowestPrice != null">
+                          <i class="fa fa-rmb"></i>
+                          <span class="text-danger">
+                            <big><strong>{{flight.lowestPrice.price}}</strong></big>
+                          </span>
+                            <i class="fa fa-long-arrow-up text-success" aria-hidden="true"></i>
 
-                          </template>    
-                      </div>
-                      <div v-else>
-                          <span class="text-danger">已售完</span>
-                      </div>
-                  </td>
-              </tr>
+                      </template>    
+                  </div>
+                  <div v-else>
+                      <span class="text-danger">已售完</span>
+                  </div>
+              </td>
+          </tr>
 
-          </tbody>
+        </tbody>
       </table>
+      <div class="card col-12 text-right mt-1 border-0" v-if="totalCount > 0">
+        <span class="text-info"><small>共</small> {{showCount}}/{{totalCount}} <small>航班</small></span>
+      </div>
     </template>
-
 
     <template v-if="detailShowing && flt">
       <div class="col-12 bg-info text-center text-white">
         <span @click="closeDetail()" class="float-left">
           <i class="fa fa-angle-left fa-2" aria-hidden="true"></i>
         </span>
-        {{flt.flightNo}} <small>{{flt.depDate}}</small>
+        <span class="fa-2 text-danger">{{flt.flightNo}}</span> <small>{{flt.depDate.substring(5)}}</small>
       </div>           
     
       <div class="card col-12 p-0">
         <div class="row">
-          <div class="col-4 text-center text-nowrap time"> {{flt.showDepTime}}</div>
-          <div class="col-4 text-center text-nowrap time">{{flt.showArrTime}}</div>
+          <div class="col-4 text-right text-nowrap time text-success"> {{flt.showDepTime}}</div>
+          <div class="col-4 text-center text-nowrap time text-muted">{{flt.showArrTime}}</div>
           <div class="col-4 text-nowrap text-warning text-right">
             <template v-if="flt.lowestPrice">
               <i class="fa fa-rmb"></i> <span class="lowest-price mr-1">{{flt.lowestPrice.price}}</span>
@@ -73,12 +86,14 @@
           <div class="clear"></div>
         </div>
         <div class="row">
-          <div class="col-3 text-right text-nowrap airport"> {{flt.depPortName}} {{flt.depTerminal}}</div>
+          <div class="col-4 text-right text-nowrap airport text-success px-0"> {{flt.depPortName}} <small>{{flt.depTerminal}}</small></div>
           <div class="col-3 text-center">
-            <p v-if="flt.stopover !== '0'">{{flt.stopover}}</p>
+            
           </div>
-          <div class="col-3 text-left text-nowrap airport">{{flt.arrPortName}} {{flt.arrTerminal}}</div>
-          <div class="col-3 text-right">&nbsp;</div>
+          <div class="col-4 text-left text-nowrap airport text-muted">{{flt.arrPortName}} <small>{{flt.arrTerminal}}</small></div>
+          <div class="col-4 text-right">
+            <span v-if="flt.stopover !== '0'">{{flt.stopover}}</span>
+          </div>
           <div class="clear"></div>
         </div>
         <div class="row">
@@ -101,7 +116,7 @@
             </td>
             <td class="text-right">
               <template v-if="info.price > 0">
-                <i class="fa fa-rmb text-warning"></i> <span class="text-danger">{{info.price}}</span>
+                <i class="fa fa-rmb text-warning"></i> <span class="text-danger fa-2">{{info.price}}</span>
               </template>
               <template v-else>
                 <span class="text-danger"><small>浮动</small></span>
@@ -121,17 +136,16 @@
           <small>更新时间: <span class="text-success">{{showFreshness(flt.freshness)}}</span></small>
         </div>
       </div>
-      
     </template>
 
-
     <template v-if="filterModalShowing">
-      <div class="col-12 bg-info text-right">
-        <button type="button" class="btn btn-success m-1" @click="closeFilterDialog()">确定</button>
+      <div class="col-12 bg-primary text-center align-center text-white">
+        <span class="fa-2">航班筛选</span>
+        <button type="button" class="btn btn-sm btn-warning float-right mt-1" @click="closeFilterDialog()">确定</button>
       </div>
 
       <div class="card p-0 col-12 border-0">
-        <div class="form-group row">
+        <div class="form-group row mt-2">
           <label class="col-4 text-right">共享航班</label>
           <div class="col-6">
             <div class="form-check">
@@ -144,8 +158,8 @@
 
         <div class="form-group row">
           <label class="col-4 col-form-label text-right">排序</label>
-          <div class="col-6">
-            <select v-model="sortBy0" class="form-control" >
+          <div class="col-6 px-0" style="border-bottom: 1px solid #5bc0de;">
+            <select v-model="sortBy0" class="form-control  border-0" >
               <option value="0">起飞时间升序</option>
               <option value="1">起飞时间降序</option>
               <option value="2">最低价格升序</option>
@@ -156,8 +170,8 @@
 
         <div class="form-group row">
           <label class="col-4 col-form-label text-right">航空公司</label>
-          <div class="col-6">
-            <select v-model="filterByCarrier0" class="form-control" >
+          <div class="col-6 px-0" style="border-bottom: 1px solid #5bc0de;">
+            <select v-model="filterByCarrier0" class="form-control  border-0" >
               <option value="">全部航司</option>
                 <template v-for="carrier in carrierInfos">
                   <option v-bind:value="carrier.code">
@@ -170,8 +184,8 @@
 
         <div class="form-group row">
           <label class="col-4 col-form-label text-right">起飞时间</label>
-          <div class="col-6">
-            <select v-model="filter.filterByTime" class="form-control" >
+          <div class="col-6 px-0"  style="border-bottom: 1px solid #5bc0de;">
+            <select v-model="filter.filterByTime" class="form-control  border-0" >
               <option value="0">所有时间</option>
                           <option value="1">00:00-06:00</option>
                           <option value="2">06:01-12:00</option>
@@ -216,7 +230,8 @@
 </template>
 
 <script>
-import { getCabinClassDesc } from '../common/common.js'
+import { getCabinClassDesc, addDate } from '../common/common.js'
+import { rav, searchTgq } from '../api/flight.js'
 import MyButton from '../components/my-button.vue'
 import MyInput from '../components/my-input.vue'
 import $ from 'jquery'
@@ -252,7 +267,11 @@ export default {
       totalCount: 0,
       showCount: 0,
 
-      dataLength: 0
+      dataLength: 0, // 每次来的数据长度
+      isReplacing: 0, // 航班数据是否开始替换了,
+
+      tgqCarrier: '',
+      tgqSubclass: ''
     }
   },
   computed: {
@@ -277,7 +296,7 @@ export default {
     this.filter.sortBy = this.sortBy
     this.filter.filterByCarrier = this.onlyCarrier
 
-    this.search()
+    this.readyToSearch()
   },
   methods: {
     back: function () {
@@ -286,88 +305,95 @@ export default {
     showErrMsg: function (msg, msgType) {
       this.$store.dispatch('showAlertMsg', { 'errMsg': msg, 'errMsgType': msgType })
     },
+    readyToSearch: function () {
+      this.startPosition = -1
+      this.isReplacing = 0
+      this.avCount = 0
+      this.dataLength = 0
+      this.searchFlightResults.splice(0)
+      this.search()
+    },
     search: function () {
       var self = this
 
-      if (self.dcity.length === 0) return
+      if (self.dcity.length === 0 || self.acity.length === 0) {
+        this.showErrMsg('请先选择出发、到达城市', 'danger')
+        return
+      }
 
       self.searching = true
-      $.ajax({
-        type: 'post',
-        url: '/Flight/flights/rav',
-        timeout: 10000,
-        data: {
-          'startPosition': self.startPosition,
-          'dcity': self.dcity,
-          'acity': self.acity,
-          'ddate': self.ddate
-        },
-        dataType: 'json',
-        success: function (jsonResult) {
-          if (jsonResult !== null) {
-            if (jsonResult.status === -1) {
-              self.showErrMsg('系统错误，请与管理员联系。')
-              self.searching = false
-              return
-            }
+      if (self.isReplacing === 1) {
+        self.searching = false // 开始替换旧的航班信息了，则关闭加载框，允许用户操作，后台更新数据
+        console.log('flight is replacing...')
+      }
 
-            if (jsonResult.status === -2) {
-              self.showErrMsg('免费查询额度用完。')
-              self.searching = false
-              return
-            }
+      var params = { 'startPosition': self.startPosition,
+        'dcity': self.dcity,
+        'acity': self.acity,
+        'ddate': self.ddate
+      }
 
-            if (jsonResult.dataList != null && jsonResult.dataList.length > 0) {
-              var len1 = jsonResult.dataList.length
-              self.dataLength = len1
-              for (var i = 0; i < len1; i++) {
-                var flt = jsonResult.dataList[i]
+      rav(params, this.ravDone, this.ravFail, this.ravAlways)
+    },
+    ravDone: function (jsonResult) {
+      var self = this
+      if (jsonResult !== null) {
+        if (jsonResult.status === -1) {
+          self.showErrMsg('系统错误，请与管理员联系。')
+          self.searching = false
+          return
+        }
 
-                // 检查是否已经存在同样的航班号，如果存在，则比较彼此的ID，ID大的留着
-                var len0 = self.searchFlightResults.length
-                for (var j = 0; j < len0; j++) {
-                  var flt0 = self.searchFlightResults[j]
-                  if (flt0.flightNo === flt.flightNo) {
-                    console.log(flt0.flightNo + ': ' + flt0.id + ', ' + flt.id)
-                    self.searchFlightResults.splice(j, 1)
-                    break
-                  }
-                }
+        if (jsonResult.dataList != null && jsonResult.dataList.length > 0) {
+          var len1 = jsonResult.dataList.length
+          self.dataLength = len1
+          for (var i = 0; i < len1; i++) {
+            var flt = jsonResult.dataList[i]
 
-                self.searchFlightResults.push(flt)
-
-                if (self.startPosition < flt.id) {
-                  self.startPosition = flt.id
-                }
-
-                if (self.carriers.length === 0 || self.carriers.indexOf(flt.carrierCode) === -1) {
-                  self.carriers.push(flt.carrierCode)
-                  self.carrierInfos.push({ 'code': flt.carrierCode, 'name': flt.carrierName })
-                }
+            // 检查是否已经存在同样的航班号，如果存在，则比较彼此的ID，ID大的留着
+            var len0 = self.searchFlightResults.length
+            for (var j = 0; j < len0; j++) {
+              var flt0 = self.searchFlightResults[j]
+              if (flt0.flightNo === flt.flightNo) {
+                console.log(flt0.flightNo + ': ' + flt0.id + ', ' + flt.id)
+                self.searchFlightResults.splice(j, 1)
+                self.isReplacing = 1 // 开始替换航班数据了
+                break
               }
             }
 
-            if (jsonResult.status === 1) {
-                // search done
-              self.carriers.sort()
-              self.carrierInfos.sort()
-              self.searching = false
-            } else if (jsonResult.status === 101) {
-              self.searching = false
-              self.showErrMsg('无直飞航班')
-            } else {
-              setTimeout(self.continueSearchFlight, 1500)
+            self.searchFlightResults.push(flt)
+
+            if (self.startPosition < flt.id) {
+              self.startPosition = flt.id
+            }
+
+            if (self.carriers.length === 0 || self.carriers.indexOf(flt.carrierCode) === -1) {
+              self.carriers.push(flt.carrierCode)
+              self.carrierInfos.push({ 'code': flt.carrierCode, 'name': flt.carrierName })
             }
           }
-        },
-        error: function (XMLHttpRequest, textStatus, errorThrown) {
-          self.searching = false
-          self.showErrMsg('search.error: ' + textStatus, 'danger')
-        },
-        complete: function (XMLHttpRequest, textStatus) {
-          // self.searching = false
         }
-      })
+
+        if (jsonResult.status === 1) {
+            // search done
+          self.carriers.sort()
+          self.carrierInfos.sort()
+          self.searching = false
+        } else if (jsonResult.status === 101) {
+          self.searching = false
+          self.showErrMsg('无直飞航班', 'danger')
+        } else {
+          setTimeout(self.continueSearchFlight, 1500)
+        }
+      }
+    },
+    ravFail: function (status, statusText) {
+      this.searching = false
+      this.showErrMsg(status + ' ' + statusText, 'danger')
+    },
+    ravAlways: function () {
+
     },
     continueSearchFlight: function () {
       if (this.startPosition === -1) {
@@ -375,9 +401,9 @@ export default {
       }
 
       this.avCount = this.avCount + 1
-      if ((this.avCount > 5 && this.totalCount === 0) || this.avCount > 20) {
+      if ((this.avCount > 5 && this.totalCount === 0) || this.avCount > 30) {
         this.searching = false
-        this.showErrMsg('好像出问题了，过会再试试吧')
+        this.showErrMsg('时间有点长了，过会再试试吧')
         return
       }
 
@@ -531,57 +557,55 @@ export default {
       this.listShowing = true
     },
     showTGQ: function (carrier, subclass) {
+      this.tgqCarrier = carrier
+      this.tgqSubclass = subclass
+      var params = { 'carrier': carrier,
+        'subclass': subclass
+      }
+
+      searchTgq(params, this.tgqDone)
+    },
+    tgqDone: function (jsonResult) {
       var self = this
-
-      $.ajax({
-        url: '/Flight/flights/tgq',
-        timeout: 3000,
-        data: {
-          'carrier': carrier,
-          'subclass': subclass
-        },
-        success: function (jsonResult) {
-          var tgqDetail = ''
-          if (jsonResult.dataList.length > 0) {
-            var info = jsonResult.dataList[0]
-            if (info.endorsementRule != null) {
-              tgqDetail = '签转：' + info.endorsementRule + '.<br />'
-            }
-
-            tgqDetail += '更改：起飞前'
-            if (info.rerouteRuleBefore === 0) {
-              tgqDetail += '免手续费, '
-            } else {
-              tgqDetail += info.rerouteRuleBefore + '%手续费, '
-            }
-            tgqDetail += '起飞后'
-            if (info.rerouteRuleAfter === 0) {
-              tgqDetail += '免手续费. '
-            } else {
-              tgqDetail += info.rerouteRuleAfter + '%手续费.'
-            }
-            tgqDetail += '<br />'
-
-            tgqDetail += '退票：起飞前'
-            if (info.refundRuleBefore === 0) {
-              tgqDetail += '免手续费, '
-            } else {
-              tgqDetail += info.refundRuleBefore + '%手续费, '
-            }
-            tgqDetail += '起飞后'
-            if (info.refundRuleAfter === 0) {
-              tgqDetail += '免手续费. '
-            } else {
-              tgqDetail += info.refundRuleAfter + '%手续费.'
-            }
-            tgqDetail += '<br />'
-          } else {
-            tgqDetail = '具体退改签信息请咨询客服'
-          }
-
-          self.dispalyTgqInfo(carrier, subclass, tgqDetail)
+      var tgqDetail = ''
+      if (jsonResult.dataList.length > 0) {
+        var info = jsonResult.dataList[0]
+        if (info.endorsementRule != null) {
+          tgqDetail = '签转：' + info.endorsementRule + '.<br />'
         }
-      })
+
+        tgqDetail += '更改：起飞前'
+        if (info.rerouteRuleBefore === 0) {
+          tgqDetail += '免手续费, '
+        } else {
+          tgqDetail += info.rerouteRuleBefore + '%手续费, '
+        }
+        tgqDetail += '起飞后'
+        if (info.rerouteRuleAfter === 0) {
+          tgqDetail += '免手续费. '
+        } else {
+          tgqDetail += info.rerouteRuleAfter + '%手续费.'
+        }
+        tgqDetail += '<br />'
+
+        tgqDetail += '退票：起飞前'
+        if (info.refundRuleBefore === 0) {
+          tgqDetail += '免手续费, '
+        } else {
+          tgqDetail += info.refundRuleBefore + '%手续费, '
+        }
+        tgqDetail += '起飞后'
+        if (info.refundRuleAfter === 0) {
+          tgqDetail += '免手续费. '
+        } else {
+          tgqDetail += info.refundRuleAfter + '%手续费.'
+        }
+        tgqDetail += '<br />'
+      } else {
+        tgqDetail = '具体退改签信息请咨询客服'
+      }
+
+      self.dispalyTgqInfo(self.tgqCarrier, self.tgqSubclass, tgqDetail)
     },
     dispalyTgqInfo: function (carrier, subclass, tgqDetail) {
       var modal = $('#tgqModal')
@@ -589,15 +613,15 @@ export default {
       modal.find('.modal-title').text(title)
       modal.find('.modal-body').html(tgqDetail)
       modal.modal('show')
+    },
+    changeDdate: function (x) {
+      var newDate = addDate(this.ddate, x)
+
+      this.$store.commit('setDdate', newDate)
+      this.readyToSearch()
     }
-  },
-  beforeRouteEnter (to, from, next) {
-    next(vm => {
-      // 通过 `vm` 访问组件实例
-    })
   }
 }
-
 </script>
 
 <style>

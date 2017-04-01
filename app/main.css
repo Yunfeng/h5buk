@@ -38,3 +38,7 @@ a:hover{
 .fade-enter, .fade-leave-to /* .fade-leave-active in <2.1.8 */ {
   opacity: 0
 }
+
+.border-bottom-1 {
+  border-bottom: 1px solid #5bc0de;  
+}
