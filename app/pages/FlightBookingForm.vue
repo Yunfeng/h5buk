@@ -9,35 +9,39 @@
 
     <!-- 航班信息 -->
     <div class="card col-12 px-0 border-0 ">
+      
       <div class="card-block pt-0 px-0" v-for="(flt, index) in bookFlights">
-        <div class="weui-flex bg-faded">
-          <div class="weui-flex__item">
-            <span class="float-right text-danger mr-2">
-                <a href="javascript:void(0)"  @click.stop="removeFlightInfo(index)">
-                  <i class="fa fa-times" aria-hidden="true"></i>
-                </a>
+        <div class="d-flex flex-row justify-content-between">
+          <div>
+            <span class="ml-2 small text-info">行程{{index+1}}</span>
+          </div>
+          <div>
+            <span class="text-danger mr-2">
+              <a href="javascript:void(0)"  @click.stop="removeFlightInfo(index)">
+                <i class="fa fa-times" aria-hidden="true"></i>
+              </a>
             </span>
           </div>
         </div>
-        <div class="weui-flex">
-            <div class="weui-flex__item"><div class="text-center">{{flt.dportName}}</div></div>
-            <div class="weui-flex__item"><div class="text-center"><small>至</small></div></div>
-            <div class="weui-flex__item"><div class="text-center">{{flt.aportName}}</div></div>
+        <div class="d-flex flex-row justify-content-around bg-faded">
+            <div class="fa-2 text-success">{{flt.dportName}}</div>
+            <div class="fa-2 text-danger"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></div>
+            <div class="fa-2 text-muted">{{flt.aportName}}</div>
         </div>
-        <div class="weui-flex bg-faded">
-            <div class="weui-flex__item"><div class="text-center">{{flt.ddate}}</div></div>
-            <div class="weui-flex__item"><div class="text-center">{{flt.showDtime}}</div></div>
-            <div class="weui-flex__item"><div class="text-center">{{flt.showAtime}}</div></div>
+        <div class="d-flex flex-row justify-content-around">
+            <div class="fa-2 text-success">{{flt.ddate}}</div>
+            <div class="fa-2 text-success">{{flt.showDtime}}</div>
+            <div class="fa-2 text-muted">{{flt.showAtime}}</div>
         </div>
 
-        <div class="weui-flex">
-            <div class="weui-flex__item text-center">
+        <div class="d-flex flex-row justify-content-around bg-faded">
+            <div class="fa-2 text-success">
               {{flt.flightNo}}
             </div>
-            <div class="weui-flex__item text-center">
+            <div class="fa-2 text-faded">
               {{flt.subclass}}
             </div>
-            <div class="weui-flex__item text-center">
+            <div class="fa-2">
               <span class="text-danger">
                 <i class="fa fa-rmb text-warning"></i> {{flt.price}}
               </span>
@@ -45,11 +49,9 @@
         </div>
       </div>
     </div>
-    <div class="col-12 mt-1" v-if="fltCount === 1">
-        <span class="small float-right">
-          <a href="javascript:void(0)" @click.stop="searchReturn()">搜索返程</a>
-        </span>
-      </div>
+    <div class="col-12 m-1 text-center" v-if="fltCount === 1">
+      <a href="javascript:void(0)" @click.stop="searchReturn()" class="btn btn-warning w-75">搜索返程</a>
+    </div>
     <!-- 表单 -->
     <form id="frmOrder" class="col-12 px-0">
       <input type="hidden" name="tmcPolicyApply.policyId" :value="policyId" />
@@ -174,8 +176,8 @@ export default {
     back: function () {
       this.$router.go(-1)
     },
-    showErrMsg: function (msg) {
-      this.$store.dispatch('showAlertMsg', { 'errMsg': msg })
+    showErrMsg: function (msg, msgType) {
+      this.$store.dispatch('showAlertMsg', { 'errMsg': msg, 'errMsgType': msgType })
     },
     addPsg: function () {
       this.$store.commit('addPsg')
@@ -202,7 +204,7 @@ export default {
         dataType: 'json',
         success: function (jsonResult) {
           if (jsonResult.status !== 'OK') {
-            self.showErrMsg(jsonResult.errmsg)
+            self.showErrMsg(jsonResult.errmsg, 'danger')
           } else {
             // 清空预定信息
             self.$store.commit('resetOrderInfo')

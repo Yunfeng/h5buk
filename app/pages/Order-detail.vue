@@ -61,13 +61,13 @@
           </dl>
         </template>
 
-        <div class="card-block py-0 bg-faded">
+        <div class="card-block py-0 bg-danger text-white">
           <small>结算信息</small>
         </div>
         <dl class="row">
-          <dt class='col-4 text-right px-0'>原价</dt>
+          <dt class='col-4 text-right px-0'>总价</dt>
           <dd class='col-8'>
-            <span><i class='fa fa-rmb'></i> {{info.totalPrice}}</span>
+            <i class="fa fa-rmb text-warning"></i><span class="text-info fa-2"> {{info.totalPrice}}</span>
           </dd>
           <template v-if="info.status !== 1024">
             <template v-if="info.serviceFee > 0">
@@ -82,14 +82,17 @@
                 <span>{{info.policyReturnPoint}}</span>
               </dd>
             </template>
-            <dt class='col-4 text-right px-0'>开票价</dt>
+            <dt class='col-4 text-right px-0'>应付总额</dt>
             <dd class='col-8'>
-              <span class="text-danger"><i class='fa fa-rmb text-warning'></i> {{info.ticketAmount}}</span>
+              <i class='fa fa-rmb text-warning'></i>
+              <span class="text-danger fa-2"> {{info.ticketAmount}}</span>
             </dd>
-            <dt class='col-4 text-right px-0'>节省</dt>
-            <dd class='col-8 text-danger'>
-              <span class="text-danger"><i class='fa fa-rmb text-warning'></i> {{costSaving}}</span>
-            </dd>
+            <template v-if="costSaving > 0">
+              <dt class='col-4 text-right px-0'>节省</dt>
+              <dd class='col-8 text-danger'>
+                <span class="text-danger"><i class='fa fa-rmb text-warning'></i> {{costSaving}}</span>
+              </dd>
+            </template>
           </template>
         </dl>
 
@@ -97,11 +100,11 @@
           <small>其它</small>
         </div>
         <dl class='row'>
-          <dt class='col-4 text-right px-0'>生成时间</dt>
+          <dt class='col-4 text-right px-0'>时间</dt>
           <dd class='col-8'>
             <p>{{convertLongToTimeDesc(info.createTime)}}</p>
           </dd>
-          <dt class='col-4 text-right px-0'>订单状态</dt>
+          <dt class='col-4 text-right px-0'>状态</dt>
           <dd class='col-8'>
             <p>{{showStatusDesc(info.status)}}</p>
           </dd>

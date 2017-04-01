@@ -17,6 +17,11 @@ export default {
       } else {
         val = 'bg-' + msgType
       }
+
+      if (val === 'bg-danger') {
+        val += ' fa-2'
+      }
+
       return val
     }
   }

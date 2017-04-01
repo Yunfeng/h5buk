@@ -56,11 +56,11 @@ export default {
     changeBgByStatus: function (orderStatus) {
       switch (orderStatus) {
         case 1: return 'bg-success text-white'
-        case 4: return 'bg-white text-danger'
+        case 4: return 'bg-white text-info'
         case 8: return 'bg-white text-faded'
-        case 32: return 'bg-whited text-success'
+        case 32: return 'bg-white text-danger'
         case 128: return 'bg-faded text-muted'
-        case 1024: return 'bg-warning text-white'
+        case 1024: return 'bg-white text-success'
         default: return 'bg-success'
       }
     },
