@@ -14,6 +14,14 @@
               PNR列表
           </p>
       </router-link>
+      <router-link to="/pnr/stat" class="weui-grid">
+          <div class="weui-grid__icon">
+              <i class="fa fa-info-circle fa-2" aria-hidden="true"></i>
+          </div>
+          <p class="weui-grid__label">
+              PNR统计
+          </p>
+      </router-link>
       <router-link to="/pnr/ctcm" class="weui-grid">
           <div class="weui-grid__icon">
               <i class="fa fa-info fa-2" aria-hidden="true"></i>

@@ -15,6 +15,11 @@
             </router-link>
           </li>
           <li class="list-group-item ml-3">
+            <router-link to="/pnr/stat">
+              PNR统计
+            </router-link>
+          </li>
+          <li class="list-group-item ml-3">
             <router-link to="/tpr">
               TPR
             </router-link>

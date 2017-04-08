@@ -34,6 +34,7 @@ const MyTmcBuy       = resolve => require(['./pages/Tmc-buy.vue'], resolve)
 const MyTmcDetail    = resolve => require(['./pages/Tmc-detail.vue'], resolve)
 const MyPnr          = resolve => require(['./pages/Pnr.vue'], resolve)
 const MyPnrList      = resolve => require(['./pages/Pnr-list.vue'], resolve)
+const MyPnrStat      = resolve => require(['./pages/Pnr-stat.vue'], resolve)
 const MyPnrDetail    = resolve => require(['./pages/Pnr-detail.vue'], resolve)
 const MyPnrAlert1    = resolve => require(['./pages/Pnr-alert1.vue'], resolve)
 const MyPnrCtcm      = resolve => require(['./pages/Pnr-ctcm.vue'], resolve)
@@ -78,6 +79,7 @@ const routes = [
   {path: '/tmc/detail',    component: MyTmcDetail},
   {path: '/pnr',           component: MyPnr},
   {path: '/pnr/list',      component: MyPnrList},
+  {path: '/pnr/stat',      component: MyPnrStat},
   {path: '/pnr/detail',    component: MyPnrDetail},
   {path: '/pnr/detail/:id',       component: MyPnrDetail},
   {path: '/pnr/alert1',    component: MyPnrAlert1},
