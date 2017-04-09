@@ -100,28 +100,30 @@
             </div>
         </div>
 
-      <div class="col-12 m-1">
+      <div class="col-12 card">
+        <div class="card-block px-0 pb-1">
             <button type="button" @click.stop="addPsg()" class="btn btn-sm btn-outline-primary">
               <small>添加乘客</small>
             </button>
+          </div>
       </div>
 
 
-      <div class="card col-12 bg-faded border-0">
+      <div class="card col-12 bg-white border-0">
         <div class="card-block px-0">
           <div class="form-group border-bottom-1">
             <input type="text" class="form-control border-0" name="tmcPolicyApply.linkPhone" placeholder="联系电话"/>
           </div>
-          <div class="form-group border-bottom-1">
+          <div class="form-group border-bottom-1 mb-0">
             <input type="text" class="form-control border-0" name="tmcPolicyApply.remark" placeholder="备注" />
           </div>
         </div>   
-
-
       </div>
 
-      <div class="weui-btn-area">
-              <a class="weui-btn weui-btn_primary text-white" @click="createFlightOrder();">保存订单</a>
+      <div class="card col-12">
+        <div class="card-block">
+          <a class="btn btn-success btn-block text-white" @click.stop="createFlightOrder();">保存订单</a>
+        </div>
       </div>
     </form>
 

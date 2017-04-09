@@ -1,5 +1,5 @@
 <template>
-	<div id="searching" class="row">
+	<div id="searching" class="row" style="background-color: #2E9CDF;">
     <div class="col-12 bg-info text-center text-white">
       <span @click="back()" class="float-left fa-2">
         <i class="fa fa-angle-left fa-2" aria-hidden="true"></i>
@@ -7,7 +7,7 @@
       <span class="fa-2">国内机票</span>
     </div> 
 
-    <div class="card col-12 mt-2 p-0 border-0">
+    <div class="card col-12 mt-2 mb-2 p-0 border-0">
       <div class="card-block">
         <div class="form-group row">
           <div class="col-5" style="border-bottom: 1px solid #5bc0de;">
@@ -94,7 +94,6 @@
         <p class="weui-toast__content">数据加载中</p>
       </div>
     </div>
-
   </div>
 </template>
 
@@ -227,14 +226,7 @@ export default {
       $.cookie('ddate', this.ddate)
 
       // 查询航班
-      // console.log(this.dcityName);
-      // console.log(this.acityName);
-      // console.log(this.dcity);
-      // console.log(this.acity);
       this.searching = true
-      // var self = this;
-      // setTimeout(function(){self.searching = false;}, 5000);
-      // setTimeout(() => this.searching = false, 5000);
       this.$router.push('/searchResult')
     },
     cityPickerClosed: function (val) {

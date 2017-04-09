@@ -1,17 +1,10 @@
 <template>
-	<div id="qinfo-list" class="row">
-    <div id="loadingToast" v-show="loading">
-      <div class="weui-mask_transparent"></div>
-      <div class="weui-toast">
-        <i class="weui-loading weui-icon_toast"></i>
-        <p class="weui-toast__content">{{loadingText}}</p>
-      </div>
-    </div>
-
+	<div id="tpr-list" class="row">
     <template v-if="filterShowing == false">  
-        <div class="col-12 bg-info text-center text-white sticky-top">
+        <div class="col-12 bg-info text-center text-white fa-2 sticky-top">
             <span @click="back()" class="float-left ml-1">
               <i class="fa fa-angle-left" aria-hidden="true"></i>
+              <small>返回</small>
             </span>
             机票销售报表数据
             <span @click="showFilter()" class="float-right mr-1">
@@ -70,8 +63,6 @@
         </div>
       </div>
     </template>
-
-
   </div>
 </template>
 
@@ -81,13 +72,12 @@ import MyPagination from '../components/my-pagination.vue'
 import $ from 'jquery'
 
 export default {
+  name: 'TprList',
   components: {
     MyPagination
   },
   data () {
     return {
-      loading: false,
-      loadingText: '数据加载中',
       detailShowing: false,
       filterShowing: false,
       pnrDetail: '',
@@ -114,10 +104,15 @@ export default {
     back: function () {
       this.$router.go(-1)
     },
+    showLoading: function (loadingText) {
+      this.$store.commit('showLoading', { 'loading': true, 'loadingText': loadingText })
+    },
+    hideLoading: function () {
+      this.$store.commit('showLoading', { 'loading': false })
+    },
     search: function () {
       var self = this
-      self.loading = true
-      self.loadingText = '数据加载中'
+      self.showLoading()
 
       var deviceId = self.deviceId
       if (deviceId === '') {
@@ -151,7 +146,7 @@ export default {
           }
         },
         complete: function (XMLHttpRequest, textStatus) {
-          self.loading = false
+          self.hideLoading()
         }
       })
     },

@@ -1,9 +1,11 @@
 <template>
-  <div id="qinfo-home" class="row">
-    <div class="col-12 bg-info text-center text-white">
+  <div id="qinfo-setting" class="row">
+    <div class="col-12 bg-info text-center text-white fa-2 sticky-top">
       <span @click="back()" class="float-left">
         <i class="fa fa-angle-left fa-2" aria-hidden="true"></i>
+        <small>返回</small>
       </span>
+      Q信息
     </div> 
 
     <div class="weui-grids col-12 mt-2">

@@ -1,9 +1,10 @@
 <template>
 	<div id="pnr-ctcm" class="row">
     <template v-if="filterShowing === false && detailShowing === false">
-      <div class="col-12 bg-info text-white text-center">
+      <div class="col-12 bg-info text-white text-center fa-2 sticky-top">
         <span @click="back()" class="float-left">
           <i class="fa fa-angle-left fa-2" aria-hidden="true"></i>
+          <small>返回</small>
         </span>
         缺CTCM列表
         <span @click="showFilter()" class="float-right">
@@ -12,25 +13,25 @@
       </div>         
 
       <div class="card col-12" style="padding: 0">
-        <ul class="list-inline bg-success">
+        <ul class="list-inline bg-success text-white">
           <li class="list-inline-item">快速过滤</li>
-          <li class="list-inline-item"><button @click.stop='setCarrier("CA")'>CA</button></li>
-          <li class="list-inline-item"><button @click.stop='setCarrier("CZ")'>CZ</button></li>
-          <li class="list-inline-item"><button @click.stop='setCarrier("MU")'>MU</button></li>
-          <li class="list-inline-item"><button @click.stop='setCarrier("FM")'>FM</button></li>
-          <li class="list-inline-item"><button @click.stop='setCarrier("ZH")'>ZH</button></li>
-          <li class="list-inline-item"><button @click.stop='setCarrier("MF")'>MF</button></li>
-          <li class="list-inline-item"><button @click.stop='setCarrier("HU")'>HU</button></li>
+          <li class="list-inline-item"><button @click.stop='setCarrier("CA")' class='text-white'>CA</button></li>
+          <li class="list-inline-item"><button @click.stop='setCarrier("CZ")' class='text-white'>CZ</button></li>
+          <li class="list-inline-item"><button @click.stop='setCarrier("MU")' class='text-white'>MU</button></li>
+          <li class="list-inline-item"><button @click.stop='setCarrier("FM")' class='text-white'>FM</button></li>
+          <li class="list-inline-item"><button @click.stop='setCarrier("ZH")' class='text-white'>ZH</button></li>
+          <li class="list-inline-item"><button @click.stop='setCarrier("MF")' class='text-white'>MF</button></li>
+          <li class="list-inline-item"><button @click.stop='setCarrier("HU")' class='text-white'>HU</button></li>
         </ul>
         <table class="table table-striped table-condensive">
           <thead>
               <tr>
-                  <th>编码</th>
+                  <th class="small">编码</th>
                   <th class="hidden-sm-down">人数/ctcm</th>
                   <th class="hidden-sm-down">状态</th>
-                  <th>用户名</th>
+                  <th class="small">用户名</th>
                   <th class="hidden-sm-down">生成时间</th>
-                  <th>更新时间</th>
+                  <th class="small">更新时间</th>
               </tr>                        
           </thead>
           <tbody>
@@ -84,13 +85,6 @@
       </div>  
     </template>
 
-    <div id="loadingToast" v-show="loading">
-      <div class="weui-mask_transparent"></div>
-      <div class="weui-toast">
-        <i class="weui-loading weui-icon_toast"></i>
-        <p class="weui-toast__content">{{loadingText}}</p>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -99,13 +93,12 @@ import MyPagination from '../components/my-pagination.vue'
 import $ from 'jquery'
 
 export default {
+  name: 'PnrCtcm',
   components: {
     'my-pagination': MyPagination
   },
   data () {
     return {
-      loading: false,
-      loadingText: '数据加载中',
       filterShowing: false,
       detailShowing: false,
 
@@ -138,10 +131,15 @@ export default {
     back: function () {
       this.$router.go(-1)
     },
+    showLoading: function (loading, loadingText) {
+      this.$store.commit('showLoading', { 'loading': loading, 'loadingText': loadingText })
+    },
+    hideLoading: function () {
+      this.$store.commit('showLoading', { 'loading': false })
+    },
     search: function () {
       var self = this
-      self.loading = true
-      self.loadingText = '数据加载中'
+      self.showLoading(true)
 
       $.cookie('pnr.ctcm.sc.carrier', this.carrier, { expires: 1, path: '/' })
       $.cookie('pnr.ctcm.sc.etermUsername', this.etermUsername, { expires: 1, path: '/' })
@@ -168,7 +166,7 @@ export default {
           }
         },
         complete: function (XMLHttpRequest, textStatus) {
-          self.loading = false
+          self.hideLoading()
         }
       })
     },

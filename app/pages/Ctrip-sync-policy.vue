@@ -1,8 +1,9 @@
 <template>  
-	<div id="tmc-list" class="row">
-    <div class="col-12 bg-info text-white text-center fixed-top">
+	<div id="ctrp-sync" class="row">
+    <div class="col-12 bg-info text-white text-center fa-2 fixed-top">
       <span @click="back()" class="float-left">
         <i class="fa fa-angle-left fa-2" aria-hidden="true"></i>
+        <small>返回</small>
       </span>
       政策同步
     </div> 
@@ -40,19 +41,10 @@
       </div>
       <div class="form-group row">
         <div class="col-12 text-center bg-faded">
-          <button @click.stop="syncPolicy()" class="btn btn-success text-center">同步特殊政策</button> 
+          <button @click.stop="syncPolicy()" class="btn btn-success btn-block text-center">同步特殊政策</button> 
         </div>
       </div>
     </div>
-
-    <div id="loadingToast" v-show="loading">
-      <div class="weui-mask_transparent"></div>
-      <div class="weui-toast">
-        <i class="weui-loading weui-icon_toast"></i>
-        <p class="weui-toast__content">{{loadingText}}</p>
-      </div>
-    </div>
-
   </div>
 </template>
 
@@ -62,9 +54,6 @@ import { syncSpecialPolicy } from '../api/ctrp.js'
 export default {
   data () {
     return {
-      loading: false,
-      loadingText: '数据加载中',
-
       carrier: '',
       subclass: '',
       dport: '',
@@ -79,10 +68,15 @@ export default {
     showErrMsg: function (msg, msgType) {
       this.$store.dispatch('showAlertMsg', { 'errMsg': msg, 'errMsgType': msgType })
     },
+    showLoading: function (loadingText) {
+      this.$store.commit('showLoading', { 'loading': true, 'loadingText': loadingText })
+    },
+    hideLoading: function () {
+      this.$store.commit('showLoading', { 'loading': false })
+    },
     syncPolicy: function () {
       var self = this
-      self.loading = true
-      self.loadingText = '数据加载中'
+      self.showLoading()
 
       var params = { 'sc.subclass': this.subclass,
         'sc.departureAirport': this.dport,
@@ -100,7 +94,7 @@ export default {
           }
         },
         (errcode, errmsg) => { this.showErrMsg(errcode + ' ' + errmsg, 'danger') },
-        () => { this.loading = false })
+        () => { this.hideLoading() })
     }
   }
 }

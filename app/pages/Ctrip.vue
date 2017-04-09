@@ -1,9 +1,11 @@
 <template>
   <div id="pnr-home" class="row">
-    <div class="col-12 bg-info text-white text-center ">
+    <div class="col-12 bg-info text-white text-center fa-2">
       <span @click="back()" class="float-left">
         <i class="fa fa-angle-left fa02" aria-hidden="true"></i>
+        <small>返回</small>
       </span>
+      携程比价
     </div> 
     <div class="weui-grids mt-2 col-12">
       <router-link to="/ctrp/policies" class="weui-grid">

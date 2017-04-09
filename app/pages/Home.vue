@@ -13,7 +13,7 @@
             <i class="fa fa-fire fa-2" aria-hidden="true"></i>
         </div>
         <p class="weui-grid__label">
-            大客户政策
+            机票政策
         </p>
     </router-link>
     <router-link to="/ctrp" class="weui-grid">

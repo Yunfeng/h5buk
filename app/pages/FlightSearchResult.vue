@@ -15,31 +15,31 @@
           </span>   
       </div>         
 
-      <div class="col-12 mt-1 sticky-top text-center">
+      <div class="col-12 sticky-top text-center bg-primary" style="opacity:0.8">
         <span class="small float-left" v-if="isToday">
-          <a href="javascript:void(0)" @click.stop="changeDdate(-1)">前一天</a>
+          <a href="javascript:void(0)" @click.stop="changeDdate(-1)" class="text-white">前一天</a>
         </span>
         <template v-if="isReplacing">
           <span class="text-danger small">更新中...</span>
         </template> 
         <span class="small float-right">
-          <a href="javascript:void(0)" @click.stop="changeDdate(1)">后一天</a>
+          <a href="javascript:void(0)" @click.stop="changeDdate(1)" class="text-white">后一天</a>
         </span>
       </div>
-      <table class="table table-striped table-hover" >
+      <table class="table table-striped table-hover table-sm">
         <thead>
-            <th class="text-center">航班</th>
-            <th class="text-center hidden-sm-down">出发</th>
-            <th class="text-center hidden-sm-down">到达</th>
-            <th class="text-center">时间</th>
-            <th class="text-center">价格</th>
+            <th class="text-center small">航班</th>
+            <th class="text-center small hidden-sm-down">出发</th>
+            <th class="text-center small hidden-sm-down">到达</th>
+            <th class="text-center small">时间</th>
+            <th class="text-center small">价格</th>
         </thead>
         <tbody>
           <tr v-for="flight in execSort(searchFlightResults)" @click="showFlightDetail(flight)" name="flightItem">
               <td class="text-center">
                 {{flight.flightNo}}
                 <br />
-                {{flight.carrierName}}
+                <small>{{flight.carrierName}}</small>
               </td>
               <td class="text-center hidden-sm-down">{{flight.depPortName}}</td>
               <td class="text-center hidden-sm-down">{{flight.arrPortName}}</td>
@@ -76,7 +76,7 @@
         <span @click="closeDetail()" class="float-left fa-2">
           <i class="fa fa-angle-left fa-2" aria-hidden="true"></i>
         </span>
-        <span class="fa-2 text-danger">{{flt.flightNo}}</span> <small>{{flt.depDate.substring(5)}}</small>
+        <span class="fa-2 text-white">{{flt.flightNo}}</span> <small>{{flt.depDate.substring(5)}}</small>
       </div>           
     
       <div class="card col-12 p-0">
@@ -201,8 +201,6 @@
         </div>
 
       </div>
-
-     
     </template>
 
     <div id="loadingToast" v-show="searching">
@@ -254,8 +252,6 @@ export default {
       filterModalShowing: false,
       flt: null,
 
-      errMsg: '',
-      errAlert: false,
       startPosition: -1,
       searchFlightResults: [],
       carriers: [],

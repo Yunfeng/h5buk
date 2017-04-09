@@ -1,9 +1,10 @@
 <template>
 	<div id="tmc-detail" class="row">
 
-    <div class="col-12 bg-info text-center text-white">
+    <div class="col-12 bg-info text-center text-white fa-2">
       <span @click="back()" class="float-left">
         <i class="fa fa-angle-left fa-2" aria-hidden="true"></i>
+        <small>返回</small>
       </span>
       政策详情
     </div> 

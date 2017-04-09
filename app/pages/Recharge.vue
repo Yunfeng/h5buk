@@ -1,9 +1,13 @@
 <template>
   <div id="recharge" class="row">
+    <div class="col-12 bg-info text-white text-center fa-2 sticky-top">
+      <span @click='back()' class="float-left">
+        <i class='fa fa-angle-left fa-2' aria-hidden='true'></i>
+        <small>返回</small>
+      </span>
+      充值
+    </div>
     <div class="card col-12 px-0">
-      <div class="card-header text-center">
-        充值
-      </div>
       <div class="card-block">
         <div class="form-group has-success">
           <label class="form-control-label">金额</label>
@@ -13,15 +17,7 @@
         </div>
       </div>
       <div class="card-footer text-center">
-        <button type="button" class="btn  btn-success" @click.stop="weixinPay1()">微信支付</button>
-      </div>
-    </div>
-
-    <div id="loadingToast" v-show="loading">
-      <div class="weui-mask_transparent"></div>
-      <div class="weui-toast">
-        <i class="weui-loading weui-icon_toast"></i>
-        <p class="weui-toast__content">{{loadingText}}</p>
+        <button type="button" class="btn  btn-success btn-block" @click.stop="weixinPay1()">微信支付</button>
       </div>
     </div>
   </div>
@@ -36,9 +32,6 @@ export default {
     return {
       total: null,
       total0: null,
-
-      loading: false,
-      loadingText: '数据加载中',
 
       appid: '',
       redirectUrl: '',
@@ -58,8 +51,17 @@ export default {
   mounted: function () {
   },
   methods: {
+    back: function () {
+      this.$router.go(-1)
+    },
     showErrMsg: function (msg, msgType) {
       this.$store.dispatch('showAlertMsg', { 'errMsg': msg, 'errMsgType': msgType })
+    },
+    showLoading: function (loadingText) {
+      this.$store.commit('showLoading', { 'loading': true, 'loadingText': loadingText })
+    },
+    hideLoading: function () {
+      this.$store.commit('showLoading', { 'loading': false })
     },
     waitForJump: function () {
       setTimeout(() => this.$router.push('/login'), 1500)
@@ -80,8 +82,7 @@ export default {
         return
       }
 
-      this.loading = true
-      this.loadingText = '支付准备中...'
+      self.showLoading('支付准备中...')
 
       // get weixin appid
       $.ajax({
@@ -103,7 +104,7 @@ export default {
           }
         },
         complete: function () {
-          self.loading = false
+          self.hideLoading()
         }
       })
     },
@@ -130,7 +131,7 @@ export default {
           }
         },
         complete: function () {
-          self.loading = false
+          self.hideLoading()
         }
       })
     }

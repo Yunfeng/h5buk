@@ -1,15 +1,7 @@
 <template>
-	<div id='pnr-list' class="row">
-    <div id='loadingToast' v-show='loading'>
-      <div class='weui-mask_transparent'></div>
-      <div class='weui-toast'>
-        <i class='weui-loading weui-icon_toast'></i>
-        <p class='weui-toast__content'>{{loadingText}}</p>
-      </div>
-    </div>
-
+	<div id="pnr-list" class="row">
     <template v-if="filterShowing">
-      <div class="col-12 text-right mt-3 mr-5">              
+      <div class="col-12 bg-info text-white text-right mr-5 fa-2">              
         <button type="button" class="btn btn-sm btn-info" @click.stop="resetFilter()">重置</button>
         <button type="button" class="btn btn-sm btn-success" @click.stop="hideFilter()">确定</button>
       </div>
@@ -27,9 +19,10 @@
       </div>      
     </template>
     <template v-else>
-      <div class="col-12 bg-info text-white text-center ">
+      <div class="col-12 bg-info text-white text-center fa-2 sticky-top">
         <span @click='back()' class="float-left">
           <i class='fa fa-angle-left fa-2' aria-hidden='true'></i>
+          <small>返回</small>
         </span>
         PNR列表
         <span @click="showFilter()" class="float-right">
@@ -69,9 +62,6 @@
           </div> 
         </div>      
     </template>     
-
-
-
   </div>
 </template>
 
@@ -87,12 +77,6 @@ export default {
   },
   data () {
     return {
-      errAlert: false,
-      errMsg: '',
-
-      loading: false,
-      loadingText: '数据加载中',
-
       filterShowing: false,
 
       dataList: [],
@@ -115,18 +99,25 @@ export default {
 
     temp = $.cookie('pnr.ctcm.sc.etermUsername')
     if (temp !== undefined) this.etermUsername = temp
-
-    this.search()
   },
   methods: {
     back: function () {
       this.$router.go(-1)
     },
+    showLoading: function (loadingText) {
+      this.$store.commit('showLoading', { 'loading': true, 'loadingText': loadingText })
+    },
+    hideLoading: function () {
+      this.$store.commit('showLoading', { 'loading': false })
+    },
+    reset: function () {
+      this.etermUsername = ''
+      this.pnrNo = ''
+      this.sc.pageNo = 1
+    },
     search: function () {
+      this.showLoading()
       var self = this
-      self.loading = true
-      self.loadingText = '数据加载中'
-
       $.cookie('pnr.list.sc.pnrNo', this.pnrNo, { expires: 1, path: '/' })
       $.cookie('pnr.list.sc.etermUsername', this.etermUsername, { expires: 1, path: '/' })
 
@@ -145,14 +136,12 @@ export default {
           self.sc = jsonResult.page
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
-          self.searching = false
-
           if (XMLHttpRequest.status === 403) {
             self.$store.commit('jumpToLogin', self.$router)
           }
         },
         complete: function (XMLHttpRequest, textStatus) {
-          self.loading = false
+          self.hideLoading()
         }
       })
     },
@@ -192,6 +181,7 @@ export default {
   beforeRouteEnter (to, from, next) {
     next(vm => {
       // 通过 `vm` 访问组件实例
+      vm.search()
     })
   }
 }

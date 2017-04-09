@@ -1,54 +1,34 @@
 <template>
-	<div id="pnr-detail" class="container-fluid">
-    <div id='loadingToast' v-show='loading'>
-      <div class='weui-mask_transparent'></div>
-      <div class='weui-toast'>
-        <i class='weui-loading weui-icon_toast'></i>
-        <p class='weui-toast__content'>{{loadingText}}</p>
-      </div>
-    </div>
-
-    <div class="row bg-info">
-      <div class="col-1">
-          <span @click="back()"><i class="fa fa-angle-left weui-tabbar__icon" aria-hidden="true"></i></span>
-      </div>         
-      <div class="col-10 text-center">
-          PNR详情
-      </div>         
-      <div class="col-1">
-          
-      </div>         
+	<div id="pnr-detail" class="row">
+    <div class="col-12 bg-info text-white text-center fa-2 sticky-top">
+      <span @click='back()' class="float-left">
+        <i class='fa fa-angle-left fa-2' aria-hidden='true'></i>
+        <small>返回</small>
+      </span>
+      PNR详情
     </div> 
 
-    <div class="row">
-      <template v-if="detail">
-        <div class="card col-12" style="padding: 0">
-          <table class="table table-sm">
-            <tbody>
-              <tr><td class="text-right">编码</td><td>{{detail.pnrNo}}</td></tr>
-              <tr><td class="text-right">大编码</td><td>{{detail.bigPnrNo}}</td></tr>
-              <tr><td class="text-right">出发机场</td><td>{{getPortDesc(detail.departurePort)}}</td></tr>
-              <tr><td class="text-right">到达机场</td><td>{{getPortDesc(detail.arrivalPort)}}</td></tr>
-              <tr><td class="text-right">航班号</td><td>{{detail.flightNo}}</td></tr>
-              <tr><td class="text-right">出发日期</td><td>{{detail.departureDate}}</td></tr>
-              <tr><td class="text-right">舱位</td><td>{{detail.subClass}}</td></tr>
-              <tr><td class="text-right">航段状态</td><td>{{detail.segStatus}}</td></tr>
-              <tr><td class="text-right">航段数</td><td>{{detail.segCount}}</td></tr>
-              <tr><td class="text-right">乘客数</td><td>{{detail.psgCount}}</td></tr>
-              <tr><td class="text-right">eterm用户名</td><td>{{detail.etermUsername}}</td></tr>
-              <tr><td class="text-right">更新时间</td><td>{{detail.updateTimeDesc}}</td></tr>
-              <tr><td class="text-right"></td><td>{{formatTime(detail.lastUpdate)}}</td></tr>
+    <template v-if="detail">
+      <div class="card col-12" style="padding: 0">
+        <table class="table table-sm">
+          <tbody>
+            <tr><td class="text-right small">编码</td><td>{{detail.pnrNo}}</td></tr>
+            <tr><td class="text-right small">大编码</td><td>{{detail.bigPnrNo}}</td></tr>
+            <tr><td class="text-right small">航段状态</td><td>{{detail.segStatus}}</td></tr>
+            <tr><td class="text-right small">航段数</td><td>{{detail.segCount}}</td></tr>
+            <tr><td class="text-right small">乘客数</td><td>{{detail.psgCount}}</td></tr>
+            <tr><td class="text-right small">eterm用户名</td><td>{{detail.etermUsername}}</td></tr>
+            <tr><td class="text-right small">更新时间</td><td>{{formatTime(detail.lastUpdate)}}</td></tr>
 
-            </tbody>
-          </table>
-          <div class="card-block bg-faded" v-if="detail.pnrDetail != null " style="padding: 0">
-            <div v-html="'<pre>' + detail.pnrDetail + '</pre>'">
-            </div>
-          </div>    
+          </tbody>
+        </table>
+        <div class="card-block bg-faded" v-if="detail.pnrDetail != null " style="padding: 0">
+          <div v-html="'<pre>' + detail.pnrDetail + '</pre>'">
+          </div>
         </div>    
-        
-      </template>     
-    </div>
+      </div>            
+    </template>     
+
   </div>
 </template>
 
@@ -57,13 +37,7 @@ import $ from 'jquery'
 import { convertLongToTimeDesc } from '../common/common.js'
 
 export default {
-  data () {
-    return {
-      errAlert: false,
-      loading: false,
-      loadingText: '数据加载中'
-    }
-  },
+  name: 'PnrDetail',
   computed: {
     detail () { return this.$store.state.pnrDetail }
   },
@@ -72,6 +46,13 @@ export default {
     var id = this.$route.params.id
     if (id !== undefined) {
       console.log(id)
+      this.refreshPnrDetail(id)
+    }
+  },
+  activated: function () {
+    var id = this.$route.params.id
+    console.log(id)
+    if (id !== undefined) {
       this.refreshPnrDetail(id)
     }
   },

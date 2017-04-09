@@ -1,9 +1,10 @@
 <template>
 	<div id="order-detail" class="row">
     <template v-if="info !== null">
-      <div class="col-12 bg-info text-center text-white fixed-top">
+      <div class="col-12 bg-info text-center text-white sticky-top">
         <span @click="back()" class="float-left fa-2">
           <i class="fa fa-angle-left"aria-hidden="true"></i>
+          <small>返回</small>
         </span>
         <span class="fa-2">订单详情</span> <small>订单号:{{info.id}}</small>
       </div> 

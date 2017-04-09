@@ -1,21 +1,12 @@
 <template>  
 	<div id="pnr-mobile" class="row">
-    <div id="loadingToast" v-show="loading">
-      <div class="weui-mask_transparent"></div>
-      <div class="weui-toast">
-        <i class="weui-loading weui-icon_toast"></i>
-        <p class="weui-toast__content">{{loadingText}}</p>
-      </div>
-    </div>
-
-    <div class="col-12 bg-info text-white text-center ">
+    <div class="col-12 bg-info text-white text-center fa-2 sticky-top">
         <span @click='back()' class="float-left">
           <i class='fa fa-angle-left fa-2' aria-hidden='true'></i>
+          <small>返回</small>
         </span>
         手机号列表        
       </div> 
-
-    
 
       <div class="card col-12 px-0">
         <table class="table table-striped">
@@ -71,6 +62,7 @@ import $ from 'jquery'
 import { convertLongToTimeDesc } from '../common/common.js'
 
 export default {
+  name: 'PnrMobile',
   components: {
     'my-pagination': MyPagination,
     'my-button': MyButton,
@@ -78,11 +70,6 @@ export default {
   },
   data () {
     return {
-      errAlert: false,
-      errMsg: '',
-      loading: false,
-      loadingText: '数据加载中',
-
       dataList: [],
       sc: {
         rowCount: 0,

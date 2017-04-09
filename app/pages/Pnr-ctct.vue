@@ -1,9 +1,10 @@
 <template>
 	<div id="pnr-ctct" class="row">
     <template v-if="filterShowing === false && detailShowing === false">
-      <div class="col-12 bg-info text-white text-center">
+      <div class="col-12 bg-info text-white text-center fa-2 sticky-top">
         <span @click="back()" class="float-left">
           <i class="fa fa-angle-left fa-2" aria-hidden="true"></i>
+          <small>返回</small>
         </span>
         缺 CTCT 列表
       </div>         
@@ -12,12 +13,12 @@
         <table class="table table-striped table-condensive">
           <thead>
               <tr>
-                  <th>编码</th>
+                  <th class="small">编码</th>
                   <th class="hidden-sm-down">人数/ctcm</th>
                   <th class="hidden-sm-down">状态</th>
-                  <th>用户名</th>
+                  <th class="small">用户名</th>
                   <th class="hidden-sm-down">生成时间</th>
-                  <th>更新时间</th>
+                  <th class="small">更新时间</th>
               </tr>                        
           </thead>
           <tbody>
@@ -69,13 +70,6 @@
       </div>  
     </template>
 
-    <div id="loadingToast" v-show="loading">
-      <div class="weui-mask_transparent"></div>
-      <div class="weui-toast">
-        <i class="weui-loading weui-icon_toast"></i>
-        <p class="weui-toast__content">{{loadingText}}</p>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -84,15 +78,12 @@ import MyPagination from '../components/my-pagination.vue'
 import $ from 'jquery'
 
 export default {
+  name: 'PnrCtct',
   components: {
     'my-pagination': MyPagination
   },
   data () {
     return {
-      errAlert: false,
-      errMsg: '',
-      loading: false,
-      loadingText: '数据加载中',
       filterShowing: false,
       detailShowing: false,
 
@@ -119,10 +110,16 @@ export default {
     back: function () {
       this.$router.go(-1)
     },
+    showLoading: function (loadingText) {
+      this.$store.commit('showLoading', { 'loading': true, 'loadingText': loadingText })
+    },
+    hideLoading: function () {
+      this.$store.commit('showLoading', { 'loading': false })
+    },
     search: function () {
       var self = this
-      self.loading = true
-      self.loadingText = '数据加载中'
+
+      self.showLoading()
 
       $.ajax({
         type: 'post',
@@ -144,7 +141,7 @@ export default {
           }
         },
         complete: function (XMLHttpRequest, textStatus) {
-          self.loading = false
+          self.hideLoading()
         }
       })
     },

@@ -1,17 +1,10 @@
 <template>
 	<div id="qinfo-list" class="row">
-    <div id="loadingToast" v-show="loading">
-      <div class="weui-mask_transparent"></div>
-      <div class="weui-toast">
-        <i class="weui-loading weui-icon_toast"></i>
-        <p class="weui-toast__content">{{loadingText}}</p>
-      </div>
-    </div>
-
     <template v-if="detailShowing === false && filterShowing == false">  
-      <div class="col-12 bg-info text-center text-white">
+      <div class="col-12 bg-info text-center text-white fa-2 sticky-top">
           <span @click="back()" class="float-left">
             <i class="fa fa-angle-left fa-2" aria-hidden="true"></i>
+            <small>返回</small>
           </span>
           Q 列表
           <span @click="showFilter()" class="float-right mr-1">
@@ -106,15 +99,12 @@ import MyPagination from '../components/my-pagination.vue'
 import $ from 'jquery'
 
 export default {
+  name: 'QinfoList',
   components: {
     MyPagination
   },
   data () {
     return {
-      errAlert: false,
-      errMsg: false,
-      loading: false,
-      loadingText: '数据加载中',
       detailShowing: false,
       filterShowing: false,
       pnrDetail: '',
@@ -143,10 +133,15 @@ export default {
     showErrMsg: function (msg, msgType) {
       this.$store.dispatch('showAlertMsg', { 'errMsg': msg, 'errMsgType': msgType })
     },
+    showLoading: function (loadingText) {
+      this.$store.commit('showLoading', { 'loading': true, 'loadingText': loadingText })
+    },
+    hideLoading: function () {
+      this.$store.commit('showLoading', { 'loading': false })
+    },
     search: function () {
       var self = this
-      self.loading = true
-      self.loadingText = '数据加载中'
+      self.showLoading()
 
       $.ajax({
         type: 'post',
@@ -170,7 +165,7 @@ export default {
           }
         },
         complete: function (XMLHttpRequest, textStatus) {
-          self.loading = false
+          self.hideLoading()
         }
       })
     },

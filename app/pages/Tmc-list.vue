@@ -1,13 +1,14 @@
 <template>  
 	<div id="tmc-list" class="row">
-    <div class="col-12 bg-info text-white text-center fixed-top">
+    <div class="col-12 bg-info text-white text-center fa-2 fixed-top">
       <span @click="back()" class="float-left">
         <i class="fa fa-angle-left fa-2" aria-hidden="true"></i>
+        <small>返回</small>
       </span>
-      大客户政策
+      机票特殊政策
     </div> 
 
-    <div class="card col-12 mt-4">
+    <div class="card col-12 mt-4 px-0">
       <table class="table table-sm table-striped table-condensive">
         <thead>
             <tr>

@@ -1,9 +1,10 @@
 <template>  
 	<div id="qinfo-setting" class="row">
     <template  v-if="detailShowing === false">
-      <div class="col-12 bg-info text-center text-white">
+      <div class="col-12 bg-info text-center text-white fa-2 sticy-top">
           <span @click="back()" class="float-left">
             <i class="fa fa-angle-left fa-2" aria-hidden="true"></i>
+            <small>返回</small>
           </span>
         Q通知设置  
       </div>               
@@ -61,18 +62,6 @@
 
 
       </div>
-
-     
-
-
-
-      <div id="loadingToast" v-show="loading">
-      <div class="weui-mask_transparent"></div>
-      <div class="weui-toast">
-        <i class="weui-loading weui-icon_toast"></i>
-        <p class="weui-toast__content">{{loadingText}}</p>
-      </div>
-      </div>
     </template>
     <template v-if="detailShowing">
       <div class="col-1 bg-info">
@@ -126,10 +115,6 @@ export default {
   },
   data () {
     return {
-      errAlert: false,
-      errMsg: '',
-      loading: false,
-      loadingText: '数据加载中',
       detailShowing: false,
       pnrDetail: '',
 
@@ -159,6 +144,15 @@ export default {
   methods: {
     back: function () {
       this.$router.go(-1)
+    },
+    showErrMsg: function (msg, msgType) {
+      this.$store.dispatch('showAlertMsg', { 'errMsg': msg, 'errMsgType': msgType })
+    },
+    showLoading: function (loadingText) {
+      this.$store.commit('showLoading', { 'loading': true, 'loadingText': loadingText })
+    },
+    hideLoading: function () {
+      this.$store.commit('showLoading', { 'loading': false })
     },
     search: function () {
       var self = this
@@ -267,13 +261,7 @@ export default {
           }
         }
       })
-    },
-    showErrMsg: function (msg) {
-      this.errMsg = msg
-      this.errAlert = true
-      setTimeout(() => { this.errAlert = false }, 1500)
     }
-
   },
   beforeRouteEnter (to, from, next) {
     next(vm => {
