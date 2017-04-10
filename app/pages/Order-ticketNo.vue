@@ -19,21 +19,14 @@
           <input type='hidden' :name="'tmcOrder.passengers[' + index + '].id'" :value='psg.id' />
           <input type='hidden' :name="'tmcOrder.passengers[' + index + '].psgName'" :value='psg.psgName' />
 
-          <div class="form-group row" >
-            <label class="col-4 col-form-label text-right">姓名</label>
-            <div class="col-8">
-              {{psg.psgName}}
-            </div>
-          </div>
-
-          <div class="form-group row" >
-            <label class="col-4 col-form-label text-right">票号</label>
-            <div class="col-8">
-              <input class='form-control' :name="'tmcOrder.passengers[' + index + '].ticketNo'" v-model='psg.ticketNo' placeholder='填写票号' />
+          <div class="form-group" >
+            <label class="form-control-label"><span class="text-info small">乘客:</span> {{psg.psgName}}</label>
+            <input class='form-control' :name="'tmcOrder.passengers[' + index + '].ticketNo'" v-model='psg.ticketNo' placeholder='填写票号' />
               <div class="form-control-feedback"><strong>{{psg.ticketNo}}</strong></div>
               <small class="form-text text-muted">请准确填写票号</small>
-            </div>
           </div>
+
+          
 
         </div>
 

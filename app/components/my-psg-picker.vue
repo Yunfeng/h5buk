@@ -1,5 +1,5 @@
 <template>
-  <div id="searchPsg" class="weui-mask" v-show="show">
+  <div id="searchPsg" class="weui-mask" v-show="show" style="z-index: 3000;">
     <div class="weui-search-bar weui-search-bar_focusing" id="search_bar">
         <a href="javascript:" class="weui-search-bar__cancel-btn text-danger ml-1" id="search_cancel" @click="cancel()">取消</a>
         <form class="weui-search-bar__form">
@@ -18,28 +18,25 @@
     <div class="weui-cells weui-cells_access container mt-0" id="search_show">
       <div class="row">
         <div class="card col-12 px-0">
-          <table class="table table-sm table-hover">
-            <thead>
-                <tr>
-                <th>姓名</th>
-                <th>身份证/护照</th>
-                <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="(psg,index) in psgs">
-                    <td>{{psg.nameCn}}</td>
-                    <td>
-                      {{psg.idNo}}
-                      <br />
-                      <small>{{psg.passportNo}}</small>
-                    </td>
-                    <td>
-                        <button type="button" class="btn btn-outline-info btn-sm " @click.stop="selectThisPsg(index);">√</button>
-                    </td>
-                </tr>
-            </tbody>
-          </table>
+          <template v-if="psgs.length > 0">
+            <div class="card-block pb-0 border-bottom-1" v-for="(psg,index) in psgs">
+              姓名: <strong>{{psg.nameCn}}</strong><br />
+              <template v-if="psg.idNo">
+                身份证：{{psg.idNo}}<br />
+              </template>
+              <template v-if="psg.passportNo">
+                护照：{{psg.passportNo}}
+              </template>
+              <span class="float-right mb-2">
+                <button type="button" class="btn btn-success btn-sm " @click.stop="selectThisPsg(index);">√</button>
+              </span>
+            </div>
+          </template>
+          <template v-else-if="searchCount > 0">
+            <div class="card-block pb-0 border-bottom-1 text-center">
+              <span class="text-danger">未找到符合的常用乘机人</span>
+            </div>
+          </template>
         </div>
       </div>
     </div>
@@ -64,11 +61,13 @@ export default {
       name: '',
       idno: '',
       passport: '',
-      idType: 0
+      idType: 0,
+      searchCount: 0
     }
   },
   watch: {
     show: function (newVal, oldVal) {
+      if (newVal) this.searchCount = 0
       // console.log('new: %s, old: %s', newVal, oldVal)
     }
   },
@@ -83,6 +82,7 @@ export default {
       this.$emit('close', 0)
     },
     searchPsg: function () {
+      this.searchCount++
       var self = this
       var searchWord = self.searchWord.toUpperCase()
 

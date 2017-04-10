@@ -1,6 +1,6 @@
 <template>
   <div id="book-form" class="row">
-    <div class="col-12 bg-info text-center text-white">
+    <div class="col-12 bg-info text-center text-white sticky-top">
       <span @click="back()" class="float-left fa-2">
         <i class="fa fa-angle-left fa-2" aria-hidden="true"></i>
       </span>

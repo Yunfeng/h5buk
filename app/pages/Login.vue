@@ -13,7 +13,7 @@
             未登录
           </div>
         </div>        
-        <div class="card-block no-gutters">
+        <div class="card-block no-gutters pb-0">
           <div class="form-group">
               <input class="form-control" type="text" placeholder="用户名" v-model="username">
           </div>
@@ -25,7 +25,7 @@
           </template>
         </div>
         <div class="card-block text-center bg-faded text-white">
-          <my-button @click="login()" type="success">登录</my-button>
+          <button class="btn btn-success btn-block" @click.stop="login()">登录</button> 
         </div>
         <div class="card-block">
           <span><small><a href="#/password">找回密码</a></small></span>
@@ -74,7 +74,7 @@
         </div>
 
           <div class="card-footer">
-            <button class="btn btn-danger w-100" @click="logout()">退出</button>
+            <button class="btn btn-danger btn-block" @click="logout()">退出</button>
           </div>         
       </div>      
     </template>

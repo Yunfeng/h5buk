@@ -4,16 +4,23 @@
         <span @click="back()" class="float-left fa-2">
           <i class="fa fa-angle-left fa-2" aria-hidden="true"></i></span>
         <span class="fa-2">机票订单</span>
-    </router-link>
     </div> 
-
-    <div class="card col-12"  v-for="info in orders" @click="showDetail(info)" :class="changeBgByStatus(info.status)">
-      <div class="card-block mt-1 mb-2 p-0">          
-        <small>{{info.shortDesc}}</small><br />
-        <span class="float-right"><small>总金额：</small>{{info.totalPrice}}</span>
-        <span><small>订单状态：</small>{{showStatusDesc(info.status)}}</span>
+    <template v-if="orders.length > 0">
+      <div class="card col-12"  v-for="info in orders" @click="showDetail(info)" :class="changeBgByStatus(info.status)">
+        <div class="card-block mt-1 mb-2 p-0">          
+          <small>{{info.shortDesc}}</small><br />
+          <span class="float-right"><small>总金额：</small>{{info.totalPrice}}</span>
+          <small>订单状态：</small><span>{{showStatusDesc(info.status)}},{{info.status}}</span>
+        </div>
       </div>
-    </div>
+    </template>
+    <template v-else>
+      <div class="col-12 text-success text-center">
+        <div class="card-block">
+          还没有机票订单，现在就去<router-link to="/search">预定</router-link>!
+        </div>
+      </div>
+    </template>
 
   </div>
 </template>
@@ -30,7 +37,7 @@ export default {
     }
   },
   computed: {
-    info () { return this.$store.state.orderDetail }
+    // info () { return this.$store.state.orderDetail }
   },
   mounted: function () {
     this.search()
@@ -50,6 +57,7 @@ export default {
         case 1: return 'bg-success text-white'
         case 4: return 'bg-white text-info'
         case 8: return 'bg-white text-faded'
+        case 16: return 'bg-success text-white'
         case 32: return 'bg-white text-danger'
         case 128: return 'bg-faded text-muted'
         case 1024: return 'bg-white text-success'

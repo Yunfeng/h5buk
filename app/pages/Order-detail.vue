@@ -117,19 +117,17 @@
         <template v-if='info.status === 1024 && info.enterpriseId > 0'>
           <div class="card col-12 border-0 mb-2 px-0">
             <div class="card-block">
-              <button type='button' class='btn btn-success w-100' @click.stop='commitTmcOrder(info.id)'>提交出票</button>
+              <button type='button' class='btn btn-success w-100' @click.stop='commitTmcOrder(info.id)'>申请出票</button>
               <button type='button' class='btn btn-outline-danger w-100 mt-3' @click.stop='cancelTmcOrder(info.id)'>取消</button>
             </div>
           </div>
         </template>
 
         <template v-if='info.status === 1  && info.enterpriseId > 0'>          
-          <div class='card col-12 border-0 mb-2'>
+          <div class='card col-12 border-0 mb-5'>
             <button type='button' class='btn btn-success w-100' @click.stop='payForTmcOrder(info.id)'>余额支付</button>
 
             <button type='button' class='btn btn-outline-success w-100 mt-3' @click.stop='weixinPay1(info.id)'>微信支付</button>
-
-            <button type='button' class='btn btn-danger w-100 mt-3' @click.stop='cancelTmcOrder(info.id)'>取消</button>
           </div>
         </template>
         <template v-if='info.status === 4  && info.enterpriseId > 0'>
@@ -158,13 +156,13 @@
           </div>
         </template>
         <template v-if='info.status === 8  && info.enterpriseId === 0 && info.seller > 0'>          
-          <div class='card col-12 border-0 mb-2'>
+          <div class='card col-12 border-0 mb-4'>
             <button type='button' class='btn btn-success w-100' @click.stop='toTicketTmcOrder(info.id);'>我来开票</button>
             <button type='button' class='btn btn-danger w-100 mt-3' @click.stop='denyTmcOrder(info.id);'>拒绝</button>
           </div>
         </template>
         <template v-if='info.status === 12  && info.enterpriseId === 0 && info.seller > 0'>
-          <div class="card col-12 border-0 mb-2">
+          <div class="card col-12 border-0 mb-4">
             <button type='button' class='btn btn-success w-100' @click='fillTicketNo(info.id);'>填写票号</button>
             <button type='button' class='btn btn-danger w-100 mt-3' @click='denyTmcOrder(info.id);'>拒绝</button>
           </div>
