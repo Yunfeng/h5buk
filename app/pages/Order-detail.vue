@@ -19,7 +19,7 @@
           <small>行程信息</small>
         </div>
         <template v-for='(flt, index) in info.flights'>
-          <dl class='row'>
+          <dl class='row mb-0'>
             <dt class='col-4 text-right px-0'>
               <span class="d-inline-block text-info">{{index+1}}.</span> 
               出发日期
@@ -45,7 +45,7 @@
           <small>乘机人信息</small>
         </div>
         <template v-for='(psg, index) in info.passengers'>
-          <dl class='row'>
+          <dl class='row mb-0'>
             <dt class='col-4 text-right px-0'>
               <span class="d-inline-block text-info">{{index+1}}.</span> 
               姓名
@@ -57,15 +57,23 @@
 
             <dt class='col-4 text-right px-0'>证件类型</dt>
             <dd class='col-8'>{{showIdTypeDesc(psg.idType)}}</dd>
-            <dt class='col-4 text-right px-0'>票号</dt>
-            <dd class='col-8 text-success'>{{psg.ticketNo}}</dd>
+            <template v-if="psg.ticketNo">
+              <dt class='col-4 text-right px-0'>票号</dt>
+              <dd class='col-8 text-success'>
+                {{psg.ticketNo}}
+                <div class="float-right mr-2">
+                  <span class="text-warning small" @click.stop="applyChange(psg.ticketNo, psg.psgName, info.id)">改签</span>
+                  <span class="text-danger small" @click.stop="applyRefund(psg.ticketNo, psg.psgName, info.id)">退票</span>
+                </div>
+              </dd>
+            </template>
           </dl>
         </template>
 
         <div class="card-block py-0 bg-danger text-white">
           <small>结算信息</small>
         </div>
-        <dl class="row">
+        <dl class="row mb-0">
           <dt class='col-4 text-right px-0'>总价</dt>
           <dd class='col-8'>
             <i class="fa fa-rmb text-warning"></i><span class="text-info fa-2"> {{info.totalPrice}}</span>
@@ -236,14 +244,6 @@
 
     <!-- v-if info !=== null end -->
     </template> 
-
-    <div id='loadingToast' v-show='loading'>
-      <div class='weui-mask_transparent'></div>
-      <div class='weui-toast'>
-        <i class='weui-loading weui-icon_toast'></i>
-        <p class='weui-toast__content'>{{loadingText}}</p>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -252,6 +252,7 @@ import { DOMAIN_URL, convertLongToTimeDesc, showIdTypeDesc, showOrderStatusDesc 
 import MyButton from '../components/my-button.vue'
 import MyInput from '../components/my-input.vue'
 import $ from 'jquery'
+import { searchPolicies, searchOrderDetail, cancelOrder } from '../api/order.js'
 
 export default {
   components: {
@@ -260,9 +261,6 @@ export default {
   },
   data () {
     return {
-      loading: false,
-      loadingText: '数据加载中',
-
       policies: [],
 
       ticketAmount: 0,
@@ -294,10 +292,10 @@ export default {
 
     var id = this.$route.params.id
     if (id !== undefined) {
-      console.log(id)
+      // console.log(id)
       this.refreshOrderDetail(parseInt(id))
     } else {
-      if (this.info !== null) {
+      if (this.info !== null && (this.info.status === 1)) {
         if (this.info.policyId === -1) {
           // search tmc policy
           this.searchPolicies()
@@ -316,6 +314,12 @@ export default {
     showErrMsg: function (msg, msgType) {
       this.$store.dispatch('showAlertMsg', { 'errMsg': msg, 'errMsgType': msgType })
     },
+    showLoading: function (loadingText) {
+      this.$store.commit('showLoading', { 'loading': true, 'loadingText': loadingText })
+    },
+    hideLoading: function () {
+      this.$store.commit('showLoading', { 'loading': false })
+    },
     calc: function () {
       var price = this.info.flights[0].price
       var psgCount = this.psgCount
@@ -325,45 +329,36 @@ export default {
     searchPolicies: function () {
       var self = this
 
-      self.loading = true
-      self.loadingText = '政策查找中'
+      self.showLoading('查找政策...')
 
       var flightNo = self.info.flights[0].flightNo
       var subclass = self.info.flights[0].subclass
       var dport = self.info.flights[0].departureAirport
-
       var carrier = flightNo.substring(0, 2)
 
-      $.ajax({
-        type: 'post',
-        url: '/Flight/policies/',
-        data: {
-          'sc.pageNo': 1,
-          'sc.pageSzie': 5,
-          'sc.policyType': -1,
-          'sc.intlPolicy': -1,
-          'sc.searchMode': 0,
-          'sc.carrier': carrier,
-          'sc.subClass': subclass,
-          'sc.dport': dport
-        },
-        dataType: 'json',
-        success: function (jsonResult) {
+      var params = { 'sc.pageNo': 1,
+        'sc.pageSzie': 5,
+        'sc.policyType': -1,
+        'sc.intlPolicy': -1,
+        'sc.searchMode': 0,
+        'sc.carrier': carrier,
+        'sc.subClass': subclass,
+        'sc.dport': dport
+      }
+
+      searchPolicies(params,
+        (jsonResult) => {
           if (jsonResult !== null) {
             self.policies = jsonResult.dataList
           }
         },
-        error: function (XMLHttpRequest, textStatus, errorThrown) {
-          self.searching = false
-
-          if (XMLHttpRequest.status === 403) {
+        (status, statusText) => {
+          if (status === 403) {
             self.$store.commit('jumpToLogin', self.$router)
           }
         },
-        complete: function (XMLHttpRequest, textStatus) {
-          self.loading = false
-        }
-      })
+        () => self.hideLoading()
+      )
     },
     selectPolicy: function (info) {
       this.returnPoint = info.returnPoint
@@ -399,15 +394,12 @@ export default {
 
       var self = this
 
-      self.loading = true
-      self.loadingText = '订单刷新中......'
+      self.showLoading('订单查询中...')
 
-      $.ajax({
-        type: 'post',
-        url: '/Flight/orders/searchOrderDetail',
-        data: { id: id },
-        dataType: 'json',
-        success: function (jsonResult) {
+      var params = { 'id': id }
+
+      searchOrderDetail(params,
+        (jsonResult) => {
           if (jsonResult !== null && jsonResult.id === id) {
             self.$store.commit('setOrderDetail', jsonResult)
             self.searchPolicies()
@@ -415,21 +407,30 @@ export default {
             self.ticketAmount = self.info.totalPrice
           }
         },
-        complete: function () {
-          self.loading = false
-        }
-      })
+        (status, statusText) => { this.showErrMsg(status + ', ' + statusText, 'danger') },
+        () => self.hideLoading()
+      )
     },
     cancelTmcOrder: function (id) {
       if (window.confirm('确定取消订单？') === false) {
         return
       }
       // 买家：取消订单
-      var url = '/Flight/orders/cancelTmcOrder.do'
-      var postData = { id: id }
-      var successHandler = this.refreshOrderDetail
+      this.showLoading('取消中...')
+      var params = { 'id': id }
 
-      this.executeOrderOp(url, postData, successHandler)
+      cancelOrder(params,
+        (jsonResult) => {
+          if (jsonResult.status === 'OK') {
+            this.showErrMsg('操作成功', 'success')
+            this.refreshOrderDetail()
+          } else {
+            this.showErrMsg(jsonResult.errmsg)
+          }
+        },
+        null,
+        () => this.hideLoading()
+      )
     },
     commitTmcOrder: function (id) {
       // 买家
@@ -570,6 +571,16 @@ export default {
           self.loading = false
         }
       })
+    },
+    applyRefund: function (ticketNo, psgName, orderId) {
+      // 申请退票
+      this.$store.commit('setRefundInfo', { 'ticketNo': ticketNo, 'psgName': psgName, 'orderId': orderId })
+      this.$router.push('/refund/apply')
+    },
+    applyChange: function (ticketNo, psgName, orderId) {
+      // 申请改期
+      this.$store.commit('setChangeInfo', { 'ticketNo': ticketNo, 'psgName': psgName, 'orderId': orderId })
+      this.$router.push('/change/apply')
     }
   },
   beforeRouteEnter (to, from, next) {

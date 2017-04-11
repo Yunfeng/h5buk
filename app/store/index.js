@@ -49,7 +49,21 @@ export default new Vuex.Store({
       nickname: '',
       headimgurl: '',
       subscribe: 0
-    }
+    },
+    // 申请退票信息
+    refundInfo: {
+      ticketNo: '',
+      psgName: '',
+      orderId: 0
+    },
+    // 申请改期信息
+    changeInfo: {
+      ticketNo: '',
+      psgName: '',
+      orderId: 0
+    },
+    refundOrderInfo: null,
+    changeOrderInfo: null
   },
   mutations: {
     init (state) {
@@ -191,6 +205,22 @@ export default new Vuex.Store({
       } else {
         state.loadingText = payload.loadingText  
       }
+    },
+    setRefundInfo(state, payload) {
+      state.refundInfo.ticketNo = payload.ticketNo
+      state.refundInfo.psgName = payload.psgName
+      state.refundInfo.orderId = payload.orderId
+    },
+    setChangeInfo(state, payload) {
+      state.changeInfo.ticketNo = payload.ticketNo
+      state.changeInfo.psgName = payload.psgName
+      state.changeInfo.orderId = payload.orderId
+    },
+    setRefundOrderInfo(state, payload) {
+      state.refundOrderInfo = payload
+    },
+    setChangeOrderInfo(state, payload) {
+      state.changeOrderInfo = payload
     }
   },
   actions: {

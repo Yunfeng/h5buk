@@ -123,4 +123,30 @@ export function showOrderStatusDesc (status) {
   return desc
 }
 
+export function showRefundOrderStatus (status) {
+  var desc = ''
+  switch (status) {
+    case 0: desc = '申请中'; break
+    case 1: desc = '已提交航司'; break
+    case 2: desc = '已退款 '; break
+    case 4: desc = '已取消'; break
+    case 8: desc = '已完成'; break
+    default:
+      desc = status
+  }
+  return desc
+}
 
+export function showChangeOrderStatus (status) {
+  var desc = ''
+  switch (status) {
+    case 0: desc = '申请中'; break
+    case 1: desc = '处理中'; break
+    case 2: desc = '处理中 '; break
+    case 4: desc = '已取消'; break
+    case 8: desc = '已完成'; break
+    default:
+      desc = status
+  }
+  return desc
+}

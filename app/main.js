@@ -25,6 +25,13 @@ const MyOrderDetail  = resolve => require(['./pages/Order-detail.vue'], resolve)
 const MyOrderTicket  = resolve => require(['./pages/Order-ticketNo.vue'], resolve)
 const MyOrderDeny    = resolve => require(['./pages/Order-deny.vue'], resolve)
 const MyOrderRecommit= resolve => require(['./pages/Order-recommit.vue'], resolve)
+const MyRefundRq     = resolve => require(['./pages/Order-refund-request.vue'], resolve)
+const MyRefunds      = resolve => require(['./pages/Order-refunds.vue'], resolve)
+const MyRefundDetail = resolve => require(['./pages/Order-refund-detail.vue'], resolve)
+const MyChangeRq     = resolve => require(['./pages/Order-change-request.vue'], resolve)
+const MyChanges      = resolve => require(['./pages/Order-changes.vue'], resolve)
+const MyChangeDetail = resolve => require(['./pages/Order-change-detail.vue'], resolve)
+
 const MyQinfo        = resolve => require(['./pages/Qinfo.vue'], resolve)
 const MyQinfoList    = resolve => require(['./pages/Qinfo-list.vue'], resolve)
 const MyQinfoSetting = resolve => require(['./pages/Qinfo-setting.vue'], resolve)
@@ -71,6 +78,14 @@ const routes = [
   {path: '/order/ticket',  component: MyOrderTicket},
   {path: '/order/deny',    component: MyOrderDeny},
   {path: '/order/recommit',component: MyOrderRecommit},
+  {path: '/refunds',       component: MyRefunds},
+  {path: '/refund/apply',  component: MyRefundRq},
+  {path: '/refund/detail/:id', component: MyRefundDetail},
+  {path: '/change/apply',  component: MyChangeRq},
+  {path: '/changes',       component: MyChanges},
+  {path: '/change/detail/:id', component: MyChangeDetail},
+
+
   {path: '/qinfo',         component: MyQinfo},
   {path: '/qinfo/list',    component: MyQinfoList},
   {path: '/qinfo/setting', component: MyQinfoSetting},

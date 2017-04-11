@@ -3,27 +3,20 @@
     <div class="col-12 bg-info text-center text-white">
         <span @click="back()" class="float-left fa-2">
           <i class="fa fa-angle-left fa-2" aria-hidden="true"></i></span>
-        <span class="fa-2">机票订单</span>
+        <span class="fa-2">退票单</span>
     </div> 
-    <div class="card col-12">
-      <div class="card-block">
-        <router-link to="/changes" class="card-link">改期单</router-link>
-        <router-link to="/refunds" class="card-link">退票单</router-link>
-      </div>
-    </div>
     <template v-if="orders.length > 0">
       <div class="card col-12"  v-for="info in orders" @click="showDetail(info)" :class="changeBgByStatus(info.status)">
         <div class="card-block mt-1 mb-2 p-0">          
           <small>{{info.shortDesc}}</small><br />
-          <span class="float-right"><small>总金额：</small>{{info.totalPrice}}</span>
-          <small>订单状态：</small><span>{{showStatusDesc(info.status)}}</span>
+          <small>状态：</small><span>{{showStatusDesc(info.status)}}</span>
         </div>
       </div>
     </template>
     <template v-else>
       <div class="col-12 text-success text-center">
         <div class="card-block">
-          还没有机票订单，现在就去<router-link to="/search">预定</router-link>!
+          没有找到退票单
         </div>
       </div>
     </template>
@@ -32,8 +25,8 @@
 </template>
 
 <script>
-import { showOrderStatusDesc } from '../common/common.js'
-import { searchOrders } from '../api/order.js'
+import { showRefundOrderStatus } from '../common/common.js'
+import { searchRefundOrders } from '../api/order.js'
 
 export default {
   data () {
@@ -60,6 +53,7 @@ export default {
     },
     changeBgByStatus: function (orderStatus) {
       switch (orderStatus) {
+        case 0: return 'bg-success text-white'
         case 1: return 'bg-success text-white'
         case 4: return 'bg-white text-info'
         case 8: return 'bg-white text-faded'
@@ -75,7 +69,7 @@ export default {
 
       this.showLoading()
 
-      searchOrders(params,
+      searchRefundOrders(params,
         (jsonResult) => {
           if (jsonResult !== null) { this.orders = jsonResult.dataList }
         },
@@ -88,11 +82,12 @@ export default {
       )
     },
     showDetail: function (orderInfo) {
-      // this.$store.commit('setOrderDetail', orderInfo)
-      this.$router.push('/order/detail/' + orderInfo.id)
+      console.log(orderInfo)
+      this.$store.commit('setRefundOrderInfo', orderInfo)
+      this.$router.push('/refund/detail/' + orderInfo.id)
     },
     showStatusDesc: function (status) {
-      return showOrderStatusDesc(status)
+      return showRefundOrderStatus(status)
     }
   },
   beforeRouteEnter (to, from, next) {
