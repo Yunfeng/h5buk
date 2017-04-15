@@ -16,13 +16,13 @@
       </div>         
 
       <div class="col-12 sticky-top text-center bg-primary" style="opacity:0.8">
-        <span class="small float-left" v-if="isToday">
+        <span class="float-left" v-if="isToday">
           <a href="javascript:void(0)" @click.stop="changeDdate(-1)" class="text-white">前一天</a>
         </span>
         <template v-if="isReplacing">
           <span class="text-danger small">更新中...</span>
         </template> 
-        <span class="small float-right">
+        <span class="float-right">
           <a href="javascript:void(0)" @click.stop="changeDdate(1)" class="text-white">后一天</a>
         </span>
       </div>

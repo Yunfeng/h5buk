@@ -62,6 +62,10 @@ const MyCtrpPrice    = resolve => require(['./pages/Ctrip-price.vue'], resolve)
 const MyCtrpSync    = resolve => require(['./pages/Ctrip-sync-policy.vue'], resolve)
 const MyCtrpPolicyDetail    = resolve => require(['./pages/Ctrip-policy-detail.vue'], resolve)
 
+const MyUpload      = () => System.import('./pages/Upload.vue')
+const MyMaterials      = () => System.import('./pages/Materials.vue')
+const MyPlay      = () => System.import('./pages/Media-play.vue')
+
 const routes = [
   {path: '/',              component: MyNav},
   {path: '/home',          component: MyHome},
@@ -112,6 +116,10 @@ const routes = [
   {path: '/ctrp/policy/:id',      component: MyCtrpPolicyDetail},
   {path: '/ctrp/price',      component: MyCtrpPrice},
   {path: '/ctrp/sync',      component: MyCtrpSync},
+
+  {path: '/upload',      component: MyUpload},
+  {path: '/materials',      component: MyMaterials},
+  {path: '/play/:id',      component: MyPlay},
 ]
 
 let router = new Router({
