@@ -43,7 +43,8 @@ module.exports = {
   },
 
   externals: {
-        "jquery": "jQuery"
+        "jquery": "jQuery",
+        "wx": "wx"
     },
 
   plugins: [

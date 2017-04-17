@@ -8,7 +8,7 @@ export function searchMaterials(params, done, fail, always) {
   }).done(function (jsonResult) {
     done(jsonResult)
   }).fail(function (jqXHR, textStatus, errorThrown) {
-    fail(jqXHR.status, jqXHR.statusText)
+    // fail(jqXHR.status, jqXHR.statusText)
   }).always(function () {
     always()
   })

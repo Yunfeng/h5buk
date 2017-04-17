@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import { getUploadToken } from '../api/upload.js'
+import { getUploadToken, locallySaveKey } from '../api/upload.js'
 import $ from 'jquery'
 
 export default {
@@ -112,9 +112,10 @@ export default {
         contentType: false,
         processData: false,
         success: function (jsonResult) {
-          // console.log(jsonResult)
+          console.log(jsonResult)
           if (jsonResult.key.length > 0) {
             self.showErrMsg('文件 ' + jsonResult.key + ' 上传成功')
+            locallySaveKey(jsonResult.key)
           }
         },
         complete: function (XMLHttpRequest, textStatus) {
