@@ -26,10 +26,10 @@
             </dt>
             <dd class='col-8 text-info'>{{flt.departureDate}}</dd>
             <dt class='col-4 text-right px-0'>出发</dt>
-            <dd class='col-8 text-info'>{{showTime(flt.departureTime)}} {{flt.departureAirportName}}</dd>
+            <dd class='col-8 text-info'>{{showTime(flt.departureTime)}} {{flt.departureAirportName}} <small>{{flt.departureTerminal}}</small></dd>
 
             <dt class='col-4 text-right px-0'>到达</dt>
-            <dd class='col-8'>{{showTime(flt.arrivalTime)}} {{flt.arrivalAirportName}}</dd>
+            <dd class='col-8'>{{showTime(flt.arrivalTime)}} {{flt.arrivalAirportName}} <small>{{flt.arrivalTerminal}}</small></dd>
 
             <dt class='col-4 text-right px-0'>航班</dt>
             <dd class='col-8 text-info'>{{flt.flightNo}}</dd>
@@ -52,11 +52,9 @@
             </dt>
             <dd class='col-8'>{{psg.psgName}}</dd>
 
-            <dt class='col-4 text-right px-0'>证件号</dt>
-            <dd class='col-8'>{{psg.idNo}}</dd>
+            <dt class='col-4 text-right px-0'>证件</dt>
+            <dd class='col-8'>{{showIdTypeDesc(psg.idType)}} {{psg.idNo}}</dd>
 
-            <dt class='col-4 text-right px-0'>证件类型</dt>
-            <dd class='col-8'>{{showIdTypeDesc(psg.idType)}}</dd>
             <template v-if="psg.ticketNo">
               <dt class='col-4 text-right px-0'>票号</dt>
               <dd class='col-8 text-success'>

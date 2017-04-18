@@ -54,3 +54,30 @@ export function saveMediaPlayStatus(id, status, done, fail, always) {
   }).always(function () {
   })
 }
+
+export function isMediaAdmin(id, done, fail, always) {
+  $.ajax({
+    type: 'post',
+    url: '/Flight/material/' + id + '/isAdmin',
+    timeout: 10000,
+    dataType: "json"
+  }).done(function (jsonResult) {
+    done(jsonResult)
+  }).fail(function (jqXHR, textStatus, errorThrown) {
+  }).always(function () {
+  })
+}
+
+export function updateMediaInfo(params, done, fail, always) {
+  $.ajax({
+    type: 'post',
+    url: '/Flight/material/update',
+    timeout: 10000,
+    dataType: "json",
+    data: params
+  }).done(function (jsonResult) {
+    done(jsonResult)
+  }).fail(function (jqXHR, textStatus, errorThrown) {
+  }).always(function () {
+  })
+}

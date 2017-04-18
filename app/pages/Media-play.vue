@@ -1,18 +1,28 @@
 <template>
-	<div id="material-list" class="row">
-    <div class="col-12 bg-info text-white text-center fa-2 sticky-top">
-      <span @click='back()' class="float-left">
-        <i class='fa fa-angle-left fa-2' aria-hidden='true'></i>
-        <small>返回</small>
-      </span>
-      媒体播放
-    </div> 
-    <div class="card col-12 px-0">
+	<div id="player" class="row">
+    <div class="card col-12 bg-info">
       <template v-if="mediaInfo">
-        <video id="media" :src="videoUrl" width="100%" controls="controls" autoplay="autoplay">您的浏览器不支持播放此视频!</video>
-        <div class="card-block">
-          文件名: {{key}} <br />
-          创建日期：{{formatTime(createTime)}}
+        <div class="card-block px-0">
+          <video id="media" :src="videoUrl" width="100%" controls="controls" autoplay="autoplay">您的浏览器不支持播放此视频!</video>
+        </div>
+        <div class="card-block text-white px-0">
+          <blockquote class="blockquote">
+            <p class="mb-0">{{remark}}</p>
+            <footer class="blockquote-footer"><span class="float-right small">{{formatTime(createTime).substring(0, 16)}}</span> 播放 {{playCount}} </footer>
+          </blockquote>
+        </div>
+        <div class="card-block bg-success text-white" v-if="isAdmin">
+          <div class="form-group">
+            <label>标题</label>
+            <input type="text" class="form-control" v-model="title1">
+            <small class="form-text text-muted">标题</small>
+          </div>
+          <div class="form-group">
+            <label for="exampleTextarea">内容介绍</label>
+            <textarea class="form-control" rows="3" v-model="remark1"></textarea>
+          </div>
+
+          <button type="button" class="btn btn-primary" @click.stop="updateMediaInfo()">保存</button>
         </div>
       </template>
     </div>  
@@ -22,7 +32,7 @@
 
 <script>
 import { convertLongToTimeDesc } from '../common/common.js'
-import { searchMediaName, saveMediaPlayStatus } from '../api/material.js'
+import { searchMediaName, saveMediaPlayStatus, isMediaAdmin, updateMediaInfo } from '../api/material.js'
 import { initJsSdkParam } from '../api/wx.js'
 import $ from 'jquery'
 import wx from 'wx'
@@ -32,27 +42,23 @@ export default {
   data () {
     return {
       mediaInfo: null,
-      sc: {
-        rowCount: 0,
-        pageNo: 1,
-        pageSize: 25,
-        pageTotal: 0
-      }
+      isAdmin: false,
+      title1: '',
+      remark1: ''
     }
   },
   computed: {
-    videoUrl () { return 'http://video.90sky.com/' + this.key },
-    key () { return this.mediaInfo.key },
+    videoUrl () { return 'http://video.90sky.com/' + this.fileName },
+    title () { return this.mediaInfo.title },
+    remark () { return this.mediaInfo.remark },
+    playCount () { return this.mediaInfo.playCount },
+    fileName () { return this.mediaInfo.key },
     createTime () { return this.mediaInfo.createTime },
     mediaId () { return this.mediaInfo.id }
   },
   updated: function () {
     var self = this
-    // window.console.log('updated')
-    if (this.mediaInfo === null) {
-      window.console.log('this.mediaInfo is null')
-    } else {
-      // window.console.log('this.mediaInfo is ok')
+    if (this.mediaInfo !== null) {
       $('#media').bind('play', function (e) {
         self.beginPlay(self.mediaInfo.id)
       }).bind('ended', function (e) {
@@ -65,19 +71,13 @@ export default {
     if (id !== undefined) {
       this.searchMediaName(parseInt(id))
     }
-
-    window.console.log('mounted')
-    if (this.mediaInfo === null) {
-      window.console.log('mounted this.mediaInfo is null')
-    } else {
-      window.console.log('mounted this.mediaInfo is ok')
-    }
-
-    this.initWxJsSdk()
   },
   methods: {
     back: function () {
       this.$router.go(-1)
+    },
+    showErrMsg: function (msg, msgType) {
+      this.$store.dispatch('showAlertMsg', { 'errMsg': msg, 'errMsgType': msgType })
     },
     initWxJsSdk: function () {
       var self = this
@@ -93,16 +93,16 @@ export default {
             jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage', 'chooseWXPay'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
           })
           wx.ready(function () {
-            console.log('wx is ready')
+            // console.log('wx is ready')
           })
           wx.error(function (res) {
-            console.log('wx.error: ' + res.errMsg)
+            // console.log('wx.error: ' + res.errMsg)
           })
           // 分享到朋友圈
           wx.onMenuShareTimeline({
-            title: self.key, // 分享标题
-            link: 'http://b2c.90sky.com/?to=play&id=' + this.mediaId, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-            imgUrl: 'http://video.90sky.com/' + self.key + '.thumbnail.jpg', // 分享图标
+            title: self.title, // 分享标题
+            link: 'http://b2c.90sky.com/?to=play&id=' + self.mediaId, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+            imgUrl: 'http://video.90sky.com/' + self.fileName + '.thumbnail.jpg', // 分享图标
             success: function () {
               // 用户确认分享后执行的回调函数
             },
@@ -113,10 +113,10 @@ export default {
 
           // 分享给朋友
           wx.onMenuShareAppMessage({
-            title: self.key, // 分享标题
-            desc: '分享', // 分享描述
-            link: 'http://b2c.90sky.com/?to=play&id=' + this.mediaId, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
-            imgUrl: 'http://video.90sky.com/' + self.key + '.thumbnail.jpg', // 分享图标
+            title: self.title, // 分享标题
+            desc: self.remark, // 分享描述
+            link: 'http://b2c.90sky.com/?to=play&id=' + self.mediaId, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+            imgUrl: 'http://video.90sky.com/' + self.fileName + '.thumbnail.jpg', // 分享图标
             type: '', // 分享类型,music、video或link，不填默认为link
             dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
             success: function () {
@@ -133,6 +133,17 @@ export default {
       searchMediaName(id,
         (jsonResult) => {
           this.mediaInfo = jsonResult
+
+          this.initWxJsSdk()
+
+          if (this.title != null) {
+            window.document.title = this.title
+          }
+
+          this.title1 = this.title
+          this.remark1 = this.remark
+
+          this.isMediaAdmin(id)
         },
         null,
         null
@@ -148,6 +159,25 @@ export default {
     },
     formatTime: function (l) {
       return convertLongToTimeDesc(l)
+    },
+    isMediaAdmin: function (id) {
+      isMediaAdmin(id,
+        (jsonResult) => { this.isAdmin = jsonResult.status === 'OK' }
+      )
+    },
+    updateMediaInfo: function () {
+      var params = { 'id': this.mediaId,
+        'title': this.title1,
+        'remark': this.remark1
+      }
+      updateMediaInfo(params,
+        (jsonResult) => {
+          if (jsonResult.status === 'OK') {
+            this.showErrMsg('修改成功')
+            this.searchMediaName(this.mediaId)
+          }
+        }
+      )
     }
   },
   beforeRouteEnter (to, from, next) {

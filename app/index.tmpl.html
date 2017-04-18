@@ -3,7 +3,6 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
-  <title>智游科技</title>
   <link rel="stylesheet" href="/assets/css/bootstrap.css" />
   <link rel="stylesheet" href="/assets/css/jquery-ui.min.css" />
   <link rel="stylesheet" href="/assets/css/weui.css" />
@@ -12,20 +11,22 @@
 </head>
 <body ontouchstart >
 	<div id="app" class="container">
-    <my-top-tips></my-top-tips>
-    <my-loading></my-loading>
     <div class="row">
-      <nav class="col col-sm-3 col-md-2 d-none d-sm-block bg-faded sidebar">
-        <my-sidebar></my-sidebar>
-      </nav>
-      <main class="col-sm-9 col-md-10">
+      <my-top-tips></my-top-tips>
+      <my-loading></my-loading>
+    </div>
+
+    <div class="row">
+      <main class="col-12">
         <transition name="fade" mode="out-in" :duration="{ enter: 100, leave: 300 }">    			
             <router-view></router-view>
     		</transition>
       </main>
     </div>
 
-		<my-tabbar></my-tabbar>
+    <div class="row">
+	   <my-tabbar></my-tabbar>
+   </div>
 	</div>
 
 <script src="/assets/js/libs/jquery-3.1.1.min.js"></script>

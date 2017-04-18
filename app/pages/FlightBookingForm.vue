@@ -24,9 +24,9 @@
           </div>
         </div>
         <div class="d-flex flex-row justify-content-around bg-faded">
-            <div class="fa-2 text-success">{{flt.dportName}}</div>
+            <div class="fa-2 text-success">{{flt.dportName}} <small>{{flt.dterm}}</small></div>
             <div class="fa-2 text-danger"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></div>
-            <div class="fa-2 text-muted">{{flt.aportName}}</div>
+            <div class="fa-2 text-muted">{{flt.aportName}} <small>{{flt.aterm}}</small></div>
         </div>
         <div class="d-flex flex-row justify-content-around">
             <div class="fa-2 text-success">{{flt.ddate}}</div>
@@ -62,7 +62,9 @@
         <input type="hidden" :name="'tmcPolicyApply.flights[' + index + '].subclass'" :value="fltInfo.subclass" />
         <input type="hidden" :name="'tmcPolicyApply.flights[' + index + '].departureAirportName'" :value="fltInfo.dportName" />
         <input type="hidden" :name="'tmcPolicyApply.flights[' + index + '].departureAirport'"  :value="fltInfo.dport" />
+        <input type="hidden" :name="'tmcPolicyApply.flights[' + index + '].departureTerminal'"  :value="fltInfo.dterm" />
         <input type="hidden" :name="'tmcPolicyApply.flights[' + index + '].arrivalAirportName'" :value="fltInfo.aportName" />
+        <input type="hidden" :name="'tmcPolicyApply.flights[' + index + '].arrivalTerminal'" :value="fltInfo.aterm" />
         <input type="hidden" :name="'tmcPolicyApply.flights[' + index + '].arrivalAirport'" :value="fltInfo.aport" />
         <input type="hidden" :name="'tmcPolicyApply.flights[' + index + '].departureTime'" :value="fltInfo.dtime"  />
         <input type="hidden" :name="'tmcPolicyApply.flights[' + index + '].arrivalTime'" :value="fltInfo.atime" />
@@ -120,7 +122,7 @@
         </div>   
       </div>
 
-      <div class="card col-12">
+      <div class="card col-12 border-0">
         <div class="card-block">
           <a class="btn btn-success btn-block text-white" @click.stop="createFlightOrder();">保存订单</a>
         </div>
@@ -129,15 +131,6 @@
 
     <div class="clear"></div>
     <my-psg-picker :show="showPicker" @close="psgPickerClosed"></my-psg-picker>
-
-    <div id="loadingToast" v-show="loading">
-      <div class="weui-mask_transparent"></div>
-      <div class="weui-toast">
-        <i class="weui-loading weui-icon_toast"></i>
-        <p class="weui-toast__content">{{loadingText}}</p>
-      </div>
-    </div>
-
   </div>
 </template>
 
@@ -152,11 +145,6 @@ export default {
   },
   data () {
     return {
-      errAlert: false,
-      errMsg: '',
-      loading: false,
-      loadingText: '数据加载中',
-
       psgSelected: -1,
 
       idTypes: [
@@ -181,6 +169,12 @@ export default {
     showErrMsg: function (msg, msgType) {
       this.$store.dispatch('showAlertMsg', { 'errMsg': msg, 'errMsgType': msgType })
     },
+    showLoading: function (loadingText) {
+      this.$store.commit('showLoading', { 'loading': true, 'loadingText': loadingText })
+    },
+    hideLoading: function () {
+      this.$store.commit('showLoading', { 'loading': false })
+    },
     addPsg: function () {
       this.$store.commit('addPsg')
     },
@@ -196,8 +190,7 @@ export default {
     createFlightOrder: function () {
       var self = this
 
-      self.loading = true
-      self.loadingText = '保存中...'
+      self.showLoading()
 
       $.ajax({
         type: 'post',
@@ -221,7 +214,7 @@ export default {
           }
         },
         complete: function (XMLHttpRequest, textStatus) {
-          self.loading = false
+          self.hideLoading()
         }
       })
     },

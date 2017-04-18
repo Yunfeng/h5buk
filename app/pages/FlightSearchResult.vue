@@ -41,8 +41,12 @@
                 <br />
                 <small>{{flight.carrierName}}</small>
               </td>
-              <td class="text-center hidden-sm-down">{{flight.depPortName}}</td>
-              <td class="text-center hidden-sm-down">{{flight.arrPortName}}</td>
+              <td class="text-center hidden-sm-down">
+                {{flight.depPortName}} <span class="small text-info">{{flight.depTerminal}}</span>
+              </td>
+              <td class="text-center hidden-sm-down">
+                {{flight.arrPortName}} <span class="small text-info">{{flight.arrTerminal}}</span>
+              </td>
               <td class="text-center">
                 <span class="text-info fa-2">{{flight.showDepTime}}</span> 
                 <small>{{flight.showArrTime}}</small>
@@ -103,7 +107,7 @@
         </div>
         <div class="row">
           <div class="col-3 text-right text-nowrap"> {{flt.carrierName}} </div>
-          <div class="col-3 text-center text-nowrap">{{flt.planeType}} </div>
+          <div class="col-3 text-center text-nowrap">机型：{{flt.planeType}} </div>
           <div class="col-3 text-center text-nowrap">
             <p v-if="flt.codeShared === '1'">代码共享</p>
           </div>
@@ -546,7 +550,9 @@ export default {
         'atime': flt0.arrTime,
         'showAtime': flt0.showArrTime,
         'dportName': flt0.depPortName,
+        'dterm': flt0.depTerminal,
         'aportName': flt0.arrPortName,
+        'aterm': flt0.arrTerminal,
         'subclass': subclass0.subClass,
         'price': subclass0.price,
         'returnPoint': subclass0.returnPoint
