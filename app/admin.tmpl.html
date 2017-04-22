@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+  <link rel="stylesheet" href="/assets/css/bootstrap.css" />
+  <link rel="stylesheet" href="/assets/css/jquery-ui.min.css" />
+  <link rel="stylesheet" href="/assets/css/weui.css" />
+  <link rel="stylesheet" href="/assets/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="/assets/css/animate.css" />
+</head>
+<body ontouchstart >
+	<div id="app" class="container-fluid">
+    <div class="row">
+      <my-top-tips></my-top-tips>
+      <my-loading></my-loading>
+    </div>
+
+    <div class="row">
+      <div class="col-3 col-md-2">
+        <my-sidebar></my-sidebar>
+      </div>
+      <main class="col-9 col-md-10">
+        <transition name="fade" mode="out-in" :duration="{ enter: 100, leave: 300 }">    			
+            <router-view></router-view>
+    		</transition>
+      </main>
+    </div>
+
+    <div class="row">
+	   <my-tabbar></my-tabbar>
+   </div>
+	</div>
+
+<script src="/assets/js/libs/jquery-3.1.1.min.js"></script>
+<script src="/assets/js/libs/jquery.cookie.js"></script>
+<script src="/assets/js/libs/jquery-ui.min.js"></script>
+<script src="/assets/js/libs/jquery.ui.datepicker-zh-CN.js"></script>
+<!-- <script src="/assets/js/libs/weui.min.js"></script> -->
+<script src="/assets/js/libs/tether.min.js" ></script>
+<script src="/assets/js/libs/bootstrap.min.js" ></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js" ></script>
+<script src="/assets/js/common.js" ></script>
+<script src="/assets/js/app.config.js" ></script>
+
+</body>
+</html>
