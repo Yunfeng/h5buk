@@ -15,11 +15,19 @@
           <div class="form-group">
               <input class="form-control" type="text" placeholder="用户名" v-model="etermUsername">
           </div>
+          <div class="form-group">
+            <select v-model="orderBy" class="form-control" >
+              <option value="0">ID降序</option>
+              <option value="1">人数降序</option>
+              <option value="2">用户名降序</option>
+              <option value="3">状态降序</option>
+            </select>
+          </div>
         </div>
       </div>      
     </template>
     <template v-else>
-      <div class="col-12 bg-info text-white text-center fa-2 sticky-top">
+      <div class="col-12 bg-info text-white text-center fa-2">
         <span @click='back()' class="float-left">
           <i class='fa fa-angle-left fa-2' aria-hidden='true'></i>
           <small>返回</small>
@@ -30,48 +38,65 @@
         </span>
       </div> 
         
-        <div class="card col-12 px-0">   
-          <table class='table table-sm table-striped'>
-            <thead>
-                <tr>
-                    <th>编码</th>
-                    <th></th>
-                    <th>用户名</th>
-                    <th class="hidden-md-down">CTCM</th>
-                    <th class="hidden-md-down">联系电话</th>
-                    <th class="hidden-md-down">生成时间</th>
-                    <th class="hidden-sm-down">更新时间</th>
-                    <th></th>
-                </tr>                        
-            </thead>
-            <tbody>
-                <tr v-for='(info, index) in dataList' @click='showDetail(info)'>
-                    <td>{{info.pnrNo}}</td>
-                    <td><small>{{info.segStatus}}</small></td>
-                    <td>{{info.etermUsername}}</td>
-                    <td class="hidden-md-down"><small>{{info.ctcmCount}}</small></td>
-                    <td class="hidden-md-down"><small>{{info.linkphone}}</small></td>
-                    <td class="hidden-md-down"><small>{{formatTime(info.createTime)}}</small></td>
-                    <td class="hidden-sm-down"><small>{{formatTime(info.lastUpdate)}}</small></td>
-                    <td><i class="fa fa-angle-right" aria-hidden="true"></i></td>
-                </tr>
-            </tbody>
-          </table>
-          <div class='card-block'>
-            <my-pagination name='pagination' :row-count='sc.rowCount' :page-total='sc.pageTotal' :page-no='sc.pageNo' @next-page='nextPage' @prev-page='prevPage' @direct-page='directPage'></my-pagination> 
-          </div> 
-        </div>      
+      <div class="card col-12 hidden-md-down">
+        <form class="form-inline">
+          <input class="form-control m-2" type="text" placeholder="编码" v-model="pnrNo">
+          <input class="form-control m-2" type="text" placeholder="用户名" v-model="etermUsername">
+          <select v-model="orderBy" class="form-control m-2" >
+              <option value="0">ID降序</option>
+              <option value="1">人数降序</option>
+              <option value="2">用户名降序</option>
+              <option value="3">状态降序</option>
+            </select>
+          <button type="button" class="btn btn-success mr-2" @click.stop="hideFilter()">确定</button>
+          <button type="button" class="btn btn-info btn-sm" @click.stop="resetFilter()">重置</button>          
+        </form>        
+      </div>
+
+      <div class="card col-12 px-0">   
+        <table class='table table-sm table-striped'>
+          <thead class="text-warning sticky-top">
+              <tr>
+                  <th>编码</th>
+                  <th>状态</th>
+                  <th>人数</th>
+                  <th>用户名</th>
+                  <th class="hidden-md-down">CTCM</th>
+                  <th class="hidden-md-down">联系电话</th>
+                  <th class="hidden-md-down">生成时间</th>
+                  <th class="hidden-sm-down">更新时间</th>
+                  <th></th>
+              </tr>                        
+          </thead>
+          <tbody>
+              <tr v-for='(info, index) in dataList' @click='showDetail(info)'>
+                  <td>{{info.pnrNo}}</td>
+                  <td><small>{{info.segStatus}}</small></td>
+                  <td>{{info.psgCount}}</td>
+                  <td>{{info.etermUsername}}</td>
+                  <td class="hidden-md-down"><small>{{info.ctcmCount}}</small></td>
+                  <td class="hidden-md-down"><small>{{info.linkphone}}</small></td>
+                  <td class="hidden-md-down"><small>{{formatTime(info.createTime)}}</small></td>
+                  <td class="hidden-sm-down"><small>{{formatTime(info.lastUpdate)}}</small></td>
+                  <td><i class="fa fa-angle-right" aria-hidden="true"></i></td>
+              </tr>
+          </tbody>
+        </table>
+        <div class='card-block'>
+          <my-pagination name='pagination' :row-count='sc.rowCount' :page-total='sc.pageTotal' :page-no='sc.pageNo' @next-page='nextPage' @prev-page='prevPage' @direct-page='directPage'></my-pagination> 
+        </div> 
+      </div>      
     </template>     
   </div>
 </template>
 
 <script>
 import MyPagination from '../components/my-pagination.vue'
-import $ from 'jquery'
 import { convertLongToTimeDesc } from '../common/common.js'
+import { searchPnr } from '../api/pnr.js'
 
 export default {
-  name: 'pnr-list',
+  name: 'PnrList',
   components: {
     'my-pagination': MyPagination
   },
@@ -87,18 +112,14 @@ export default {
         pageTotal: 0
       },
       etermUsername: '',
-      pnrNo: ''
+      pnrNo: '',
+      orderBy: 0
     }
   },
   computed: {
     // acityName() {return this.$store.state.searchParams.acityName},
   },
   mounted: function () {
-    var temp = $.cookie('pnr.list.sc.pnrNo')
-    if (temp !== undefined) this.pnrNo = temp
-
-    temp = $.cookie('pnr.ctcm.sc.etermUsername')
-    if (temp !== undefined) this.etermUsername = temp
   },
   methods: {
     back: function () {
@@ -117,33 +138,22 @@ export default {
     },
     search: function () {
       this.showLoading()
-      var self = this
-      $.cookie('pnr.list.sc.pnrNo', this.pnrNo, { expires: 1, path: '/' })
-      $.cookie('pnr.list.sc.etermUsername', this.etermUsername, { expires: 1, path: '/' })
 
-      $.ajax({
-        type: 'post',
-        url: '/Flight/pnr/list.do',
-        data: {
-          'sc.pageNo': this.sc.pageNo,
-          'sc.pageSize': this.sc.pageSize,
-          'sc.pnrNo': this.pnrNo,
-          'sc.etermUsername': this.etermUsername
+      var params = { 'sc.pageNo': this.sc.pageNo,
+        'sc.pageSize': this.sc.pageSize,
+        'sc.pnrNo': this.pnrNo,
+        'sc.etermUsername': this.etermUsername,
+        'sc.orderBy': this.orderBy
+      }
+
+      searchPnr(params,
+        (jsonResult) => {
+          this.dataList = jsonResult.dataList
+          this.sc = jsonResult.page
         },
-        dataType: 'json',
-        success: function (jsonResult) {
-          self.dataList = jsonResult.dataList
-          self.sc = jsonResult.page
-        },
-        error: function (XMLHttpRequest, textStatus, errorThrown) {
-          if (XMLHttpRequest.status === 403) {
-            self.$store.commit('jumpToLogin', self.$router)
-          }
-        },
-        complete: function (XMLHttpRequest, textStatus) {
-          self.hideLoading()
-        }
-      })
+        null,
+        () => { this.hideLoading() }
+      )
     },
     showDetail: function (info) {
       this.$store.commit('setPnrDetail', info)

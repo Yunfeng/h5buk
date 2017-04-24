@@ -45,10 +45,10 @@
     "vue": "^2.2.6",
     "vue-html-loader": "^1.2.3",
     "vue-loader": "^11.0.0",
-    "vue-router": "^2.3.0",
+    "vue-router": "^2.4.0",
     "vue-style-loader": "^1.0.0",
     "vue-template-compiler": "^2.2.6",
-    "vuex": "^2.2.1",
+    "vuex": "^2.3.0",
     "webpack": "^2.2.0",
     "webpack-dev-server": "^1.16.2",
     "weui": "^1.1.0"

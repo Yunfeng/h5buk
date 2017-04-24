@@ -101,7 +101,7 @@ const routes = [
   {path: '/tmc/buy',       component: MyTmcBuy},
   {path: '/tmc/detail',    component: MyTmcDetail},
   {path: '/pnr',           component: MyPnr},
-  {name: 'pnrList',   path: '/pnr/list',      component: MyPnrList},
+  {path: '/pnr/list',      component: MyPnrList, meta: { keepAlive: true } },
   {path: '/pnr/stat',      component: MyPnrStat},
   {path: '/pnr/detail',    component: MyPnrDetail},
   {name: 'pnrDetail', path: '/pnr/detail/:id',       component: MyPnrDetail},

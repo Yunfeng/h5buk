@@ -33,8 +33,8 @@
 </template>
 
 <script>
-import $ from 'jquery'
 import { convertLongToTimeDesc } from '../common/common.js'
+import { getPnr } from '../api/pnr.js'
 
 export default {
   name: 'PnrDetail',
@@ -42,16 +42,15 @@ export default {
     detail () { return this.$store.state.pnrDetail }
   },
   mounted: function () {
-    // this.search()
     var id = this.$route.params.id
     if (id !== undefined) {
-      console.log(id)
+      // console.log(id)
       this.refreshPnrDetail(id)
     }
   },
   activated: function () {
     var id = this.$route.params.id
-    console.log(id)
+    // console.log(id)
     if (id !== undefined) {
       this.refreshPnrDetail(id)
     }
@@ -60,55 +59,27 @@ export default {
     back: function () {
       this.$router.go(-1)
     },
-    getIntlPolicyDesc: function (val) {
-      var desc = '国内'
-      if (val === 1) desc = '国际'
-
-      return desc
+    showLoading: function (loadingText) {
+      this.$store.commit('showLoading', { 'loading': true, 'loadingText': loadingText })
     },
-    getRouteTypeDesc: function (val) {
-      var desc = '单程'
-      if (val === 1) desc = '往返'
-      return desc
-    },
-    getStatusDesc: function (val) {
-      var desc = '启用中'
-      if (val === 0) desc = '停用'
-      return desc
-    },
-    getPortDesc: function (val) {
-      var desc = val
-      if (val === '*') desc = '全国'
-      return desc
+    hideLoading: function () {
+      this.$store.commit('showLoading', { 'loading': false })
     },
     formatTime: function (l) {
       return convertLongToTimeDesc(l)
     },
     refreshPnrDetail: function (id) {
-      var self = this
-      self.loading = true
-      self.loadingText = '数据加载中'
+      this.showLoading()
 
-      $.ajax({
-        type: 'post',
-        url: '/Flight/pnr/' + id,
-        dataType: 'json',
-        success: function (info) {
+      getPnr(id,
+        (info) => {
           if (info !== null) {
-            self.$store.commit('setPnrDetail', info)
+            this.$store.commit('setPnrDetail', info)
           }
         },
-        error: function (XMLHttpRequest, textStatus, errorThrown) {
-          self.searching = false
-
-          if (XMLHttpRequest.status === 403) {
-            self.$store.commit('jumpToLogin', self.$router)
-          }
-        },
-        complete: function (XMLHttpRequest, textStatus) {
-          self.loading = false
-        }
-      })
+        () => { },
+        () => { this.hideLoading() }
+      )
     }
   }
 }

@@ -21,9 +21,14 @@
         <my-sidebar></my-sidebar>
       </div>
       <main class="col-9 col-md-10">
-        <transition name="fade" mode="out-in" :duration="{ enter: 100, leave: 300 }">    			
-            <router-view></router-view>
-    		</transition>
+        <transition name="fade">
+          <keep-alive>
+            <router-view v-if="$route.meta.keepAlive"></router-view>
+          </keep-alive>
+        </transition>
+        <transition  name="fade" mode="out-in" :duration="{ enter: 100, leave: 300 }">
+          <router-view v-if="!$route.meta.keepAlive"></router-view>
+        </transition>
       </main>
     </div>
 
