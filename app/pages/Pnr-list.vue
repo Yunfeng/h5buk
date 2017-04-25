@@ -16,6 +16,12 @@
               <input class="form-control" type="text" placeholder="用户名" v-model="etermUsername">
           </div>
           <div class="form-group">
+              <input class="form-control" type="text" placeholder="开始日期" v-model="beginDate">
+          </div>
+          <div class="form-group">
+              <input class="form-control" type="text" placeholder="截止日期" v-model="endDate">
+          </div>
+          <div class="form-group">
             <select v-model="orderBy" class="form-control" >
               <option value="0">ID降序</option>
               <option value="1">人数降序</option>
@@ -46,8 +52,10 @@
         
       <div class="card col-12 hidden-md-down">
         <form class="form-inline">
-          <input class="form-control m-2" type="text" placeholder="编码" v-model="pnrNo">
-          <input class="form-control m-2" type="text" placeholder="用户名" v-model="etermUsername">
+          <input class="form-control m-2 col-1" type="text" placeholder="编码" v-model="pnrNo">
+          <input class="form-control m-2 col-1" type="text" placeholder="用户名" v-model="etermUsername">
+          <input class="form-control m-2" style="width:7rem" type="text" placeholder="开始日期" v-model="beginDate">
+          <input class="form-control m-2" style="width:7rem" type="text" placeholder="截止日期" v-model="endDate">
           <select v-model="orderBy" class="form-control m-2" >
             <option value="0">ID降序</option>
             <option value="1">人数降序</option>
@@ -124,6 +132,8 @@ export default {
       },
       etermUsername: '',
       pnrNo: '',
+      beginDate: '',
+      endDate: '',
       orderBy: 0,
       dataMode: '0'
     }
@@ -151,10 +161,22 @@ export default {
     search: function () {
       this.showLoading()
 
+      var beginDate = this.beginDate
+      if (beginDate === '') {
+        beginDate = null
+      }
+
+      var endDate = this.endDate
+      if (endDate === '') {
+        endDate = null
+      }
+
       var params = { 'sc.pageNo': this.sc.pageNo,
         'sc.pageSize': this.sc.pageSize,
         'sc.pnrNo': this.pnrNo,
         'sc.etermUsername': this.etermUsername,
+        'sc.beginDate': beginDate,
+        'sc.endDate': endDate,
         'sc.orderBy': this.orderBy
       }
 
@@ -209,6 +231,9 @@ export default {
     resetFilter: function () {
       this.etermUsername = ''
       this.pnrNo = ''
+      this.beginDate = ''
+      this.endDate = ''
+      this.orderBy = 0
     }
   },
   beforeRouteEnter (to, from, next) {
