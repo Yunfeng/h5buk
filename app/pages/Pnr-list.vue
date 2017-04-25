@@ -23,6 +23,12 @@
               <option value="3">状态降序</option>
             </select>
           </div>
+          <div class="form-group">
+            <select v-model="dataMode" class="form-control" >
+              <option value="0">当前在用</option>
+              <option value="1">已删除</option>
+            </select>
+          </div>
         </div>
       </div>      
     </template>
@@ -43,11 +49,16 @@
           <input class="form-control m-2" type="text" placeholder="编码" v-model="pnrNo">
           <input class="form-control m-2" type="text" placeholder="用户名" v-model="etermUsername">
           <select v-model="orderBy" class="form-control m-2" >
-              <option value="0">ID降序</option>
-              <option value="1">人数降序</option>
-              <option value="2">用户名降序</option>
-              <option value="3">状态降序</option>
-            </select>
+            <option value="0">ID降序</option>
+            <option value="1">人数降序</option>
+            <option value="2">用户名降序</option>
+            <option value="3">状态降序</option>
+          </select>
+          <select v-model="dataMode" class="form-control m-2" >
+            <option value="0">当前在用</option>
+            <option value="1">已删除</option>
+          </select>
+
           <button type="button" class="btn btn-success mr-2" @click.stop="hideFilter()">确定</button>
           <button type="button" class="btn btn-info btn-sm" @click.stop="resetFilter()">重置</button>          
         </form>        
@@ -93,7 +104,7 @@
 <script>
 import MyPagination from '../components/my-pagination.vue'
 import { convertLongToTimeDesc } from '../common/common.js'
-import { searchPnr } from '../api/pnr.js'
+import { searchPnr, searchPnrUsed } from '../api/pnr.js'
 
 export default {
   name: 'PnrList',
@@ -113,7 +124,8 @@ export default {
       },
       etermUsername: '',
       pnrNo: '',
-      orderBy: 0
+      orderBy: 0,
+      dataMode: '0'
     }
   },
   computed: {
@@ -146,14 +158,25 @@ export default {
         'sc.orderBy': this.orderBy
       }
 
-      searchPnr(params,
-        (jsonResult) => {
-          this.dataList = jsonResult.dataList
-          this.sc = jsonResult.page
-        },
-        null,
-        () => { this.hideLoading() }
-      )
+      if (this.dataMode === '0') {
+        searchPnr(params,
+          (jsonResult) => {
+            this.dataList = jsonResult.dataList
+            this.sc = jsonResult.page
+          },
+          null,
+          () => { this.hideLoading() }
+        )
+      } else {
+        searchPnrUsed(params,
+          (jsonResult) => {
+            this.dataList = jsonResult.dataList
+            this.sc = jsonResult.page
+          },
+          null,
+          () => { this.hideLoading() }
+        )
+      }
     },
     showDetail: function (info) {
       this.$store.commit('setPnrDetail', info)
