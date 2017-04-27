@@ -1,5 +1,5 @@
 <template>
-  <input :id="id" type="text" :class="className" :placeholder="placeholder" :value="value" @input="updateValue($event.target.value)">
+  <input :id="id" type="text" :placeholder="placeholder" :value="value" @input="updateValue($event.target.value)">
 </template>
 
 <script>
@@ -8,7 +8,6 @@ import $ from 'jquery'
 export default {
   props: {
     placeholder: '',
-    className: '',
     value: '',
     id: ''
   },

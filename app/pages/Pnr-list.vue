@@ -16,10 +16,10 @@
               <input class="form-control" type="text" placeholder="用户名" v-model="etermUsername">
           </div>
           <div class="form-group">
-              <input class="form-control" type="text" placeholder="开始日期" v-model="beginDate">
+              <my-date-picker :id="'beginDate0'" :class="'form-control'" :placeholder="'开始日期'" v-model="beginDate"></my-date-picker> 
           </div>
           <div class="form-group">
-              <input class="form-control" type="text" placeholder="截止日期" v-model="endDate">
+              <my-date-picker :id="'endDate0'" :class="'form-control'" :placeholder="'截止日期'" v-model="endDate"></my-date-picker>  
           </div>
           <div class="form-group">
             <select v-model="orderBy" class="form-control" >
@@ -54,8 +54,8 @@
         <form class="form-inline">
           <input class="form-control m-2 col-1" type="text" placeholder="编码" v-model="pnrNo">
           <input class="form-control m-2 col-1" type="text" placeholder="用户名" v-model="etermUsername">
-          <input class="form-control m-2" style="width:7rem" type="text" placeholder="开始日期" v-model="beginDate">
-          <input class="form-control m-2" style="width:7rem" type="text" placeholder="截止日期" v-model="endDate">
+          <my-date-picker :id="'beginDate1'" :class="'form-control m-2'" :style="'width:7rem'" :placeholder="'开始日期'" v-model="beginDate"></my-date-picker> 
+          <my-date-picker :id="'endDate1'" :class="'form-control m-2'" :style="'width:7rem'"  :placeholder="'截止日期'" v-model="endDate"></my-date-picker>  
           <select v-model="orderBy" class="form-control m-2" >
             <option value="0">ID降序</option>
             <option value="1">人数降序</option>
@@ -111,13 +111,15 @@
 
 <script>
 import MyPagination from '../components/my-pagination.vue'
+import MyDatePicker from '../components/my-datepicker.vue'
 import { convertLongToTimeDesc } from '../common/common.js'
 import { searchPnr, searchPnrUsed } from '../api/pnr.js'
 
 export default {
   name: 'PnrList',
   components: {
-    'my-pagination': MyPagination
+    'my-pagination': MyPagination,
+    MyDatePicker
   },
   data () {
     return {
