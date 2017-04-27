@@ -10,12 +10,12 @@
       </div> 
 
       <div class="card col-12 px-0 border-0">
-        <div class="card-header text-center">
+        <div class="card-block text-center">
           订单金额: <span class="text-danger"><i class="fa fa-rmb text-warning"></i> {{info.totalPrice}}</span>
         </div>
       </div>
       <div class="card col-12 px-0 border-0">
-        <div class="card-block py-0 bg-primary text-white">
+        <div class="card-block py-0 bg-faded text-warning">
           <small>行程信息</small>
         </div>
         <template v-for='(flt, index) in info.flights'>
@@ -41,7 +41,7 @@
             <dd class='col-8'>{{flt.taxCn}}</dd>
           </dl>
         </template>       
-        <div class="card-block py-0 bg-primary text-white">
+        <div class="card-block py-0 bg-faded text-warning">
           <small>乘机人信息</small>
         </div>
         <template v-for='(psg, index) in info.passengers'>
@@ -68,7 +68,7 @@
           </dl>
         </template>
 
-        <div class="card-block py-0 bg-danger text-white">
+        <div class="card-block py-0 bg-faded text-warning">
           <small>结算信息</small>
         </div>
         <dl class="row mb-0">
@@ -76,25 +76,27 @@
           <dd class='col-8'>
             <i class="fa fa-rmb text-warning"></i><span class="text-info fa-2"> {{info.totalPrice}}</span>
           </dd>
-          <template v-if="info.status !== 1024">
-            <template v-if="info.serviceFee > 0">
-              <dt class='col-4 text-right px-0'>服务费</dt>
-              <dd class='col-8'>
-                <span class="text-danger"><i class='fa fa-rmb text-warning'></i> {{info.serviceFee}}</span>
-              </dd>
-            </template>
+          <template v-if="info.status !== 1025">
             <template v-if="info.policyId > 0">
               <dt class='col-4 text-right px-0'>返点</dt>
               <dd class='col-8'>
                 <span>{{info.policyReturnPoint}}</span>
               </dd>
             </template>
-            <dt class='col-4 text-right px-0'>应付总额</dt>
-            <dd class='col-8'>
-              <i class='fa fa-rmb text-warning'></i>
-              <span class="text-danger fa-2"> {{info.ticketAmount}}</span>
-            </dd>
-            <template v-if="costSaving > 0">
+            <template v-if="info.ticketAmount > 0">
+              <dt class='col-4 text-right px-0'>应付票款</dt>
+              <dd class='col-8'>
+                <i class='fa fa-rmb text-warning'></i>
+                <span class="text-danger fa-2"> {{info.ticketAmount}}</span>
+              </dd>
+            </template>
+            <template v-if="info.serviceFee > 0">
+              <dt class='col-4 text-right px-0'>服务费</dt>
+              <dd class='col-8'>
+                <span class="text-danger"><i class='fa fa-rmb text-warning'></i> {{info.serviceFee}}</span>
+              </dd>
+            </template>
+            <template v-if="info.ticketAmount > 0 && costSaving > 0">
               <dt class='col-4 text-right px-0'>节省</dt>
               <dd class='col-8 text-danger'>
                 <span class="text-danger"><i class='fa fa-rmb text-warning'></i> {{costSaving}}</span>
@@ -118,129 +120,105 @@
         </dl>
       </div>
 
-      <template v-if='info.policyId >= 0'>
-        <!-- 普通订单 -->
-        <template v-if='info.status === 1024 && info.enterpriseId > 0'>
-          <div class="card col-12 border-0 mb-2 px-0">
-            <div class="card-block">
-              <button type='button' class='btn btn-success w-100' @click.stop='commitTmcOrder(info.id)'>申请出票</button>
-              <button type='button' class='btn btn-outline-danger w-100 mt-3' @click.stop='cancelTmcOrder(info.id)'>取消</button>
-            </div>
+      <template v-if='info.status === 1024 && info.enterpriseId > 0'>
+        <template v-if="policies.length > 0">
+          <div class="card-block py-0 bg-faded text-info">
+            特殊政策 <small>(票面低于实际付款金额)</small>
           </div>
+          <table class='table table-sm table-striped table-condensive'>
+            <thead>
+                <tr>
+                    <th>航司</th>
+                    <th>舱位</th>
+                    <th class="text-right">返点</th>
+                    <th class="text-right">最低票面</th>
+                    <th></th>
+                </tr>                        
+            </thead>
+            <tbody>
+                <tr v-for='(info, index) in policies' @click='showPolicyDetail(info)'>
+                    <td>{{info.carrier}}</td>
+                    <td>{{info.subclass}}</td>
+                    <td class="text-right">{{info.returnPoint}}</td>
+                    <td class="text-right">{{info.minPrice}}</td>
+                    <td class="text-center"><button class='btn btn-success btn-sm' @click.stop='selectPolicy(info)'>选择</button></td>
+                </tr>
+            </tbody>
+          </table>
+          <div class="card-block py-0 bg-faded text-info">
+            <small>备注</small>
+          </div>
+          <table class="table">
+            <tr>
+              <td>
+                <input type="input" class="form-control" placeholder="请在此输入备注信息" v-model="remark">
+              </td>
+            </tr>                  
+          </table>                
         </template>
 
-        <template v-if='info.status === 1  && info.enterpriseId > 0'>          
-          <div class='card col-12 border-0 mb-5'>
-            <button type='button' class='btn btn-success w-100' @click.stop='payForTmcOrder(info.id)'>余额支付</button>
+        <div class="card col-12 border-0 mb-2 px-0">
+          <div class="card-block">
+            <button type='button' class='btn btn-success w-100' @click.stop='commitTmcOrder(info.id)'>申请出票</button>
+            <button type='button' class='btn btn-outline-danger w-100 mt-3' @click.stop='cancelTmcOrder(info.id)'>取消</button>
+          </div>
+        </div>
+      </template>
 
-            <button type='button' class='btn btn-outline-success w-100 mt-3' @click.stop='weixinPay1(info.id)'>微信支付</button>
+      <template v-if='info.status === 1  && info.enterpriseId > 0'>          
+        <div class='card col-12 border-0 mb-5'>
+          <button type='button' class='btn btn-success w-100' @click.stop='payForTmcOrder(info.id)'>余额支付</button>
+          <button type='button' class='btn btn-outline-success w-100 mt-3' @click.stop='weixinPay1(info.id)'>
+            微信支付
+            <template v-if="wxpayRate>0">
+              <small>支付费率千分之 {{wxpayRate}}</small>
+            </template>
+          </button>
+          <button type='button' class='btn btn-outline-info w-100 mt-3' @click.stop="aliPay1(info.id)">
+            支付宝
+            <template v-if="alipayRate>0">
+              <span class="small align-bottom">支付费率千分之 {{alipayRate}}</span>
+            </template>
+          </button>
+        </div>
+      </template>
+      <template v-if='info.status === 4  && info.enterpriseId > 0'>
+        <div class="card col-12 border-0 mb-2">
+          <div class="card-block py-0 bg-faded">
+            <small>拒单说明</small>
           </div>
-        </template>
-        <template v-if='info.status === 4  && info.enterpriseId > 0'>
-          <div class="card col-12 border-0 mb-2">
-            <div class="card-block py-0 bg-faded">
-              <small>拒单说明</small>
-            </div>
-            <dl class='row'>
-              <dt class='col-4 text-right  px-0'>拒单理由</dt>
-              <dd class='col-8'>
-                <p>{{info.denyReason}} <small>({{info.denyCode}})</small></p>
-              </dd>
-            </dl>
-          </div>
-          <template v-if='info.denyCode == 401 || info.denyCode == 402'>
-            <div class='card col-12 border-0 mb-2'>
-              <button type='button' class='btn btn-success w-100' @click='recommitTmcOrder()'>重新提交</button>
-            </div>
-          </template>
-        </template>
-        <template v-if='info.status === 16  && info.enterpriseId > 0 && info.policyId > 0'>
+          <dl class='row'>
+            <dt class='col-4 text-right  px-0'>拒单理由</dt>
+            <dd class='col-8'>
+              <p>{{info.denyReason}} <small>({{info.denyCode}})</small></p>
+            </dd>
+          </dl>
+        </div>
+        <template v-if='info.denyCode == 401 || info.denyCode == 402'>
           <div class='card col-12 border-0 mb-2'>
-            <button type='button' class='weui-btn weui-btn_primary' @click='confirmOrderTicketRight(info.id)'>票号正确 ({{ticketCorrectConfirmTimes}})</button>
-
-            <button type='button' class='weui-btn weui-btn_warn' @click='confirmOrderTicketWrong(info.id)'>票号有误 ({{ticketWrongConfirmTimes}})</button>
-          </div>
-        </template>
-        <template v-if='info.status === 8  && info.enterpriseId === 0 && info.seller > 0'>          
-          <div class='card col-12 border-0 mb-4'>
-            <button type='button' class='btn btn-success w-100' @click.stop='toTicketTmcOrder(info.id);'>我来开票</button>
-            <button type='button' class='btn btn-danger w-100 mt-3' @click.stop='denyTmcOrder(info.id);'>拒绝</button>
-          </div>
-        </template>
-        <template v-if='info.status === 12  && info.enterpriseId === 0 && info.seller > 0'>
-          <div class="card col-12 border-0 mb-4">
-            <button type='button' class='btn btn-success w-100' @click='fillTicketNo(info.id);'>填写票号</button>
-            <button type='button' class='btn btn-danger w-100 mt-3' @click='denyTmcOrder(info.id);'>拒绝</button>
+            <button type='button' class='btn btn-success w-100' @click='recommitTmcOrder()'>重新提交</button>
           </div>
         </template>
       </template>
-      <template v-else-if='info.policyId === -1 && info.status !== 128 && info.enterpriseId > 0'>      
-        <div class='weui-cells__title'>
-        候选政策
-        </div>
-        <table class='table table-striped table-condensive'>
-          <thead>
-              <tr>
-                  <th>航司</th>
-                  <th>舱位</th>
-                  <th>返点</th>
-                  <th>最低票面</th>
-                  <th></th>
-              </tr>                        
-          </thead>
-          <tbody>
-              <tr v-for='(info, index) in policies' @click='showPolicyDetail(info)'>
-                  <td>{{info.carrier}}</td>
-                  <td>{{info.subclass}}</td>
-                  <td>{{info.returnPoint}}</td>
-                  <td>{{info.minPrice}}</td>
-                  <td><button class='btn btn-success btn-xs' @click.stop='selectPolicy(info)'>选择</button></td>
-              </tr>
-          </tbody>
-        </table>
-        <div class='weui-cells__title'>结算信息</div>
-        <div class='weui-cells weui-cells_form'>
-              <div class='weui-cell'>
-                  <div class='weui-cell__hd'><label class='weui-label'>应付票款</label></div>
-                  <div class='weui-cell__bd'>
-                      <input class='weui-input' type='number' pattern='[0-9]*' v-model='ticketAmount' placeholder='请输入整数'>
-                  </div>
-              </div>
-              <div class='weui-cells__tips'>用FD正价扣除返点，保留到元，不要分和角。含机场税，不含平台服务费。</div>
-              <div class='weui-cell'>
-                  <div class='weui-cell__hd'><label for='' class='weui-label'>备注</label></div>
-                  <div class='weui-cell__bd'>
-                      <input class='weui-input' value='' v-model='remark'>
-                  </div>
-              </div>
-        </div>
-        <div class='weui-form-preview'>
-            <div class='weui-form-preview__bd'>
-                <div class='weui-form-preview__item'>
-                    <label class='weui-form-preview__label'>票款</label>
-                    <span class='weui-form-preview__value'>{{ticketAmount}}</span>
-                </div>
-                <div class='weui-form-preview__item'>
-                    <label class='weui-form-preview__label'>备注</label>
-                    <span class='weui-form-preview__value'>{{remark}}</span>
-                </div>
-                <div class='weui-form-preview__item'>
-                    <label class='weui-form-preview__label'>返点</label>
-                    <span class='weui-form-preview__value'>{{returnPoint}}</span>
-                </div>
-                <div class='weui-form-preview__item'>
-                    <label class='weui-form-preview__label'>返钱</label>
-                    <span class='weui-form-preview__value'>{{returnMoney}}</span>
-                </div>
-            </div>
-        </div>
-        <div class='weui-btn-area'>
-            <button class='weui-btn weui-btn_primary' @click='commitTmcPolicyOrder(info.id)'>提交出票</button>
-            <button class='weui-btn weui-btn_warn' @click='cancelTmcOrder(info.id)'>取消</button>
-          </div>
-      </template>
+      <template v-if='info.status === 16  && info.enterpriseId > 0 && info.policyId > 0'>
+        <div class='card col-12 border-0 mb-2'>
+          <button type='button' class='weui-btn weui-btn_primary' @click='confirmOrderTicketRight(info.id)'>票号正确 ({{ticketCorrectConfirmTimes}})</button>
 
-    <!-- v-if info !=== null end -->
+          <button type='button' class='weui-btn weui-btn_warn' @click='confirmOrderTicketWrong(info.id)'>票号有误 ({{ticketWrongConfirmTimes}})</button>
+        </div>
+      </template>
+      <template v-if='info.status === 8  && info.enterpriseId === 0 && info.seller > 0'>          
+        <div class='card col-12 border-0 mb-4'>
+          <button type='button' class='btn btn-success w-100' @click.stop='toTicketTmcOrder(info.id);'>我来开票</button>
+          <button type='button' class='btn btn-danger w-100 mt-3' @click.stop='denyTmcOrder(info.id);'>拒绝</button>
+        </div>
+      </template>
+      <template v-if='info.status === 12  && info.enterpriseId === 0 && info.seller > 0'>
+        <div class="card col-12 border-0 mb-4">
+          <button type='button' class='btn btn-success w-100' @click='fillTicketNo(info.id);'>填写票号</button>
+          <button type='button' class='btn btn-danger w-100 mt-3' @click='denyTmcOrder(info.id);'>拒绝</button>
+        </div>
+      </template>
     </template> 
   </div>
 </template>
@@ -250,7 +228,7 @@ import { DOMAIN_URL, convertLongToTimeDesc, showIdTypeDesc, showOrderStatusDesc 
 import MyButton from '../components/my-button.vue'
 import MyInput from '../components/my-input.vue'
 import $ from 'jquery'
-import { searchPolicies, searchOrderDetail, cancelOrder } from '../api/order.js'
+import { searchPolicies, searchOrderDetail, cancelOrder, searchPayRates } from '../api/order.js'
 
 export default {
   components: {
@@ -260,26 +238,14 @@ export default {
   data () {
     return {
       policies: [],
-
-      ticketAmount: 0,
       remark: '',
-      returnPoint: 0,
-      returnMoney: 0,
-      policyId: 0,
-      ticketWrongConfirmTimes: 3,
-      ticketCorrectConfirmTimes: 2
+      wxpayRate: 0,
+      alipayRate: 0
     }
   },
   computed: {
     info () { return this.$store.state.orderDetail },
     orderId () { return this.$store.state.orderId },
-    psgCount () {
-      if (this.$store.state.orderDetail == null) {
-        return 0
-      } else {
-        return this.$store.state.orderDetail.passengers.length
-      }
-    },
     costSaving () {
       return this.info.totalPrice - this.info.ticketAmount - this.info.serviceFee
     }
@@ -296,9 +262,9 @@ export default {
       if (this.info !== null && (this.info.status === 1)) {
         if (this.info.policyId === -1) {
           // search tmc policy
-          this.searchPolicies()
+          // this.searchPolicies()
 
-          this.ticketAmount = this.info.totalPrice
+          // this.ticketAmount = this.info.totalPrice
         }
       } else if (this.orderId > 0) {
         this.refreshOrderDetail(this.orderId)
@@ -317,12 +283,6 @@ export default {
     },
     hideLoading: function () {
       this.$store.commit('showLoading', { 'loading': false })
-    },
-    calc: function () {
-      var price = this.info.flights[0].price
-      var psgCount = this.psgCount
-
-      this.ticketAmount = Math.round((price * (100 - this.returnPoint) / 100 - this.returnMoney + 50) * psgCount)
     },
     searchPolicies: function () {
       var self = this
@@ -358,11 +318,11 @@ export default {
         () => self.hideLoading()
       )
     },
-    selectPolicy: function (info) {
-      this.returnPoint = info.returnPoint
-      this.returnMoney = info.returnMoney
-      this.policyId = info.id
-      this.calc()
+    selectPolicy: function (info0) {
+      this.$store.commit('selectPolicy', { 'policyId': info0.id,
+        'returnPoint': info0.returnPoint,
+        'returnMoney': info0.returnMoney }
+      )
       this.showErrMsg('选择成功', 'success')
     },
     showStatusDesc: function (status) {
@@ -390,23 +350,25 @@ export default {
         id = this.orderId
       }
 
-      var self = this
-
-      self.showLoading('订单查询中...')
+      this.showLoading('订单查询中...')
 
       var params = { 'id': id }
 
       searchOrderDetail(params,
         (jsonResult) => {
           if (jsonResult !== null && jsonResult.id === id) {
-            self.$store.commit('setOrderDetail', jsonResult)
-            self.searchPolicies()
+            this.$store.commit('setOrderDetail', jsonResult)
 
-            self.ticketAmount = self.info.totalPrice
+            if (jsonResult.status === 1024) {
+              this.searchPolicies()
+            } else if (jsonResult.status === 1) {
+              // 查找支付费率
+              this.searchPayRate()
+            }
           }
         },
         (status, statusText) => { this.showErrMsg(status + ', ' + statusText, 'danger') },
-        () => self.hideLoading()
+        () => this.hideLoading()
       )
     },
     cancelTmcOrder: function (id) {
@@ -432,24 +394,25 @@ export default {
     },
     commitTmcOrder: function (id) {
       // 买家
-      var url = '/Flight/orders/commitTmcOrder.do'
-      var postData = { id: id }
-      var successHandler = this.refreshOrderDetail
+      if (this.info.policyId > 0) {
+        // 提交大客户政策订单开票
+        const url = '/Flight/orders/commitTmcPolicyOrder.do'
+        const postData = {
+          'id': id,
+          'policyId': this.info.policyId,
+          'ticketAmount': this.info.ticketAmount,
+          'remark': this.remark
+        }
+        const successHandler = this.refreshOrderDetail
 
-      this.executeOrderOp(url, postData, successHandler)
-    },
-    commitTmcPolicyOrder: function (id) {
-      // 提交大客户政策订单开票
-      var url = '/Flight/orders/commitTmcPolicyOrder.do'
-      var postData = {
-        'id': id,
-        'policyId': this.policyId,
-        'ticketAmount': this.ticketAmount,
-        'remark': this.remark
+        this.executeOrderOp(url, postData, successHandler)
+      } else {
+        const url = '/Flight/orders/commitTmcOrder.do'
+        const postData = { id: id }
+        const successHandler = this.refreshOrderDetail
+
+        this.executeOrderOp(url, postData, successHandler)
       }
-      var successHandler = this.refreshOrderDetail
-
-      this.executeOrderOp(url, postData, successHandler)
     },
     payForTmcOrder: function (id) {
       // 买家：支付订单
@@ -522,7 +485,7 @@ export default {
             self.showErrMsg('操作成功', 'success')
             opResult = true
           } else {
-            self.showErrMsg(jsonResult.errmsg)
+            self.showErrMsg(jsonResult.errmsg, 'danger')
           }
         },
         complete: function () {
@@ -534,30 +497,36 @@ export default {
       })
     },
     weixinPay1: function (orderId) {
-      // alert('请咨询商家是否收取支付手续费!!!')
-      this.createPayOrder(orderId)
+      this.createPayOrder(orderId, 0)
     },
-    createPayOrder: function (orderId) {
+    aliPay1: function (orderId) {
+      this.createPayOrder(orderId, 1)
+    },
+    createPayOrder: function (orderId, payType) {
       var self = this
 
-      this.loading = true
-      this.loadingText = '支付准备中...'
+      this.showLoading('支付准备中...')
 
       // get weixin appid
       $.ajax({
         type: 'post',
-        url: '/Flight/pay/createOrderPayOrder/' + orderId,
+        url: '/Flight/pay/createOrderPayOrder/' + orderId + '/' + payType,
         dataType: 'json',
         success: function (jsonResult) {
           if (jsonResult.status === 'OK') {
-            var appid = jsonResult.attach
-            var payOrderId = jsonResult.desc
+            if (payType === 0) {
+              var appid = jsonResult.attach
+              var payOrderId = jsonResult.desc
 
-            var redirectUrl = DOMAIN_URL + '/wxp/wxp.html'
-            var url0 = escape(redirectUrl)
+              var redirectUrl = DOMAIN_URL + '/wxp/wxp.html'
+              var url0 = escape(redirectUrl)
 
-            var url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + appid + '&redirect_uri=' + url0 + '&response_type=code&scope=snsapi_base&state=' + payOrderId + '#wechat_redirect'
-            window.location.href = url
+              const url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + appid + '&redirect_uri=' + url0 + '&response_type=code&scope=snsapi_base&state=' + payOrderId + '#wechat_redirect'
+              window.location.href = url
+            } else if (payType === 1) {
+              const url = jsonResult.attach
+              window.location.href = url
+            }
           }
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -566,7 +535,7 @@ export default {
           }
         },
         complete: function () {
-          self.loading = false
+          self.hideLoading()
         }
       })
     },
@@ -579,6 +548,13 @@ export default {
       // 申请改期
       this.$store.commit('setChangeInfo', { 'ticketNo': ticketNo, 'psgName': psgName, 'orderId': orderId })
       this.$router.push('/change/apply')
+    },
+    searchPayRate: function () {
+      searchPayRates((jsonResult) => {
+        // console.log(jsonResult)
+        this.wxpayRate = jsonResult.wxpayRate
+        this.alipayRate = jsonResult.alipayRate
+      })
     }
   },
   beforeRouteEnter (to, from, next) {

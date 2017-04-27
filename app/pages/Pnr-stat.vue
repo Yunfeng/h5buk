@@ -13,10 +13,10 @@
               <input class="form-control" type="text" placeholder="用户名" v-model="etermUsername">
           </div>
           <div class="form-group">
-              <input class="form-control" id="beginDate" type="text" placeholder="开始日期" v-model="beginDate">
+            <my-date-picker :id="'beginDate'" :class="'form-control'" :placeholder="'开始日期'" v-model="beginDate"></my-date-picker>
           </div>
           <div class="form-group">
-              <input class="form-control" id="endDate" type="text" placeholder="截止日期" v-model="endDate">
+            <my-date-picker :id="'endDate'" :class="'form-control'" :placeholder="'截止日期'" v-model="endDate"></my-date-picker>  
           </div>
         </div>
       </div>      
@@ -55,10 +55,13 @@
 
 <script>
 import { statPnr } from '../api/pnr.js'
-import $ from 'jquery'
+import MyDatePicker from '../components/my-datepicker.vue'
 
 export default {
   name: 'PnrStat',
+  components: {
+    MyDatePicker
+  },
   data () {
     return {
       filterShowing: false,
@@ -79,39 +82,6 @@ export default {
     // acityName() {return this.$store.state.searchParams.acityName},
   },
   mounted: function () {
-    var self = this
-    $('#beginDate').datepicker({
-      dateFormat: 'yy-mm-dd',
-      autoSize: true,
-      showButtonPanel: false,
-      showOtherMonths: false,
-      selectOtherMonths: false,
-      numberOfMonths: 1,
-      showOptions: { direction: 'up' },
-      onSelect: function (dateText, inst) {
-        self.beginDate = dateText
-      },
-      beforeShow: function (input) {
-        $(input).css({ position: 'relative', zIndex: '1000' })
-      }
-    })
-
-    $('#endDate').datepicker({
-      dateFormat: 'yy-mm-dd',
-      autoSize: true,
-      showButtonPanel: false,
-      showOtherMonths: false,
-      selectOtherMonths: false,
-      numberOfMonths: 1,
-      showOptions: { direction: 'up' },
-      onSelect: function (dateText, inst) {
-        self.endDate = dateText
-      },
-      beforeShow: function (input) {
-        $(input).css({ position: 'relative', zIndex: '1000' })
-      }
-    })
-
     this.search()
   },
   methods: {
@@ -127,8 +97,6 @@ export default {
     search: function () {
       var self = this
       self.showLoading()
-
-      console.log(this.etermUsername + ',' + this.beginDate + ',' + this.endDate)
 
       var params = {
         'etermUsername': self.etermUsername,

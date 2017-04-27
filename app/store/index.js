@@ -221,6 +221,17 @@ export default new Vuex.Store({
     },
     setChangeOrderInfo(state, payload) {
       state.changeOrderInfo = payload
+    },
+    selectPolicy(state, p) {
+      // console.log(p)
+      state.orderDetail.policyId = p.policyId
+      state.orderDetail.policyReturnPoint = p.returnPoint
+      state.orderDetail.returnMoney = p.returnMoney
+
+      var price = state.orderDetail.flights[0].price
+      var psgCount = state.orderDetail.psgCount
+
+      state.orderDetail.ticketAmount = Math.round((price * (100 - p.returnPoint) / 100 - p.returnMoney + 50) * psgCount)
     }
   },
   actions: {
