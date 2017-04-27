@@ -1,53 +1,34 @@
 <template>  
-	<div id="tmc-buy" class="container-fluid">
-    <div class="weui-toptips weui-toptips_warn" style="display:block" v-show="errAlert">{{errMsg}}</div>
-
-    <div class="row bg-info">
-      <div class="col-1">
-          <span @click="back()"><i class="fa fa-angle-left" aria-hidden="true"></i></span>
-      </div>         
-      <div class="col-10 text-center">
-          采购大客户政策
-      </div>         
-      <div class="col-1">
-          
-      </div>         
+	<div id="tmc-buy" class="row">
+    <div class="col-12 bg-info text-white text-center fa-2 sticky-top">
+      <span @click="back()" class="float-left">
+        <i class="fa fa-angle-left fa-2" aria-hidden="true"></i>
+        <small>返回</small>
+      </span>
+      采购特殊政策
     </div> 
+    
 
-    <div class="row">
-      <div class="card col-12">
-        <textarea class="form-control" placeholder="请粘帖编码内容于此" rows="12" v-model="pnrDetail"></textarea>
-        <p class="form-text text-muted">
-          若无编码内容，请从航班查询开始
-        </p>
-              <div class="weui-btn-area">
-            <button type="button" class="weui-btn weui-btn_primary" @click.stop="nextStep()">下一步</button>
-            <button type="button" class="weui-btn weui-btn_detail" @click.stop="emptyPnrDetail()">清空</button>
-      </div>
-
-      </div>
-    </div> 
-
-    <div id="loadingToast" v-show="loading">
-      <div class="weui-mask_transparent"></div>
-      <div class="weui-toast">
-        <i class="weui-loading weui-icon_toast"></i>
-        <p class="weui-toast__content">{{loadingText}}</p>
+    <div class="card col-12">
+      <textarea class="form-control" placeholder="请粘帖编码内容于此" rows="12" v-model="pnrDetail"></textarea>
+      <p class="form-text text-muted">
+        若无编码内容，请从航班查询开始
+      </p>
+      <div class="card-footer">
+          <button type="button" class="btn btn-block btn-success" @click.stop="nextStep()">下一步</button>
+          <button type="button" class="btn btn-block btn-secondary" @click.stop="emptyPnrDetail()">清空</button>
       </div>
     </div>
+
   </div>
 </template>
 
 <script>
-import $ from 'jquery'
+import { processPnrDetail } from '../api/flight.js'
 
 export default {
   data () {
     return {
-      errAlert: false,
-      errMsg: '',
-      loading: false,
-      loadingText: '数据加载中',
       idTypes: [
         { idType: 1, idName: '身份证' },
         { idType: 2, idName: '护照' }
@@ -66,10 +47,14 @@ export default {
     back: function () {
       this.$router.go(-1)
     },
-    showErrMsg: function (msg) {
-      this.errMsg = msg
-      this.errAlert = true
-      setTimeout(() => { this.errAlert = false }, 2500)
+    showErrMsg: function (msg, msgType) {
+      this.$store.dispatch('showAlertMsg', { 'errMsg': msg, 'errMsgType': msgType })
+    },
+    showLoading: function (loadingText) {
+      this.$store.commit('showLoading', { 'loading': true, 'loadingText': loadingText })
+    },
+    hideLoading: function () {
+      this.$store.commit('showLoading', { 'loading': false })
     },
     emptyPnrDetail: function () {
       this.pnrDetail = ''
@@ -79,29 +64,15 @@ export default {
     },
     doJob0: function () {
       if (this.pnrDetail !== null && this.pnrDetail.length > 10) {
-        var self = this
-        self.loading = true
-        self.loadingText = '编码内容处理中'
+        this.showLoading('编码内容处理中')
 
-        $.ajax({
-          type: 'post',
-          url: '/Flight/pnr/processPnrDetail',
-          data: { pnrDetail: this.pnrDetail },
-          dataType: 'json',
-          success: function (jsonResult) {
-            if (jsonResult !== null) {
-              self.prepareOrder(jsonResult)
-            }
-          },
-          error: function (XMLHttpRequest, textStatus, errorThrown) {
-            if (XMLHttpRequest.status === 403) {
-              self.$store.commit('jumpToLogin', self.$router)
-            }
-          },
-          complete: function (XMLHttpRequest, textStatus) {
-            self.loading = false
-          }
-        })
+        var params = { pnrDetail: this.pnrDetail }
+
+        processPnrDetail(params,
+          (jsonResult) => { this.prepareOrder(jsonResult) },
+          null,
+          () => { this.hideLoading() }
+        )
       } else {
         this.showErrMsg('请粘帖编码内容')
       }
@@ -135,7 +106,9 @@ export default {
         fltInfo.dport = flt.departureAirport
         fltInfo.aport = flt.arrivalAirport
         fltInfo.dtime = flt.departureTime
+        fltInfo.showDtime = flt.departureTime
         fltInfo.atime = flt.arrivalTime
+        fltInfo.showAtime = flt.arrivalTime
         fltInfo.price = flt.price
         fltInfo.dportName = flt.departureAirport
         fltInfo.aportName = flt.arrivalAirport
