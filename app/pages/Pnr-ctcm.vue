@@ -13,15 +13,15 @@
       </div>         
 
       <div class="card col-12" style="padding: 0">
-        <ul class="list-inline bg-success text-white">
+        <ul class="list-inline bg-info text-white">
           <li class="list-inline-item">快速过滤</li>
-          <li class="list-inline-item"><button @click.stop='setCarrier("CA")' class='text-white'>CA</button></li>
-          <li class="list-inline-item"><button @click.stop='setCarrier("CZ")' class='text-white'>CZ</button></li>
-          <li class="list-inline-item"><button @click.stop='setCarrier("MU")' class='text-white'>MU</button></li>
-          <li class="list-inline-item"><button @click.stop='setCarrier("FM")' class='text-white'>FM</button></li>
-          <li class="list-inline-item"><button @click.stop='setCarrier("ZH")' class='text-white'>ZH</button></li>
-          <li class="list-inline-item"><button @click.stop='setCarrier("MF")' class='text-white'>MF</button></li>
-          <li class="list-inline-item"><button @click.stop='setCarrier("HU")' class='text-white'>HU</button></li>
+          <li class="list-inline-item"><button @click.stop='setCarrier("CA")' class='btn-primary text-white'>CA</button></li>
+          <li class="list-inline-item"><button @click.stop='setCarrier("CZ")' class='btn-primary text-white'>CZ</button></li>
+          <li class="list-inline-item"><button @click.stop='setCarrier("MU")' class='btn-primary text-white'>MU</button></li>
+          <li class="list-inline-item"><button @click.stop='setCarrier("FM")' class='btn-primary text-white'>FM</button></li>
+          <li class="list-inline-item"><button @click.stop='setCarrier("ZH")' class='btn-primary text-white'>ZH</button></li>
+          <li class="list-inline-item"><button @click.stop='setCarrier("MF")' class='btn-primary text-white'>MF</button></li>
+          <li class="list-inline-item"><button @click.stop='setCarrier("HU")' class='btn-primary text-white'>HU</button></li>
         </ul>
         <table class="table table-striped table-condensive">
           <thead>

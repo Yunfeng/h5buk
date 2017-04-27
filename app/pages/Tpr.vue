@@ -13,7 +13,7 @@
         </div>         
       <div class="card col-12 hidden-md-down">
         <form class="form-inline">
-          <input class="form-control m-2" type="text" placeholder="日期格式：2017-12-31" v-model="sellDate">
+          <my-date-picker :id="'sellDate0'" :class="'form-control m-2'" :placeholder="'日期'" v-model="sellDate"></my-date-picker> 
           <input class="form-control m-2 col-2" type="text" placeholder="设备号" v-model="deviceId">
           <button type="button" class="btn btn-success mr-2" @click.stop="search()">确定</button>
           <button type="button" class="btn btn-info btn-sm" @click.stop="resetFilter()">重置</button>          
@@ -81,7 +81,7 @@
         <div class="card-block">
           <div class="card-title">查询条件</div>
           <div class="form-group">
-              <input class="form-control" type="text" placeholder="销售日期，格式：yyyy-MM-dd" v-model="sellDate">
+            <my-date-picker :id="'sellDate1'" :class="'form-control'" :placeholder="'日期'" v-model="sellDate"></my-date-picker> 
           </div>
           <div class="form-group">
               <input class="form-control" type="text" placeholder="设备号" v-model="deviceId">
@@ -94,12 +94,14 @@
 
 <script>
 import MyPagination from '../components/my-pagination.vue'
+import MyDatePicker from '../components/my-datepicker.vue'
 import { searchTpr } from '../api/pnr.js'
 
 export default {
   name: 'TprList',
   components: {
-    MyPagination
+    MyPagination,
+    MyDatePicker
   },
   data () {
     return {

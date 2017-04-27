@@ -1,6 +1,43 @@
 <template>  
   <div id="accordion" role="tablist" class="row" v-if="logined">
     <div class="card col-12 px-0">
+      <div class="card-header" role="tab" id="heading2">
+          <a data-toggle="collapse" href="#collapse2" aria-expanded="true" aria-controls="collapse2">
+              机票
+          </a>
+      </div>
+
+      <div id="collapse2" class="collapse" role="tabpanel" aria-labelledby="heading2" data-parent="#accordion">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item ml-3">
+            <router-link to="/search">
+              航班查询
+            </router-link>
+          </li>
+          <li class="list-group-item ml-3">
+            <router-link to="/tmc">
+              大客户政策
+            </router-link>
+          </li>
+          <li class="list-group-item ml-3">
+            <router-link to="/order">
+              买家订单
+            </router-link>
+          </li>
+          <li class="list-group-item ml-3">
+            <router-link to="/order/sale">
+              卖家订单
+            </router-link>
+          </li>
+          <li class="list-group-item ml-3">
+            <router-link to="/eterm">
+              ETERM
+            </router-link>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div class="card col-12 px-0">
       <div class="card-header" role="tab" id="headingOne">
           <a data-toggle="collapse" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
             PNR管理
@@ -53,43 +90,6 @@
       </div>
     </div>
 
-    <div class="card col-12 px-0">
-      <div class="card-header" role="tab" id="heading2">
-          <a data-toggle="collapse" href="#collapse2" aria-expanded="true" aria-controls="collapse2">
-              机票
-          </a>
-      </div>
-
-      <div id="collapse2" class="collapse" role="tabpanel" aria-labelledby="heading2" data-parent="#accordion">
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item ml-3">
-            <router-link to="/search">
-              航班查询
-            </router-link>
-          </li>
-          <li class="list-group-item ml-3">
-            <router-link to="/tmc">
-              大客户政策
-            </router-link>
-          </li>
-          <li class="list-group-item ml-3">
-            <router-link to="/order">
-              买家订单
-            </router-link>
-          </li>
-          <li class="list-group-item ml-3">
-            <router-link to="/order/sale">
-              卖家订单
-            </router-link>
-          </li>
-          <li class="list-group-item ml-3">
-            <router-link to="/eterm">
-              ETERM
-            </router-link>
-          </li>
-        </ul>
-      </div>
-    </div>
 
     <div class="card col-12 px-0">
       <div class="card-header" role="tab" id="heading3">

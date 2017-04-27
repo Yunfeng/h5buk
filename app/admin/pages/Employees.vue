@@ -1,6 +1,6 @@
 <template>  
 	<div id="tmc-list" class="row">
-    <div class="col-12 bg-info text-white text-center fa-2 fixed-top">
+    <div class="col-12 bg-info text-white text-center fa-2 sticky-top">
       <span @click="back()" class="float-left">
         <i class="fa fa-angle-left fa-2" aria-hidden="true"></i>
         <small>返回</small>

@@ -16,7 +16,7 @@
 
     <div class="row">
       <div class="card col-12">
-        <textarea class="form-control" placeholder="请粘帖编码内容于此" rows="6" v-model="pnrDetail"></textarea>
+        <textarea class="form-control" placeholder="请粘帖编码内容于此" rows="12" v-model="pnrDetail"></textarea>
         <p class="form-text text-muted">
           若无编码内容，请从航班查询开始
         </p>
