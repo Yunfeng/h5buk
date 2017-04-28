@@ -133,6 +133,11 @@
               员工管理
             </router-link>
           </li>
+          <li class="list-group-item ml-3">
+            <router-link to="/subscribers">
+              微信关注者
+            </router-link>
+          </li>
         </ul>
       </div>
     </div>

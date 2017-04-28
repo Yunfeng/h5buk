@@ -68,6 +68,7 @@ const MyPlay      = () => System.import('./pages/Media-play.vue')
 
 const MyCustomers      = () => System.import('./admin/pages/Customers.vue')
 const MyEmployees      = () => System.import('./admin/pages/Employees.vue')
+const MySubscribers    = () => System.import('./admin/pages/Subscribers.vue')
 
 const routes = [
   {path: '/',              component: MyNav},
@@ -126,6 +127,7 @@ const routes = [
 
   {path: '/customers',      component: MyCustomers},
   {path: '/employees',      component: MyEmployees},
+  {path: '/subscribers',      component: MySubscribers},
 ]
 
 let router = new Router({

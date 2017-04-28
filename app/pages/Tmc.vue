@@ -13,17 +13,15 @@
           <div class="weui-grid__icon">
               <i class="fa fa-info-circle fa-2" aria-hidden="true"></i>
           </div>
-          <p class="weui-grid__label">
+          <p class="weui-grid__label text-primary">
               特殊政策
           </p>
       </router-link>
-      <router-link to="/tmc/buy" class="weui-grid">
+      <router-link to="/tmc/buy" class="weui-grid bg-danger text-white">
           <div class="weui-grid__icon">
               <i class="fa fa-jpy fa-2" aria-hidden="true"></i>
           </div>
-          <p class="weui-grid__label">
-              采购
-          </p>
+          <p class="weui-grid__label text-white">采购</p>
       </router-link>
       <router-link to="/order" class="weui-grid">
           <div class="weui-grid__icon">
