@@ -228,7 +228,7 @@ import { DOMAIN_URL, convertLongToTimeDesc, showIdTypeDesc, showOrderStatusDesc 
 import MyButton from '../components/my-button.vue'
 import MyInput from '../components/my-input.vue'
 import $ from 'jquery'
-import { searchPolicies, searchOrderDetail, cancelOrder, searchPayRates } from '../api/order.js'
+import { searchPolicies, searchOrderDetail, cancelOrder, searchPayRates, processOrder } from '../api/order.js'
 
 export default {
   components: {
@@ -256,17 +256,9 @@ export default {
 
     var id = this.$route.params.id
     if (id !== undefined) {
-      // console.log(id)
       this.refreshOrderDetail(parseInt(id))
     } else {
-      if (this.info !== null && (this.info.status === 1)) {
-        if (this.info.policyId === -1) {
-          // search tmc policy
-          // this.searchPolicies()
-
-          // this.ticketAmount = this.info.totalPrice
-        }
-      } else if (this.orderId > 0) {
+      if (this.orderId > 0) {
         this.refreshOrderDetail(this.orderId)
       }
     }
@@ -468,33 +460,27 @@ export default {
       this.executeOrderOp(url, postData, successHandler)
     },
     executeOrderOp: function (url, postData, successHandler) {
-      var self = this
+      this.showLoading('处理中......')
 
-      self.loading = true
-      self.loadingText = '处理中......'
+      let opResult = false
 
-      var opResult = false
-
-      $.ajax({
-        type: 'post',
-        url: url,
-        data: postData,
-        dataType: 'json',
-        success: function (jsonResult) {
+      processOrder(url, postData,
+        (jsonResult) => {
           if (jsonResult.status === 'OK') {
-            self.showErrMsg('操作成功', 'success')
+            this.showErrMsg('操作成功', 'success')
             opResult = true
           } else {
-            self.showErrMsg(jsonResult.errmsg, 'danger')
+            this.showErrMsg(jsonResult.errmsg, 'danger')
           }
         },
-        complete: function () {
-          self.loading = false
+        null,
+        () => {
+          this.hideLoading()
           if (opResult) {
             successHandler()
           }
         }
-      })
+      )
     },
     weixinPay1: function (orderId) {
       this.createPayOrder(orderId, 0)

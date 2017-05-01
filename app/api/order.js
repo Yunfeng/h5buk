@@ -1,3 +1,20 @@
+export function processOrder(url, params, done, fail, always) {
+  $.ajax({
+    type: 'post',
+    url: url,
+    data: params,
+    dataType: 'json'
+  }).done(function (jsonResult) {
+    done(jsonResult)
+  }).fail(function (jqXHR, textStatus, errorThrown) {
+    if (fail !== null) {
+      fail(jqXHR.status, jqXHR.statusText)  
+    }    
+  }).always(function () {
+    always()
+  })
+}
+
 export function searchOrders(params, done, fail, always) {
   $.ajax({
     type: 'post',
