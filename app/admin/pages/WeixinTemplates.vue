@@ -13,23 +13,17 @@
         <thead>
             <tr>
                 <th></th>
-                <th>nickname</th>
-                <th>province</th>
-                <th>city</th>
-                <th></th>
+                <th>title</th>
+                <th>id</th>
                 <th></th>
             </tr>                        
         </thead>
         <tbody>
             <tr v-for="(info, index) in dataList">
                 <td>{{index+1}}</td>
-                <td>{{info.nickname}}</td>
-                <td>{{info.province}}</td>
-                <td>{{info.city}}</td>
-                <td>{{formatDateTime(info.subscribe_time)}}</td>
-                <td>
-                  <img class="d-flex mr-3" :src="info.headimgurl" style="width: 2rem; height: 2rem">
-                </td>
+                <td>{{info.title}}</td>
+                <td>{{info.template_id}}</td>
+                <td>{{info.content}}</td>
             </tr>
         </tbody>
       </table>
@@ -43,7 +37,7 @@
 
 <script>
 import MyPagination from '../../components/my-pagination.vue'
-import { searchSubscribers } from '../../api/admin.js'
+import { searchTemplates } from '../../api/admin.js'
 import { convertLongToTimeDesc } from '../../common/common.js'
 
 export default {
@@ -84,10 +78,11 @@ export default {
         'sc.pageSize': this.sc.pageSize
       }
 
-      searchSubscribers(params,
+      searchTemplates(params,
         (jsonResult) => {
-          this.dataList = jsonResult.dataList
-          this.sc = jsonResult.page
+          this.dataList = jsonResult
+          // this.sc = jsonResult.page
+          // console.log(jsonResult)
         },
         null,
         () => this.hideLoading()

@@ -3,7 +3,7 @@
     <div class="card col-12 px-0">
       <div class="card-header" role="tab" id="heading2">
           <a data-toggle="collapse" href="#collapse2" aria-expanded="true" aria-controls="collapse2">
-              机票
+              机票 <i class="fa fa-angle-right" aria-hidden="true"></i>
           </a>
       </div>
 
@@ -15,8 +15,13 @@
             </router-link>
           </li>
           <li class="list-group-item ml-3">
-            <router-link to="/tmc">
-              大客户政策
+            <router-link to="/tmc/buy">
+              编码导入
+            </router-link>
+          </li>
+          <li class="list-group-item ml-3">
+            <router-link to="/tmc/list">
+              特殊政策 <small>票面低</small>
             </router-link>
           </li>
           <li class="list-group-item ml-3">
@@ -40,7 +45,7 @@
     <div class="card col-12 px-0">
       <div class="card-header" role="tab" id="headingOne">
           <a data-toggle="collapse" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-            PNR管理
+            PNR管理 <i class="fa fa-angle-right" aria-hidden="true"></i>
           </a>
       </div>
 
@@ -94,7 +99,7 @@
     <div class="card col-12 px-0">
       <div class="card-header" role="tab" id="heading3">
           <a data-toggle="collapse" href="#collapse3" aria-expanded="true" aria-controls="collapse3">
-              其它
+              其它 <i class="fa fa-angle-right" aria-hidden="true"></i>
           </a>
       </div>
 
@@ -117,7 +122,7 @@
     <div class="card col-12 px-0">
       <div class="card-header" role="tab" id="heading4">
           <a data-toggle="collapse" href="#collapse4" aria-expanded="true" aria-controls="collapse4">
-              系统管理
+              系统管理 <i class="fa fa-angle-right" aria-hidden="true"></i>
           </a>
       </div>
 
@@ -136,6 +141,11 @@
           <li class="list-group-item ml-3">
             <router-link to="/subscribers">
               微信关注者
+            </router-link>
+          </li>
+          <li class="list-group-item ml-3">
+            <router-link to="/templates">
+              微信消息模板
             </router-link>
           </li>
         </ul>

@@ -22,6 +22,7 @@ const MyBookingForm  = resolve => require(['./pages/FlightBookingForm.vue'], res
 const MyOrder        = resolve => require(['./pages/Order.vue'], resolve)
 const MyOrderSale    = resolve => require(['./pages/Order-sale.vue'], resolve)
 const MyOrderDetail  = resolve => require(['./pages/Order-detail.vue'], resolve)
+const MyOrderBuyer   = resolve => require(['./pages/Order-buyer.vue'], resolve)
 const MyOrderTicket  = resolve => require(['./pages/Order-ticketNo.vue'], resolve)
 const MyOrderDeny    = resolve => require(['./pages/Order-deny.vue'], resolve)
 const MyOrderRecommit= resolve => require(['./pages/Order-recommit.vue'], resolve)
@@ -79,6 +80,7 @@ const routes = [
   {path: '/order/sale',    component: MyOrderSale},
   {path: '/order/detail',  component: MyOrderDetail},
   {path: '/order/detail/:id',  component: MyOrderDetail},
+  {path: '/order/:id/buyer',  component: MyOrderBuyer},
   {path: '/order/ticket',  component: MyOrderTicket},
   {path: '/order/deny',    component: MyOrderDeny},
   {path: '/order/recommit',component: MyOrderRecommit},

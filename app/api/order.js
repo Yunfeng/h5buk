@@ -188,3 +188,20 @@ export function searchPayRates(done) {
     // setTimeout(() => { always() }, 5000)
   })
 }
+
+export function specifyBuyerForOrder(id, params, done, fail, always) {
+  $.ajax({
+    type: 'post',
+    url: '/Flight/orders/' + id +'/buyer',
+    dataType: 'json',
+    data: params
+  }).done(function (jsonResult) {
+    done(jsonResult)
+  }).fail(function (jqXHR, textStatus, errorThrown) {
+    // fail(jqXHR.status, jqXHR.statusText)
+  }).always(function () {
+    if (always) always()
+    // always()
+    // setTimeout(() => { always() }, 5000)
+  })
+}

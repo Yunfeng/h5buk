@@ -10,9 +10,11 @@
 
     <div class="card col-12" v-for="info in orders" @click="showDetail(info)" :class="changeBgByStatus(info.status)">
       <div class="card-block"  style="padding: 0;">          
-        <p class="card-text"><small>{{info.shortDesc}}</small></p>
+        <span class="small">订单日期：{{info.createDate}}</span>
+        <p class="card-text">{{info.shortDesc}}</p>
+        
+        <span class="small">订单状态：{{showStatusDesc(info.status)}}</span>
         <span class="float-right">总金额：{{info.totalPrice}}</span>
-        <span>订单状态：{{showStatusDesc(info.status)}}</span>
       </div>
     </div>
 

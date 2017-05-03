@@ -17,10 +17,10 @@
     </div>
 
     <div class="row mb-5">
-      <div class="col-3 col-md-2">
+      <div class="hidden-md-down col-md-2">
         <my-sidebar></my-sidebar>
       </div>
-      <main class="col-9 col-md-10">
+      <main class="col-12 col-md-10">
         <transition name="fade">
           <keep-alive>
             <router-view v-if="$route.meta.keepAlive"></router-view>
