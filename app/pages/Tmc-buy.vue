@@ -110,8 +110,8 @@ export default {
         fltInfo.atime = flt.arrivalTime
         fltInfo.showAtime = flt.arrivalTime
         fltInfo.price = flt.price
-        fltInfo.dportName = flt.departureAirport
-        fltInfo.aportName = flt.arrivalAirport
+        fltInfo.dportName = flt.dportName
+        fltInfo.aportName = flt.aportName
         fltInfo.returnPoint = 0
 
         this.$store.commit('addFlight', fltInfo)
