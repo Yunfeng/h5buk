@@ -66,6 +66,9 @@
           <router-link to="/order" class="card-link">
             我的订单
           </router-link>
+          <button class="card-link btn btn-sm btn-success float-right" @click.stop="checkIn()">
+            签到
+          </button>
         </div>
         <div class="card-block pt-0">
           <router-link to="/home" class="card-link text-success">
@@ -88,6 +91,7 @@ import MyButton from '../components/my-button.vue'
 import MyInput from '../components/my-input.vue'
 import MyVcodeInput from '../components/my-vcode.vue'
 import $ from 'jquery'
+import { checkIn } from '../api/user.js'
 
 export default {
   components: {
@@ -276,6 +280,11 @@ export default {
     refreshKaptcha: function () {
       $('#kaptchaImage').attr('src',
         '/Flight/captcha/getCaptchaCode.do?' + Math.floor(Math.random() * 100)).fadeIn()
+    },
+    checkIn: function () {
+      checkIn((jsonResult) => {
+        this.showErrMsg(jsonResult.desc)
+      })
     }
   },
   beforeRouteEnter (to, from, next) {
