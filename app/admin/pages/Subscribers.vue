@@ -88,6 +88,7 @@ export default {
         (jsonResult) => {
           this.dataList = jsonResult.dataList
           this.sc = jsonResult.page
+          console.log(this.sc)
         },
         null,
         () => this.hideLoading()
