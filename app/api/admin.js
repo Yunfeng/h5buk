@@ -29,3 +29,46 @@ export function searchTemplates(params, done, fail, always) {
     always()
   })
 }
+
+export function searchCustomMenus(done, fail, always) {
+  $.ajax({
+    type: 'post',
+    url: '/Flight/weixin/menus',
+    dataType: 'json'
+  }).done(function (jsonResult) {
+    done(jsonResult)
+  }).fail(function (jqXHR, textStatus, errorThrown) {
+    // fail(jqXHR.status, jqXHR.statusText)
+  }).always(function () {
+    always()
+  })
+}
+
+export function deleteCustomMenu(id, done, fail, always) {
+  $.ajax({
+    type: 'post',
+    url: '/Flight/weixin/menu/' + id + '/delete',
+    dataType: 'json'
+  }).done(function (jsonResult) {
+    done(jsonResult)
+  }).fail(function (jqXHR, textStatus, errorThrown) {
+    // fail(jqXHR.status, jqXHR.statusText)
+  }).always(function () {
+    always()
+  })
+}
+
+export function createCustomMenu(params, done, fail, always) {
+  $.ajax({
+    type: 'post',
+    url: '/Flight/weixin/menu/create',
+    dataType: 'json',
+    data: params
+  }).done(function (jsonResult) {
+    done(jsonResult)
+  }).fail(function (jqXHR, textStatus, errorThrown) {
+    // fail(jqXHR.status, jqXHR.statusText)
+  }).always(function () {
+    always()
+  })
+}

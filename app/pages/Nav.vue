@@ -30,7 +30,7 @@ export default {
       }
       this.$router.replace(path)
     } else {
-      this.$router.push('/home')
+      this.$router.push('/login')
     }
   }
 }

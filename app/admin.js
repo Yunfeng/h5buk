@@ -71,6 +71,7 @@ const MyCustomers      = () => System.import('./admin/pages/Customers.vue')
 const MyEmployees      = () => System.import('./admin/pages/Employees.vue')
 const MySubscribers    = () => System.import('./admin/pages/Subscribers.vue')
 const MyWxTemplates    = () => System.import('./admin/pages/WeixinTemplates.vue')
+const MyWxCustomMenus  = () => System.import('./admin/pages/WeixinCustomMenus.vue')
 
 const routes = [
   {path: '/',              component: MyNav},
@@ -116,22 +117,23 @@ const routes = [
   {path: '/pnr/mobile',    component: MyPnrMobile},
   {path: '/eterm',         component: MyEterm},
   {path: '/recharge',      component: MyRecharge},
-  {path: '/payresult/:id',      component: MyPayResult},
-  {path: '/tpr',      component: MyTpr},
-  {path: '/ctrp',      component: MyCtrp},
-  {path: '/ctrp/policies',      component: MyCtrpPolicies},
-  {path: '/ctrp/policy/:id',      component: MyCtrpPolicyDetail},
-  {path: '/ctrp/price',      component: MyCtrpPrice},
+  {path: '/payresult/:id',  component: MyPayResult},
+  {path: '/tpr',            component: MyTpr},
+  {path: '/ctrp',           component: MyCtrp},
+  {path: '/ctrp/policies',  component: MyCtrpPolicies},
+  {path: '/ctrp/policy/:id',component: MyCtrpPolicyDetail},
+  {path: '/ctrp/price',     component: MyCtrpPrice},
   {path: '/ctrp/sync',      component: MyCtrpSync},
 
-  {path: '/upload',      component: MyUpload},
+  {path: '/upload',         component: MyUpload},
   {path: '/materials',      component: MyMaterials},
-  {path: '/play/:id',      component: MyPlay},
+  {path: '/play/:id',       component: MyPlay},
 
   {path: '/customers',      component: MyCustomers},
   {path: '/employees',      component: MyEmployees},
-  {path: '/subscribers',      component: MySubscribers},
+  {path: '/subscribers',    component: MySubscribers},
   {path: '/templates',      component: MyWxTemplates},
+  {path: '/weixin/menus',   component: MyWxCustomMenus},
 ]
 
 let router = new Router({

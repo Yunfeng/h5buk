@@ -40,8 +40,5 @@ export function checkIn(done) {
   }).fail(function (jqXHR, textStatus, errorThrown) {
     // fail(jqXHR.status, jqXHR.statusText)
   }).always(function () {
-    if (always !== null) {
-      always()  
-    }
   })
 }

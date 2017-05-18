@@ -22,15 +22,6 @@
         <div v-html="'<pre>' + cmdResult + '</pre>'">
         </div>
     </div>  
-  
-
-    <div id="loadingToast" v-show="loading">
-      <div class="weui-mask_transparent"></div>
-      <div class="weui-toast">
-        <i class="weui-loading weui-icon_toast"></i>
-        <p class="weui-toast__content">{{loadingText}}</p>
-      </div>
-    </div>
 
   </div>
 </template>
@@ -41,13 +32,8 @@ import $ from 'jquery'
 export default {
   data () {
     return {
-      errAlert: false,
-      errMsg: '',
-      loading: false,
-      loadingText: '数据加载中',
-
       hostcmd: '',
-      cmdResult: ''
+      cmdResult: '该功能需要在微信公众号里面使用<br />目前开放了av,fd,nfd指令<br />执行指令要扣除积分<br />您可以签到来赚取积分'
     }
   },
   computed: {
@@ -60,10 +46,14 @@ export default {
     back: function () {
       this.$router.go(-1)
     },
-    showErrMsg: function (msg) {
-      this.errMsg = msg
-      this.errAlert = true
-      setTimeout(() => { this.errAlert = false }, 1500)
+    showErrMsg: function (msg, msgType) {
+      this.$store.dispatch('showAlertMsg', { 'errMsg': msg, 'errMsgType': msgType })
+    },
+    showLoading: function (loadingText) {
+      this.$store.commit('showLoading', { 'loading': true, 'loadingText': loadingText })
+    },
+    hideLoading: function () {
+      this.$store.commit('showLoading', { 'loading': false })
     },
     execCmd: function () {
       var self = this
@@ -71,12 +61,11 @@ export default {
       self.cmdResult = ''
 
       if (self.hostcmd.length < 6) {
-        self.showErrMsg('航班查询指令的长度不够')
+        self.showErrMsg('指令的长度不能少于6')
         return
       }
 
-      self.loading = true
-      self.loadingText = '数据加载中'
+      this.showLoading('执行中...')
 
       $.ajax({
         type: 'post',
@@ -89,7 +78,7 @@ export default {
           if (jsonResult.status === 'OK') {
             self.cmdResult = jsonResult.desc
           } else {
-            self.showErrMsg(jsonResult.errmsg)
+            self.showErrMsg(jsonResult.errmsg, 'danger')
           }
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -98,7 +87,7 @@ export default {
           }
         },
         complete: function (XMLHttpRequest, textStatus) {
-          self.loading = false
+          self.hideLoading()
         }
       })
     }

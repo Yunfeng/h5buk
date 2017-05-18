@@ -7,7 +7,7 @@
           </a>
       </div>
 
-      <div id="collapse2" class="collapse" role="tabpanel" aria-labelledby="heading2" data-parent="#accordion">
+      <div id="collapse2" class="" role="tabpanel" aria-labelledby="heading2" data-parent="#accordion">
         <ul class="list-group list-group-flush">
           <li class="list-group-item ml-3">
             <router-link to="/search">
@@ -138,19 +138,38 @@
               员工管理
             </router-link>
           </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="card col-12 px-0">
+      <div class="card-header" role="tab" id="heading5">
+          <a data-toggle="collapse" href="#collapse5" aria-expanded="true" aria-controls="collapse5">
+              公众号管理 <i class="fa fa-angle-right" aria-hidden="true"></i>
+          </a>
+      </div>
+
+      <div id="collapse5" class="collapse" role="tabpanel" aria-labelledby="heading5" data-parent="#accordion">
+        <ul class="list-group list-group-flush">
           <li class="list-group-item ml-3">
             <router-link to="/subscribers">
-              微信关注者
+              关注者
             </router-link>
           </li>
           <li class="list-group-item ml-3">
             <router-link to="/templates">
-              微信消息模板
+              消息模板
+            </router-link>
+          </li>
+          <li class="list-group-item ml-3">
+            <router-link to="/weixin/menus">
+              自定义菜单
             </router-link>
           </li>
         </ul>
       </div>
     </div>
+
   </div>
 </template>
 
