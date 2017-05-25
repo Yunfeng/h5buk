@@ -10,33 +10,38 @@
       <div id="collapse2" class="" role="tabpanel" aria-labelledby="heading2" data-parent="#accordion">
         <ul class="list-group list-group-flush">
           <li class="list-group-item ml-3">
+            <router-link to="/tmc/buy" class="text-danger">
+              导入编码
+            </router-link>
+          </li>
+          <li class="list-group-item ml-3">
+            <router-link to="/tmc/list" class="text-primary">
+              机票政策
+            </router-link>
+          </li>
+          <li class="list-group-item ml-3">
+            <router-link to="/order" class="text-warning">
+              我的订单
+            </router-link>
+          </li>
+          <li class="list-group-item ml-3">
+            <router-link to="/refunds" class="text-warning">
+              我的退票
+            </router-link>
+          </li>
+          <li class="list-group-item ml-3">
+            <router-link to="/changes" class="text-warning">
+              我的改期
+            </router-link>
+          </li>
+          <li class="list-group-item ml-3">
             <router-link to="/search">
               航班查询
             </router-link>
           </li>
           <li class="list-group-item ml-3">
-            <router-link to="/tmc/buy">
-              编码导入
-            </router-link>
-          </li>
-          <li class="list-group-item ml-3">
-            <router-link to="/tmc/list">
-              特殊政策 <small>票面低</small>
-            </router-link>
-          </li>
-          <li class="list-group-item ml-3">
-            <router-link to="/order">
-              买家订单
-            </router-link>
-          </li>
-          <li class="list-group-item ml-3">
-            <router-link to="/order/sale">
-              卖家订单
-            </router-link>
-          </li>
-          <li class="list-group-item ml-3">
             <router-link to="/eterm">
-              ETERM
+              eterm指令
             </router-link>
           </li>
         </ul>

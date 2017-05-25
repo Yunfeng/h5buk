@@ -34,22 +34,21 @@
               </tr>
           </thead>
           <tbody>
-            <tr v-for="(info, index) in dataList" @click="editNotice(info)">
+            <tr v-for="(info, index) in dataList">
                 <td class="hidden-md-down">{{getConditionTypeDesc(info.conditionType)}}</td>
                 <td>{{info.conditionValue}}</td>
                 <td>{{info.email}}</td>
                 <td class="hidden-md-down">{{info.mobile}}</td>
                 <td class="hidden-md-down">{{info.weixinId}}</td>
-                <td  class="hidden-md-down">{{info.createTime}}</td>
+                <td  class="hidden-md-down">{{formatTime(info.createTime)}}</td>
                 <td  class="hidden-md-down">
                     <template v-if="info.lastupdate != null">
-                        {{info.lastupdate}}
+                        {{formatTime(info.lastupdate)}}
                     </template>
                 </td>
 
                 <td class="hidden-md-down">
-                    <a href="#" class="btn btn-info btn-sm" v-on:click="editNotice(index)">修改</a>
-                    <a href="#" class="btn btn-danger btn-xs" v-on:click="deleteNotice(index)">删除</a>
+                    <a href="javascript:void(0)" class="btn btn-info btn-sm" @click.stop="editNotice(info)">修改</a>
                 </td>
             </tr>
 
@@ -104,6 +103,7 @@
 import MyPagination from '../components/my-pagination.vue'
 import MyButton from '../components/my-button.vue'
 import MyInput from '../components/my-input.vue'
+import { convertLongToTimeDesc } from '../common/common.js'
 
 import $ from 'jquery'
 
@@ -261,6 +261,9 @@ export default {
           }
         }
       })
+    },
+    formatTime: function (l) {
+      return convertLongToTimeDesc(l)
     }
   },
   beforeRouteEnter (to, from, next) {

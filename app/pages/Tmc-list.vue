@@ -8,24 +8,32 @@
       机票特殊政策
     </div> 
 
-    <div class="card col-12 mt-4 px-0">
-      <table class="table table-sm table-striped table-condensive">
+    <div class="card col-12 mt-4">
+      <table class="table table-striped table-condensive">
         <thead>
             <tr>
                 <th>航司</th>
                 <th>舱位</th>
+                <th>出发</th>
+                <th>到达</th>
                 <th>返点</th>
-                <th>最低票面</th>
+                <th>票面</th>
+                <th class="hidden-md-down">备注</th>
+                <th></th>
             </tr>                        
         </thead>
         <tbody>
             <tr v-for="(info, index) in dataList" @click="showDetail(info)">
                 <td>{{info.carrier}}</td>
-                <td>{{info.subclass}}</td>
+                <td>{{showSubclass(info.subclass)}}</td>
+                <td>{{getPortDesc(info.dport)}}</td>
+                <td>{{getPortDesc(info.aport)}}</td>
                 <td>{{info.returnPoint}}</td>
-                <td>{{info.minPrice}} 
-                  <i class="fa fa-angle-right text-warning float-right fa-2 pr-2" aria-hidden="true"></i>
+                <td>>{{info.minPrice}} 
+                  
                 </td>
+                <td class="hidden-md-down">{{info.remark}}</td>
+                <th><i class="fa fa-angle-right text-warning float-right fa-2 pr-2" aria-hidden="true"></i></th>
             </tr>
         </tbody>
       </table>
@@ -132,6 +140,15 @@ export default {
       var desc = val
       if (val === '*') desc = '全国'
       return desc
+    },
+    showSubclass: function (val) {
+      if (val === undefined || val === null) {
+        return val
+      } else if (val.length < 4) {
+        return val
+      } else {
+        return val.substring(0, 3) + '...'
+      }
     },
     prevPage: function () {
       this.sc.pageNo = this.sc.pageNo - 1
