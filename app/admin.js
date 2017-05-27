@@ -73,6 +73,16 @@ const MySubscribers    = () => System.import('./admin/pages/Subscribers.vue')
 const MyWxTemplates    = () => System.import('./admin/pages/WeixinTemplates.vue')
 const MyWxCustomMenus  = () => System.import('./admin/pages/WeixinCustomMenus.vue')
 
+const MyTrips  = () => System.import('./admin/pages/Trip-list.vue')
+const MyTripNew  = () => System.import('./admin/pages/Trip-new.vue')
+const MyTripDetail  = () => System.import('./admin/pages/Trip-detail.vue')
+const MyTripEdit  = () => System.import('./admin/pages/Trip-edit.vue')
+
+const MyGroups  = () => System.import('./admin/pages/Group-list.vue')
+const MyGroupNew  = () => System.import('./admin/pages/Group-new.vue')
+const MyGroupDetail  = () => System.import('./admin/pages/Group-detail.vue')
+const MyGroupEdit  = () => System.import('./admin/pages/Group-edit.vue')
+
 const routes = [
   {path: '/',              component: MyNav},
   {path: '/home',          component: MyHome},
@@ -134,6 +144,16 @@ const routes = [
   {path: '/subscribers',    component: MySubscribers},
   {path: '/templates',      component: MyWxTemplates},
   {path: '/weixin/menus',   component: MyWxCustomMenus},
+
+  {path: '/trips',   component: MyTrips},
+  {path: '/trip/new',   component: MyTripNew},
+  {path: '/trip/:id',   component: MyTripDetail},
+  {path: '/trip/edit/:id',   component: MyTripEdit},
+
+  {path: '/groups',   component: MyGroups},
+  {path: '/group/new',   component: MyGroupNew},
+  {path: '/group/:id',   component: MyGroupDetail},
+  {path: '/group/edit/:id',   component: MyGroupEdit},
 ]
 
 let router = new Router({

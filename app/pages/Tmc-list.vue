@@ -32,7 +32,7 @@
                 <td>>{{info.minPrice}} 
                   
                 </td>
-                <td class="hidden-md-down">{{info.remark}}</td>
+                <td class="hidden-md-down">{{showShortDesc(info.remark)}}</td>
                 <th><i class="fa fa-angle-right text-warning float-right fa-2 pr-2" aria-hidden="true"></i></th>
             </tr>
         </tbody>
@@ -148,6 +148,14 @@ export default {
         return val
       } else {
         return val.substring(0, 3) + '...'
+      }
+    },
+    showShortDesc: function (val) {
+      console.log(val)
+      if (val === undefined || val === null || val.length < 10) {
+        return val
+      } else {
+        return val.substring(0, 10 + '...')
       }
     },
     prevPage: function () {

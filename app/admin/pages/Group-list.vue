@@ -1,0 +1,143 @@
+<template>
+	<div id="art-list" class="row">
+    <div class="col-12 bg-primary text-center text-white">
+        <span @click="back()" class="float-left">
+          <i class="fa fa-angle-left" aria-hidden="true"></i>
+        </span>
+        团队机票
+    </div>
+
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>标题</th>
+          <th>出发</th>
+          <th>到达</th>
+          <th>修改时间</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <template v-for="(info, index) in dataList">
+          <tr @click="showDetail(info)">
+            <td>
+              {{info.id}}
+            </td>
+            <td>{{showShortName(info.name)}}</td>
+            <td>
+              {{info.dcity}}
+            </td>
+            <td>
+              {{info.acity}}
+            </td>
+            <td>
+              <template v-if="info.lastupdate">
+                {{formatDateTime(info.lastupdate)}}
+              </template>
+              <template v-else>
+                {{formatDateTime(info.createTime)}}
+              </template>
+            </td>
+            <td>
+                <i class="fa fa-angle-right text-warning float-right" aria-hidden="true"></i>
+            </td>
+          </tr>
+        </template>
+      </tbody>
+    </table>
+
+
+  </div>
+</template>
+
+<script>
+import { searchGroups } from '../../api/group-flight.js'
+import { convertLongToTimeDesc } from '../../common/common.js'
+
+export default {
+  data () {
+    return {
+      dataList: [],
+      sc: {
+        rowCount: 0,
+        pageNo: 1,
+        pageSize: 25,
+        pageTotal: 0
+      }
+    }
+  },
+  computed: {
+  },
+  mounted: function () {
+    this.search()
+  },
+  methods: {
+    back: function () {
+      this.$router.go(-1)
+    },
+    showErrMsg: function (msg, msgType) {
+      this.$store.dispatch('showAlertMsg', { 'errMsg': msg, 'errMsgType': msgType })
+    },
+    showLoading: function (loadingText) {
+      this.$store.commit('showLoading', { 'loading': true, 'loadingText': loadingText })
+    },
+    hideLoading: function () {
+      this.$store.commit('showLoading', { 'loading': false })
+    },
+    search: function () {
+      this.showLoading()
+
+      var params = { 'sc.pageNo': this.sc.pageNo,
+        'sc.pageSize': this.sc.pageSize
+      }
+
+      searchGroups(params,
+        (jsonResult) => {
+          this.dataList = jsonResult.dataList
+          this.sc = jsonResult.page
+        },
+        null,
+        () => { this.hideLoading() }
+      )
+    },
+    showDetail: function (info) {
+      var path = '/group/' + info.id
+      this.$router.push(path)
+    },
+    prevPage: function () {
+      this.sc.pageNo = this.sc.pageNo - 1
+      if (this.sc.pageNo < 1) this.sc.pageNo = 1
+      this.search()
+    },
+    nextPage: function () {
+      this.sc.pageNo = this.sc.pageNo + 1
+      this.search()
+    },
+    directPage: function (pageNo) {
+      this.sc.pageNo = pageNo
+      this.search()
+    },
+    formatDateTime: function (val) {
+      if (val === null) {
+        return ''
+      } else {
+        return convertLongToTimeDesc(val)
+      }
+    },
+    showShortName: function (val) {
+      if (val.length > 20) {
+        return val.substring(0, 20) + '...'
+      } else {
+        return val
+      }
+    }
+  },
+  beforeRouteEnter (to, from, next) {
+    next(vm => {
+      // 通过 `vm` 访问组件实例
+      // console.log('i m in.')
+    })
+  }
+}
+</script>

@@ -1,5 +1,5 @@
 <template>  
-  <div id="accordion" role="tablist" class="row" v-if="logined">
+  <div id="accordion" role="tablist" class="row">
     <div class="card col-12 px-0">
       <div class="card-header" role="tab" id="heading2">
           <a data-toggle="collapse" href="#collapse2" aria-expanded="true" aria-controls="collapse2">
@@ -7,16 +7,22 @@
           </a>
       </div>
 
-      <div id="collapse2" class="" role="tabpanel" aria-labelledby="heading2" data-parent="#accordion">
+      <div id="collapse2" class="collapse" role="tabpanel" aria-labelledby="heading2" data-parent="#accordion">
         <ul class="list-group list-group-flush">
           <li class="list-group-item ml-3">
-            <router-link to="/tmc/buy" class="text-danger">
+            <router-link to="/tmc/list" class="text-primary">
+              机票政策
+            </router-link>
+            <router-link to="/tmc/buy" class="text-danger small ml-2">
               导入编码
             </router-link>
           </li>
           <li class="list-group-item ml-3">
-            <router-link to="/tmc/list" class="text-primary">
-              机票政策
+            <router-link to="/groups" class="text-primary">
+              团队机票
+            </router-link>
+            <router-link to="/group/new" class="text-danger small ml-2">
+              新建
             </router-link>
           </li>
           <li class="list-group-item ml-3">
@@ -44,6 +50,29 @@
               eterm指令
             </router-link>
           </li>
+        </ul>
+      </div>
+    </div>
+    <div class="card col-12 px-0">
+      <div class="card-header" role="tab" id="headingTrip">
+          <a data-toggle="collapse" href="#collapseTrip" aria-expanded="true" aria-controls="collapseTrip">
+              旅游 <i class="fa fa-angle-right" aria-hidden="true"></i>
+          </a>
+      </div>
+
+      <div id="collapseTrip" class="collapse" role="tabpanel" aria-labelledby="headingTrip" data-parent="#accordion">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item ml-3">
+            <router-link to="/trips" class="text-danger">
+              路线列表
+            </router-link>
+          </li>
+          <li class="list-group-item ml-3">
+            <router-link to="/trip/new" class="text-primary">
+              新建路线
+            </router-link>
+          </li>
+        
         </ul>
       </div>
     </div>
