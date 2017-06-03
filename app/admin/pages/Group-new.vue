@@ -22,6 +22,14 @@
           <td><input class="weui-input" placeholder="目的城市/机场代码, 三字码" v-model.trim="tripTo"></td>
         </tr>
         <tr>
+          <td>最早日期</td>
+          <td><input class="weui-input" placeholder="格式：yyyy-MM-dd" v-model.trim="minDate" id="minDate"></td>
+        </tr>
+        <tr>
+          <td>最晚日期</td>
+          <td><input class="weui-input" placeholder="格式：yyyy-MM-dd" v-model.trim="maxDate" id="maxDate"></td>
+        </tr>
+        <tr>
           <td>价格</td>
           <td><input class="weui-input" placeholder="最低价格" v-model.number="price"></td>
         </tr>
@@ -53,8 +61,9 @@
 </template>
 
 <script>
-import { createGroupTravel } from '../../api/group-flight.js'
+import { createGroupTravel, getGroupTravel } from '../../api/group-flight.js'
 import UM from 'UM'
+import $ from 'jquery'
 
 export default {
   data () {
@@ -67,6 +76,8 @@ export default {
       buyUrl: '',
       buyContact: '',
       price: 0,
+      minDate: '',
+      maxDate: '',
 
       editor: null
     }
@@ -74,6 +85,49 @@ export default {
   mounted: function () {
     window.UMEDITOR_HOME_URL = '/ueditor/'
     this.editor = UM.getEditor('myEditor')
+
+    var id = this.$route.params.id
+    if (id !== undefined) {
+      this.id = parseInt(id)
+      this.init()
+    }
+
+    var self = this
+    var today = new Date()
+
+    $('#minDate').datepicker({
+      dateFormat: 'yy-mm-dd',
+      autoSize: true,
+      showButtonPanel: false,
+      showOtherMonths: false,
+      selectOtherMonths: false,
+      numberOfMonths: 1,
+      minDate: today,
+      showOptions: { direction: 'up' },
+      onSelect: function (dateText, inst) {
+        self.minDate = dateText
+      },
+      beforeShow: function (input) {
+        $(input).css({ position: 'relative', zIndex: '1000' })
+      }
+    })
+
+    $('#maxDate').datepicker({
+      dateFormat: 'yy-mm-dd',
+      autoSize: true,
+      showButtonPanel: false,
+      showOtherMonths: false,
+      selectOtherMonths: false,
+      numberOfMonths: 1,
+      minDate: today,
+      showOptions: { direction: 'up' },
+      onSelect: function (dateText, inst) {
+        self.maxDate = dateText
+      },
+      beforeShow: function (input) {
+        $(input).css({ position: 'relative', zIndex: '1000' })
+      }
+    })
   },
   destroyed () {
     this.editor.destroy()
@@ -99,7 +153,9 @@ export default {
         'price': this.price,
         'content': this.editor.getContent(),
         'buyUrl': this.buyUrl,
-        'buyContact': this.buyContact
+        'buyContact': this.buyContact,
+        'minDate': this.minDate,
+        'maxDate': this.maxDate
       }
 
       this.showLoading()
@@ -126,10 +182,33 @@ export default {
       this.tripContent = ''
       this.buyUrl = ''
       this.buyContact = ''
+      this.minDate = ''
+      this.maxData = ''
 
       this.editor.setContent(this.tripContent, true)
-    }
+    },
+    init: function () {
+      this.showLoading()
 
+      getGroupTravel(this.id,
+        (jsonResult) => {
+          if (jsonResult !== null && jsonResult.id === this.id) {
+            this.id = 0
+            this.tripName = jsonResult.name
+            this.tripFrom = jsonResult.dcity
+            this.tripTo = jsonResult.acity
+            this.buyUrl = jsonResult.buyUrl
+            this.buyContact = jsonResult.buyContact
+            this.price = jsonResult.price
+
+            this.tripContent = jsonResult.content
+            this.editor.setContent(this.tripContent, true)
+          }
+        },
+        () => {},
+        () => { this.hideLoading() }
+      )
+    }
   },
   beforeRouteEnter (to, from, next) {
     next(vm => {

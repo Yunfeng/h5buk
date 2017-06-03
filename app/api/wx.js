@@ -13,3 +13,14 @@ export function initJsSdkParam(url, done, fail, always) {
     // always()
   })
 }
+
+export function getDomainUrl (cb) {
+  $.ajax({
+    type: 'post',
+    url: '/Flight/pay/domain',
+    dataType: 'text',
+    success: function (jsonResult) {
+      cb(jsonResult)
+    }
+  })    
+}

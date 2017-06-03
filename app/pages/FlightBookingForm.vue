@@ -8,8 +8,7 @@
     </div> 
 
     <!-- 航班信息 -->
-    <div class="card col-12 px-0 border-0 ">
-      
+    <div class="card col-12 px-0">
       <div class="card-block pt-0 px-0" v-for="(flt, index) in bookFlights">
         <div class="d-flex flex-row justify-content-between">
           <div>
@@ -50,7 +49,7 @@
       </div>
     </div>
     <div class="col-12 m-1 text-center" v-if="fltCount === 1">
-      <a href="javascript:void(0)" @click.stop="searchReturn()" class="btn btn-warning w-75">搜索返程</a>
+      <a href="javascript:void(0)" @click.stop="searchReturn()" class="btn btn-success w-75">搜索返程</a>
     </div>
     <!-- 表单 -->
     <form id="frmOrder" class="col-12 px-0">
@@ -73,8 +72,13 @@
       </template>
 
 
-        <div class="card card-outline-inf col-12 mt-1" v-for="(psg, index) in psgInfos">
-            <div class="card-block p-0">
+        <div class="card bg-warning text-white">
+          <div class="card-block py-0">
+            <span>乘机人</span>
+          </div>
+        </div>
+        <div class="card px-0 col-12" v-for="(psg, index) in psgInfos">
+            <div class="card-block p-0 mt-1">
               <span class="text-faded"><small>乘客 {{index+1}}</small></span>
               <button type="button" @click.stop="selectPsg(index)" title="搜索并选择乘机人">
                 <i class="fa fa-search-plus text-success" aria-hidden="true"></i>
@@ -110,8 +114,43 @@
           </div>
       </div>
 
+      <template v-if="insurances.length > 0">
+        <div class="card col-12 bg-white border-0 mt-1 px-0">
+          <div class="card-header bg-warning text-white py-0">
+            <span>保险</span>
+          </div>
+          <div class="card-block">
+            <table class="table">
+              <tr v-for="(info, index) in insurances">                
+                <input type="hidden" :name="'tmcPolicyApply.insurances[' + index + '].productCode'" :value="info.productCode" />
+                <input type="hidden" :name="'tmcPolicyApply.insurances[' + index + '].productName'" :value="info.productName" />
+                <input type="hidden" :name="'tmcPolicyApply.insurances[' + index + '].price'" :value="info.price" />
+                <input type="hidden" :name="'tmcPolicyApply.insurances[' + index + '].discount'" :value="info.discount" />
+                <input type="hidden" :name="'tmcPolicyApply.insurances[' + index + '].count'" :value="psgInfos.length" />
 
-      <div class="card col-12 bg-white border-0">
+                <td>
+                  <input class="form-check-input" type="checkbox" :name="'tmcPolicyApply.insurances[' + index + '].buyed'" value="1">
+                  {{info.productName}} 
+                </td>
+                <td>
+                  <i class="fa fa-rmb text-warning"></i>{{info.price-info.discount}}/份
+                </td>
+                <td>
+                  购买{{psgInfos.length}}份
+                </td>
+                <td>
+                  {{info.productDesc}}
+                </td>
+              </tr>
+            </table>  
+          </div>
+        </div>
+      </template>
+
+      <div class="card col-12 bg-white border-0 mt-1 px-0">
+        <div class="card-header bg-warning text-white py-0">
+            <span>联系人</span>
+          </div>
         <div class="card-block px-0">
           <div class="form-group border-bottom-1">
             <input type="text" class="form-control border-0" name="tmcPolicyApply.linkPhone" placeholder="联系电话"/>
@@ -137,6 +176,7 @@
 <script>
 import { addDate } from '../common/common.js'
 import MyPsgPicker from '../components/my-psg-picker.vue'
+import { searchInsurances } from '../api/product.js'
 import $ from 'jquery'
 
 export default {
@@ -152,7 +192,9 @@ export default {
         { idType: 2, idName: '护照' },
         { idType: 10, idName: '其它' }
       ],
-      showPicker: false
+      showPicker: false,
+
+      insurances: []
     }
   },
   computed: {
@@ -161,6 +203,9 @@ export default {
     policyId () { return this.$store.state.order.policyId },
     ddate () { return this.$store.state.searchParams.ddate },
     fltCount () { return this.bookFlights.length }
+  },
+  mounted: function () {
+    this.searchInsurances()
   },
   methods: {
     back: function () {
@@ -234,6 +279,19 @@ export default {
       var newDate = addDate(this.ddate, 1)
       this.$store.commit('setDdate', newDate)
       this.$router.push('/search')
+    },
+    searchInsurances: function () {
+      var params = { 'sc.pageNo': 1,
+        'sc.pageSize': 10
+      }
+
+      searchInsurances(params,
+        (jsonResult) => {
+          this.insurances = jsonResult.dataList
+        },
+        null,
+        () => {}
+      )
     }
   },
   beforeRouteEnter (to, from, next) {

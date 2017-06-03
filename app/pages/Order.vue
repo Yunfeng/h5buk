@@ -5,12 +5,6 @@
           <i class="fa fa-angle-left fa-2" aria-hidden="true"></i></span>
         <span class="fa-2">机票订单</span>
     </div> 
-    <div class="card col-12">
-      <div class="card-block">
-        <router-link to="/changes" class="card-link">改期单</router-link>
-        <router-link to="/refunds" class="card-link">退票单</router-link>
-      </div>
-    </div>
     <template v-if="orders.length > 0">
       <div class="card col-12"  v-for="info in orders" @click="showDetail(info)" :class="changeBgByStatus(info.status)">
         <div class="card-block mt-1 mb-2 p-0">          

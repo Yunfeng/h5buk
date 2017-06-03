@@ -1,4 +1,3 @@
-export const DOMAIN_URL = 'http://b2c.90sky.com'
 export const WEBAPP_NAME = '/Flight'
 /**
 * 

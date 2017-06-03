@@ -83,6 +83,13 @@ const MyGroupNew  = () => System.import('./admin/pages/Group-new.vue')
 const MyGroupDetail  = () => System.import('./admin/pages/Group-detail.vue')
 const MyGroupEdit  = () => System.import('./admin/pages/Group-edit.vue')
 
+const MySettings  = () => System.import('./admin/pages/My-settings.vue')
+
+const MyInsurances  = () => System.import('./admin/pages/Insurance-list.vue')
+const MyInsuranceNew  = () => System.import('./admin/pages/Insurance-new.vue')
+
+const MyHistoryRav  = () => System.import('./admin/pages/History-rav.vue')
+
 const routes = [
   {path: '/',              component: MyNav},
   {path: '/home',          component: MyHome},
@@ -150,10 +157,18 @@ const routes = [
   {path: '/trip/:id',   component: MyTripDetail},
   {path: '/trip/edit/:id',   component: MyTripEdit},
 
-  {path: '/groups',   component: MyGroups},
+  {path: '/groups',   component: MyGroups, meta: { keepAlive: true } },
   {path: '/group/new',   component: MyGroupNew},
+  {path: '/group/new/:id',   component: MyGroupNew},
   {path: '/group/:id',   component: MyGroupDetail},
   {path: '/group/edit/:id',   component: MyGroupEdit},
+
+  {path: '/settings',   component: MySettings},
+
+  {path: '/p/insurances',   component: MyInsurances},
+  {path: '/p/insurance/new',   component: MyInsuranceNew},
+
+  {path: '/history/rav',   component: MyHistoryRav},
 ]
 
 let router = new Router({

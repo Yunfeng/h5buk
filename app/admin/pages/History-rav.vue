@@ -4,67 +4,40 @@
         <span @click="back()" class="float-left">
           <i class="fa fa-angle-left" aria-hidden="true"></i>
         </span>
-        团队机票
+        航班查询记录
     </div>
-
-    <div class="card col-12 hidden-md-down">
-        <form class="form-inline">
-          <input class="form-control m-2 col-1" type="text" placeholder="出发城市" v-model.trim="dport">
-          <input class="form-control m-2 col-1" type="text" placeholder="到达城市" v-model.trim="aport">
-          <button type="button" class="btn btn-success mr-2" @click.stop="search()">确定</button>
-          <button type="button" class="btn btn-info btn-sm" @click.stop="resetFilter()">重置</button>          
-        </form>        
-      </div>
-
     <div class="card col-12">
       <table class="table table-hover">
         <thead>
           <tr>
-            <th>ID</th>
-            <th>标题</th>
             <th>出发</th>
             <th>到达</th>
-            <th>最早</th>
-            <th>最晚</th>
-            <th>价格</th>
+            <th>日期</th>
+            <th>openid</th>
+            <th>ip</th>
             <th>修改时间</th>
-            <th></th>
           </tr>
         </thead>
         <tbody>
           <template v-for="(info, index) in dataList">
-            <tr @click="showDetail(info)">
-              <td>
-                {{info.id}}
-              </td>
-              <td>{{showShortName(info.name)}}</td>
-              <td>
-                {{info.dcity}}
-              </td>
+            <tr>
+              <td>{{info.dcity}}</td>
               <td>
                 {{info.acity}}
               </td>
               <td>
-                {{info.minDate}}
+                {{info.ddate}}
               </td>
               <td>
-                {{info.maxDate}}
+                {{info.openId}}
               </td>
               <td>
-                <span v-if="info.price > 0">
-                  {{info.price}}
-                </span>
+                {{info.ip}}
               </td>
               <td>
-                <template v-if="info.lastupdate">
+                <template v-if="info.lastupdate !== null">
                   {{formatDateTime(info.lastupdate)}}
                 </template>
-                <template v-else>
-                  {{formatDateTime(info.createTime)}}
-                </template>
-              </td>
-              <td>
-                  <i class="fa fa-angle-right text-warning float-right" aria-hidden="true"></i>
               </td>
             </tr>
           </template>
@@ -80,11 +53,11 @@
 
 <script>
 import MyPagination from '../../components/my-pagination.vue'
-import { searchGroups } from '../../api/group-flight.js'
+import { searchHistoryRav } from '../../api/admin.js'
 import { convertLongToTimeDesc } from '../../common/common.js'
 
 export default {
-  name: 'GroupList',
+  name: 'HistoryRav',
   components: {
     'my-pagination': MyPagination
   },
@@ -94,11 +67,9 @@ export default {
       sc: {
         rowCount: 0,
         pageNo: 1,
-        pageSize: 10,
+        pageSize: 25,
         pageTotal: 0
-      },
-      dport: '',
-      aport: ''
+      }
     }
   },
   computed: {
@@ -122,13 +93,11 @@ export default {
     search: function () {
       this.showLoading()
 
-      var params = { 'sc.pageNo': this.sc.pageNo,
-        'sc.pageSize': this.sc.pageSize,
-        'sc.dport': this.dport.toUpperCase(),
-        'sc.aport': this.aport.toUpperCase()
+      var params = { 'pageNo': this.sc.pageNo,
+        'pageSize': this.sc.pageSize
       }
 
-      searchGroups(params,
+      searchHistoryRav(params,
         (jsonResult) => {
           this.dataList = jsonResult.dataList
           this.sc = jsonResult.page
@@ -136,10 +105,6 @@ export default {
         null,
         () => { this.hideLoading() }
       )
-    },
-    showDetail: function (info) {
-      var path = '/group/' + info.id
-      this.$router.push(path)
     },
     prevPage: function () {
       this.sc.pageNo = this.sc.pageNo - 1
@@ -160,18 +125,6 @@ export default {
       } else {
         return convertLongToTimeDesc(val)
       }
-    },
-    showShortName: function (val) {
-      if (val.length > 20) {
-        return val.substring(0, 20) + '...'
-      } else {
-        return val
-      }
-    },
-    resetFilter: function () {
-      this.dport = ''
-      this.aport = ''
-      this.sc.pageNo = 1
     }
   },
   beforeRouteEnter (to, from, next) {

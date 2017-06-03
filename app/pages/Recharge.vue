@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { DOMAIN_URL } from '../common/common.js'
+import { getDomainUrl } from '../api/wx.js'
 import $ from 'jquery'
 
 export default {
@@ -35,7 +35,9 @@ export default {
 
       appid: '',
       redirectUrl: '',
-      orderId: ''
+      orderId: '',
+
+      domain: ''
     }
   },
   watch: {
@@ -49,6 +51,7 @@ export default {
     }
   },
   mounted: function () {
+    this.getDomain()
   },
   methods: {
     back: function () {
@@ -67,11 +70,11 @@ export default {
       setTimeout(() => this.$router.push('/login'), 1500)
     },
     weixinPay0: function () {
-      this.redirectUrl = DOMAIN_URL + '/wxp/test/wxp.html'
+      this.redirectUrl = 'http://' + this.domain + '/wxp/test/wxp.html'
       this.createPayOrder()
     },
     weixinPay1: function () {
-      this.redirectUrl = DOMAIN_URL + '/wxp/wxp.html'
+      this.redirectUrl = 'http://' + this.domain + '/wxp/wxp.html'
       this.createPayOrder()
     },
     createPayOrder: function () {
@@ -134,6 +137,9 @@ export default {
           self.hideLoading()
         }
       })
+    },
+    getDomain: function () {
+      getDomainUrl((val) => { this.domain = val })
     }
   },
   beforeRouteEnter (to, from, next) {

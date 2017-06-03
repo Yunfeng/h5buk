@@ -23,7 +23,7 @@
           <span class="text-danger small">更新中...</span>
         </template> 
         <span class="float-right">
-          <a href="javascript:void(0)" @click.stop="changeDdate(1)" class="text-white">后一天</a>
+          <a href="javascript:void(0)" @click.stop="changeDdate(1)" class="text-white fa-2">后一天</a>
         </span>
       </div>
       <table class="table table-striped table-hover table-sm">
@@ -140,7 +140,7 @@
         </tbody>
       </table>
 
-      <div class="card col-12 border-0">
+      <div class="card col-12 border-0" v-if="flt.freshness < 60">
         <div class="card-block text-right">
           <small>更新时间: <span class="text-success">{{showFreshness(flt.freshness)}}</span></small>
         </div>

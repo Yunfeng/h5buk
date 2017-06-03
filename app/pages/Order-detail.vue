@@ -68,6 +68,25 @@
           </dl>
         </template>
 
+        <template v-if="info.insurances.length > 0">
+          <div class="card-block py-0 bg-faded text-warning">
+            <small>保险</small>
+          </div>
+          <dl class='row mb-0' v-for='(info, index) in info.insurances'>
+            <dt class='col-4 text-right px-0'>              
+            </dt>
+            <dd class='col-8'>{{info.productName}}</dd>
+
+            <dt class='col-4 text-right px-0'>价格</dt>
+            <dd class='col-8'><i class='fa fa-rmb text-warning'></i>{{info.price - info.discount}}/份</dd>
+
+            <dt class='col-4 text-right px-0'>份数</dt>
+            <dd class='col-8'>{{info.count}}</dd>
+
+            
+          </dl>
+        </template>
+
         <div class="card-block py-0 bg-faded text-warning">
           <small>结算信息</small>
         </div>
@@ -229,7 +248,8 @@
 </template>
 
 <script>
-import { DOMAIN_URL, convertLongToTimeDesc, showIdTypeDesc, showOrderStatusDesc } from '../common/common.js'
+import { convertLongToTimeDesc, showIdTypeDesc, showOrderStatusDesc } from '../common/common.js'
+import { getDomainUrl } from '../api/wx.js'
 import MyButton from '../components/my-button.vue'
 import MyInput from '../components/my-input.vue'
 import $ from 'jquery'
@@ -245,7 +265,8 @@ export default {
       policies: [],
       remark: '',
       wxpayRate: 0,
-      alipayRate: 0
+      alipayRate: 0,
+      domain: ''
     }
   },
   computed: {
@@ -267,6 +288,8 @@ export default {
         this.refreshOrderDetail(this.orderId)
       }
     }
+
+    this.getDomain()
   },
   methods: {
     back: function () {
@@ -509,7 +532,7 @@ export default {
               var appid = jsonResult.attach
               var payOrderId = jsonResult.desc
 
-              var redirectUrl = DOMAIN_URL + '/wxp/wxp.html'
+              var redirectUrl = 'http://' + self.domain + '/wxp/wxp.html'
               var url0 = escape(redirectUrl)
 
               const url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + appid + '&redirect_uri=' + url0 + '&response_type=code&scope=snsapi_base&state=' + payOrderId + '#wechat_redirect'
@@ -550,6 +573,9 @@ export default {
     specifyBuyerPayOrder: function (id) {
       // 指定买家并通知买家付款
       this.$router.push('/order/' + id + '/buyer')
+    },
+    getDomain: function () {
+      getDomainUrl((val) => { this.domain = val })
     }
   },
   beforeRouteEnter (to, from, next) {

@@ -50,26 +50,37 @@
           </div>
         </div>  
           
-          <table class="table table-sm">
+          <table class="table">
             <tr>
               <td class="text-right">现金账户</td>
               <td>{{userInfo.cashBalance}} <small>元</small></td>
-              <td><small><router-link to="/recharge" class="text-danger">充值</router-link></small></td>
+              <td><small><router-link to="/recharge" class="btn btn-sm btn-outline-danger">充值</router-link></small></td>
             </tr>
             <tr>
               <td class="text-right">积分</td>
               <td>{{userInfo.freeBalance}}</td>
-              <td></td>
+              <td>
+                <button class="btn btn-sm btn-outline-success" @click.stop="checkIn()">
+                  签到
+                </button>
+              </td>
             </tr>
           </table>
-        <div class="card-block pt-0 bg-faded">
-          <router-link to="/order" class="card-link">
-            我的订单
-          </router-link>
-          <button class="card-link btn btn-sm btn-success float-right" @click.stop="checkIn()">
-            签到
-          </button>
-        </div>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              <router-link to="/order" class="card-link">我的订单</router-link>
+            </li>
+            <li class="list-group-item">
+              <router-link to="/changes" class="card-link">我的改期</router-link>
+            </li>
+            <li class="list-group-item">
+              <router-link to="/refunds" class="card-link">我的退票</router-link>
+            </li>
+          </ul>
+          
+        
+        
+          
         <div class="card-block pt-0">
           <router-link to="/home" class="card-link text-success">
             更多功能

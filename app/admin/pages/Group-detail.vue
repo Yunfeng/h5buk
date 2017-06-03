@@ -13,6 +13,8 @@
           <h4 class="card-title">{{detail.name}}</h4>    
           出发地：{{detail.dcity}}<br />
           目的地：{{detail.acity}}<br />
+          最早：{{detail.minDate}}<br />
+          最晚：{{detail.maxDate}}<br />
           最低价: {{detail.price}}<br />
           <!-- 购买链接：<a :href="detail.buyUrl" target="_blank">{{detail.buyUrl}}</a><br /> -->
           联系方式：{{detail.buyContact}}<br />
@@ -23,8 +25,9 @@
           <li class="list-group-item">创建时间: {{formatDateTime(detail.createTime)}}</li>
           <li class="list-group-item">修改时间: {{formatDateTime(detail.lastupdate)}}</li>
         </ul>
-        <div class="card-footer">
+        <div class="card-footer" v-if="detail.enterpriseId > 0">
           <button class="btn btn-block btn-primary" @click.stop="edit(detail.id)">修改</button>
+          <button class="btn btn-block btn-primary" @click.stop="copy(detail.id)">复制</button>
         </div>
       </div>
     </template>     
@@ -79,6 +82,10 @@ export default {
     },
     edit: function (id) {
       var path = '/group/edit/' + id
+      this.$router.push(path)
+    },
+    copy: function (id) {
+      var path = '/group/new/' + id
       this.$router.push(path)
     },
     formatDateTime: function (val) {

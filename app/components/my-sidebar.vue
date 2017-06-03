@@ -64,15 +64,12 @@
         <ul class="list-group list-group-flush">
           <li class="list-group-item ml-3">
             <router-link to="/trips" class="text-danger">
-              路线列表
+              路线
+            </router-link>
+            <router-link to="/trip/new" class="text-primary small ml-2">
+              新建
             </router-link>
           </li>
-          <li class="list-group-item ml-3">
-            <router-link to="/trip/new" class="text-primary">
-              新建路线
-            </router-link>
-          </li>
-        
         </ul>
       </div>
     </div>
@@ -129,30 +126,6 @@
       </div>
     </div>
 
-
-    <div class="card col-12 px-0">
-      <div class="card-header" role="tab" id="heading3">
-          <a data-toggle="collapse" href="#collapse3" aria-expanded="true" aria-controls="collapse3">
-              其它 <i class="fa fa-angle-right" aria-hidden="true"></i>
-          </a>
-      </div>
-
-      <div id="collapse3" class="collapse" role="tabpanel" aria-labelledby="heading3" data-parent="#accordion">
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item ml-3">
-            <router-link to="/recharge">
-              充值
-            </router-link>
-          </li>
-          <li class="list-group-item ml-3">
-            <a href="https://github.com/Yunfeng/h5buk" target="_blank">
-              源码
-            </a>
-          </li>
-        </ul>
-      </div>
-    </div>
-
     <div class="card col-12 px-0">
       <div class="card-header" role="tab" id="heading4">
           <a data-toggle="collapse" href="#collapse4" aria-expanded="true" aria-controls="collapse4">
@@ -163,6 +136,11 @@
       <div id="collapse4" class="collapse" role="tabpanel" aria-labelledby="heading4" data-parent="#accordion">
         <ul class="list-group list-group-flush">
           <li class="list-group-item ml-3">
+            <router-link to="/settings">
+              设置
+            </router-link>
+          </li>          
+          <li class="list-group-item ml-3">
             <router-link to="/customers">
               客户管理
             </router-link>
@@ -170,6 +148,16 @@
           <li class="list-group-item ml-3">
             <router-link to="/employees">
               员工管理
+            </router-link>
+          </li>
+          <li class="list-group-item ml-3">
+            <router-link to="/p/insurances">
+              保险产品管理
+            </router-link>
+          </li>
+          <li class="list-group-item ml-3">
+            <router-link to="/history/rav">
+              航班查询记录
             </router-link>
           </li>
         </ul>
