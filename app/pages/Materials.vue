@@ -13,26 +13,26 @@
         <thead>
             <tr>
                 <th>文件</th>
-                <th>生成时间</th>
                 <th></th>
+                <th>生成时间</th>
             </tr>                        
         </thead>
         <tbody>
             <tr v-for='(info, index) in dataList' @click="showDetail(info)">
-                <td>{{info.key}}</td>
-                <td><small>{{formatTime(info.createTime)}}</small></td>
-                <td><i class="fa fa-angle-right" aria-hidden="true"></i></td>
+                <td>{{info.key}}
+
+                </td>
+                <td><img class="d-flex mr-3" :src="'http://video.90sky.com/' + info.key" style="width: 2rem; height: 2rem"></td>
+                <td>
+                  <small>{{formatTime(info.createTime)}}</small>
+                  <span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span>
+                </td>
             </tr>
         </tbody>
       </table>
       <div class='card-block'>
         <my-pagination name='pagination' :row-count='sc.rowCount' :page-total='sc.pageTotal' :page-no='sc.pageNo' @next-page='nextPage' @prev-page='prevPage' @direct-page='directPage'></my-pagination> 
       </div> 
-      <div class="card">
-        <div class="card-block">
-          <button class="btn btn-success" @click.stop="syncMaterial()">同步一下</button>
-        </div>
-      </div>
     </div>      
   </div>
 </template>
@@ -40,7 +40,7 @@
 <script>
 import MyPagination from '../components/my-pagination.vue'
 import { convertLongToTimeDesc } from '../common/common.js'
-import { searchMaterials, syncMaterials } from '../api/material.js'
+import { searchMaterials } from '../api/material.js'
 
 export default {
   name: 'materials',
@@ -89,15 +89,6 @@ export default {
         },
         null,
         () => { this.hideLoading() }
-      )
-    },
-    syncMaterial: function () {
-      this.showLoading()
-
-      syncMaterials(null,
-        () => { },
-        null,
-        () => { this.search() }
       )
     },
     showDetail: function (info) {

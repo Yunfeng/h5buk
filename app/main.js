@@ -67,6 +67,8 @@ const MyUpload      = () => System.import('./pages/Upload.vue')
 const MyMaterials      = () => System.import('./pages/Materials.vue')
 const MyPlay      = () => System.import('./pages/Media-play.vue')
 
+const MyArtDetail    = resolve => require(['./pages/Article-detail.vue'], resolve);
+
 const routes = [
   {path: '/',              component: MyNav},
   {path: '/home',          component: MyHome},
@@ -122,6 +124,8 @@ const routes = [
   {path: '/upload',      component: MyUpload},
   {path: '/materials',      component: MyMaterials},
   {path: '/play/:id',      component: MyPlay},
+
+  {path: '/article/:id',       component: MyArtDetail},
 ]
 
 let router = new Router({

@@ -15,6 +15,10 @@
             <tr><td class="text-right small">编码</td><td>{{detail.pnrNo}}</td></tr>
             <tr><td class="text-right small">大编码</td><td>{{detail.bigPnrNo}}</td></tr>
             <tr><td class="text-right small">航段状态</td><td>{{detail.segStatus}}</td></tr>
+            <tr>
+              <td class="text-right small"></td>
+              <td>{{detail.departurePort}}{{detail.arrivalPort}} {{detail.departureDate}}</td>
+            </tr>
             <tr><td class="text-right small">航段数</td><td>{{detail.segCount}}</td></tr>
             <tr><td class="text-right small">乘客数</td><td>{{detail.psgCount}}</td></tr>
             <tr><td class="text-right small">eterm用户名</td><td>{{detail.etermUsername}}</td></tr>

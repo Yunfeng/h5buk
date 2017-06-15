@@ -70,8 +70,6 @@ const MyPlay      = () => System.import('./pages/Media-play.vue')
 const MyCustomers      = () => System.import('./admin/pages/Customers.vue')
 const MyEmployees      = () => System.import('./admin/pages/Employees.vue')
 const MySubscribers    = () => System.import('./admin/pages/Subscribers.vue')
-const MyWxTemplates    = () => System.import('./admin/pages/WeixinTemplates.vue')
-const MyWxCustomMenus  = () => System.import('./admin/pages/WeixinCustomMenus.vue')
 
 const MyTrips  = () => System.import('./admin/pages/Trip-list.vue')
 const MyTripNew  = () => System.import('./admin/pages/Trip-new.vue')
@@ -89,6 +87,15 @@ const MyInsurances  = () => System.import('./admin/pages/Insurance-list.vue')
 const MyInsuranceNew  = () => System.import('./admin/pages/Insurance-new.vue')
 
 const MyHistoryRav  = () => System.import('./admin/pages/History-rav.vue')
+
+const MyArtList      = resolve => require(['./admin/pages/Article-list.vue'], resolve);
+const MyArtNew       = resolve => require(['./admin/pages/Article-new.vue'], resolve);
+const MyArtDetail    = resolve => require(['./admin/pages/Article-detail.vue'], resolve);
+
+const MyWxTemplates    = () => System.import('./admin/pages/WeixinTemplates.vue')
+const MyWxCustomMenus  = () => System.import('./admin/pages/WeixinCustomMenus.vue')
+const MyWxMaterials    = () => System.import('./admin/pages/Material-upload.vue');
+
 
 const routes = [
   {path: '/',              component: MyNav},
@@ -151,6 +158,7 @@ const routes = [
   {path: '/subscribers',    component: MySubscribers},
   {path: '/templates',      component: MyWxTemplates},
   {path: '/weixin/menus',   component: MyWxCustomMenus},
+  {path: '/weixin/materials',   component: MyWxMaterials},
 
   {path: '/trips',   component: MyTrips},
   {path: '/trip/new',   component: MyTripNew},
@@ -169,6 +177,12 @@ const routes = [
   {path: '/p/insurance/new',   component: MyInsuranceNew},
 
   {path: '/history/rav',   component: MyHistoryRav},
+
+  {path: '/arts', component: MyArtList},
+  {path: '/art/new', component: MyArtNew},
+  {path: '/art/:id',       component: MyArtDetail},
+  {path: '/art/edit/:id',       component: MyArtNew},
+
 ]
 
 let router = new Router({

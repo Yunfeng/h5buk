@@ -163,7 +163,36 @@
         </ul>
       </div>
     </div>
+    <div class="card col-12 px-0">
+      <div class="card-header" role="tab" id="headingArt">
+          <a data-toggle="collapse" href="#collapseArt" aria-expanded="true" aria-controls="collapseArt">
+              文章 <i class="fa fa-angle-right" aria-hidden="true"></i>
+          </a>
+      </div>
 
+      <div id="collapseArt" class="collapse" role="tabpanel" aria-labelledby="headingArt" data-parent="#accordion">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item ml-3">
+            <router-link to="/arts" class="text-danger">
+              文章
+            </router-link>
+            <router-link to="/art/new" class="text-primary small ml-2">
+              新建
+            </router-link>
+          </li>
+          <li class="list-group-item ml-3">
+            <router-link to="/materials" class="text-danger">
+              媒体文件
+            </router-link>
+          </li>
+          <li class="list-group-item ml-3">
+            <router-link to="/upload" class="text-danger">
+              上传
+            </router-link>
+          </li>
+        </ul>
+      </div>
+    </div>
     <div class="card col-12 px-0">
       <div class="card-header" role="tab" id="heading5">
           <a data-toggle="collapse" href="#collapse5" aria-expanded="true" aria-controls="collapse5">
@@ -186,6 +215,11 @@
           <li class="list-group-item ml-3">
             <router-link to="/weixin/menus">
               自定义菜单
+            </router-link>
+          </li>
+          <li class="list-group-item ml-3">
+            <router-link to="/weixin/materials">
+              素材
             </router-link>
           </li>
         </ul>

@@ -22,6 +22,13 @@
               <my-date-picker :id="'endDate0'" :class="'form-control'" :placeholder="'截止日期'" v-model="endDate"></my-date-picker>  
           </div>
           <div class="form-group">
+            <select v-model="dzStatus" class="form-control" >
+              <option value="-1">全部</option>
+              <option value="0">未开票</option>
+              <option value="1">已开票</option>
+            </select>
+          </div>
+          <div class="form-group">
             <select v-model="orderBy" class="form-control" >
               <option value="0">ID降序</option>
               <option value="1">人数降序</option>
@@ -56,6 +63,11 @@
           <input class="form-control m-2 col-1" type="text" placeholder="用户名" v-model="etermUsername">
           <my-date-picker :id="'beginDate1'" :class="'form-control m-2'" :style="'width:7rem'" :placeholder="'开始日期'" v-model="beginDate"></my-date-picker> 
           <my-date-picker :id="'endDate1'" :class="'form-control m-2'" :style="'width:7rem'"  :placeholder="'截止日期'" v-model="endDate"></my-date-picker>  
+          <select v-model="dzStatus" class="form-control m-2" >
+            <option value="-1">全部</option>
+            <option value="0">未开票</option>
+            <option value="1">已开票</option>
+          </select>
           <select v-model="orderBy" class="form-control m-2" >
             <option value="0">ID降序</option>
             <option value="1">人数降序</option>
@@ -77,24 +89,32 @@
           <thead class="text-warning sticky-top">
               <tr>
                   <th>编码</th>
+                  <th class="hidden-md-down">出发</th>
+                  <th class="hidden-md-down">段数</th>
                   <th>状态</th>
                   <th>人数</th>
                   <th>用户名</th>
                   <th class="hidden-md-down">CTCM</th>
                   <th class="hidden-md-down">联系电话</th>
+                  <th class="hidden-md-down"></th>
                   <th class="hidden-md-down">生成时间</th>
                   <th class="hidden-sm-down">更新时间</th>
                   <th></th>
               </tr>                        
           </thead>
           <tbody>
-              <tr v-for='(info, index) in dataList' @click='showDetail(info)'>
+              <tr v-for='(info, index) in dataList' @click='showDetail(info)' :class="{'bg-success text-white': info.dzStatus}">
                   <td>{{info.pnrNo}}</td>
+                  <td class="hidden-md-down small">
+                    {{info.departurePort}}{{info.arrivalPort}} {{info.departureDate}}
+                  </td>
+                  <td class="hidden-md-down small">{{info.segCount}}</td>
                   <td><small>{{info.segStatus}}</small></td>
                   <td>{{info.psgCount}}</td>
                   <td>{{info.etermUsername}}</td>
                   <td class="hidden-md-down"><small>{{info.ctcmCount}}</small></td>
                   <td class="hidden-md-down"><small>{{info.linkphone}}</small></td>
+                  <td class="hidden-md-down"><small>{{info.bookOfficeNo}}</small></td>
                   <td class="hidden-md-down"><small>{{formatTime(info.createTime)}}</small></td>
                   <td class="hidden-sm-down"><small>{{formatTime(info.lastUpdate)}}</small></td>
                   <td><i class="fa fa-angle-right" aria-hidden="true"></i></td>
@@ -136,6 +156,7 @@ export default {
       pnrNo: '',
       beginDate: '',
       endDate: '',
+      dzStatus: -1,
       orderBy: 0,
       dataMode: '0'
     }
@@ -179,7 +200,8 @@ export default {
         'sc.etermUsername': this.etermUsername,
         'sc.beginDate': beginDate,
         'sc.endDate': endDate,
-        'sc.orderBy': this.orderBy
+        'sc.orderBy': this.orderBy,
+        'sc.dzStatus': this.dzStatus
       }
 
       if (this.dataMode === '0') {

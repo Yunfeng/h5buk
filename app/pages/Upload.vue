@@ -40,18 +40,6 @@ export default {
       uploadToken: ''
     }
   },
-  watch: {
-    total0 (curVal, oldVal) {
-      console.log(curVal, oldVal)
-      if (curVal === null) {
-        this.total = null
-      } else {
-        this.total = parseInt(curVal * 100)
-      }
-    }
-  },
-  mounted: function () {
-  },
   methods: {
     back: function () {
       this.$router.go(-1)
@@ -71,30 +59,30 @@ export default {
         this.showErrMsg('请先选择需要上传的文件')
         return
       }
-
-      this.showLoading()
       this.uploadToken = ''
+      this.showLoading()
 
       getUploadToken(null,
         (jsonResult) => {
+          console.log(jsonResult)
           this.uploadToken = jsonResult
-          // console.log(jsonResult)
         },
         null,
         () => {
+          this.hideLoading()
           if (this.uploadToken.length > 0) {
-            // console.log(this.uploadToken)
             this.upload2(f, $('#key').val())
-          } else {
-            this.hideLoading()
           }
         }
       )
     },
     upload2: function (f, key) {
+      console.log(f)
+      // console.log(key)
       var self = this
 
-      var formData = new window.FormData($('#upload')[0])
+      // var formData = new window.FormData($('#upload')[0])
+      var formData = new window.FormData()
       formData.append('token', this.uploadToken)
       formData.append('file', f)
       if (key.length === 0) {
@@ -103,7 +91,10 @@ export default {
         formData.append('key', key)
       }
 
+      this.showLoading('uploading...')
+
       $.ajax({
+        'mimeType': 'multipart/form-data',
         url: 'http://upload.qiniu.com/',
         type: 'POST',
         data: formData,
@@ -111,8 +102,10 @@ export default {
         cache: false,
         contentType: false,
         processData: false,
+        dataType: 'json',
         success: function (jsonResult) {
           console.log(jsonResult)
+          console.log(jsonResult.key)
           if (jsonResult.key.length > 0) {
             self.showErrMsg('文件 ' + jsonResult.key + ' 上传成功')
             locallySaveKey(jsonResult.key)
@@ -129,67 +122,31 @@ export default {
           console.log(XMLHttpRequest.responseJSON)
         }
       })
-    },
-    createPayOrder: function () {
-      var self = this
 
-      if (this.total === null || this.total < 1) {
-        this.showErrMsg('请输入充值金额')
-        return
-      }
+      // const file = $('$file').files[0]
+      // const formData = new window.FormData()
+      // formData.append('file', file)
+      // formData.append('token', this.uploadToken)
+      // if (key.length === 0) {
+      //   formData.append('key', f.name)
+      // } else {
+      //   formData.append('key', key)
+      // }
 
-      self.showLoading('支付准备中...')
+      // var settings = {
+      //   'async': true,
+      //   'crossDomain': true,
+      //   'url': 'http://upload.qiniu.com/',
+      //   'method': 'POST',
+      //   'processData': false,
+      //   'contentType': false,
+      //   'mimeType': 'multipart/form-data',
+      //   'data': formData
+      // }
 
-      // get weixin appid
-      $.ajax({
-        type: 'post',
-        url: '/Flight/pay/createRechargeOrder',
-        data: {
-          'total_fee': self.total
-        },
-        dataType: 'json',
-        success: function (jsonResult) {
-          if (jsonResult.status === 'OK') {
-            self.orderId = jsonResult.desc
-            self.weixinPay()
-          }
-        },
-        error: function (XMLHttpRequest, textStatus, errorThrown) {
-          if (XMLHttpRequest.status === 403) {
-            self.$store.commit('jumpToLogin', self.$router)
-          }
-        },
-        complete: function () {
-          self.hideLoading()
-        }
-      })
-    },
-    weixinPay: function () {
-      var self = this
-      // get weixin appid
-      $.ajax({
-        type: 'post',
-        url: '/Flight/weixin/getAppid',
-        dataType: 'text',
-        success: function (jsonResult) {
-          console.log(jsonResult)
-          self.appid = jsonResult
-          var url1 = self.redirectUrl
-          var url0 = escape(url1)
-
-          var url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' +
-            self.appid + '&redirect_uri=' + url0 + '&response_type=code&scope=snsapi_base&state=' + self.orderId + '#wechat_redirect'
-          window.location.href = url
-        },
-        error: function (XMLHttpRequest, textStatus, errorThrown) {
-          if (XMLHttpRequest.status === 403) {
-            self.$store.commit('jumpToLogin', self.$router)
-          }
-        },
-        complete: function () {
-          self.hideLoading()
-        }
-      })
+      // $.ajax(settings).done(function (response) {
+      //   console.log(response)
+      // })
     }
   },
   beforeRouteEnter (to, from, next) {
