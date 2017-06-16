@@ -15,12 +15,15 @@
         <span class="bg-faded text-center text-muted">&nbsp;</span>
         <div class="card-block p-1" id="vegDetail" v-html="detail.content"></div>
         <ul class="list-group list-group-flush">
+          <li class="list-group-item">摘要: {{detail.digest}}</li>
+          <li class="list-group-item">封面图片素材id: {{detail.thumbMediaId}}</li>
           <li class="list-group-item">创建时间: {{formatDateTime(detail.createTime)}}</li>
           <li class="list-group-item">修改时间: {{formatDateTime(detail.lastupdate)}}</li>
         </ul>
         <div class="card-footer">
           <button class="btn btn-block btn-primary" @click.stop="edit(detail.id)">修改</button>
           <button class="btn btn-block btn-danger" @click.stop="deleteArt(detail.id, detail.title)">删除</button>  
+          <button class="btn btn-block btn-warning mt-3" @click.stop="uploadToWx(detail.id)">上传为微信图文素材</button>  
         </div>
       </div>
     </template>     
@@ -28,7 +31,7 @@
 </template>
 
 <script>
-import { refreshArticle, deleteArticle } from '../../api/article.js'
+import { refreshArticle, deleteArticle, uploadArticleToWx } from '../../api/article.js'
 import { convertLongToTimeDesc } from '../../common/common.js'
 
 export default {
@@ -92,6 +95,21 @@ export default {
           if (jsonResult.status === 'OK') {
             this.showErrMsg(title + ' 已删除')
             this.$router.replace('/arts')
+          }
+        },
+        () => {},
+        () => { this.hideLoading() }
+      )
+    },
+    uploadToWx: function (id) {
+      this.showLoading('处理中......')
+
+      uploadArticleToWx(id,
+        (jsonResult) => {
+          if (jsonResult.status === 'OK') {
+            this.showErrMsg('media_id is ' + jsonResult.desc)
+          } else {
+            this.showErrMsg('出了点问题')
           }
         },
         () => {},

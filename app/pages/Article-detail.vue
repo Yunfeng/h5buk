@@ -7,10 +7,6 @@
         </div>       
         <span class="bg-faded text-center text-muted">&nbsp;</span>
         <div class="card-block p-1" id="vegDetail" v-html="detail.content"></div>
-        <ul class="list-group list-group-flush">
-          <li class="list-group-item">创建时间: {{formatDateTime(detail.createTime)}}</li>
-          <li class="list-group-item">修改时间: {{formatDateTime(detail.lastupdate)}}</li>
-        </ul>
       </div>
     </template>     
   </div>
@@ -28,6 +24,7 @@ export default {
     }
   },
   mounted: function () {
+    this.hideBottomBar()
     var id = this.$route.params.id
     if (id !== undefined) {
       this.refreshArticle(parseInt(id))
@@ -45,6 +42,9 @@ export default {
     },
     hideLoading: function () {
       this.$store.commit('showLoading', { 'loading': false })
+    },
+    hideBottomBar: function () {
+      this.$store.commit('hideBottomTabBar')
     },
     formatDateTime: function (val) {
       if (val === null) {

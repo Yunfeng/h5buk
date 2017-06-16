@@ -15,11 +15,11 @@
     <div class="card col-12">
       <table class="table">
         <tr>
-          <td>标题</td>
+          <td>标题*</td>
           <td><input class="weui-input" placeholder="文章标题" v-model="title"></td>
         </tr>
         <tr>
-          <td colspan="2">内容</td>
+          <td colspan="2">内容*</td>
         </tr>
         <tr>
           <td colspan="2">
@@ -32,6 +32,15 @@
             <button data-toggle="modal" data-target="#selectMaterialModal">插入图片</button>
           </td>
         </tr>
+        <tr>
+          <td>摘要</td>
+          <td><input class="weui-input" placeholder="微信图文消息的摘要" v-model="digest"></td>
+        </tr>
+        <tr>
+          <td>封面图片素材id</td>
+          <td><input class="weui-input" placeholder="微信图文消息的封面图片素材id" v-model="thumbMediaId"></td>
+        </tr>
+
       </table>
 
       <div class="card-footer">
@@ -77,6 +86,8 @@ export default {
       id: 0,
       title: '',
       content: '',
+      digent: '',
+      thumbMediaId: '',
 
       editor: null,
 
@@ -140,6 +151,8 @@ export default {
         (jsonResult) => {
           this.title = jsonResult.title
           this.content = jsonResult.content
+          this.digest = jsonResult.digest
+          this.thumbMediaId = jsonResult.thumbMediaId
           this.editor.setContent(this.content, true)
         },
         null,
@@ -150,7 +163,9 @@ export default {
       var params = {
         'id': this.id,
         'title': this.title,
-        'content': this.editor.getContent()
+        'content': this.editor.getContent(),
+        'digest': this.digest,
+        'thumbMediaId': this.thumbMediaId
       }
 
       this.showLoading('保存中......')

@@ -5,6 +5,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    bottomTabBarShowed: true,
     logined: false,
     username: '',
     fullname: '',
@@ -232,6 +233,12 @@ export default new Vuex.Store({
       var psgCount = state.orderDetail.psgCount
 
       state.orderDetail.ticketAmount = Math.round((price * (100 - p.returnPoint) / 100 - p.returnMoney + 50) * psgCount)
+    },
+    hideBottomTabBar(state) {
+      state.bottomTabBarShowed = false
+    },
+    showBottomTabBar(state) {
+      state.bottomTabBarShowed = true
     }
   },
   actions: {

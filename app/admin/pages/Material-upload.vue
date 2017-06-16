@@ -14,6 +14,7 @@
             <th>media type</th>
             <th>media id</th>
             <th>url</th>
+            <th>name</th>
             <th>创建时间</th>
             <th>修改时间</th>
             <th></th>
@@ -34,6 +35,7 @@
                   <a @click.stop="copy('url.' + info.id)" class="small">复制</a>
                 </template>
               </td>
+              <td>{{info.name}}</td>
               <td>
                 {{formatDateTime(info.createTime)}}
               </td>

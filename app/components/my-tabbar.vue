@@ -26,7 +26,7 @@
       
 		</div>
 	</div> -->
-  <div class="row col-12 fixed-bottom">
+  <div class="row col-12 fixed-bottom" v-if="showed">
     <div class="weui-tabbar">
       <router-link to="/search" class="weui-tabbar__item">
         <div class="weui-tabbar__icon">
@@ -52,3 +52,11 @@
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  computed: {
+    showed () { return this.$store.state.bottomTabBarShowed }
+  }
+}
+</script>
