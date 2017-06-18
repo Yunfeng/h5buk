@@ -53,9 +53,6 @@ export default {
         return convertLongToTimeDesc(val)
       }
     },
-    edit: function () {
-      this.$router.push('/art/edit/' + this.detail.id)
-    },
     refreshArticle: function (id) {
       this.showLoading()
 

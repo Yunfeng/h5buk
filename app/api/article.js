@@ -47,7 +47,7 @@ export function updateArticle(params, done, fail, always) {
 
 export function refreshArticle(id, done, fail, always) {
   $.ajax({
-    type: "post",
+    type: "get",
     url: "/Flight/article/" + id,
     dataType: "json",
   }).done(function (jsonResult) {    

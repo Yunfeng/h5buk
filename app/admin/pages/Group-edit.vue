@@ -71,7 +71,7 @@
 <script>
 import { createGroupTravel, getGroupTravel } from '../../api/group-flight.js'
 import { convertLongToTimeDesc } from '../../common/common.js'
-import UM from 'UM'
+import UE from 'UE'
 import $ from 'jquery'
 
 export default {
@@ -96,7 +96,7 @@ export default {
   },
   mounted: function () {
     window.UMEDITOR_HOME_URL = '/ueditor/'
-    this.editor = UM.getEditor('myEditor')
+    this.editor = UE.getEditor('myEditor')
 
     var id = this.$route.params.id
     if (id !== undefined) {

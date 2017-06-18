@@ -76,7 +76,7 @@
 
 <script>
 import $ from 'jquery'
-import UM from 'UM'
+import UE from 'UE'
 import { createArticle, refreshArticle, updateArticle } from '../../api/article.js'
 import { searchMaterials } from '../../api/material.js'
 
@@ -86,7 +86,7 @@ export default {
       id: 0,
       title: '',
       content: '',
-      digent: '',
+      digest: '',
       thumbMediaId: '',
 
       editor: null,
@@ -99,7 +99,7 @@ export default {
   },
   mounted: function () {
     window.UMEDITOR_HOME_URL = '/ueditor/'
-    this.editor = UM.getEditor('myEditor')
+    this.editor = UE.getEditor('myEditor')
 
     var id = this.$route.params.id
     if (id !== undefined) {
@@ -153,7 +153,12 @@ export default {
           this.content = jsonResult.content
           this.digest = jsonResult.digest
           this.thumbMediaId = jsonResult.thumbMediaId
-          this.editor.setContent(this.content, true)
+
+          const self = this
+
+          this.editor.ready(function () {
+            self.editor.setContent(self.content, true)
+          })
         },
         null,
         () => {}

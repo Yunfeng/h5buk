@@ -55,7 +55,7 @@
 
 <script>
 import { createTrip } from '../../api/trip.js'
-import UM from 'UM'
+import UE from 'UE'
 
 export default {
   data () {
@@ -73,7 +73,7 @@ export default {
   },
   mounted: function () {
     window.UMEDITOR_HOME_URL = '/ueditor/'
-    this.editor = UM.getEditor('myEditor')
+    this.editor = UE.getEditor('myEditor')
 
     var id = this.$route.params.id
     if (id !== undefined) {
