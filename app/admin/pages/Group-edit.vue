@@ -192,10 +192,16 @@ export default {
             this.price = jsonResult.price
 
             this.tripContent = jsonResult.content
-            this.editor.setContent(this.tripContent, true)
+            // this.editor.setContent(this.tripContent, true)
 
             this.createTime = jsonResult.createTime
             this.lastupdate = jsonResult.lastupdate
+
+            const self = this
+
+            this.editor.ready(function () {
+              self.editor.setContent(self.tripContent, true)
+            })
           }
         },
         () => {},

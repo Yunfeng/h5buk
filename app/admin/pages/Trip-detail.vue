@@ -16,8 +16,29 @@
           购买链接：<a :href="detail.buyUrl" target="_blank">{{detail.buyUrl}}</a><br />
           联系购买：{{detail.buyContact}}<br />
         </div>       
-        <span class="bg-faded text-center text-muted">详细介绍 </span>
+        <span class="bg-faded text-center text-muted">介绍 </span>
         <div class="card-block p-1" id="vegDetail" v-html="detail.content"></div>
+        <span class="bg-faded text-center text-muted">每日行程</span>
+        <table class="table">
+          <thead>
+            <tr><th></th><th></th><th></th></tr>
+          </thead>
+          <tbody>
+            <template v-for="dayInfo in detail.dayInfos">
+              <tr>
+                <td>{{dayInfo.day}}</td>
+                <td><span v-html="dayInfo.content"></span></td>
+                <td>
+                  <button class="btn btn-sm btn-danger" @click.stop="delDayInfo(dayInfo.id)">删除</button></td>
+              </tr>
+            </template>
+            <tr>
+              <td colspan="3" class="text-right">
+                <button class="btn btn-sm btn-success" @click.stop="addDayInfo(detail.id)">增加日程安排</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
         <ul class="list-group list-group-flush">
           <li class="list-group-item">创建时间: {{formatDateTime(detail.createTime)}}</li>
           <li class="list-group-item">修改时间: {{formatDateTime(detail.lastupdate)}}</li>
@@ -31,20 +52,19 @@
 </template>
 
 <script>
-import { getTripDetail } from '../../api/trip.js'
+import { getTripDetail, delTripDayInfo } from '../../api/trip.js'
 import { convertLongToTimeDesc } from '../../common/common.js'
 
 export default {
   data () {
     return {
+      id: 0,
       detail: null
     }
   },
   mounted: function () {
-    var id = this.$route.params.id
-    if (id !== undefined) {
-      this.refreshTripDetail(parseInt(id))
-    }
+    this.id = parseInt(this.$route.params.id)
+    this.refreshTripDetail(this.id)
   },
   updated: function () {
     // this.addImgFluid()
@@ -86,6 +106,28 @@ export default {
       } else {
         return convertLongToTimeDesc(val)
       }
+    },
+    addDayInfo: function (id) {
+      var path = '/trip/' + id + '/day'
+      this.$router.push(path)
+    },
+    delDayInfo: function (id) {
+      if (window.confirm('确定删除此日行程安排 吗？') === false) {
+        return
+      }
+
+      this.showLoading()
+
+      delTripDayInfo(id,
+        (jsonResult) => {
+          if (jsonResult.status === 'OK') {
+            this.showErrMsg('操作成功')
+            this.refreshTripDetail(this.id)
+          }
+        },
+        () => {},
+        () => { this.hideLoading() }
+      )
     }
   },
   beforeRouteEnter (to, from, next) {

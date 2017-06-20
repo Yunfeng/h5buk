@@ -202,7 +202,13 @@ export default {
             this.price = jsonResult.price
 
             this.tripContent = jsonResult.content
-            this.editor.setContent(this.tripContent, true)
+            // this.editor.setContent(this.tripContent, true)
+
+            const self = this
+
+            this.editor.ready(function () {
+              self.editor.setContent(self.tripContent, true)
+            })
           }
         },
         () => {},
