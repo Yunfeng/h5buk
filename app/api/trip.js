@@ -72,3 +72,32 @@ export function delTripDayInfo(id, done, fail, always) {
     always()
   })
 }
+
+export function createTripPrice(params, done, fail, always) {
+  $.ajax({
+    type: 'post',
+    url: WEBAPP_NAME + '/trip/price/create',
+    dataType: 'json',
+    data: params
+  }).done(function (jsonResult) {
+    done(jsonResult)
+  }).fail(function (jqXHR, textStatus, errorThrown) {
+    // fail(jqXHR.status, jqXHR.statusText)
+  }).always(function () {
+    always()
+  })
+}
+
+export function delTripPriceInfo(id, done, fail, always) {
+  $.ajax({
+    type: 'post',
+    url: WEBAPP_NAME + '/trip/price/' + id + '/delete',
+    dataType: 'json',
+  }).done(function (jsonResult) {
+    done(jsonResult)
+  }).fail(function (jqXHR, textStatus, errorThrown) {
+    fail(jqXHR.status, jqXHR.statusText)
+  }).always(function () {
+    always()
+  })
+}

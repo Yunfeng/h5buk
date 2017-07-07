@@ -30,7 +30,6 @@
 </template>
 
 <script>
-
 export default {
   methods: {
     back: function () {

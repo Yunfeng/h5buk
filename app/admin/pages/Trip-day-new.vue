@@ -11,11 +11,54 @@
       <table class="table">
         <tr>
           <td>第几天</td>
-          <td><input class="weui-input" placeholder="第几天" v-model.number="day"></td>
+          <td><input placeholder="第几天" v-model.number="day"></td>
         </tr>
         <tr>
           <td>标题</td>
-          <td><input class="weui-input" placeholder="标题" v-model="title"></td>
+          <td><input placeholder="标题" v-model="title"></td>
+        </tr>
+        <tr>
+          <td>当前站</td>
+          <td><input placeholder="当前站" v-model="currentStop"></td>
+        </tr>
+        <tr>
+          <td>下一站</td>
+          <td><input placeholder="下一站" v-model="nextStop"></td>
+        </tr>
+        <tr>
+          <td>交通方式</td>
+          <td>
+            <select v-model.number="transport">
+              <option value="0">无</option>
+              <option value="1">汽车</option>
+              <option value="2">火车</option>
+              <option value="8">飞机</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td>早中晚餐</td>
+          <td>
+            <label for="breakfast">早餐</label>
+            <select v-model.number="breakfast">
+              <option value="0">不含</option>
+              <option value="1">含早餐</option>
+            </select>
+            <label for="breakfast">午餐</label>
+            <select v-model.number="lunch">
+              <option value="0">不含</option>
+              <option value="1">含午餐</option>
+            </select>
+            <label for="breakfast">晚餐</label>
+            <select v-model.number="supper">
+              <option value="0">不含</option>
+              <option value="1">含晚餐</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td>住宿</td>
+          <td><input placeholder="住宿" v-model="accommodation"></td>
         </tr>
         <tr>
           <td colspan="2">内容</td>
@@ -47,6 +90,13 @@ export default {
       day: 0,
       title: '',
       content: '',
+      breakfast: 0,
+      lunch: 0,
+      supper: 0,
+      accommodation: '',
+      transport: 0,
+      currentStop: '',
+      nextStop: '',
 
       editor: null
     }
@@ -56,6 +106,8 @@ export default {
     this.editor = UE.getEditor('myEditor')
 
     this.tripId = this.$route.params.id
+
+    window.scroll(0, 0)
   },
   destroyed () {
     this.editor.destroy()
@@ -78,7 +130,14 @@ export default {
         'tripId': this.tripId,
         'day': this.day,
         'title': this.title,
-        'content': this.editor.getContent()
+        'content': this.editor.getContent(),
+        'currentStop': this.currentStop,
+        'nextStop': this.nextStop,
+        'transport': this.transport,
+        'breakfast': this.breakfast,
+        'lunch': this.lunch,
+        'supper': this.supper,
+        'accommodation': this.accommodation
       }
 
       this.showLoading()

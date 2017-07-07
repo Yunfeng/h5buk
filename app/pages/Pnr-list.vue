@@ -13,6 +13,9 @@
               <input class="form-control" type="text" placeholder="编码" v-model="pnrNo">
           </div>
           <div class="form-group">
+              <input class="form-control" type="text" placeholder="航司" v-model="carrier">
+          </div>
+          <div class="form-group">
               <input class="form-control" type="text" placeholder="用户名" v-model="etermUsername">
           </div>
           <div class="form-group">
@@ -60,6 +63,7 @@
       <div class="card col-12 hidden-md-down">
         <form class="form-inline">
           <input class="form-control m-2 col-1" type="text" placeholder="编码" v-model="pnrNo">
+          <input class="form-control m-2 col-1" type="text" placeholder="航司" v-model="carrier">
           <input class="form-control m-2 col-1" type="text" placeholder="用户名" v-model="etermUsername">
           <my-date-picker :id="'beginDate1'" :class="'form-control m-2'" :style="'width:7rem'" :placeholder="'开始日期'" v-model="beginDate"></my-date-picker> 
           <my-date-picker :id="'endDate1'" :class="'form-control m-2'" :style="'width:7rem'"  :placeholder="'截止日期'" v-model="endDate"></my-date-picker>  
@@ -157,6 +161,7 @@ export default {
       beginDate: '',
       endDate: '',
       dzStatus: -1,
+      carrier: '',
       orderBy: 0,
       dataMode: '0'
     }
@@ -201,7 +206,8 @@ export default {
         'sc.beginDate': beginDate,
         'sc.endDate': endDate,
         'sc.orderBy': this.orderBy,
-        'sc.dzStatus': this.dzStatus
+        'sc.dzStatus': this.dzStatus,
+        'sc.carrier': this.carrier
       }
 
       if (this.dataMode === '0') {
@@ -258,6 +264,8 @@ export default {
       this.beginDate = ''
       this.endDate = ''
       this.orderBy = 0
+      this.carrier = ''
+      this.dzStatus = -1
     }
   },
   beforeRouteEnter (to, from, next) {

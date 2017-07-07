@@ -35,7 +35,7 @@
           <td><input class="weui-input" placeholder="联系方式" v-model="buyContact"></td>
         </tr>
         <tr>
-          <td colspan="2">内容</td>
+          <td colspan="2">内容简介(行程特色)</td>
         </tr>
         <tr>
           <td colspan="2">

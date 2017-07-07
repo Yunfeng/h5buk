@@ -60,7 +60,6 @@
 </template>
 
 <script>
-
 export default {
   name: 'PnrHome',
   methods: {

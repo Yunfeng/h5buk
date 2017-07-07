@@ -36,6 +36,14 @@
             机票
         </p>
       </router-link>
+      <router-link to="/trips" class="weui-tabbar__item">
+        <div class="weui-tabbar__icon">
+            <i class="fa fa-plane fa-2 text-primary" aria-hidden="true"></i>
+        </div>
+        <p class="weui-tabbar__label">
+            旅游
+        </p>
+      </router-link>
       <router-link to="/order" class="weui-tabbar__item">
         <div class="weui-tabbar__icon">
           <i class="fa fa-home fa-2" aria-hidden="true"></i>

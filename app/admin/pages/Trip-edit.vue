@@ -38,7 +38,7 @@
           <td>{{formatDateTime(lastupdate)}}</td>
         </tr>
         <tr>
-          <td colspan="2">内容</td>
+          <td colspan="2">内容简介(行程特色)</td>
         </tr>
         <tr>
           <td colspan="2">

@@ -67,7 +67,10 @@ const MyUpload      = () => System.import('./pages/Upload.vue')
 const MyMaterials      = () => System.import('./pages/Materials.vue')
 const MyPlay      = () => System.import('./pages/Media-play.vue')
 
-const MyArtDetail    = resolve => require(['./pages/Article-detail.vue'], resolve);
+const MyArtDetail    = resolve => require(['./pages/Article-detail.vue'], resolve)
+
+const MyTripList    = resolve => require(['./pages/Trip-list.vue'], resolve)
+const MyTripDetail    = resolve => require(['./pages/Trip-detail.vue'], resolve)
 
 const routes = [
   {path: '/',              component: MyNav},
@@ -126,6 +129,9 @@ const routes = [
   {path: '/play/:id',      component: MyPlay},
 
   {path: '/article/:id',       component: MyArtDetail},
+
+  {path: '/trips', component: MyTripList},
+  {path: '/trip/:id', component: MyTripDetail}
 ]
 
 let router = new Router({

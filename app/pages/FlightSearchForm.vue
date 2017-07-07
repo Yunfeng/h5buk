@@ -1,9 +1,6 @@
 <template>
 	<div id="searching" class="row" style="background-color: #2E9CDF;">
     <div class="col-12 bg-info text-center text-white">
-      <span @click="back()" class="float-left fa-2">
-        <i class="fa fa-angle-left fa-2" aria-hidden="true"></i>
-      </span>
       <span class="fa-2">国内机票</span>
     </div> 
 
