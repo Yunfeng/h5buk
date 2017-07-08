@@ -1,3 +1,5 @@
+import { WEBAPP_NAME } from '../common/common.js'
+
 export function processOrder(url, params, done, fail, always) {
   $.ajax({
     type: 'post',
@@ -202,6 +204,37 @@ export function specifyBuyerForOrder(id, params, done, fail, always) {
   }).always(function () {
     if (always) always()
     // always()
+    // setTimeout(() => { always() }, 5000)
+  })
+}
+
+export function searchTripOrders(params, done, fail, always) {
+  $.ajax({
+    type: 'post',
+    url: WEBAPP_NAME + '/trip/orders',
+    data: params,
+    dataType: 'json',
+  }).done(function (jsonResult) {
+    done(jsonResult)
+  }).fail(function (jqXHR, textStatus, errorThrown) {
+    fail(jqXHR.status, jqXHR.statusText)
+  }).always(function () {
+    always()
+    // setTimeout(() => { always() }, 5000)
+  })
+}
+
+export function searchTripOrderDetail(id, done, fail, always) {
+  $.ajax({
+    type: 'post',
+    url: WEBAPP_NAME + '/trip/order/detail/' + id,
+    dataType: 'json',
+  }).done(function (jsonResult) {
+    done(jsonResult)
+  }).fail(function (jqXHR, textStatus, errorThrown) {
+    fail(jqXHR.status, jqXHR.statusText)
+  }).always(function () {
+    always()
     // setTimeout(() => { always() }, 5000)
   })
 }

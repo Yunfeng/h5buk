@@ -40,11 +40,11 @@
                 </a>
               </h5>
             </div>
-            <div id="collapseTripThree" class="collapse" role="tabpanel" aria-labelledby="headingTripThree">
+            <div id="collapseTripThree" class="collapse show" role="tabpanel" aria-labelledby="headingTripThree">
               <table class="table">
                   <tbody>
                     <template v-for="dayInfo in detail.dayInfos">
-                      <tr>
+                      <tr class="bg-info text-white">
                         <td>第{{dayInfo.day}}天</td>
                         <td>
                           {{dayInfo.currentStop}} 
@@ -55,10 +55,9 @@
                       </tr>
                       <tr>
                         <td colspan="2"><span v-html="dayInfo.content"></span></td>
-                        <td></td>
                       </tr>
                       <tr>
-                        <td colspan="3" class="text-center">
+                        <td colspan="2" class="text-center">
                           <template v-if="dayInfo.breakfast || dayInfo.lunch || dayInfo.supper">
                             含 <span v-if="dayInfo.breakfast">早餐</span>
                             <span v-if="dayInfo.lunch">午餐</span>
@@ -73,45 +72,7 @@
                 </table>
             </div>
           </div>
-          <div class="card">
-            <div class="card-header" role="tab" id="headingTripPrice">
-              <h5 class="mb-0">
-                <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTripPrice" aria-expanded="false" aria-controls="collapseTripPrice">
-                  价格
-                </a>
-              </h5>
-            </div>
-            <div id="collapseTripPrice" class="collapse" role="tabpanel" aria-labelledby="headingTripPrice">
-              <table class="table">
-                  <thead>
-                    <tr>
-                      <th>出发日期</th>
-                      <th>价格</th>
-                      <th>儿童价</th>
-                      <th></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <template v-for="info in detail.priceInfos">
-                      <tr>
-                        <td>{{info.ddate}}</td>
-                        <td>
-                          {{info.price}} 
-                        </td>
-                        <td>
-                          {{info.childPrice}} 
-                        </td>
-                        <td>
-                          <button class="btn btn-sm btn-success">预定</button>
-                          </td> 
-                      </tr>
-                    </template>
-                  </tbody>
-                </table>
-            </div>
-          </div>
-        </div>        
-        
+        </div>                
       </div>
     </template>     
   </div>
@@ -135,10 +96,6 @@ export default {
   mounted: function () {
     this.id = parseInt(this.$route.params.id)
     this.refreshTripDetail(this.id)
-  },
-  updated: function () {
-    // this.addImgFluid()
-    // this.bindCarousel()
   },
   methods: {
     back: function () {
@@ -166,10 +123,6 @@ export default {
         () => { this.hideLoading() }
       )
     },
-    edit: function (id) {
-      var path = '/trip/edit/' + id
-      this.$router.push(path)
-    },
     formatDateTime: function (val) {
       if (val === null) {
         return ''
@@ -178,8 +131,9 @@ export default {
       }
     },
     selectTripDate: function (tripDate, price) {
-      console.log(tripDate)
+      // console.log(tripDate)
       // window.alert(tripDate + ', ' + price)
+      this.$router.push('/trip/' + this.id + '/' + tripDate)
     }
   },
   beforeRouteEnter (to, from, next) {

@@ -168,7 +168,7 @@ export default {
   }
 
   .full-calendar-body{
-    margin-top: 20px;
+    margin-top: 5px;
   .weeks{
     display: flex;
     border-top:1px solid #e0e0e0;

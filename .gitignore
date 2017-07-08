@@ -1,3 +1,4 @@
 .DS_Store
 .svn
+build.bat
 node_modules
