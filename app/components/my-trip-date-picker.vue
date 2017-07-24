@@ -31,7 +31,7 @@
               <template v-if="day.isCurMonth">
                 <p class="day-number">{{ day.monthDay }}</p>
                 <span class="text-success small" v-if="calcDayPrice(day.date) > 0">
-                  ￥{{calcDayPrice(day.date)}}
+                  {{calcDayPrice(day.date)}}
                 </span>
               </template>
             </div>
@@ -90,14 +90,19 @@ export default {
   methods: {
     calcDayPrice (showDate) {
       const date0 = showDate.format('YYYY-MM-DD')
-      const now = moment()
-      const spanDays = moment.duration(showDate - now)
-      if (spanDays.days() < 0) return -1
+      const now0 = moment()
+      const spanMonths = moment.duration(showDate - now0).months()
+      const spanDays = moment.duration(showDate - now0).days()
+
+      if (spanDays < 0) return -1
+
+      const totalSpanDays = spanMonths * 30 + spanDays
 
       for (let i = 0; i < this.prices.length; i++) {
         const info = this.prices[i]
+
         if (info.ddate === date0) {
-          if (spanDays.days() < info.advanceDays) {
+          if (totalSpanDays < info.advanceDays) {
             return 0
           } else {
             return info.price

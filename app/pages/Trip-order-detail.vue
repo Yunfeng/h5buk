@@ -10,11 +10,10 @@
       </div> 
 
       <div class="card col-12 px-0 border-0">
-        <div class="card-block text-center">
-          <span class="text-info">{{info.tripName}}</span> 
+        <div class="card-block text-center" @click="showTripDetail(info.tripId)">
+          <span class="text-primary">{{info.tripName}}</span> <span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span>
           <br/>      
           <span class="small">出发日期：</span><span class="text-danger small">{{info.ddate}}</span>
-          <small>金额: </small><span class="text-danger"><i class="fa fa-rmb text-warning"></i> {{info.totalPrice}}</span>
         </div>
       </div>
       <div class="card col-12 px-0 border-0">
@@ -59,69 +58,13 @@
         </dl>
       </div>
 
-      <template v-if='info.status === 1024 && info.enterpriseId > 0'>
-        <template v-if="policies.length > 0">
-          <div class="card-block py-0 bg-faded text-info">
-            特殊政策 <small>(票面低于实际付款金额)</small>
-          </div>
-          <table class='table table-sm table-striped table-condensive'>
-            <thead>
-                <tr>
-                    <th>航司</th>
-                    <th>舱位</th>
-                    <th class="text-right">返点</th>
-                    <th class="text-right">最低票面</th>
-                    <th></th>
-                </tr>                        
-            </thead>
-            <tbody>
-                <tr v-for='(info, index) in policies' @click='showPolicyDetail(info)'>
-                    <td>{{info.carrier}}</td>
-                    <td>{{info.subclass}}</td>
-                    <td class="text-right">{{info.returnPoint}}</td>
-                    <td class="text-right">{{info.minPrice}}</td>
-                    <td class="text-center"><button class='btn btn-success btn-sm' @click.stop='selectPolicy(info)'>选择</button></td>
-                </tr>
-            </tbody>
-          </table>
-          <div class="card-block py-0 bg-faded text-info">
-            <small>备注</small>
-          </div>
-          <table class="table">
-            <tr>
-              <td>
-                <input type="input" class="form-control" placeholder="请在此输入备注信息" v-model="remark">
-              </td>
-            </tr>                  
-          </table>                
-        </template>
-
-        <div class="card col-12 border-0 mb-2 px-0">
-          <div class="card-block">
-            <template v-if="info.enterpriseId === info.seller">              
-              <button type='button' class='btn btn-outline-danger w-100 mb-3' @click.stop='specifyBuyerPayOrder(info.id)'>通知买家付款</button>
-            </template>
-
-            <button type='button' class='btn btn-success w-100' @click.stop='commitTmcOrder(info.id)'>申请出票</button>
-
-            <button type='button' class='btn btn-outline-danger w-100 mt-3' @click.stop='cancelTmcOrder(info.id)'>取消</button>
-          </div>
-        </div>
-      </template>
-
       <template v-if='info.status === 1'>          
         <div class='card col-12 border-0 mb-5'>
-          <button type='button' class='btn btn-success w-100' @click.stop='payForTmcOrder(info.id)'>余额支付</button>
+          <button type='button' class='btn btn-success w-100' @click.stop='payForTripOrder(info.id)'>余额支付</button>
           <button type='button' class='btn btn-outline-success w-100 mt-3' @click.stop='weixinPay1(info.id)'>
             微信支付
             <template v-if="wxpayRate>0">
               <small>支付费率千分之 {{wxpayRate}}</small>
-            </template>
-          </button>
-          <button type='button' class='btn btn-outline-info w-100 mt-3' @click.stop="aliPay1(info.id)">
-            支付宝
-            <template v-if="alipayRate>0">
-              <span class="small align-bottom">支付费率千分之 {{alipayRate}}</span>
             </template>
           </button>
         </div>
@@ -144,36 +87,17 @@
           </div>
         </template>
       </template>
-      <template v-if='info.status === 16  && info.enterpriseId > 0 && info.policyId > 0'>
-        <div class='card col-12 border-0 mb-2'>
-          <button type='button' class='weui-btn weui-btn_primary' @click='confirmOrderTicketRight(info.id)'>票号正确 ({{ticketCorrectConfirmTimes}})</button>
-
-          <button type='button' class='weui-btn weui-btn_warn' @click='confirmOrderTicketWrong(info.id)'>票号有误 ({{ticketWrongConfirmTimes}})</button>
-        </div>
-      </template>
-      <template v-if='info.status === 8  && info.enterpriseId === 0 && info.seller > 0'>          
-        <div class='card col-12 border-0 mb-4'>
-          <button type='button' class='btn btn-success w-100' @click.stop='toTicketTmcOrder(info.id);'>我来开票</button>
-          <button type='button' class='btn btn-danger w-100 mt-3' @click.stop='denyTmcOrder(info.id);'>拒绝</button>
-        </div>
-      </template>
-      <template v-if='info.status === 12  && info.enterpriseId === 0 && info.seller > 0'>
-        <div class="card col-12 border-0 mb-4">
-          <button type='button' class='btn btn-success w-100' @click='fillTicketNo(info.id);'>填写票号</button>
-          <button type='button' class='btn btn-danger w-100 mt-3' @click='denyTmcOrder(info.id);'>拒绝</button>
-        </div>
-      </template>
     </template> 
   </div>
 </template>
 
 <script>
-import { convertLongToTimeDesc, showIdTypeDesc, showTripOrderStatus } from '../common/common.js'
+import { convertLongToTimeDesc, showIdTypeDesc, showTripOrderStatus, WEBAPP_NAME, ORDER_TYPE_TRIP } from '../common/common.js'
 import { getDomainUrl } from '../api/wx.js'
 import MyButton from '../components/my-button.vue'
 import MyInput from '../components/my-input.vue'
 import $ from 'jquery'
-import { searchTripOrderDetail, cancelOrder, searchPayRates, processOrder } from '../api/order.js'
+import { searchTripOrderDetail, payTripOrder, searchPayRates } from '../api/order.js'
 
 export default {
   components: {
@@ -214,17 +138,6 @@ export default {
     showIdTypeDesc: function (idType) {
       return showIdTypeDesc(idType)
     },
-    showTime: function (old) {
-      if (old.length === 4) {
-        return old.substring(0, 2) + ':' + old.substring(2, 4)
-      } else {
-        return old
-      }
-    },
-    showPolicyDetail: function (info) {
-      this.$store.commit('setPolicyDetail', info)
-      this.$router.push('/tmc/detail')
-    },
     formatDateTime: function (l) {
       return convertLongToTimeDesc(l)
     },
@@ -250,123 +163,23 @@ export default {
         () => this.hideLoading()
       )
     },
-    cancelTmcOrder: function (id) {
-      if (window.confirm('确定取消订单？') === false) {
-        return
-      }
-      // 买家：取消订单
-      this.showLoading('取消中...')
-      var params = { 'id': id }
-
-      cancelOrder(params,
-        (jsonResult) => {
-          if (jsonResult.status === 'OK') {
-            this.showErrMsg('操作成功', 'success')
-            this.refreshOrderDetail()
-          } else {
-            this.showErrMsg(jsonResult.errmsg)
-          }
-        },
-        null,
-        () => this.hideLoading()
-      )
-    },
-    commitTmcOrder: function (id) {
-      // 买家
-      if (this.info.policyId > 0) {
-        // 提交大客户政策订单开票
-        const url = '/Flight/orders/commitTmcPolicyOrder.do'
-        const postData = {
-          'id': id,
-          'policyId': this.info.policyId,
-          'ticketAmount': this.info.ticketAmount,
-          'remark': this.remark
-        }
-        const successHandler = this.refreshOrderDetail
-
-        this.executeOrderOp(url, postData, successHandler)
-      } else {
-        const url = '/Flight/orders/commitTmcOrder.do'
-        const postData = { id: id }
-        const successHandler = this.refreshOrderDetail
-
-        this.executeOrderOp(url, postData, successHandler)
-      }
-    },
-    payForTmcOrder: function (id) {
-      // 买家：支付订单
-      var url = '/Flight/orders/payForTmcOrder.do'
-      var postData = { id: id }
-      var successHandler = this.refreshOrderDetail
-
-      this.executeOrderOp(url, postData, successHandler)
-    },
-    toTicketTmcOrder: function (id) {
-      // 卖家：我来开票
-      var url = '/Flight/orders/toTicketForTmcOrder.do'
-      var postData = { id: id }
-      var successHandler = this.refreshOrderDetail
-
-      this.executeOrderOp(url, postData, successHandler)
-    },
-    denyTmcOrder: function (id) {
-      this.$router.push('/order/deny')
-    },
-    recommitTmcOrder: function () {
-      this.$router.push('/order/recommit')
-    },
-    fillTicketNo: function (id) {
-      this.$router.push('/order/ticket')
-    },
-    confirmOrderTicketWrong: function (id) {
-      this.ticketWrongConfirmTimes--
-      if (this.ticketWrongConfirmTimes > 0) {
-        console.log(this.ticketWrongConfirmTimes)
-        return
-      }
-
-      // 买家：票号错误
-      var url = '/Flight/orders/confirmOrderTicketWrong.do'
-      var postData = { id: id }
-      var successHandler = this.refreshOrderDetail
-
-      this.executeOrderOp(url, postData, successHandler)
-    },
-    confirmOrderTicketRight: function (id) {
-      this.ticketCorrectConfirmTimes--
-      if (this.ticketCorrectConfirmTimes > 0) {
-        console.log(this.ticketCorrectConfirmTimes)
-        return
-      }
-
-      // 买家：票号正确
-      var url = '/Flight/orders/confirmOrderTicketCorrect.do'
-      var postData = { id: id }
-      var successHandler = this.refreshOrderDetail
-
-      this.executeOrderOp(url, postData, successHandler)
-    },
-    executeOrderOp: function (url, postData, successHandler) {
+    payForTripOrder: function (id) {
       this.showLoading('处理中......')
 
-      let opResult = false
-
-      processOrder(url, postData,
+      payTripOrder(id,
         (jsonResult) => {
           if (jsonResult.status === 'OK') {
             this.showErrMsg('操作成功', 'success')
-            opResult = true
           } else {
             this.showErrMsg(jsonResult.errmsg, 'danger')
+            if (jsonResult.errcode === -4) {
+              console.log('call weixin pay')
+              this.weixinPay1(id)
+            }
           }
         },
         null,
-        () => {
-          this.hideLoading()
-          if (opResult) {
-            successHandler()
-          }
-        }
+        () => { this.hideLoading() }
       )
     },
     weixinPay1: function (orderId) {
@@ -383,7 +196,7 @@ export default {
       // get weixin appid
       $.ajax({
         type: 'post',
-        url: '/Flight/pay/createOrderPayOrder/' + orderId + '/' + payType,
+        url: WEBAPP_NAME + '/pay/createPayOrder/' + ORDER_TYPE_TRIP + '/' + orderId + '/' + payType,
         dataType: 'json',
         success: function (jsonResult) {
           if (jsonResult.status === 'OK') {
@@ -435,6 +248,9 @@ export default {
     },
     getDomain: function () {
       getDomainUrl((val) => { this.domain = val })
+    },
+    showTripDetail: function (id) {
+      this.$router.push('/trip/' + id)
     }
   },
   beforeRouteEnter (to, from, next) {

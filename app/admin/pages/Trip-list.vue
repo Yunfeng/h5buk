@@ -10,7 +10,6 @@
     <table class="table table-hover">
       <thead>
         <tr>
-          <th>ID</th>
           <th>标题</th>
           <th>出发</th>
           <th>到达</th>
@@ -21,9 +20,6 @@
       <tbody>
         <template v-for="(info, index) in dataList">
           <tr @click="showDetail(info)">
-            <td>
-              {{info.id}}
-            </td>
             <td>{{showShortName(info.name)}}</td>
             <td>
               {{info.dcity}}
@@ -52,7 +48,7 @@
 </template>
 
 <script>
-import { searchTrips } from '../../api/trip.js'
+import { searchMyTrips } from '../../api/trip.js'
 import { convertLongToTimeDesc } from '../../common/common.js'
 
 export default {
@@ -92,7 +88,7 @@ export default {
         'sc.pageSize': this.sc.pageSize
       }
 
-      searchTrips(params,
+      searchMyTrips(params,
         (jsonResult) => {
           this.dataList = jsonResult.dataList
           this.sc = jsonResult.page

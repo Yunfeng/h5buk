@@ -5,15 +5,28 @@
         <i class="fa fa-angle-left weui-tabbar__icon" aria-hidden="true"></i>
       </span>
       <template v-if="id ===0">
-        录入新线路计划
+        录入线路
       </template>
       <template v-else>
-        修改文章 <small>id: {{id}}</small>
+        修改线路 <small>id: {{id}}</small>
       </template>
     </div>
 
     <div class="card col-12">
       <table class="table">
+        <tr>
+          <td>国内国际</td>
+          <td>
+            <div class="form-group">
+                <label class="form-check-label">
+                    <input type="radio" class="form-check-input" name="sc.status" value="1" v-model.number="domestic">国内
+                </label>
+                <label class="form-check-label">
+                    <input type="radio" class="form-check-input" name="sc.status" value="0" v-model.number="domestic">国际
+                </label>
+            </div>
+          </td>
+        </tr>
         <tr>
           <td>线路名称</td>
           <td><input class="weui-input" placeholder="线路名称" v-model="tripName"></td>
@@ -61,14 +74,19 @@ export default {
   data () {
     return {
       id: 0,
+      domestic: 1,
       tripName: '',
       tripFrom: '',
+      tripFromCityId: 0,
       tripTo: '',
       tripContent: '',
       buyUrl: '',
       buyContact: '',
 
-      editor: null
+      editor: null,
+
+      targetName: '',
+      showPicker: false
     }
   },
   mounted: function () {
@@ -146,6 +164,7 @@ export default {
     },
     createTrip: function () {
       var params = {
+        'domestic': this.domestic,
         'name': this.tripName,
         'from': this.tripFrom,
         'to': this.tripTo,
@@ -171,8 +190,10 @@ export default {
     },
     reset: function () {
       this.id = 0
+      this.domestic = 1
       this.tripName = ''
       this.tripFrom = ''
+      this.tripFromCityId = 0
       this.tripTo = ''
       this.tripContent = ''
       this.buyUrl = ''
@@ -180,7 +201,6 @@ export default {
 
       this.editor.setContent(this.tripContent, true)
     }
-
   },
   beforeRouteEnter (to, from, next) {
     next(vm => {

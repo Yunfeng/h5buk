@@ -524,7 +524,7 @@ export default {
       // get weixin appid
       $.ajax({
         type: 'post',
-        url: '/Flight/pay/createOrderPayOrder/' + orderId + '/' + payType,
+        url: '/Flight/pay/createPayOrder/01/' + orderId + '/' + payType,
         dataType: 'json',
         success: function (jsonResult) {
           if (jsonResult.status === 'OK') {

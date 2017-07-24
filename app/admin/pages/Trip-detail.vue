@@ -23,7 +23,7 @@
             <div class="card-header" role="tab" id="headingTripTwo">
               <h5 class="mb-0">
                 <a class="collapsed" data-toggle="collapse" data-parent="#accordion" href="#collapseTripTwo" aria-expanded="false" aria-controls="collapseTripTwo">
-                  内容简介(行程特色)
+                  行程特色
                 </a>
               </h5>
             </div>
@@ -58,9 +58,7 @@
                           <button class="btn btn-sm btn-danger" @click.stop="delDayInfo(dayInfo.id)">删除</button></td>
                       </tr>
                       <tr>
-                        <td></td>
-                        <td><span v-html="dayInfo.content"></span></td>
-                        <td></td>
+                        <td colspan="3"><span v-html="dayInfo.content"></span></td>
                       </tr>
                       <tr>
                         <td colspan="3" class="text-center">
@@ -231,9 +229,9 @@ export default {
       )
     },
     delPriceInfo: function (id) {
-      if (window.confirm('确定删除此日价格 吗？') === false) {
-        return
-      }
+      // if (window.confirm('确定删除此日价格 吗？') === false) {
+      //   return
+      // }
 
       this.showLoading()
 

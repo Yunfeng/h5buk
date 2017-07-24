@@ -107,7 +107,7 @@
               </tr>                        
           </thead>
           <tbody>
-              <tr v-for='(info, index) in dataList' @click='showDetail(info)' :class="{'bg-success text-white': info.dzStatus}">
+              <tr v-for='(info, index) in dataList' @click='showDetail(info)' :class="{'success text-white': info.dzStatus}">
                   <td>{{info.pnrNo}}</td>
                   <td class="hidden-md-down small">
                     {{info.departurePort}}{{info.arrivalPort}} {{info.departureDate}}

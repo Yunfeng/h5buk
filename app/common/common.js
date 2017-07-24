@@ -1,4 +1,6 @@
 export const WEBAPP_NAME = '/Flight'
+export const ORDER_TYPE_FLIGHT = '01'
+export const ORDER_TYPE_TRIP = '06'
 /**
 * 
 */

@@ -8,13 +8,15 @@
     <template v-if="orders.length > 0">
       <div class="card col-12"  v-for="info in orders" @click="showDetail(info)" :class="changeBgByStatus(info.status)">
         <div class="card-block mt-1 mb-2 p-0">   
-          <span class="text-info">{{info.tripName}}</span> 
+          <span>{{info.tripName}}</span> 
+          <span class="float-right"><i class="fa fa-angle-right" aria-hidden="true"></i></span>
           <br/>      
           <span class="small">出发日期：</span><span class="text-danger">{{info.ddate}}</span>
           <br />          
           <small>订单状态：</small><span>{{showStatusDesc(info.status)}}</span><br />
           <span class="float-right"><small>总金额：</small>{{info.totalPrice}}</span>
           <small>下单时间：{{formatDateTime(info.createTime)}}</small> <br />
+          
         </div>
       </div>
     </template>
@@ -58,7 +60,7 @@ export default {
     },
     changeBgByStatus: function (orderStatus) {
       switch (orderStatus) {
-        case 1: return 'bg-success text-white'
+        case 1: return 'bg-info text-white'
         case 4: return 'bg-white text-info'
         case 8: return 'bg-white text-faded'
         case 16: return 'bg-success text-white'
