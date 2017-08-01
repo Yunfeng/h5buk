@@ -302,11 +302,16 @@ export default {
     }
   },
   mounted: function () {
+    this.$store.commit('hideBottomTabBar')
+
     this.avCount = 0
     this.filter.sortBy = this.sortBy
     this.filter.filterByCarrier = this.onlyCarrier
 
     this.readyToSearch()
+  },
+  beforeDestroy: function () {
+    this.$store.commit('showBottomTabBar')
   },
   methods: {
     back: function () {

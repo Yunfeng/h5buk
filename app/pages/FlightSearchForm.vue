@@ -97,6 +97,7 @@
 <script>
 import MyButton from '../components/my-button.vue'
 import MyCityPicker from '../components/my-citypicker.vue'
+import { addDate } from '../common/common.js'
 import $ from 'jquery'
 
 export default {
@@ -150,19 +151,42 @@ export default {
       }
       this.$store.commit('setAcity', { 'cityCode': cityCode, 'cityName': cityName })
 
-      var ddate = $.cookie('ddate')
-      var date0
+      var ddate
+      console.log(ddate)
+      var date0 = new Date()
+
+      const hours = date0.getHours()
+      console.log(hours)
+
+      // var oDate = new Date(); //实例一个时间对象；
+      // oDate.getFullYear();   //获取系统的年；
+      // oDate.getMonth()+1;   //获取系统月份，由于月份是从0开始计算，所以要加1
+      // oDate.getDate(); // 获取系统日，
+      // oDate.getHours(); //获取系统时，
+      // oDate.getMinutes(); //分
+      // oDate.getSeconds(); //秒
+
       var cookieDate = $.cookie('ddate')
       if (cookieDate === undefined || cookieDate === null || cookieDate.length !== 10) {
-        date0 = new Date()
-        ddate = date0.format('yyyy-MM-dd')
-      } else if (cookieDate !== undefined && cookieDate.length === 10) {
-        date0 = new Date()
-        var date1 = new Date(cookieDate)
-        if (date1 < date0) {
+        // date0 = new Date()
+        if (hours > 18) {
+          ddate = addDate(date0, 1)
+        } else {
           ddate = date0.format('yyyy-MM-dd')
         }
+      } else if (cookieDate !== undefined && cookieDate.length === 10) {
+        // date0 = new Date()
+        var date1 = new Date(cookieDate)
+        if (date1 < date0) {
+          if (hours > 18) {
+            ddate = addDate(date0, 1)
+          } else {
+            ddate = date0.format('yyyy-MM-dd')
+          }
+        }
       }
+
+      console.log(ddate)
 
       this.$store.commit('setDdate', ddate)
     }

@@ -67,6 +67,15 @@ export default {
       this.$store.commit('showLoading', { 'loading': false })
     },
     ok: function () {
+      if (this.buyerType === -1) {
+        this.showErrMsg('请选择需要指定的客户', 'danger')
+        return
+      }
+
+      if (this.buyerUsername === null && this.buyerOpenid === null) {
+        this.showErrMsg('请选择需要指定的客户', 'danger')
+        return
+      }
       const params = {
         'type': this.buyerType,
         'username': this.buyerUsername,
@@ -80,7 +89,7 @@ export default {
             this.showErrMsg('操作成功', 'success')
             this.back()
           } else {
-            this.showErrMsg(jsonResult.errMsg, 'danger')
+            this.showErrMsg(jsonResult.errmsg, 'danger')
           }
         },
         null,

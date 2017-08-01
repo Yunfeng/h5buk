@@ -380,7 +380,7 @@ export default {
             this.$store.commit('setOrderDetail', jsonResult)
 
             if (jsonResult.status === 1024) {
-              this.searchPolicies()
+              // this.searchPolicies()
             } else if (jsonResult.status === 1) {
               // 查找支付费率
               this.searchPayRate()

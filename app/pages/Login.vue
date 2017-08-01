@@ -295,6 +295,9 @@ export default {
     checkIn: function () {
       checkIn((jsonResult) => {
         this.showErrMsg(jsonResult.desc)
+        if (jsonResult.status === 'OK') {
+          this.searchBalance()
+        }
       })
     }
   },

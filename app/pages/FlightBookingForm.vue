@@ -205,7 +205,11 @@ export default {
     fltCount () { return this.bookFlights.length }
   },
   mounted: function () {
+    this.$store.commit('hideBottomTabBar')
     this.searchInsurances()
+  },
+  beforeDestroy: function () {
+    this.$store.commit('showBottomTabBar')
   },
   methods: {
     back: function () {
@@ -233,6 +237,10 @@ export default {
       }
     },
     createFlightOrder: function () {
+      if (this.bookFlights.length === 0) {
+        this.$router.push('/search')
+        return
+      }
       var self = this
 
       self.showLoading()
@@ -244,7 +252,11 @@ export default {
         dataType: 'json',
         success: function (jsonResult) {
           if (jsonResult.status !== 'OK') {
-            self.showErrMsg(jsonResult.errmsg, 'danger')
+            if (jsonResult.errcode === -10001) {
+              self.$store.commit('jumpToLogin', self.$router)
+            } else {
+              self.showErrMsg(jsonResult.errmsg, 'danger')
+            }
           } else {
             // 清空预定信息
             self.$store.commit('resetOrderInfo')
