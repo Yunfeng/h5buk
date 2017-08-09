@@ -253,3 +253,34 @@ export function payTripOrder(id, done, fail, always) {
     // setTimeout(() => { always() }, 5000)
   })
 }
+
+export function acceptTripOrder(id, done, fail, always) {
+  $.ajax({
+    type: 'post',
+    url: WEBAPP_NAME + '/trip/order/' + id + '/accept',
+    dataType: 'json',
+  }).done(function (jsonResult) {
+    done(jsonResult)
+  }).fail(function (jqXHR, textStatus, errorThrown) {
+    fail(jqXHR.status, jqXHR.statusText)
+  }).always(function () {
+    always()
+    // setTimeout(() => { always() }, 5000)
+  })
+}
+
+export function denyTripOrder(id, params, done, fail, always) {
+  $.ajax({
+    type: 'post',
+    url: WEBAPP_NAME + '/trip/order/' + id + '/deny',
+    dataType: 'json',
+    data: params,
+  }).done(function (jsonResult) {
+    done(jsonResult)
+  }).fail(function (jqXHR, textStatus, errorThrown) {
+    fail(jqXHR.status, jqXHR.statusText)
+  }).always(function () {
+    always()
+    // setTimeout(() => { always() }, 5000)
+  })
+}

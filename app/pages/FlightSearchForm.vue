@@ -152,11 +152,11 @@ export default {
       this.$store.commit('setAcity', { 'cityCode': cityCode, 'cityName': cityName })
 
       var ddate
-      console.log(ddate)
+      // console.log(ddate)
       var date0 = new Date()
 
       const hours = date0.getHours()
-      console.log(hours)
+      // console.log(hours)
 
       // var oDate = new Date(); //实例一个时间对象；
       // oDate.getFullYear();   //获取系统的年；
@@ -167,6 +167,7 @@ export default {
       // oDate.getSeconds(); //秒
 
       var cookieDate = $.cookie('ddate')
+      // console.log('cookieDate: ' + cookieDate)
       if (cookieDate === undefined || cookieDate === null || cookieDate.length !== 10) {
         // date0 = new Date()
         if (hours > 18) {
@@ -177,16 +178,19 @@ export default {
       } else if (cookieDate !== undefined && cookieDate.length === 10) {
         // date0 = new Date()
         var date1 = new Date(cookieDate)
+        // console.log(date1)
         if (date1 < date0) {
           if (hours > 18) {
             ddate = addDate(date0, 1)
           } else {
             ddate = date0.format('yyyy-MM-dd')
           }
+        } else {
+          ddate = date1.format('yyyy-MM-dd')
         }
       }
 
-      console.log(ddate)
+      // console.log(ddate)
 
       this.$store.commit('setDdate', ddate)
     }

@@ -77,6 +77,8 @@ const MyTripDetail  = () => System.import('./admin/pages/Trip-detail.vue')
 const MyTripEdit  = () => System.import('./admin/pages/Trip-edit.vue')
 const MyTripDayNew  = () => System.import('./admin/pages/Trip-day-new.vue')
 const MyTripPrice  = () => System.import('./admin/pages/Trip-price.vue')
+const MyTripOrderList    = () => System.import('./admin/pages/Trip-order-list.vue')
+const MyTripOrderDetail    = () => System.import('./admin/pages/Trip-order-detail.vue')
 
 const MyGroups  = () => System.import('./admin/pages/Group-list.vue')
 const MyGroupNew  = () => System.import('./admin/pages/Group-new.vue')
@@ -168,6 +170,8 @@ const routes = [
   {path: '/trip/edit/:id',   component: MyTripEdit},
   {path: '/trip/:id/day',   component: MyTripDayNew},
   {path: '/trip/:id/price',   component: MyTripPrice},
+  {path: '/trip-orders',   component: MyTripOrderList},
+  {path: '/trip-order/:id',   component: MyTripOrderDetail},
 
   {path: '/groups',   component: MyGroups, meta: { keepAlive: true } },
   {path: '/group/new',   component: MyGroupNew},

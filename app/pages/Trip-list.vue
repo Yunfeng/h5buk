@@ -5,11 +5,10 @@
     </div>
     <template v-for="(info, index) in dataList">  
       <div class="card col-12 border-top-0">
-        <div class="card-block" @click="showDetail(info)">
+        <div class="card-block px-0" @click="showDetail(info)">
           <p class="card-text">{{showShortName(info.name)}}</p>
           <p class="small">
-            出发地：<span class="text-info">{{info.dcity}}</span> 
-            目的地: <span class="text-primary">{{info.acity}}</span>
+            <span class="text-info">{{info.dcity}}</span> 出发
             <i class="fa fa-angle-right text-warning float-right fa-2" aria-hidden="true"></i>
           </p>
           

@@ -55,9 +55,9 @@
     </div>
     <div class="card col-12 px-0">
       <div class="card-header" role="tab" id="headingTrip">
-          <a data-toggle="collapse" href="#collapseTrip" aria-expanded="true" aria-controls="collapseTrip">
-              旅游 <i class="fa fa-angle-right" aria-hidden="true"></i>
-          </a>
+        <a data-toggle="collapse" href="#collapseTrip" aria-expanded="true" aria-controls="collapseTrip">
+          旅游 <i class="fa fa-angle-right" aria-hidden="true"></i>
+        </a>
       </div>
 
       <div id="collapseTrip" class="collapse" role="tabpanel" aria-labelledby="headingTrip" data-parent="#accordion">
@@ -68,6 +68,11 @@
             </router-link>
             <router-link to="/trip/new" class="text-primary small ml-2">
               新建
+            </router-link>
+          </li>
+          <li class="list-group-item ml-3">
+            <router-link to="/trip-orders" class="text-danger">
+              订单管理
             </router-link>
           </li>
         </ul>

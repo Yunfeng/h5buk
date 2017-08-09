@@ -339,7 +339,7 @@ export default {
       self.searching = true
       if (self.isReplacing) {
         self.searching = false // 开始替换旧的航班信息了，则关闭加载框，允许用户操作，后台更新数据
-        console.log('flight is replacing...')
+        // console.log('flight is replacing...')
       }
 
       var params = { 'startPosition': self.startPosition,
@@ -370,7 +370,7 @@ export default {
             for (var j = 0; j < len0; j++) {
               var flt0 = self.searchFlightResults[j]
               if (flt0.flightNo === flt.flightNo) {
-                console.log(flt0.flightNo + ': ' + flt0.id + ', ' + flt.id)
+                // console.log(flt0.flightNo + ': ' + flt0.id + ', ' + flt.id)
                 self.searchFlightResults.splice(j, 1)
                 self.isReplacing = true // 开始替换航班数据了
                 break
@@ -417,7 +417,7 @@ export default {
       }
 
       this.avCount = this.avCount + 1
-      if ((this.avCount > 5 && this.totalCount === 0) || this.avCount > 30) {
+      if ((this.avCount > 5 && this.totalCount === 0) || this.avCount > 10) {
         this.searching = false
         this.showErrMsg('时间有点长了，过会再试试吧')
         return

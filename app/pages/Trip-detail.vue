@@ -1,6 +1,6 @@
 <template>  
 	<div id="article-detail" class="row">
-    <div class="col-12 bg-primary text-center text-white fa-2">
+    <div class="col-12 bg-primary text-center text-white fa-2 sticky-top" style="opacity:0.6;">
       <span @click="back()" class="float-left">
         <i class="fa fa-angle-left fa-2" aria-hidden="true"></i>
       </span>
@@ -12,9 +12,7 @@
         <div class="card-block">
           <h4 class="card-title">{{detail.name}}</h4>    
           <p class="small">
-            出发地: <span class="text-info">{{detail.dcity}}</span> 
-            &nbsp;&nbsp;
-            目的地: <span class="text-primary">{{detail.acity}}</span>
+            <span class="text-info">{{detail.dcity}}</span>出发
           </p>
         </div>       
         <span class="bg-faded text-center text-muted">团期</span>

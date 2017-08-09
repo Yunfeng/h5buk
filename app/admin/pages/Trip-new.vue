@@ -15,25 +15,33 @@
     <div class="card col-12">
       <table class="table">
         <tr>
-          <td>国内国际</td>
+          <td>线路名称</td>
+          <td>
+            <input class="weui-input" placeholder="线路名称" v-model="tripName">
+          </td>
+        </tr>        
+        <tr>
+          <td>境内外</td>
           <td>
             <div class="form-group">
                 <label class="form-check-label">
-                    <input type="radio" class="form-check-input" name="sc.status" value="1" v-model.number="domestic">国内
+                    <input type="radio" class="form-check-input" name="sc.status" value="1" v-model.number="domestic">境内游
                 </label>
                 <label class="form-check-label">
-                    <input type="radio" class="form-check-input" name="sc.status" value="0" v-model.number="domestic">国际
+                    <input type="radio" class="form-check-input" name="sc.status" value="0" v-model.number="domestic">境外游
                 </label>
             </div>
           </td>
         </tr>
         <tr>
-          <td>线路名称</td>
-          <td><input class="weui-input" placeholder="线路名称" v-model="tripName"></td>
-        </tr>
-        <tr>
           <td>出发地</td>
-          <td><input class="weui-input" placeholder="出发地" v-model="tripFrom"></td>
+          <td>
+            <select class="form-control" v-model.number="tripFromCityId">
+              <template v-for="city in cities">
+                <option :value="city.id">{{city.cityName}}</option>
+              </template>
+            </select>
+          </td>
         </tr>
         <tr>
           <td>目的地</td>
@@ -68,6 +76,7 @@
 
 <script>
 import { createTrip } from '../../api/trip.js'
+import { searchCities } from '../../api/data.js'
 import UE from 'UE'
 
 export default {
@@ -86,7 +95,24 @@ export default {
       editor: null,
 
       targetName: '',
-      showPicker: false
+      showPicker: false,
+
+      cities: []
+    }
+  },
+  watch: {
+    tripFromCityId: function (newId) {
+      if (newId === undefined) return
+      for (let i = 0; i < this.cities.length; i++) {
+        const info = this.cities[i]
+        // console.log(info)
+        // console.log(info.id + ', ' + newId)
+        if (info.id === newId) {
+          // console.log(info.cityName)
+          this.tripFrom = info.cityName
+          break
+        }
+      }
     }
   },
   mounted: function () {
@@ -98,6 +124,8 @@ export default {
       this.id = parseInt(id)
       this.init()
     }
+
+    this.searchCity()
   },
   destroyed () {
     this.editor.destroy()
@@ -115,58 +143,17 @@ export default {
     hideLoading: function () {
       this.$store.commit('showLoading', { 'loading': false })
     },
-    search: function () {
-      // if (this.dataList.size > 0) return
-
-      // var self = this
-      // self.loading = true
-      // self.loadingText = '数据加载中'
-
-      // $.ajax({
-      //   type: 'post',
-      //   url: '/Flight/material/list',
-      //   dataType: 'json',
-      //   success: function (jsonResult) {
-      //     self.loading = false
-      //     if (jsonResult.count > 0) {
-      //       self.$store.commit('setMaterials', jsonResult.dataList)
-      //     }
-      //   },
-      //   error: function (XMLHttpRequest, textStatus, errorThrown) {
-      //     self.searching = false
-
-      //     if (XMLHttpRequest.status === 403) {
-      //       self.$store.commit('jumpToLogin', self.$router)
-      //     }
-      //   },
-      //   complete: function (XMLHttpRequest, textStatus) {
-      //     self.loading = false
-      //   }
-      // })
-    },
-    init: function () {
-      // var detail = this.$store.state.articleDetail
-      // if (detail === null) {
-      //   refreshArticle(this.id,
-      //     (jsonResult) => {
-      //       this.title = jsonResult.title
-      //       this.content = jsonResult.content
-      //       this.editor.setContent(this.content, true)
-      //     },
-      //     null,
-      //     () => {}
-      //   )
-      // } else {
-      //   this.title = detail.title
-      //   this.content = detail.content
-      //   this.editor.setContent(this.content, true)
-      // }
+    searchCity: function () {
+      searchCities((jsonResult) => {
+        this.cities = jsonResult.dataList
+      })
     },
     createTrip: function () {
       var params = {
         'domestic': this.domestic,
         'name': this.tripName,
         'from': this.tripFrom,
+        'fromCityId': this.tripFromCityId,
         'to': this.tripTo,
         'content': this.editor.getContent(),
         'buyUrl': this.buyUrl,

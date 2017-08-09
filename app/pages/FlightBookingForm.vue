@@ -136,10 +136,10 @@
                   <i class="fa fa-rmb text-warning"></i>{{info.price-info.discount}}/份
                 </td>
                 <td>
-                  购买{{psgInfos.length}}份
+                  <small>购买 {{psgInfos.length}} 份</small>
                 </td>
                 <td>
-                  {{info.productDesc}}
+                  <small>{{info.productDesc}}</small>
                 </td>
               </tr>
             </table>  

@@ -75,6 +75,8 @@ const MyTripBooking    = resolve => require(['./pages/TripBookingForm.vue'], res
 const MyTripOrders    = resolve => require(['./pages/Trip-orders.vue'], resolve)
 const MyTripOrderDetail    = resolve => require(['./pages/Trip-order-detail.vue'], resolve)
 
+const MyHomeOrder    = resolve => require(['./pages/Home-order.vue'], resolve)
+
 const routes = [
   {path: '/',              component: MyNav},
   {path: '/home',          component: MyHome},
@@ -137,7 +139,9 @@ const routes = [
   {path: '/trip/:id', component: MyTripDetail},
   {path: '/trip/:id/:ddate', component: MyTripBooking},
   {path: '/trip-orders', component: MyTripOrders},
-  {path: '/trip-order/:id', component: MyTripOrderDetail}
+  {path: '/trip-order/:id', component: MyTripOrderDetail},
+
+  {path: '/home-order', component: MyHomeOrder}
 ]
 
 let router = new Router({

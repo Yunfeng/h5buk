@@ -52,7 +52,7 @@
             购物车
         </p>
       </router-link>      
-      <router-link to="/order" class="weui-tabbar__item">
+      <router-link to="/home-order" class="weui-tabbar__item">
         <div class="weui-tabbar__icon">
           <i class="fa fa-home fa-2" aria-hidden="true"></i>
         </div>
