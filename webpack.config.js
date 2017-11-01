@@ -8,6 +8,7 @@ module.exports = {
   entry:  {
     main: __dirname + "/app/main.js",
     admin: __dirname + "/app/admin.js",
+    repair: __dirname + "/app/repair.js",
     vendor: ['vue', 'vue-router', 'vuex']
   }
   ,//已多次提及的唯一入口文件
@@ -73,6 +74,11 @@ module.exports = {
       filename: "admin.html",
       chunks: ['admin', 'vendor', 'manifest']
     }),
+    new HtmlWebpackPlugin({
+      template: __dirname + "/app/repair.tmpl.html", //new 一个这个插件的实例，并传入相关的参数,
+      filename: "repair.html",
+      chunks: ['repair', 'vendor', 'manifest']
+    }),
 
     new webpack.optimize.UglifyJsPlugin(),
 
@@ -88,7 +94,6 @@ module.exports = {
 
   devServer: {
     contentBase: __dirname + "/wwwroot",//本地服务器所加载的页面所在的目录
-    colors: true,//终端中输出结果为彩色
     historyApiFallback: true,//不跳转
     inline: true,//实时刷新,
     // hot: true,

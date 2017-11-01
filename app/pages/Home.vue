@@ -64,5 +64,13 @@
             上传
         </p>
     </router-link>
+    <router-link to="/test" class="weui-grid">
+        <div class="weui-grid__icon">
+            <i class="fa fa-info-circle fa-2" aria-hidden="true"></i>
+        </div>
+        <p class="weui-grid__label">
+            测试
+        </p>
+    </router-link>    
 </div>
 </template>

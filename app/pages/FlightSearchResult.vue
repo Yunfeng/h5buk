@@ -391,7 +391,7 @@ export default {
         }
 
         if (jsonResult.status === 1) {
-            // search done
+          // search done
           self.carriers.sort()
           self.carrierInfos.sort()
           self.searching = false

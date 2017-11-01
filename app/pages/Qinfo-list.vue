@@ -84,12 +84,17 @@
           <div class="form-group">
               <input class="form-control" type="text" placeholder="请输入用户名" v-model="username">
           </div>
+          <div class="form-group">
+              <select class="form-control" v-model="qtype">
+                <option value="">全部</option>
+                <option value="SC">SC</option>
+                <option value="KK">KK</option>
+              </select>
+          </div>
         </div>
       </div>
 
     </template>
-
-
   </div>
 </template>
 
@@ -117,7 +122,8 @@ export default {
         pageTotal: 0
       },
       pnrNo: '',
-      username: ''
+      username: '',
+      qtype: ''
     }
   },
   computed: {
@@ -150,7 +156,8 @@ export default {
           'sc.pageNo': self.sc.pageNo,
           'sc.pageSize': self.sc.pageSize,
           'sc.pnrNo': self.pnrNo,
-          'sc.username': self.username
+          'sc.username': self.username,
+          'sc.qtype': self.qtype
         },
         dataType: 'json',
         success: function (jsonResult) {
@@ -186,6 +193,7 @@ export default {
     resetFilter: function () {
       this.pnrNo = ''
       this.username = ''
+      this.qtype = ''
     },
     reInform: function (index) {
       var id = this.qinfoes[index].id

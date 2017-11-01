@@ -77,6 +77,9 @@ const MyTripOrderDetail    = resolve => require(['./pages/Trip-order-detail.vue'
 
 const MyHomeOrder    = resolve => require(['./pages/Home-order.vue'], resolve)
 
+const MyTest      = () => System.import('./pages/Test.vue')
+const MyRepairIssues      = () => System.import('./pages/RepairIssues.vue')
+
 const routes = [
   {path: '/',              component: MyNav},
   {path: '/home',          component: MyHome},
@@ -141,7 +144,11 @@ const routes = [
   {path: '/trip-orders', component: MyTripOrders},
   {path: '/trip-order/:id', component: MyTripOrderDetail},
 
-  {path: '/home-order', component: MyHomeOrder}
+  {path: '/home-order', component: MyHomeOrder},
+
+  {path: '/test', component: MyTest},
+
+  {path: '/repair/issues', component: MyRepairIssues}
 ]
 
 let router = new Router({
