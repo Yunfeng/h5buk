@@ -8,8 +8,8 @@
     </div> 
 
     <!-- 航班信息 -->
-    <div class="card col-12 px-0">
-      <div class="card-block pt-0 px-0" v-for="(flt, index) in bookFlights">
+    <div class="card col-12">
+      <div class="card-body pt-0" v-for="(flt, index) in bookFlights">
         <div class="d-flex flex-row justify-content-between">
           <div>
             <span class="ml-2 small text-info">行程{{index+1}}</span>
@@ -23,19 +23,22 @@
           </div>
         </div>
         <div class="d-flex flex-row justify-content-around bg-faded">
-            <div class="fa-2 text-success">{{flt.dportName}} <small>{{flt.dterm}}</small></div>
+            <div class="fa-2 text-info">{{flt.dportName}} <small>{{flt.dterm}}</small></div>
             <div class="fa-2 text-danger"><i class="fa fa-long-arrow-right" aria-hidden="true"></i></div>
             <div class="fa-2 text-muted">{{flt.aportName}} <small>{{flt.aterm}}</small></div>
         </div>
         <div class="d-flex flex-row justify-content-around">
-            <div class="fa-2 text-success">{{flt.ddate}}</div>
-            <div class="fa-2 text-success">{{flt.showDtime}}</div>
+            <div class="fa-2 text-info">
+              <small>{{flt.ddate}}</small>
+              {{flt.showDtime}}
+            </div>
+            <div class="fa-2 text-success"></div>
             <div class="fa-2 text-muted">{{flt.showAtime}}</div>
         </div>
 
         <div class="d-flex flex-row justify-content-around bg-faded">
-            <div class="fa-2 text-success">
-              {{flt.flightNo}}
+            <div class="fa-2 text-info">
+              {{flt.flightNo}} <small>{{flt.carrierName}}</small>
             </div>
             <div class="fa-2 text-faded">
               {{flt.subclass}}
@@ -52,7 +55,7 @@
       <a href="javascript:void(0)" @click.stop="searchReturn()" class="btn btn-success w-75">搜索返程</a>
     </div>
     <!-- 表单 -->
-    <form id="frmOrder" class="col-12 px-0">
+    <form id="frmOrder" class="col-12">
       <input type="hidden" name="tmcPolicyApply.policyId" :value="policyId" />
       <input type="hidden" name="tmcPolicyApply.ticketAmount" value="0" />
       <template v-for="(fltInfo, index) in bookFlights">
@@ -72,86 +75,81 @@
       </template>
 
 
-        <div class="card bg-warning text-white">
-          <div class="card-block py-0">
-            <span>乘机人</span>
+      <div class="card border-0">
+        <div class="card-header bg-warning text-white py-0">
+          乘客
+        </div>
+        <template v-for="(psg, index) in psgInfos">
+          <div class="card-body bg-faded p-0 mt-1">
+            <span class="text-muted">乘客 {{index+1}}</span>
+            <button type="button" @click.stop="selectPsg(index)" title="搜索并选择乘机人">
+              <i class="fa fa-search-plus text-success" aria-hidden="true"></i>
+            </button> 
+            <a href="javascript:void(0)" @click.stop="deletePsg(index)" class="float-right">
+              <i class="fa fa-times text-danger" aria-hidden="true"></i>
+            </a>
           </div>
-        </div>
-        <div class="card px-0 col-12" v-for="(psg, index) in psgInfos">
-            <div class="card-block p-0 mt-1">
-              <span class="text-faded"><small>乘客 {{index+1}}</small></span>
-              <button type="button" @click.stop="selectPsg(index)" title="搜索并选择乘机人">
-                <i class="fa fa-search-plus text-success" aria-hidden="true"></i>
-              </button> 
-              <a href="javascript:void(0)" @click.stop="deletePsg(index)" class="float-right">
-                <i class="fa fa-times text-danger" aria-hidden="true"></i>
-              </a>
+
+          <div class="card-body" style="padding: 0">
+            <div class="form-group border-bottom-1">
+              <input type="text" class="form-control border-0" :name="'tmcPolicyApply.passengers[' + index + '].psgName'" placeholder="乘客姓名" v-model="psg.psgName"/>
             </div>
-
-            <div class="card-block" style="padding: 0">
-              <div class="form-group border-bottom-1">
-                <input type="text" class="form-control border-0" :name="'tmcPolicyApply.passengers[' + index + '].psgName'" placeholder="乘客姓名" v-model="psg.psgName"/>
-              </div>
-              <div class="form-group border-bottom-1">
-                <input type="text" class="form-control border-0" :name="'tmcPolicyApply.passengers[' + index + '].idNo'" placeholder="证件号" v-model="psg.idNo" />
-              </div>
-              <div class="form-group border-bottom-1">
-                <select class="form-control border-0" :name="'tmcPolicyApply.passengers[' + index + '].idType'" v-model="psg.idType">
-                <option v-for="item in idTypes" :value="item.idType">
-                  {{ item.idName }}
-                </option>
-              </select>
-              </div>
-
+            <div class="form-group border-bottom-1">
+              <input type="text" class="form-control border-0" :name="'tmcPolicyApply.passengers[' + index + '].idNo'" placeholder="证件号" v-model="psg.idNo" />
             </div>
-        </div>
+            <div class="form-group border-bottom-1">
+              <select class="form-control border-0" :name="'tmcPolicyApply.passengers[' + index + '].idType'" v-model="psg.idType">
+              <option v-for="item in idTypes" :value="item.idType">
+                {{ item.idName }}
+              </option>
+            </select>
+            </div>
+          </div>            
+        </template>
 
-      <div class="col-12 card">
-        <div class="card-block px-0 pb-1">
-            <button type="button" @click.stop="addPsg()" class="btn btn-sm btn-outline-primary">
+        <div class="card-body px-0 pb-1">
+            <button type="button" @click.stop="addPsg()" class="btn btn-sm btn-outline-primary float-right">
               <small>添加乘客</small>
             </button>
           </div>
       </div>
 
-      <template v-if="insurances.length > 0">
-        <div class="card col-12 bg-white border-0 mt-1 px-0">
-          <div class="card-header bg-warning text-white py-0">
-            <span>保险</span>
-          </div>
-          <div class="card-block">
-            <table class="table">
-              <tr v-for="(info, index) in insurances">                
-                <input type="hidden" :name="'tmcPolicyApply.insurances[' + index + '].productCode'" :value="info.productCode" />
-                <input type="hidden" :name="'tmcPolicyApply.insurances[' + index + '].productName'" :value="info.productName" />
-                <input type="hidden" :name="'tmcPolicyApply.insurances[' + index + '].price'" :value="info.price" />
-                <input type="hidden" :name="'tmcPolicyApply.insurances[' + index + '].discount'" :value="info.discount" />
-                <input type="hidden" :name="'tmcPolicyApply.insurances[' + index + '].count'" :value="psgInfos.length" />
-
-                <td>
-                  <input class="form-check-input" type="checkbox" :name="'tmcPolicyApply.insurances[' + index + '].buyed'" value="1">
-                  {{info.productName}} 
-                </td>
-                <td>
-                  <i class="fa fa-rmb text-warning"></i>{{info.price-info.discount}}/份
-                </td>
-                <td>
-                  <small>购买 {{psgInfos.length}} 份</small>
-                </td>
-                <td>
-                  <small>{{info.productDesc}}</small>
-                </td>
-              </tr>
-            </table>  
-          </div>
+      <div class="card col-12 bg-white border-0 mt-1 px-0" v-if="insurances.length > 0">
+        <div class="card-header bg-warning text-white py-0">
+          <span>保险</span>
         </div>
-      </template>
+        <table class="table">
+          <tr v-for="(info, index) in insurances">                
+            <input type="hidden" :name="'tmcPolicyApply.insurances[' + index + '].productCode'" :value="info.productCode" />
+            <input type="hidden" :name="'tmcPolicyApply.insurances[' + index + '].productName'" :value="info.productName" />
+            <input type="hidden" :name="'tmcPolicyApply.insurances[' + index + '].price'" :value="info.price" />
+            <input type="hidden" :name="'tmcPolicyApply.insurances[' + index + '].discount'" :value="info.discount" />
+            <input type="hidden" :name="'tmcPolicyApply.insurances[' + index + '].count'" :value="psgInfos.length" />
+
+            <td>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" :name="'tmcPolicyApply.insurances[' + index + '].buyed'" value="1">
+                <label class="form-check-label">{{info.productName}}</label>                 
+              </div>
+            </td>
+            <td>
+              <i class="fa fa-rmb text-warning"></i>{{info.price-info.discount}}/份
+            </td>
+            <td>
+              <small>购买 {{psgInfos.length}} 份</small>
+            </td>
+            <td>
+              <small>{{info.productDesc}}</small>
+            </td>
+          </tr>
+        </table>  
+      </div>
 
       <div class="card col-12 bg-white border-0 mt-1 px-0">
         <div class="card-header bg-warning text-white py-0">
             <span>联系人</span>
           </div>
-        <div class="card-block px-0">
+        <div class="card-body px-0">
           <div class="form-group border-bottom-1">
             <input type="text" class="form-control border-0" name="tmcPolicyApply.linkPhone" placeholder="联系电话"/>
           </div>
@@ -162,7 +160,7 @@
       </div>
 
       <div class="card col-12 border-0">
-        <div class="card-block">
+        <div class="card-body">
           <a class="btn btn-success btn-block text-white" @click.stop="createFlightOrder();">保存订单</a>
         </div>
       </div>

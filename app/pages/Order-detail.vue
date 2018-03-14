@@ -10,12 +10,12 @@
       </div> 
 
       <div class="card col-12 px-0 border-0">
-        <div class="card-block text-center">
+        <div class="card-body text-center">
           订单金额: <span class="text-danger"><i class="fa fa-rmb text-warning"></i> {{info.totalPrice}}</span>
         </div>
       </div>
       <div class="card col-12 px-0 border-0">
-        <div class="card-block py-0 bg-faded text-warning">
+        <div class="card-body py-0 bg-info text-warning">
           <small>行程信息</small>
         </div>
         <template v-for='(flt, index) in info.flights'>
@@ -41,7 +41,7 @@
             <dd class='col-8'>{{flt.taxCn}}</dd>
           </dl>
         </template>       
-        <div class="card-block py-0 bg-faded text-warning">
+        <div class="card-body py-0 bg-info text-warning">
           <small>乘机人信息</small>
         </div>
         <template v-for='(psg, index) in info.passengers'>
@@ -69,7 +69,7 @@
         </template>
 
         <template v-if="info.insurances.length > 0">
-          <div class="card-block py-0 bg-faded text-warning">
+          <div class="card-body py-0 bg-info text-warning">
             <small>保险</small>
           </div>
           <dl class='row mb-0' v-for='(info, index) in info.insurances'>
@@ -87,7 +87,7 @@
           </dl>
         </template>
 
-        <div class="card-block py-0 bg-faded text-warning">
+        <div class="card-body py-0 bg-info text-warning">
           <small>结算信息</small>
         </div>
         <dl class="row mb-0">
@@ -124,13 +124,13 @@
           </template>
         </dl>
 
-        <div class="card-block py-0 bg-faded">
+        <div class="card-body py-0 bg-info">
           <small>其它</small>
         </div>
         <dl class='row'>
           <dt class='col-4 text-right px-0'>时间</dt>
           <dd class='col-8'>
-            <p>{{convertLongToTimeDesc(info.createTime)}}</p>
+            <p>{{info.createTime}}</p>
           </dd>
           <dt class='col-4 text-right px-0'>状态</dt>
           <dd class='col-8'>
@@ -141,7 +141,7 @@
 
       <template v-if='info.status === 1024 && info.enterpriseId > 0'>
         <template v-if="policies.length > 0">
-          <div class="card-block py-0 bg-faded text-info">
+          <div class="card-body py-0 bg-faded text-info">
             特殊政策 <small>(票面低于实际付款金额)</small>
           </div>
           <table class='table table-sm table-striped table-condensive'>
@@ -164,7 +164,7 @@
                 </tr>
             </tbody>
           </table>
-          <div class="card-block py-0 bg-faded text-info">
+          <div class="card-body py-0 bg-faded text-info">
             <small>备注</small>
           </div>
           <table class="table">
@@ -177,7 +177,7 @@
         </template>
 
         <div class="card col-12 border-0 mb-2 px-0">
-          <div class="card-block">
+          <div class="card-body">
             <template v-if="info.enterpriseId === info.seller">              
               <button type='button' class='btn btn-outline-danger w-100 mb-3' @click.stop='specifyBuyerPayOrder(info.id)'>通知买家付款</button>
             </template>
@@ -191,14 +191,14 @@
 
       <template v-if='info.status === 1  && info.enterpriseId > 0'>          
         <div class='card col-12 border-0 mb-5'>
-          <button type='button' class='btn btn-success w-100' @click.stop='payForTmcOrder(info.id)'>余额支付</button>
-          <button type='button' class='btn btn-outline-success w-100 mt-3' @click.stop='weixinPay1(info.id)'>
+          <button type='button' class='btn btn-success w-100' @click.stop='payForTmcOrder(info.id)'>支付</button>
+          <button type='button' class='btn btn-outline-success w-100 invisible' @click.stop='weixinPay1(info.id)'>
             微信支付
             <template v-if="wxpayRate>0">
               <small>支付费率千分之 {{wxpayRate}}</small>
             </template>
           </button>
-          <button type='button' class='btn btn-outline-info w-100 mt-3' @click.stop="aliPay1(info.id)">
+          <button type='button' class='btn btn-outline-info w-100 invisible' @click.stop="aliPay1(info.id)">
             支付宝
             <template v-if="alipayRate>0">
               <span class="small align-bottom">支付费率千分之 {{alipayRate}}</span>
@@ -208,7 +208,7 @@
       </template>
       <template v-if='info.status === 4  && info.enterpriseId > 0'>
         <div class="card col-12 border-0 mb-2">
-          <div class="card-block py-0 bg-faded">
+          <div class="card-body py-0 bg-faded">
             <small>拒单说明</small>
           </div>
           <dl class='row'>
@@ -248,12 +248,13 @@
 </template>
 
 <script>
-import { convertLongToTimeDesc, showIdTypeDesc, showOrderStatusDesc } from '../common/common.js'
+import { showIdTypeDesc, showOrderStatusDesc } from '../common/common.js'
 import { getDomainUrl } from '../api/wx.js'
 import MyButton from '../components/my-button.vue'
 import MyInput from '../components/my-input.vue'
 import $ from 'jquery'
 import { searchPolicies, searchOrderDetail, cancelOrder, searchPayRates, processOrder } from '../api/order.js'
+import { payForTmcOrder } from '../api/order.js'
 
 export default {
   components: {
@@ -362,9 +363,6 @@ export default {
       this.$store.commit('setPolicyDetail', info)
       this.$router.push('/tmc/detail')
     },
-    convertLongToTimeDesc: function (l) {
-      return convertLongToTimeDesc(l)
-    },
     refreshOrderDetail: function (id) {
       if (id === undefined || id === null) {
         id = this.orderId
@@ -436,11 +434,23 @@ export default {
     },
     payForTmcOrder: function (id) {
       // 买家：支付订单
-      var url = '/Flight/orders/payForTmcOrder.do'
-      var postData = { id: id }
-      var successHandler = this.refreshOrderDetail
+      // var url = '/Flight/orders/payForTmcOrder.do'
+      // var postData = { id: id }
+      // var successHandler = this.refreshOrderDetail
 
-      this.executeOrderOp(url, postData, successHandler)
+      // this.executeOrderOp(url, postData, successHandler)
+      payForTmcOrder({ id }, v => {
+        console.log(v)
+        if (v.status === 'OK') {
+          this.showErrMsg('支付成功')
+        } else if (v.errcode === -4) {
+          // 调用微信支付
+          this.showErrMsg(v.errmsg + ', 使用微信支付', 'danger')
+          this.weixinPay1(id)
+        } else {
+          this.showErrMsg(v.errmsg, 'danger')
+        }
+      })
     },
     toTicketTmcOrder: function (id) {
       // 卖家：我来开票

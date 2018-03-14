@@ -8,7 +8,6 @@ module.exports = {
   entry:  {
     main: __dirname + "/app/main.js",
     admin: __dirname + "/app/admin.js",
-    repair: __dirname + "/app/repair.js",
     vendor: ['vue', 'vue-router', 'vuex']
   }
   ,//已多次提及的唯一入口文件
@@ -73,11 +72,6 @@ module.exports = {
       template: __dirname + "/app/admin.tmpl.html", //new 一个这个插件的实例，并传入相关的参数,
       filename: "admin.html",
       chunks: ['admin', 'vendor', 'manifest']
-    }),
-    new HtmlWebpackPlugin({
-      template: __dirname + "/app/repair.tmpl.html", //new 一个这个插件的实例，并传入相关的参数,
-      filename: "repair.html",
-      chunks: ['repair', 'vendor', 'manifest']
     }),
 
     new webpack.optimize.UglifyJsPlugin(),

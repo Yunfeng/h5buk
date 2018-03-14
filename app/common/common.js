@@ -1,6 +1,6 @@
-export const WEBAPP_NAME = '/Flight'
-export const ORDER_TYPE_FLIGHT = '01'
-export const ORDER_TYPE_TRIP = '06'
+const WEBAPP_NAME = '/Flight'
+const ORDER_TYPE_FLIGHT = '01'
+const ORDER_TYPE_TRIP = '06'
 /**
 * 
 */
@@ -30,11 +30,11 @@ Date.prototype.format = function(format){
  return format;
 }
 
-export function convertLongToTimeDesc (l) {
+function convertLongToTimeDesc (l) {
   return getFormatDate(new Date(l))
 }
 
-export function getFormatDate (date, pattern) {
+function getFormatDate (date, pattern) {
   if (date === undefined) {
     date = new Date()
   }
@@ -44,7 +44,7 @@ export function getFormatDate (date, pattern) {
   return date.format(pattern)
 }
 
-export function addDate(d0, x) {
+ function addDate(d0, x) {
   var d1 = new Date(d0)
   
   d1 = d1.valueOf()
@@ -54,7 +54,7 @@ export function addDate(d0, x) {
   return d1.format("yyyy-MM-dd")
 }
 
-export function getURLParameter (sParam) {
+function getURLParameter (sParam) {
   var sPageURL = window.location.search.substring(1);
   var sURLVariables = sPageURL.split('&');
   for (var i = 0; i < sURLVariables.length; i++) 
@@ -100,7 +100,7 @@ function selectElementText(el){
     selection.addRange(range) // add range to Selection object to select it
 }
 
-export function copySelectionText(id){
+ function copySelectionText(id){
   var para = document.getElementById(id);
   selectElementText(para);
   var paratext = getSelectionText();
@@ -108,7 +108,7 @@ export function copySelectionText(id){
   document.execCommand("copy");
 }
 
-export function getCabinClassDesc (cabinClass, offset) {
+ function getCabinClassDesc (cabinClass, offset) {
   if (cabinClass === 'F') {
     if (offset === 100) {
       return '头等'
@@ -137,7 +137,7 @@ export function getCabinClassDesc (cabinClass, offset) {
   }
 }
 
-export function showIdTypeDesc (idType) {
+ function showIdTypeDesc (idType) {
   var desc = ''
   switch (idType) {
     case '1': desc = '身份证'; break
@@ -146,7 +146,7 @@ export function showIdTypeDesc (idType) {
   return desc
 }
 
-export function showOrderStatusDesc (status) {
+ function showOrderStatusDesc (status) {
   var desc = ''
   switch (status) {
     case 0: desc = '等待接单'; break
@@ -166,7 +166,7 @@ export function showOrderStatusDesc (status) {
   return desc
 }
 
-export function showRefundOrderStatus (status) {
+ function showRefundOrderStatus (status) {
   var desc = ''
   switch (status) {
     case 0: desc = '申请中'; break
@@ -180,7 +180,7 @@ export function showRefundOrderStatus (status) {
   return desc
 }
 
-export function showChangeOrderStatus (status) {
+ function showChangeOrderStatus (status) {
   var desc = ''
   switch (status) {
     case 0: desc = '申请中'; break
@@ -194,7 +194,7 @@ export function showChangeOrderStatus (status) {
   return desc
 }
 
-export function showTripOrderStatus (status) {
+ function showTripOrderStatus (status) {
   var desc = ''
   switch (status) {
     case 0: desc = '等待确认'; break
@@ -212,4 +212,56 @@ export function showTripOrderStatus (status) {
       desc = status
   }
   return desc
+}
+
+function callService(url, {
+  cbDone = function () {},
+  cbAlways = function () {},
+  cbFail = function () {},
+  type = 'post',
+  dataType = 'json',
+  data = null,
+  contentType = 'application/x-www-form-urlencoded; charset=UTF-8'
+}) {
+  $.ajax({
+    type: type,
+    url: url,
+    dataType: dataType,
+    data: data,
+    contentType: contentType
+  }).done(function (jsonResult) {
+    cbDone(jsonResult)
+  }).fail(function (jqXHR, textStatus, errorThrown) {
+    if (jqXHR.status === 403) {
+      window.alert('您没有相关授权，或者可以退出系统后重新登录，再试一次！(403)')
+    } else {
+      cbFail()
+    }
+  }).always(function () {
+    cbAlways()
+  })
+}
+
+export {
+  WEBAPP_NAME,
+  WEBAPP_NAME as APP_FLIGHT_PATH,
+  getURLParameter,
+  convertLongToTimeDesc,
+  isPositiveNum,
+  callService,
+  showFlightOrderStatus,
+  showVasOrderStatus,
+  showPayType,
+  showItineraryType,
+  showPsgType,
+  today,
+  addDate,
+  getCabinClassDesc,
+  showTripOrderStatus,
+  showIdTypeDesc,
+  showChangeOrderStatus,
+  showOrderStatusDesc,
+  showRefundOrderStatus,
+  copySelectionText,
+  ORDER_TYPE_TRIP
 }

@@ -10,7 +10,7 @@
           <span @click="showFilter()" class="float-right fa-2">                       
             <i class="fa fa-filter fa-2" aria-hidden="true"></i>
             <template v-if="totalCount > 0">
-              <small>选项({{totalCount}})</small>
+              <small>筛选</small>
             </template>
           </span>   
       </div>         
@@ -80,13 +80,20 @@
         <span @click="closeDetail()" class="float-left fa-2">
           <i class="fa fa-angle-left fa-2" aria-hidden="true"></i>
         </span>
-        <span class="fa-2 text-white">{{flt.flightNo}}</span> <small>{{flt.depDate.substring(5)}}</small>
+        <span class="fa-2 text-white">{{flt.flightNo}}</span>
+        <small class="text-warning">{{flt.depDate}}</small>
       </div>           
     
-      <div class="card col-12 p-0">
+      <div class="card col-12">
         <div class="row">
-          <div class="col-4 text-right text-nowrap time text-success"> {{flt.showDepTime}}</div>
-          <div class="col-4 text-center text-nowrap time text-muted">{{flt.showArrTime}}</div>
+          <div class="col-4 text-nowrap">
+            <span class="time text-success">{{flt.showDepTime}}</span>
+            <small>出发</small>
+          </div>
+          <div class="col-4 text-nowrap">
+            <span class="time text-muted">{{flt.showArrTime}}</span>
+            <small>到达</small>
+          </div>
           <div class="col-4 text-nowrap text-warning text-right">
             <template v-if="flt.lowestPrice">
               <i class="fa fa-rmb"></i> <span class="lowest-price mr-1">{{flt.lowestPrice.price}}</span>
@@ -95,11 +102,14 @@
           <div class="clear"></div>
         </div>
         <div class="row">
-          <div class="col-4 text-right text-nowrap airport text-success px-0"> {{flt.depPortName}} <small>{{flt.depTerminal}}</small></div>
-          <div class="col-3 text-center">
-            
+          <div class="col-4 text-nowrap">
+            <span class="time text-success">{{flt.depPortName}}</span>
+            <small>{{flt.depTerminal}}</small>
           </div>
-          <div class="col-4 text-left text-nowrap airport text-muted">{{flt.arrPortName}} <small>{{flt.arrTerminal}}</small></div>
+          <div class="col-4 text-nowrap">
+            <span class="time text-muted">{{flt.arrPortName}}</span>
+            <small>{{flt.arrTerminal}}</small>
+          </div>
           <div class="col-4 text-right">
             <span v-if="flt.stopover !== '0'">{{flt.stopover}}</span>
           </div>
@@ -545,8 +555,10 @@ export default {
       }
     },
     bookFlight: function (flt0, subclass0) {
+      console.log(flt0)
       var fltInfo = {
         'flightNo': flt0.flightNo,
+        'carrierName': flt0.carrierName,
         'ddate': flt0.depDate,
         'dport': flt0.depPort,
         'aport': flt0.arrPort,

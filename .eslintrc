@@ -1,7 +1,9 @@
 {
   "root": true,
-  "parser": "babel-eslint",
-  "extends": "vue",
+  "parserOptions": {
+    "parser": "babel-eslint"
+  },
+  "extends": ["plugin:vue/base"],
   "plugins": ["flowtype"],
   "globals": {
     "__WEEX__": true

@@ -2,7 +2,7 @@
   <div id="login" class="row">
 
     <template v-if="logined === false">
-      <div class="card col-12 no-gutters px-0">
+      <div class="card col-12 no-gutters">
         <div class="card-header text-center text-success"  v-if="openid.length === 0">
             登录
         </div>
@@ -34,7 +34,7 @@
       </div>
     </template>
     <template v-else>
-      <div class="card col-12 px-0">
+      <div class="card col-12">
         <div class="media card-block border-0" v-if="openid.length === 0">
           <img class="d-flex align-self-center mr-3" :src="headimgurl" style="width: 5rem; height: 5rem">
           <div class="media-body">
@@ -50,50 +50,47 @@
           </div>
         </div>  
           
-          <table class="table">
-            <tr>
-              <td class="text-right">现金账户</td>
-              <td>{{userInfo.cashBalance}} <small>元</small></td>
-              <td><small><router-link to="/recharge" class="btn btn-sm btn-outline-danger">充值</router-link></small></td>
-            </tr>
-            <tr>
-              <td class="text-right">积分</td>
-              <td>{{userInfo.freeBalance}}</td>
-              <td>
-                <button class="btn btn-sm btn-outline-success" @click.stop="checkIn()">
-                  签到
-                </button>
-              </td>
-            </tr>
-          </table>
-          <ul class="list-group list-group-flush">
-            <li class="list-group-item">
-              <router-link to="/order" class="card-link">我的订单</router-link>
-            </li>
-            <li class="list-group-item">
-              <router-link to="/changes" class="card-link">我的改期</router-link>
-            </li>
-            <li class="list-group-item">
-              <router-link to="/refunds" class="card-link">我的退票</router-link>
-            </li>
-          </ul>
+        <table class="table">
+          <tr>
+            <td class="text-right">现金账户</td>
+            <td>{{userInfo.cashBalance}} <small>元</small></td>
+            <td><small><router-link to="/recharge" class="btn btn-sm btn-outline-danger">充值</router-link></small></td>
+          </tr>
+          <tr>
+            <td class="text-right">积分</td>
+            <td>{{userInfo.freeBalance}}</td>
+            <td>
+              <button class="btn btn-sm btn-outline-success" @click.stop="checkIn()">
+                签到
+              </button>
+            </td>
+          </tr>
+        </table>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">
+            <router-link to="/order" class="card-link">我的订单</router-link>
+          </li>
+          <li class="list-group-item">
+            <router-link to="/changes" class="card-link">我的改期</router-link>
+          </li>
+          <li class="list-group-item">
+            <router-link to="/refunds" class="card-link">我的退票</router-link>
+          </li>
+          <li class="list-group-item">
+            <router-link to="/refunds" class="card-link">我的退票</router-link>
+          </li>
+          <li class="list-group-item">
+            <router-link to="/home" class="card-link text-success">
+              更多功能
+            </router-link>
+          </li>
+        </ul>
           
-        
-        
-          
-        <div class="card-block pt-0">
-          <router-link to="/home" class="card-link text-success">
-            更多功能
-          </router-link>
-        </div>
-
-          <div class="card-footer">
-            <button class="btn btn-danger btn-block" @click="logout()">退出</button>
-          </div>         
+        <div class="card-footer">
+          <button class="btn btn-danger btn-block" @click="logout()">退出</button>
+        </div>         
       </div>      
     </template>
-
-
   </div>
 </template>
 

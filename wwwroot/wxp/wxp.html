@@ -9,7 +9,7 @@
 <body>
 微信支付处理中......
 
-<script src="/assets/js/libs/jquery-3.1.1.min.js"></script>
+<script src="/assets/js/libs/jquery-3.3.1.min.js"></script>
 <script src="/assets/js/libs/jquery.cookie.js"></script>
 <script src="/assets/js/common.js" ></script>
 
@@ -17,6 +17,7 @@
   var orderId = ''
   var code = ''
   var domain = ''
+  var params = null
 
   function getDomainUrl () {
     $.ajax({
@@ -41,13 +42,27 @@
         dataType: 'json',
         success: function (jsonResult) {
           if (jsonResult !== null) {
-            jsApiCall(jsonResult)
+			params = jsonResult
+            jsApiCall()
           }
         }
       })    
   }
 
-  function jsApiCall (params) {
+  function jsApiCall () {
+  	if (typeof WeixinJSBridge == "undefined"){
+  	   if( document.addEventListener ){
+  		   document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+  	   }else if (document.attachEvent){
+  		   document.attachEvent('WeixinJSBridgeReady', onBridgeReady); 
+  		   document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+  	   }
+  	} else {
+  	   onBridgeReady();
+  	} 
+  }
+
+  function onBridgeReady() {   
     WeixinJSBridge.invoke ('getBrandWCPayRequest', 
       {
        "appId": params.appId,     //公众号名称，由商户传入     

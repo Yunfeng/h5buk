@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+  <title>微信支付处理中(test)</title>
+  <link rel="stylesheet" href="/assets/css/bootstrap.css" />
+</head>
+<body >
+  <p>微信支付处理中......</p>
+  <div id="myConsole"></div>
+
+<script src="/assets/js/libs/jquery-3.3.1.min.js"></script>
+<script src="/assets/js/libs/jquery.cookie.js"></script>
+<script src="/assets/js/common.js" ></script>
+<script src="/assets/js/app.config.js" ></script>
+
+<script type="text/javascript">
+  var openid = ''
+  var total = 1
+  var orderId = ''
+  var domain = ''
+  var code = ''
+  var params = null
+  var steps = 0
+
+  function getDomainUrl () {
+    $.ajax({
+        type: 'post',
+        url: '/Flight/pay/domain',
+        dataType: 'text',
+        success: function (jsonResult) {
+          domain = jsonResult
+		  appendConsole(domain)
+          callWexinPay()
+        }
+      })    
+  }
+  
+  function appendConsole (val) {
+	steps = steps + 1 
+	$('#myConsole').append(steps).append('<br />')
+    // $('#myConsole').append(val).append('<br />')
+  }
+
+  function callWexinPay () {
+    appendConsole('call weixinPay')
+    $.ajax({
+        type: 'post',
+        url: '/Flight/pay/generateWxPrepayOrder',
+        data: {
+          'id': orderId,
+          'openid': openid,
+          'total_fee': total
+        },
+        dataType: 'json',
+        success: function (jsonResult) {
+          appendConsole(jsonResult)
+          if (jsonResult !== null) {
+			params = jsonResult
+            jsApiCall()
+          }
+        }
+      })    
+  }
+
+  function jsApiCall () {
+    appendConsole('jsApiCall')
+    appendConsole('appId: ' + params.appId)
+    appendConsole('timeStamp: ' + params.timeStamp)
+    appendConsole('nonceStr: ' + params.nonceStr)
+    appendConsole('package: ' + params.packageA)
+    appendConsole('paySign: ' + params.paySign)
+    appendConsole('signType: ' + params.signType)
+	
+	appendConsole("WeixinJSBridge:" + typeof WeixinJSBridge)
+	if (typeof WeixinJSBridge == "undefined"){
+	   if( document.addEventListener ){
+		   document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+	   }else if (document.attachEvent){
+		   document.attachEvent('WeixinJSBridgeReady', onBridgeReady); 
+		   document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+	   }
+	}else{
+	   onBridgeReady();
+	} 
+  }
+  
+  function onBridgeReady() {
+	appendConsole('onBridgeReady')
+    WeixinJSBridge.invoke ('getBrandWCPayRequest', 
+      {
+       "appId": params.appId,     //公众号名称，由商户传入     
+       "timeStamp": params.timeStamp,         //时间戳，自1970年以来的秒数     
+       "nonceStr": params.nonceStr, //随机串     
+       "package": params.packageA,     
+       "signType": params.signType,         //微信签名方式：     
+       "paySign": params.paySign //微信签名 
+      },
+      function (res) {    
+        appendConsole(res)
+        console.log(res) 
+        if(res.err_msg == "get_brand_wcpay_request：ok" ) {}     // 使用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。 
+      }) 
+  }
+
+  $(function() {
+      code = GetURLParameter('code')
+      orderId = GetURLParameter('state')
+      appendConsole('code: ' + code)
+      appendConsole('orderId: ' + orderId)
+	  
+	  // getDomainUrl()
+
+      //获取 open id
+      $.ajax({
+        type: 'post',
+        url: '/Flight/weixin/getOpenId',
+        data: { 'code': code },
+        dataType: 'json',
+        success: function (jsonResult) {
+          openid = jsonResult.openid
+          appendConsole('openid: ' + openid)
+          callWexinPay()
+        },
+        complete: function () {
+          //self.loading = false
+        }
+      })
+  })
+
+</script>
+
+</html>

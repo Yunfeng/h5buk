@@ -1,7 +1,7 @@
 <template>
   <div id="register" class="row">
 
-    <div class="card col-12 px-0">
+    <div class="card col-12">
       <div class="card-header text-center">
         找回密码
       </div>
@@ -9,9 +9,7 @@
         <form>
           <div class="form-group">
             <input type="input" class="form-control" placeholder="手机号"  v-model="mobile">
-            <p class="form-text text-muted">
-              注册时填写的手机号
-            </p>
+            <small class="form-text text-muted">注册时填写的手机号</small>
           </div>
           <div class="form-group">
             <div class="row no-gutters">

@@ -1,6 +1,6 @@
 <template>
   <div id="register" class="row">
-    <div class="card col-12 px-0">
+    <div class="card col-12">
       <div class="card-header text-center">
         注册
       </div>
@@ -17,9 +17,7 @@
           </div>
           <div class="form-group">
             <input type="input" class="form-control" placeholder="手机号"  v-model="mobile">
-            <p class="form-text text-success">
-              <small>需要时可通过手机号找回密码</small>
-            </p>
+            <small class="form-text text-success">需要时可通过手机号找回密码</small>
           </div>
           <div class="form-group" v-if="openid.length === 0">
             <div class="row no-gutters">

@@ -1,4 +1,13 @@
-import { WEBAPP_NAME } from '../common/common.js'
+import { WEBAPP_NAME, callService } from '../common/common.js'
+
+
+export function payForTmcOrder(params, cbDone) {
+  const url = WEBAPP_NAME + '/orders/payForTmcOrder.do'
+  callService(url, {
+    data: params,
+    cbDone: cbDone
+  })
+}
 
 export function processOrder(url, params, done, fail, always) {
   $.ajax({
