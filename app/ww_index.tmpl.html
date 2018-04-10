@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+  <link rel="stylesheet" href="/assets/css/bootstrap.css" />
+  <link rel="stylesheet" href="/assets/css/jquery-ui.min.css" />
+  <link rel="stylesheet" href="/assets/css/weui.css" />
+  <link rel="stylesheet" href="/assets/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="/assets/css/animate.css" />
+  
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "https://hm.baidu.com/hm.js?b4ceaea0931bb5e08e90cf5fc8c0511b";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>  
+  
+</head>
+<body ontouchstart >
+	<div id="app" class="container-fluid">
+    <div class="row">
+      <my-top-tips></my-top-tips>
+      <my-loading></my-loading>
+    </div>
+
+    <div class="row mb-5">
+      <main class="col-12">
+        <transition name="fade">
+          <keep-alive>
+            <router-view v-if="$route.meta.keepAlive"></router-view>
+          </keep-alive>
+        </transition>
+        <transition  name="fade" mode="out-in" :duration="{ enter: 100, leave: 300 }">
+          <router-view v-if="!$route.meta.keepAlive"></router-view>
+        </transition>
+      </main>
+    </div>
+    <div class="row">
+      &nbsp;
+    </div>
+    <my-tabbar></my-tabbar>
+	</div>
+
+<script src="/assets/js/libs/jquery-3.3.1.min.js"></script>
+<script src="/assets/js/libs/jquery.cookie.js"></script>
+<script src="/assets/js/libs/jquery-ui.min.js"></script>
+<script src="/assets/js/libs/jquery.ui.datepicker-zh-CN.js"></script>
+<!-- <script src="/assets/js/libs/weui.min.js"></script> -->
+<script src="/assets/js/libs/tether.min.js" ></script>
+<script src="/assets/js/libs/bootstrap.min.js" ></script>
+<script src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js" ></script>
+<script src="/assets/js/common.js" ></script>
+<script src="/assets/js/app.config.js" ></script>
+
+</body>
+</html>

@@ -7,6 +7,7 @@ module.exports = {
   devtool: 'eval-source-map',//配置生成Source Maps，选择合适的选项
   entry:  {
     main: __dirname + "/app/main.js",
+    ww: __dirname + "/app/ww_main.js",
     admin: __dirname + "/app/admin.js",
     vendor: ['vue', 'vue-router', 'vuex']
   }
@@ -67,6 +68,11 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: __dirname + "/app/index.tmpl.html", //new 一个这个插件的实例，并传入相关的参数,
       chunks: ['main', 'vendor', 'manifest']
+    }),
+    new HtmlWebpackPlugin({
+      template: __dirname + "/app/ww_index.tmpl.html", //new 一个这个插件的实例，并传入相关的参数,
+      filename: "index_ww.html",
+      chunks: ['ww', 'vendor', 'manifest']
     }),
     new HtmlWebpackPlugin({
       template: __dirname + "/app/admin.tmpl.html", //new 一个这个插件的实例，并传入相关的参数,
