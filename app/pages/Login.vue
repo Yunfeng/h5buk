@@ -122,7 +122,7 @@ export default {
     sessionUsername () {
       var username = this.$store.state.username
       if (username.length === 0) {
-        username = $.cookie('username')
+        // username = $.cookie('username')
         if (username === undefined) username = ''
       }
       return username
@@ -133,7 +133,7 @@ export default {
     openid () {
       var openid = this.$store.state.wxInfo.openid
       if (openid.length === 0) {
-        openid = $.cookie('openid')
+        // openid = $.cookie('openid')
         if (openid === undefined) openid = ''
       }
       return openid
@@ -141,7 +141,7 @@ export default {
     nickname () {
       var nickname = this.$store.state.wxInfo.nickname
       if (nickname.length === 0) {
-        nickname = $.cookie('nickname')
+        // nickname = $.cookie('nickname')
         if (nickname === undefined) nickname = ''
       }
       return nickname
@@ -149,7 +149,7 @@ export default {
     headimgurl () {
       var headimgurl = this.$store.state.wxInfo.headimgurl
       if (headimgurl.length === 0) {
-        headimgurl = $.cookie('headimgurl')
+        // headimgurl = $.cookie('headimgurl')
         if (headimgurl === undefined) headimgurl = ''
       }
       return headimgurl
@@ -297,17 +297,6 @@ export default {
         }
       })
     }
-  },
-  beforeRouteEnter (to, from, next) {
-    next(vm => {
-      // console.log('i m in.');
-      $('#kaptchaImage').click(function () {
-        $(this).hide().attr('src',
-          '/Flight/captcha/getCaptchaCode.do?' + Math.floor(Math.random() * 100)).fadeIn()
-      })
-
-      $('#kaptchaImage').click()
-    })
   }
 }
 </script>

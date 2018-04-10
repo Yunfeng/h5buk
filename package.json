@@ -1,57 +1,58 @@
 {
-  "name": "webapp",
+  "name": "vue-ssr",
+  "description": "A Vue.js project",
   "version": "1.0.0",
-  "description": "webapp for tmc",
-  "main": "main.js",
-  "scripts": {
-    "start": "./node_modules/.bin/webpack --progress",
-    "build": "./node_modules/.bin/webpack --config ./webpack.production.config.js --progress",
-    "dev": "webpack-dev-server --inline"
-  },
-  "author": "yfdai",
+  "author": "yfdai <1410439635@qq.com>",
   "license": "MIT",
-  "devDependencies": {
-    "babel-core": "^6.26.0",
-    "babel-eslint": "^7.2.3",
-    "babel-loader": "^7.1.2",
-    "babel-plugin-transform-runtime": "^6.23.0",
-    "babel-preset-env": "^1.6.1",
-    "css-loader": "^0.28.5",
-    "eslint": "^4.18.2",
-    "eslint-config-standard": "^6.2.1",
-    "eslint-loader": "^1.9.0",
-    "eslint-plugin-flowtype": "^2.30.0",
-    "eslint-plugin-promise": "^3.5.0",
-    "eslint-plugin-standard": "^3.0.1",
-    "eslint-plugin-vue": "^4.3.0",
-    "extract-text-webpack-plugin": "^2.0.0-rc.3",
-    "file-loader": "^0.9.0",
-    "html-webpack-plugin": "^2.24.1",
-    "jasmine-core": "^2.5.2",
-    "json-loader": "^0.5.4",
-    "karma": "^1.5.0",
-    "karma-chrome-launcher": "^2.0.0",
-    "karma-jasmine": "^1.1.0",
-    "less": "^2.7.1",
-    "less-loader": "^2.2.3",
-    "moment": "^2.17.1",
-    "node-sass": "^4.5.3",
-    "npm": "^4.2.0",
-    "sass-loader": "^4.0.2",
-    "style-loader": "^0.13.1",
-    "url-loader": "^0.5.7",
-    "vue": "^2.5.16",
-    "vue-template-compiler": "^2.5.16",
-    "vue-html-loader": "^1.2.3",
-    "vue-loader": "^14.1.0",
-    "vue-router": "^3.0.1",
-    "vue-style-loader": "^3.0.1",
-    "vuex": "^3.0.1",
-    "webpack": "^3.8.1",
-    "webpack-dev-server": "^2.7.0",
-    "weui": "^1.1.0"
+  "private": true,
+  "scripts": {
+    "dev": "node server.js",
+    "start": "npm run build && npm run start-server",
+    "build": "npm run build-client && npm run build-server",
+    "build-client": "cross-env NODE_ENV=production webpack --config webpack.client.config.js --progress --hide-modules",
+    "build-server": "cross-env NODE_ENV=production webpack --config webpack.server.config.js --progress --hide-modules",
+    "start-server": "node server.js"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "dist/*",
+      "docs/*"
+    ],
+    "delay": "2500"
   },
   "dependencies": {
-    "jquery": "^3.3.1"
+    "axios": "^0.18.0",
+    "express": "^4.16.2",
+    "http-proxy-middleware": "^0.18.0",
+    "jquery": "^3.3.1",
+    "vue": "^2.5.16",
+    "vue-axios": "^2.1.1",
+    "vue-router": "^3.0.1",
+    "vue-server-renderer": "^2.5.16",
+    "vuex": "^3.0.1",
+    "vuex-router-sync": "^5.0.0",
+    "webpack-merge": "^4.1.1"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not ie <= 8"
+  ],
+  "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-3": "^6.24.1",
+    "cross-env": "^5.0.5",
+    "css-loader": "^0.28.7",
+    "file-loader": "^1.1.4",
+    "vue-loader": "^13.0.5",
+    "vue-template-compiler": "^2.4.4",
+    "html-webpack-plugin": "^2.24.1",
+    "webpack": "^3.6.0",
+    "webpack-dev-middleware": "^2.0.4",
+    "webpack-dev-server": "^2.9.1",
+    "webpack-hot-middleware": "^2.21.0"
   }
 }

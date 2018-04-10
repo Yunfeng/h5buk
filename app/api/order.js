@@ -9,6 +9,15 @@ export function payForTmcOrder(params, cbDone) {
   })
 }
 
+export function searchOrders(params, cbDone, cbAlways) {
+  const url = WEBAPP_NAME + '/orders/search.do'
+  callService(url, {
+    data: params,
+    cbDone: cbDone,
+    cbAlways: cbAlways
+  })
+}
+
 export function processOrder(url, params, done, fail, always) {
   $.ajax({
     type: 'post',
@@ -26,21 +35,7 @@ export function processOrder(url, params, done, fail, always) {
   })
 }
 
-export function searchOrders(params, done, fail, always) {
-  $.ajax({
-    type: 'post',
-    url: '/Flight/orders/search.do',
-    data: params,
-    dataType: 'json',
-  }).done(function (jsonResult) {
-    done(jsonResult)
-  }).fail(function (jqXHR, textStatus, errorThrown) {
-    fail(jqXHR.status, jqXHR.statusText)
-  }).always(function () {
-    always()
-    // setTimeout(() => { always() }, 5000)
-  })
-}
+
 
 export function searchOrderDetail(params, done, fail, always) {
   $.ajax({
