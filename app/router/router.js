@@ -17,7 +17,8 @@ export function createRouter () {
       { path: '/order/:id', component: () => System.import('../pages/Order-detail.vue')},
 
       { path: '/search', component: () => System.import('../pages/FlightSearchForm.vue')},
-      { path: '/searchResult', component: () => System.import('../pages/FlightSearchResult.vue')}
+      { path: '/searchResult', component: () => System.import('../pages/FlightSearchResult.vue')},
+      { path: '/booking', component: () => System.import('../pages/FlightBookingForm.vue')}
 
     ]
   });

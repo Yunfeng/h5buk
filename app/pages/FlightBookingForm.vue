@@ -260,7 +260,7 @@ export default {
             self.$store.commit('resetOrderInfo')
 
             self.$store.commit('setOrderId', jsonResult.returnCode)
-            self.$router.push('/order/detail/' + jsonResult.returnCode)
+            self.$router.push('/order/' + jsonResult.returnCode)
           }
         },
         error: function (XMLHttpRequest, textStatus, errorThrown) {
@@ -303,12 +303,6 @@ export default {
         () => {}
       )
     }
-  },
-  beforeRouteEnter (to, from, next) {
-    next(vm => {
-      // 通过 `vm` 访问组件实例
-      window.scroll(0, 0)
-    })
   }
 }
 </script>

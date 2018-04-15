@@ -587,12 +587,6 @@ export default {
     getDomain: function () {
       getDomainUrl((val) => { this.domain = val })
     }
-  },
-  beforeRouteEnter (to, from, next) {
-    next(vm => {
-      // 通过 `vm` 访问组件实例
-      window.scroll(0, 0)
-    })
   }
 }
 </script>

@@ -5,7 +5,7 @@
     </div> 
 
     <div class="card col-12 mt-2 mb-2 p-0 border-0">
-      <div class="card-block">
+      <div class="card-body">
         <div class="form-group row">
           <div class="col-5" style="border-bottom: 1px solid #5bc0de;">
               <input class="form-control border-0 " type="text" placeholder="出发城市" v-model="dcityName" @focus="dcityFocusedEvent()">
@@ -134,6 +134,9 @@ export default {
     }
   },
   created: function () {
+
+  },
+  mounted: function () {
     if (this.dcity == null || this.dcity.length === 0) {
       var cityCode = $.cookie('dcity')
       var cityName = $.cookie('dcityName')
@@ -156,15 +159,6 @@ export default {
       var date0 = new Date()
 
       const hours = date0.getHours()
-      // console.log(hours)
-
-      // var oDate = new Date(); //实例一个时间对象；
-      // oDate.getFullYear();   //获取系统的年；
-      // oDate.getMonth()+1;   //获取系统月份，由于月份是从0开始计算，所以要加1
-      // oDate.getDate(); // 获取系统日，
-      // oDate.getHours(); //获取系统时，
-      // oDate.getMinutes(); //分
-      // oDate.getSeconds(); //秒
 
       var cookieDate = $.cookie('ddate')
       // console.log('cookieDate: ' + cookieDate)
@@ -193,9 +187,7 @@ export default {
       // console.log(ddate)
 
       this.$store.commit('setDdate', ddate)
-    }
-  },
-  mounted: function () {
+    }    
     var self = this
     var today = new Date()
 

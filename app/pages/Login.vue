@@ -1,6 +1,5 @@
 <template>
   <div id="login" class="row">
-
     <template v-if="logined === false">
       <div class="card col-12 no-gutters">
         <div class="card-header text-center text-success"  v-if="openid.length === 0">
@@ -13,7 +12,7 @@
             未登录
           </div>
         </div>        
-        <div class="card-block no-gutters pb-0">
+        <div class="card-body no-gutters pb-0">
           <div class="form-group">
               <input class="form-control" type="text" placeholder="用户名" v-model="username">
           </div>
@@ -24,10 +23,10 @@
             <my-vcode label-text="验证码" img-id="kaptchaImage" v-model="vcode"></my-vcode>
           </template>
         </div>
-        <div class="card-block text-center bg-faded text-white">
+        <div class="card-body text-center bg-faded text-white">
           <button class="btn btn-success btn-block" @click.stop="login()">登录</button> 
         </div>
-        <div class="card-block">
+        <div class="card-body py-0">
           <span><small><a href="#/password">找回密码</a></small></span>
           <span class="float-right"><small><a href="#/register">这里注册</a></small></span>
         </div>
@@ -35,14 +34,14 @@
     </template>
     <template v-else>
       <div class="card col-12">
-        <div class="media card-block border-0" v-if="openid.length === 0">
+        <div class="media card-body border-0" v-if="openid.length === 0">
           <img class="d-flex align-self-center mr-3" :src="headimgurl" style="width: 5rem; height: 5rem">
           <div class="media-body">
             <h5 class="mt-0">{{fullname}}</h5>
             <small>当前用户：{{sessionUsername}}</small>
           </div>
         </div>
-        <div class="media card-block border-0"  v-if="openid.length > 0">
+        <div class="media card-body border-0"  v-if="openid.length > 0">
           <img class="d-flex align-self-center mr-3" :src="headimgurl" style="width: 5rem; height: 5rem">
           <div class="media-body">
             <h5 class="mt-0">{{nickname}}</h5>
@@ -68,13 +67,10 @@
         </table>
         <ul class="list-group list-group-flush">
           <li class="list-group-item">
-            <router-link to="/order" class="card-link">我的订单</router-link>
+            <router-link to="/orders" class="card-link">我的订单</router-link>
           </li>
           <li class="list-group-item">
             <router-link to="/changes" class="card-link">我的改期</router-link>
-          </li>
-          <li class="list-group-item">
-            <router-link to="/refunds" class="card-link">我的退票</router-link>
           </li>
           <li class="list-group-item">
             <router-link to="/refunds" class="card-link">我的退票</router-link>
