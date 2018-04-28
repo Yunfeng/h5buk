@@ -19,7 +19,6 @@ export function createRouter () {
       { path: '/search', component: () => System.import('../pages/FlightSearchForm.vue')},
       { path: '/searchResult', component: () => System.import('../pages/FlightSearchResult.vue')},
       { path: '/booking', component: () => System.import('../pages/FlightBookingForm.vue')}
-
     ]
   });
 }

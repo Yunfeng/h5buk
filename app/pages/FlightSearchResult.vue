@@ -42,10 +42,10 @@
                 <small>{{flight.carrierName}}</small>
               </td>
               <td class="text-center hidden-sm-down">
-                {{flight.depPortName}} <span class="small text-info">{{flight.depTerminal}}</span>
+                {{flight.depPortName}} 
               </td>
               <td class="text-center hidden-sm-down">
-                {{flight.arrPortName}} <span class="small text-info">{{flight.arrTerminal}}</span>
+                {{flight.arrPortName}} 
               </td>
               <td class="text-center">
                 <span class="text-info fa-2">{{flight.showDepTime}}</span> 
