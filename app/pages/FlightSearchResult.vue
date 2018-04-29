@@ -1,6 +1,6 @@
 <template>
 	<div id="flight-result" class="row">
-    <template v-if="listShowing">
+
       <div class="col-12 bg-info text-center text-white">
           <span @click="back()" class="float-left fa-2">
             <i class="fa fa-angle-left fa-2" aria-hidden="true"></i>
@@ -8,20 +8,20 @@
           <span class="fa-2">{{dcityName}}-{{acityName}}</span> <small>{{ddate.substring(5)}}</small>
 
           <span @click="showFilter()" class="float-right fa-2">                       
-            <i class="fa fa-filter fa-2" aria-hidden="true"></i>
+            <i class="fa fa-filter" aria-hidden="true"></i>
             <template v-if="totalCount > 0">
               <small>筛选</small>
             </template>
           </span>   
       </div>         
 
-      <div class="col-12 sticky-top text-center bg-primary" style="opacity:0.8">
+      <div class="col-12 sticky-top text-center bg-primary border-1" style="opacity:0.8">
         <span class="float-left" v-if="isToday">
           <a href="javascript:void(0)" @click.stop="changeDdate(-1)" class="text-white">前一天</a>
         </span>
-        <template v-if="isReplacing">
-          <span class="text-danger small">更新中...</span>
-        </template> 
+        
+        <span class="text-danger small" v-if="isReplacing">更新中...</span>
+        
         <span class="float-right">
           <a href="javascript:void(0)" @click.stop="changeDdate(1)" class="text-white fa-2">后一天</a>
         </span>
@@ -73,89 +73,6 @@
       <div class="card col-12 text-right mt-1 border-0" v-if="totalCount > 0">
         <span class="text-info"><small>共</small> {{showCount}}/{{totalCount}} <small>航班</small></span>
       </div>
-    </template>
-
-    <template v-if="detailShowing && flt">
-      <div class="col-12 bg-info text-center text-white">
-        <span @click="closeDetail()" class="float-left fa-2">
-          <i class="fa fa-angle-left fa-2" aria-hidden="true"></i>
-        </span>
-        <span class="fa-2 text-white">{{flt.flightNo}}</span>
-        <small class="text-warning">{{flt.depDate}}</small>
-      </div>           
-    
-      <div class="card col-12">
-        <div class="row">
-          <div class="col-4 text-nowrap">
-            <span class="time text-success">{{flt.showDepTime}}</span>
-            <small>出发</small>
-          </div>
-          <div class="col-4 text-nowrap">
-            <span class="time text-muted">{{flt.showArrTime}}</span>
-            <small>到达</small>
-          </div>
-          <div class="col-4 text-nowrap text-warning text-right">
-            <template v-if="flt.lowestPrice">
-              <i class="fa fa-rmb"></i> <span class="lowest-price mr-1">{{flt.lowestPrice.price}}</span>
-            </template>
-          </div>
-          <div class="clear"></div>
-        </div>
-        <div class="row">
-          <div class="col-4 text-nowrap">
-            <span class="time text-success">{{flt.depPortName}}</span>
-            <small>{{flt.depTerminal}}</small>
-          </div>
-          <div class="col-4 text-nowrap">
-            <span class="time text-muted">{{flt.arrPortName}}</span>
-            <small>{{flt.arrTerminal}}</small>
-          </div>
-          <div class="col-4 text-right">
-            <span v-if="flt.stopover !== '0'">{{flt.stopover}}</span>
-          </div>
-          <div class="clear"></div>
-        </div>
-        <div class="row">
-          <div class="col-3 text-right text-nowrap"> {{flt.carrierName}} </div>
-          <div class="col-3 text-center text-nowrap">机型：{{flt.planeType}} </div>
-          <div class="col-3 text-center text-nowrap">
-            <p v-if="flt.codeShared === '1'">代码共享</p>
-          </div>
-          <div class="col-3 text-center text-nowrap">{{flt.carrierFlightNo}} </div>
-          <div class="clear"></div>
-        </div>          
-      </div>
-
-      <table class="table table-striped">
-        <tbody>
-          <tr v-for="info in sortSubclass(flt.subClassList)">
-            <td class="text-right px-1"><small>{{showCabinClass(info.cabinClass, info.offset)}} {{info.subClass}}</small></td>
-            <td class="text-center">
-              <span :id="'tgq-' + flt.id + '-' + info.subClass" tgq-cached="0" @click="showTGQ(flt.carrierCode, info.subClass)"><small>退改</small></span>
-            </td>
-            <td class="text-right">
-              <template v-if="info.price > 0">
-                <i class="fa fa-rmb text-warning"></i> <span class="text-danger fa-2">{{info.price}}</span>
-              </template>
-              <template v-else>
-                <span class="text-danger"><small>浮动</small></span>
-              </template>
-            </td>
-            <td class="text-right">
-              <span v-if="info.seatCount < 10" class="text-danger"><small>{{info.seatCount}}张</small></span>
-
-              <a @click.stop="bookFlight(flt, info);" :title="info.price + '元，余位' + info.seatStatus" class="btn btn-outline-info btn-sm">预定</a>              
-            </td>
-          </tr>
-        </tbody>
-      </table>
-
-      <div class="card col-12 border-0" v-if="flt.freshness < 60">
-        <div class="card-block text-right">
-          <small>更新时间: <span class="text-success">{{showFreshness(flt.freshness)}}</span></small>
-        </div>
-      </div>
-    </template>
 
     <div id="loadingToast" v-show="searching">
       <div class="weui-mask_transparent"></div>
@@ -205,8 +122,6 @@ export default {
   data () {
     return {
       searching: false,
-      listShowing: true,
-      detailShowing: false,
 
       flt: null,
 
@@ -372,11 +287,15 @@ export default {
     },
     showFlightDetail: function (fltInfo) {
       // 显示某一航班详情
-      this.listShowing = false
-      this.detailShowing = true
-      this.flt = fltInfo
+      console.log(fltInfo)
+      this.$store.commit('setFlightInfo', fltInfo)
+      this.$router.push('/flight/detail')
 
-      window.scroll(0, 0)
+      // this.listShowing = false
+      // this.detailShowing = true
+      // this.flt = fltInfo
+
+      // window.scroll(0, 0)
     },
     closeDetail: function () {
       this.detailShowing = false

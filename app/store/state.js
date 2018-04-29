@@ -35,6 +35,7 @@ export const state = {
     frozenBalance: 0,
     creditLimit: 0
   },
+  flightInfo: null,
   orderId: 0,
   orderDetail: null,
   policyDetail: null,

@@ -9,46 +9,46 @@ export const mutations = {
     state.airports = v.dataList
     state.sc = v.page
   },
-    init (state) {
-      // 初始化，读取cookie中的数据
-      var username = $.cookie('username')
-      if (username !== undefined) {
-        state.username = username
-        state.logined = true
+  init (state) {
+    // 初始化，读取cookie中的数据
+    var username = $.cookie('username')
+    if (username !== undefined) {
+      state.username = username
+      state.logined = true
+    }
+
+    var openid = $.cookie('openid')
+    if (openid !== undefined) {
+      state.wxInfo.openid = openid
+
+      var nickname = $.cookie('nickname')
+      if (nickname !== undefined) {
+        state.wxInfo.nickname = nickname
       }
+      
+      var headimgurl = $.cookie('headimgurl')
+      if (headimgurl !== undefined) {
+        state.wxInfo.headimgurl = headimgurl
+      }
+    }      
+  },
+  resetOrderInfo (state) {
+    state.order.pnrNo = ''
+    state.order.pnrDetail = ''
+    state.order.policyId = 0
+    state.order.flights.splice(0)
+    state.order.psgs.splice(0)
+  },
+  jumpToLogin (state, router) {
+    state.historyStep = -1;
+    state.username = "",
+    state.logined = false;
 
-      var openid = $.cookie('openid')
-      if (openid !== undefined) {
-        state.wxInfo.openid = openid
+    $.removeCookie('username', { path: '/' }); 
+    $.removeCookie('token', { path: '/' }); 
 
-        var nickname = $.cookie('nickname')
-        if (nickname !== undefined) {
-          state.wxInfo.nickname = nickname
-        }
-        
-        var headimgurl = $.cookie('headimgurl')
-        if (headimgurl !== undefined) {
-          state.wxInfo.headimgurl = headimgurl
-        }
-      }      
-    },
-    resetOrderInfo (state) {
-      state.order.pnrNo = ''
-      state.order.pnrDetail = ''
-      state.order.policyId = 0
-      state.order.flights.splice(0)
-      state.order.psgs.splice(0)
-    },
-    jumpToLogin (state, router) {
-      state.historyStep = -1;
-      state.username = "",
-      state.logined = false;
-
-      $.removeCookie('username', { path: '/' }); 
-      $.removeCookie('token', { path: '/' }); 
-
-      router.push("/login");
-    },
+    router.push("/login");
+  },
     logout(state)  {
       state.historyStep = -1;
       state.username = ""
@@ -134,6 +134,9 @@ export const mutations = {
     setOrderDetail(state, payload) {
       state.orderDetail = payload;
       state.orderId = payload.id;
+    },
+    setFlightInfo(state, payload) {
+      state.flightInfo = payload;
     },
     setPolicyDetail(state, payload) {
       state.policyDetail = payload;

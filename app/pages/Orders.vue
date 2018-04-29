@@ -3,19 +3,18 @@
     <div class="col-12 bg-info text-center text-white">
         <span @click="back()" class="float-left fa-2">
           <i class="fa fa-angle-left fa-2" aria-hidden="true"></i></span>
-        <span class="fa-2">机票订单</span>
+        <span class="fa-2">订单</span>
     </div> 
     <template v-if="orders.length > 0">
-      <div class="card col-12 ">
+      <div class="card col-12 px-0">
         <table class="table table-striped table-sm small">
           <thead>
             <tr>
               <th class="text-center">日期</th>
               <th class="text-center">出发</th>
               <th class="text-center">到达</th>
-              <th class="text-center">人数</th>
               <th class="text-right">金额</th>
-              <th class="text-right"></th>
+              <th>状态</th>
             </tr>
           </thead>
           <tbody>
@@ -25,7 +24,6 @@
               </td>
               <td class="text-center">{{info.flights[0].departureAirportName}}</td>
               <td class="text-center">{{info.flights[0].arrivalAirportName}}</td>
-              <td class="text-center">{{info.psgCount}}</td>
               <td class="text-right">{{info.totalAmount}}</td>
               <td class="" :class="changeBgByStatus(info.status)">
                 {{showStatusDesc(info.status)}}

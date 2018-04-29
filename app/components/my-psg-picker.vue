@@ -17,24 +17,32 @@
     </div>
     <div class="weui-cells weui-cells_access container mt-0" id="search_show">
       <div class="row">
-        <div class="card col-12 px-0">
+        <div class="card col-12">
           <template v-if="psgs.length > 0">
-            <div class="card-block pb-0 border-bottom-1" v-for="(psg,index) in psgs">
-              姓名: <strong>{{psg.nameCn}}</strong><br />
-              <template v-if="psg.idNo">
-                身份证：{{psg.idNo}}<br />
-              </template>
-              <template v-if="psg.passportNo">
-                护照：{{psg.passportNo}}
-              </template>
-              <span class="float-right mb-2">
-                <button type="button" class="btn btn-success btn-sm " @click.stop="selectThisPsg(index);">√</button>
-              </span>
-            </div>
+            <table class="table table-striped table-sm">
+              <tbody>
+                <tr v-for="(psg,index) in psgs">
+                  <td>
+                    <strong>{{psg.nameCn}}</strong>
+                    <template v-if="psg.idNo">
+                      <small>{{psg.idNo}}</small>
+                    </template>
+                    <template v-else-if="psg.passportNo">
+                      <small>{{psg.passportNo}}</small>
+                    </template>
+                  </td>
+                  <td>
+                    <span class="float-right mb-2">
+                      <button type="button" class="btn btn-success btn-sm " @click.stop="selectThisPsg(index);">确定</button>
+                    </span>
+                  </td>
+                </tr>                
+              </tbody>
+            </table>
           </template>
           <template v-else-if="searchCount > 0">
             <div class="card-block pb-0 border-bottom-1 text-center">
-              <span class="text-danger">未找到符合的常用乘机人</span>
+              <span class="text-danger">未找到乘机人信息</span>
             </div>
           </template>
         </div>

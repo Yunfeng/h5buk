@@ -77,11 +77,11 @@
 
       <div class="card border-0">
         <div class="card-header bg-warning text-white py-0">
-          乘客
+          乘机人
         </div>
         <template v-for="(psg, index) in psgInfos">
           <div class="card-body bg-faded p-0 mt-1">
-            <span class="text-muted">乘客 {{index+1}}</span>
+            <span class="text-muted">第 {{index+1}} 位</span>
             <button type="button" @click.stop="selectPsg(index)" title="搜索并选择乘机人">
               <i class="fa fa-search-plus text-success" aria-hidden="true"></i>
             </button> 
@@ -92,7 +92,7 @@
 
           <div class="card-body" style="padding: 0">
             <div class="form-group border-bottom-1">
-              <input type="text" class="form-control border-0" :name="'tmcPolicyApply.passengers[' + index + '].psgName'" placeholder="乘客姓名" v-model="psg.psgName"/>
+              <input type="text" class="form-control border-0" :name="'tmcPolicyApply.passengers[' + index + '].psgName'" placeholder="姓名" v-model="psg.psgName"/>
             </div>
             <div class="form-group border-bottom-1">
               <input type="text" class="form-control border-0" :name="'tmcPolicyApply.passengers[' + index + '].idNo'" placeholder="证件号" v-model="psg.idNo" />
