@@ -88,7 +88,7 @@ server.get('*', (req, res) => {
   const s = Date.now()
   const context = { url: req.url, 
     meta: `<meta description="vuejs server side render">`,
-    title: 'yunfeng\'s title is: manager'
+    title: ''
   }
   // No need to pass an app here because it is auto-created by
   // executing the bundle. Now our server is decoupled from our Vue app!

@@ -157,66 +157,6 @@
       </div>
     </template>
 
-    <template v-if="filterModalShowing">
-      <div class="col-12 bg-primary text-center align-center text-white">
-        <span class="fa-2">航班筛选</span>
-        <button type="button" class="btn btn-sm btn-warning float-right mt-1" @click="closeFilterDialog()">确定</button>
-      </div>
-
-      <div class="card p-0 col-12 border-0">
-        <div class="form-group row mt-2">
-          <label class="col-4 text-right">共享航班</label>
-          <div class="col-6">
-            <div class="form-check">
-              <label class="form-check-label">
-                <input class="form-check-input" type="checkbox" v-model="filter.showCodeShare"> 显示共享航班
-              </label>
-            </div>
-          </div>
-        </div>
-
-        <div class="form-group row">
-          <label class="col-4 col-form-label text-right">排序</label>
-          <div class="col-6 px-0" style="border-bottom: 1px solid #5bc0de;">
-            <select v-model="sortBy0" class="form-control  border-0" >
-              <option value="0">起飞时间升序</option>
-              <option value="1">起飞时间降序</option>
-              <option value="2">最低价格升序</option>
-              <option value="3">最低价格降序</option>
-            </select>                
-          </div>
-        </div>
-
-        <div class="form-group row">
-          <label class="col-4 col-form-label text-right">航空公司</label>
-          <div class="col-6 px-0" style="border-bottom: 1px solid #5bc0de;">
-            <select v-model="filterByCarrier0" class="form-control  border-0" >
-              <option value="">全部航司</option>
-                <template v-for="carrier in carrierInfos">
-                  <option v-bind:value="carrier.code">
-                    {{carrier.code}} {{carrier.name}}
-                </option>
-                </template>
-            </select>                
-          </div>
-        </div>
-
-        <div class="form-group row">
-          <label class="col-4 col-form-label text-right">起飞时间</label>
-          <div class="col-6 px-0"  style="border-bottom: 1px solid #5bc0de;">
-            <select v-model="filter.filterByTime" class="form-control  border-0" >
-              <option value="0">所有时间</option>
-                          <option value="1">00:00-06:00</option>
-                          <option value="2">06:01-12:00</option>
-                          <option value="3">12:01-18:00</option>
-                          <option value="4">18:00-23:59</option>
-            </select>                
-          </div>
-        </div>
-
-      </div>
-    </template>
-
     <div id="loadingToast" v-show="searching">
       <div class="weui-mask_transparent"></div>
       <div class="weui-toast">
@@ -242,7 +182,9 @@
           </div>
         </div>
       </div>
-    </div>    
+    </div>  
+
+    <my-modal-filter ref="modalFilter" :carrierInfos="carrierInfos"></my-modal-filter>
   </div>
 </template>
 
@@ -252,18 +194,20 @@ import { rav, searchTgq } from '../api/flight.js'
 import MyButton from '../components/my-button.vue'
 import MyInput from '../components/my-input.vue'
 import $ from 'jquery'
+import MyModalFilter from '../components/my-flight-filter.vue'
 
 export default {
   components: {
     'my-button': MyButton,
-    'my-input': MyInput
+    'my-input': MyInput,
+    MyModalFilter
   },
   data () {
     return {
       searching: false,
       listShowing: true,
       detailShowing: false,
-      filterModalShowing: false,
+
       flt: null,
 
       startPosition: -1,
@@ -276,8 +220,7 @@ export default {
         filterByTime: '0',
         sortBy: 0
       },
-      filterByCarrier0: '',
-      sortBy0: '',
+
       avCount: 0,
       totalCount: 0,
       showCount: 0,
@@ -301,14 +244,6 @@ export default {
       // 判断 ddate 日期是否小于等于今天
       var aa = new Date(this.ddate) - new Date()
       return aa > 0
-    }
-  },
-  watch: {
-    filterByCarrier0 (curVal, oldVal) {
-      this.filter.filterByCarrier = curVal
-    },
-    sortBy0 (curVal, oldVal) {
-      this.filter.sortBy = parseInt(curVal)
     }
   },
   mounted: function () {
@@ -579,14 +514,12 @@ export default {
       this.$router.replace('/booking')
     },
     showFilter: function () {
-      this.filterModalShowing = true
-      this.listShowing = false
-      this.filterByCarrier0 = this.filter.filterByCarrier
-      this.sortBy0 = this.filter.sortBy
-    },
-    closeFilterDialog: function () {
-      this.filterModalShowing = false
-      this.listShowing = true
+      this.$refs.modalFilter.modal().then(v => {
+        this.filter.showCodeShare = v.showCodeShare
+        this.filter.filterByCarrier = v.filterByCarrier
+        this.filter.filterByTime = v.filterByTime
+        this.filter.sortBy = parseInt(v.sortBy)
+      }).catch(ex => {})
     },
     showTGQ: function (carrier, subclass) {
       this.tgqCarrier = carrier

@@ -1,6 +1,6 @@
 <template>
-	<div id="searching" class="row" style="background-color: #2E9CDF;">
-    <div class="col-12 bg-info text-center text-white">
+	<div id="searching" class="row">
+    <div class="col-12 bg-info text-center text-white mb-1">
       <span class="fa-2">国内机票</span>
     </div> 
 
