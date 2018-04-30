@@ -26,6 +26,7 @@
         dataType: 'text',
         success: function (jsonResult) {
           domain = jsonResult
+          alert(domain)
           callWexinPay()
         }
       })    
@@ -42,7 +43,7 @@
         dataType: 'json',
         success: function (jsonResult) {
           if (jsonResult !== null) {
-			params = jsonResult
+			      params = jsonResult
             jsApiCall()
           }
         }
@@ -63,6 +64,7 @@
   }
 
   function onBridgeReady() {   
+    alert(params)
     WeixinJSBridge.invoke ('getBrandWCPayRequest', 
       {
        "appId": params.appId,     //公众号名称，由商户传入     
@@ -81,6 +83,9 @@
   $(function() {
       code = GetURLParameter('code')
       orderId = GetURLParameter('state')
+
+      alert(code)
+      alert(orderId)
 
       getDomainUrl()
   })
