@@ -26,10 +26,6 @@
         <div class="card-body text-center bg-faded text-white">
           <button class="btn btn-success btn-block" @click.stop="login()">登录</button> 
         </div>
-        <div class="card-body py-0">
-          <span><small><a href="#/password">找回密码</a></small></span>
-          <span class="float-right"><small><a href="#/register">这里注册</a></small></span>
-        </div>
       </div>
     </template>
     <template v-else>

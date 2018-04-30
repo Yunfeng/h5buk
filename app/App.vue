@@ -1,5 +1,5 @@
 <template>
-  <div id="app" class="container-fluid">
+  <div id="app" class="container">
     <my-loading></my-loading>
     <top-tips></top-tips>
 

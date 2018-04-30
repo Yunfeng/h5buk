@@ -9,6 +9,14 @@
             机票
         </p>
       </router-link>
+
+      <router-link to="/policies" class="weui-tabbar__item">
+        <div class="weui-tabbar__icon">
+          <i class="fa fa-home fa-2" aria-hidden="true"></i>
+        </div>
+        <p class="weui-tabbar__label">政策</p>
+      </router-link>
+
       <router-link to="/orders" class="weui-tabbar__item">
         <div class="weui-tabbar__icon">
           <i class="fa fa-home fa-2" aria-hidden="true"></i>

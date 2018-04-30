@@ -1,15 +1,14 @@
 <template>  
-	<div id="tmc-list" class="row">
-    <div class="col-12 bg-info text-white text-center fa-2 sticky-top">
-      <span @click="back()" class="float-left">
+	<div id="policies" class="row">
+    <div class="col-12 bg-info text-white text-center">
+      <span @click="back()" class="float-left fa-2">
         <i class="fa fa-angle-left fa-2" aria-hidden="true"></i>
-        <small>返回</small>
       </span>
-      机票特殊政策
+      <span class="fa-2">政策</span>
     </div> 
 
-    <div class="card col-12 mt-4">
-      <table class="table table-striped table-condensive">
+    <div class="card col-12">
+      <table class="table table-striped table-sm">
         <thead>
             <tr>
                 <th>航司</th>
@@ -18,7 +17,7 @@
                 <th>到达</th>
                 <th>返点</th>
                 <th>票面</th>
-                <th class="hidden-md-down">备注</th>
+                <th class="d-none">备注</th>
                 <th></th>
             </tr>                        
         </thead>
@@ -29,11 +28,11 @@
                 <td>{{getPortDesc(info.dport)}}</td>
                 <td>{{getPortDesc(info.aport)}}</td>
                 <td>{{info.returnPoint}}</td>
-                <td>>{{info.minPrice}} 
-                  
-                </td>
-                <td class="hidden-md-down">{{showShortDesc(info.remark)}}</td>
-                <th><i class="fa fa-angle-right text-warning float-right fa-2 pr-2" aria-hidden="true"></i></th>
+                <td>{{info.minPrice}}</td>
+                <td class="d-none">{{showShortDesc(info.remark)}}</td>
+                <th>
+                  <i class="fa fa-angle-right text-warning float-right fa-2 pr-2" aria-hidden="true"></i>
+                </th>
             </tr>
         </tbody>
       </table>
@@ -73,7 +72,7 @@ export default {
       sc: {
         rowCount: 0,
         pageNo: 1,
-        pageSize: 25,
+        pageSize: 10,
         pageTotal: 0
       }
     }
@@ -118,7 +117,7 @@ export default {
     },
     showDetail: function (info) {
       this.$store.commit('setPolicyDetail', info)
-      this.$router.push('/tmc/detail')
+      this.$router.push('/policy/' + info.id)
     },
     getIntlPolicyDesc: function (val) {
       var desc = '国内'
@@ -137,8 +136,13 @@ export default {
       return desc
     },
     getPortDesc: function (val) {
+      // console.log(val + ', ' + val.length)
       var desc = val
-      if (val === '*') desc = '全国'
+      if (val === '*') {
+        desc = '全国'
+      } else if (val.length > 7) {
+        desc = val.substring(0, 7) + '...'
+      }  
       return desc
     },
     showSubclass: function (val) {
@@ -151,7 +155,6 @@ export default {
       }
     },
     showShortDesc: function (val) {
-      console.log(val)
       if (val === undefined || val === null || val.length < 10) {
         return val
       } else {
@@ -171,11 +174,6 @@ export default {
       this.sc.pageNo = pageNo
       this.search()
     }
-  },
-  beforeRouteEnter (to, from, next) {
-    next(vm => {
-      // 通过 `vm` 访问组件实例
-    })
   }
 }
 </script>

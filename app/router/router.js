@@ -2,7 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 
 import MyNav from '../pages/Nav.vue';
-import About from '../pages/About.vue';
+
 import Login from '../pages/Login.vue';
 import Orders from '../pages/Orders.vue';
 import OrderDetail from '../pages/Order-detail.vue';
@@ -11,7 +11,8 @@ import FlightDetail from '../pages/FlightDetail.vue';
 import Recharge from '../pages/Recharge.vue';
 import MyPayResult from '../pages/Recharge-result.vue';
 
-
+import Policies from '../pages/Tmc-list.vue'
+import PolicyDetail from '../pages/Tmc-detail.vue'
 
 Vue.use(Router);
 
@@ -20,7 +21,7 @@ export function createRouter () {
     mode: 'history',
     routes: [
       { path: '/', component: MyNav},
-      { path: '/about', component: About},
+
       { path: '/login', component: Login},
 
       { path: '/recharge', component: Recharge},
@@ -32,7 +33,10 @@ export function createRouter () {
       { path: '/search', component: () => System.import('../pages/FlightSearchForm.vue')},
       { path: '/searchResult', component: () => System.import('../pages/FlightSearchResult.vue')},
       { path: '/flight/detail', component: FlightDetail},
-      { path: '/booking', component: () => System.import('../pages/FlightBookingForm.vue')}
+      { path: '/booking', component: () => System.import('../pages/FlightBookingForm.vue')},
+
+      { path: '/policies', component: Policies},
+      { path: '/policy/:id', component: PolicyDetail}
     ]
   });
 }
