@@ -13,7 +13,7 @@
           <label class="form-control-label">金额</label>
           <input type="text" class="form-control" placeholder="充值金额，元"  v-model="total0">
           <div class="form-control-feedback">充值 {{total0}} 元</div>
-          <small class="form-text text-muted">单位元, 保留小数点后2位</small>
+          <small class="form-text text-muted">单位元</small>
         </div>
       </div>
       <div class="card-footer text-center">
@@ -30,7 +30,7 @@ import $ from 'jquery'
 export default {
   data () {
     return {
-      total: null,
+      total: 0,
       total0: null,
 
       appid: '',
@@ -42,11 +42,9 @@ export default {
   },
   watch: {
     total0 (curVal, oldVal) {
-      console.log(curVal, oldVal)
-      if (curVal === null) {
-        this.total = null
-      } else {
-        this.total = parseInt(curVal * 100)
+      const amount = parseInt(curVal)
+      if (!isNaN(amount)) {
+        this.total = amount * 100
       }
     }
   },
@@ -77,7 +75,7 @@ export default {
       var self = this
 
       if (this.total === null || this.total < 1) {
-        this.showErrMsg('请输入充值金额')
+        this.showErrMsg('请输入充值金额', 'danger')
         return
       }
 
