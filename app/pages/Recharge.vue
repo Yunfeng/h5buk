@@ -8,7 +8,7 @@
       充值
     </div>
     <div class="card col-12 px-0">
-      <div class="card-block">
+      <div class="card-body">
         <div class="form-group has-success">
           <label class="form-control-label">金额</label>
           <input type="text" class="form-control" placeholder="充值金额，元"  v-model="total0">
@@ -68,10 +68,6 @@ export default {
     },
     waitForJump: function () {
       setTimeout(() => this.$router.push('/login'), 1500)
-    },
-    weixinPay0: function () {
-      this.redirectUrl = 'http://' + this.domain + '/wxp/test/wxp.html'
-      this.createPayOrder()
     },
     weixinPay1: function () {
       this.redirectUrl = 'http://' + this.domain + '/wxp/wxp.html'
@@ -141,11 +137,6 @@ export default {
     getDomain: function () {
       getDomainUrl((val) => { this.domain = val })
     }
-  },
-  beforeRouteEnter (to, from, next) {
-    next(vm => {
-      // console.log('i m in.')
-    })
   }
 }
 </script>

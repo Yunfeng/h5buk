@@ -69,18 +69,13 @@
           <li class="list-group-item">
             <router-link to="/orders" class="card-link">我的订单</router-link>
           </li>
-          <li class="list-group-item">
+<!--           <li class="list-group-item">
             <router-link to="/changes" class="card-link">我的改期</router-link>
           </li>
           <li class="list-group-item">
             <router-link to="/refunds" class="card-link">我的退票</router-link>
           </li>
-          <li class="list-group-item">
-            <router-link to="/home" class="card-link text-success">
-              更多功能
-            </router-link>
-          </li>
-        </ul>
+ -->        </ul>
           
         <div class="card-footer">
           <button class="btn btn-danger btn-block" @click="logout()">退出</button>
