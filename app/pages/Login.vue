@@ -36,7 +36,6 @@
     <template v-else>
       <div class="card col-12">
         <div class="media card-body border-0" v-if="openid.length === 0">
-          <img class="d-flex align-self-center mr-3" :src="headimgurl" style="width: 5rem; height: 5rem">
           <div class="media-body">
             <h5 class="mt-0">{{fullName}}</h5>
             <small>
@@ -45,7 +44,7 @@
             </small> 
           </div>
         </div>
-        <div class="media card-body border-0"  v-if="openid.length > 0">
+        <div class="media card-body border-0"  v-else-if="openid.length > 0">
           <img class="d-flex align-self-center mr-3" :src="headimgurl" style="width: 5rem; height: 5rem">
           <div class="media-body">
             <h5 class="mt-0">{{nickname}}</h5>
@@ -121,11 +120,8 @@ export default {
     historyStep () { return this.$store.state.historyStep },
     userInfo () { return this.$store.state.userInfo },
     openid () {
-      var openid = this.$store.state.wxInfo.openid
-      if (openid.length === 0) {
-        // openid = $.cookie('openid')
-        if (openid === undefined) openid = ''
-      }
+      const openid = this.$store.state.wxInfo.openid
+      console.log('openid: ' + openid + ', ' + openid.length)
       return openid
     },
     nickname () {
