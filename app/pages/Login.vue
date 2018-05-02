@@ -49,7 +49,8 @@
           <img class="d-flex align-self-center mr-3" :src="headimgurl" style="width: 5rem; height: 5rem">
           <div class="media-body">
             <h5 class="mt-0">{{nickname}}</h5>
-            <small>当前用户：{{sessionUsername}}</small> 修改
+            <small>当前用户：{{sessionUsername}}</small>
+            <router-link to="/profile">修改</router-link>
           </div>
         </div>  
           
