@@ -43,22 +43,6 @@ export const actions = {
 
     setTimeout(() => { context.state.errAlert = false }, timeout)
   },
-      showAlertMsg(context, payload) {
-      // console.log(payload)
-      if (payload.errMsgType === undefined) {
-        context.state.errMsgType = 'warning'
-      } else {
-        context.state.errMsgType = payload.errMsgType
-      }
-
-      context.state.errMsg = payload.errMsg
-      context.state.errAlert = true
-
-      var timeout = payload.timeout
-      if (timeout === undefined || timeout === null) timeout = 2500
-
-      setTimeout(() => { context.state.errAlert = false }, timeout)
-    },
     setWxCode(context, payload) {
       context.state.wxInfo.code = payload
       context.dispatch('getWxOpenid')

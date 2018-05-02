@@ -84,6 +84,9 @@ export default {
     back: function () {
       this.$router.go(-1)
     },
+    showErrMsg: function (msg, msgType) {
+      this.$store.dispatch('showAlertMsg', { 'errMsg': msg, 'errMsgType': msgType })
+    },        
     search: function () {
       var self = this
       self.loading = true
@@ -107,6 +110,7 @@ export default {
           self.searching = false
 
           if (XMLHttpRequest.status === 403) {
+            self.showErrMsg('您可能需要先登录，或申请授权')
             self.$store.commit('jumpToLogin', self.$router)
           }
         },

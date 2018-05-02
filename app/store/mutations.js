@@ -59,7 +59,7 @@ export const mutations = {
     },
     setUsername (state, payload) {
       state.username = payload.username
-      state.fullname = payload.fullname
+      state.fullName = payload.fullName
       state.logined = payload.logined
     },
     setUserInfo(state, payload) {

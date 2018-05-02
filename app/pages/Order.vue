@@ -28,8 +28,7 @@
 </template>
 
 <script>
-import { showOrderStatusDesc } from '../common/common.js'
-import { searchOrders } from '../api/order.js'
+import { searchOrders, showOrderStatusDesc } from '../api/order.js'
 
 export default {
   data () {

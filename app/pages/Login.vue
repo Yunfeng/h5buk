@@ -27,21 +27,29 @@
           <button class="btn btn-success btn-block" @click.stop="login()">登录</button> 
         </div>
       </div>
+      <div class="card col-12">
+        <div class="card-body">
+          <router-link to="/subscribe">如何注册</router-link>
+        </div>
+      </div>
     </template>
     <template v-else>
       <div class="card col-12">
         <div class="media card-body border-0" v-if="openid.length === 0">
           <img class="d-flex align-self-center mr-3" :src="headimgurl" style="width: 5rem; height: 5rem">
           <div class="media-body">
-            <h5 class="mt-0">{{fullname}}</h5>
-            <small>当前用户：{{sessionUsername}}</small>
+            <h5 class="mt-0">{{fullName}}</h5>
+            <small>
+              当前用户：{{sessionUsername}}
+              <router-link to="/profile">修改</router-link>
+            </small> 
           </div>
         </div>
         <div class="media card-body border-0"  v-if="openid.length > 0">
           <img class="d-flex align-self-center mr-3" :src="headimgurl" style="width: 5rem; height: 5rem">
           <div class="media-body">
             <h5 class="mt-0">{{nickname}}</h5>
-            <small>当前用户：{{sessionUsername}}</small>
+            <small>当前用户：{{sessionUsername}}</small> 修改
           </div>
         </div>  
           
@@ -65,13 +73,7 @@
           <li class="list-group-item">
             <router-link to="/orders" class="card-link">我的订单</router-link>
           </li>
-<!--           <li class="list-group-item">
-            <router-link to="/changes" class="card-link">我的改期</router-link>
-          </li>
-          <li class="list-group-item">
-            <router-link to="/refunds" class="card-link">我的退票</router-link>
-          </li>
- -->        </ul>
+        </ul>
           
         <div class="card-footer">
           <button class="btn btn-danger btn-block" @click="logout()">退出</button>
@@ -114,7 +116,7 @@ export default {
       }
       return username
     },
-    fullname () { return this.$store.state.fullname },
+    fullName () { return this.$store.state.fullName },
     historyStep () { return this.$store.state.historyStep },
     userInfo () { return this.$store.state.userInfo },
     openid () {
@@ -185,13 +187,13 @@ export default {
             var u = {
               'username': jsonResult.username,
               'logined': true,
-              'fullname': jsonResult.fullname
+              'fullName': jsonResult.fullName
             }
             self.$store.commit('setUsername', u)
 
             $.cookie('token', jsonResult.token, { expires: 30, path: '/' })
             $.cookie('username', jsonResult.username, { expires: 30, path: '/' })
-            $.cookie('fullname', jsonResult.fullname, { expires: 30, path: '/' })
+            $.cookie('fullName', jsonResult.fullName, { expires: 30, path: '/' })
 
             if (self.historyStep !== 0) {
               self.$router.go(self.historyStep)
@@ -222,7 +224,7 @@ export default {
             self.$store.commit('setUsername', { 'username': jsonResult.username, 'logined': true })
 
             $.cookie('username', jsonResult.username, { expires: 30, path: '/' })
-            $.cookie('fullname', jsonResult.fullname, { expires: 30, path: '/' })
+            $.cookie('fullName', jsonResult.fullName, { expires: 30, path: '/' })
 
             self.searchBalance()
           }

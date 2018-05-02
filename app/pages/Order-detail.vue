@@ -248,13 +248,13 @@
 </template>
 
 <script>
-import { showIdTypeDesc, showOrderStatusDesc } from '../common/common.js'
+import { showIdTypeDesc,  } from '../common/common.js'
 import { getDomainUrl } from '../api/wx.js'
 import MyButton from '../components/my-button.vue'
 import MyInput from '../components/my-input.vue'
 import $ from 'jquery'
 import { searchPolicies, searchOrderDetail, cancelOrder, searchPayRates, processOrder } from '../api/order.js'
-import { payForTmcOrder } from '../api/order.js'
+import { payForTmcOrder, showOrderStatusDesc } from '../api/order.js'
 
 export default {
   components: {

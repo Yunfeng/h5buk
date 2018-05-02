@@ -46,8 +46,7 @@
 </template>
 
 <script>
-import { showOrderStatusDesc } from '../api/common.js'
-import { searchOrders } from '../api/order.js'
+import { searchOrders, showOrderStatusDesc } from '../api/order.js'
 
 export default {
   asyncData ({ store, route }) {
@@ -68,6 +67,9 @@ export default {
     back: function () {
       this.$router.go(-1)
     },
+    showErrMsg: function (msg, msgType) {
+      this.$store.dispatch('showAlertMsg', { 'errMsg': msg, 'errMsgType': msgType })
+    },    
     showLoading: function (loadingText) {
       this.$store.commit('showLoading', { 'loading': true, 'loadingText': loadingText })
     },
@@ -94,6 +96,12 @@ export default {
       searchOrders(params,
         (jsonResult) => {
           if (jsonResult !== null) { this.orders = jsonResult.dataList }
+        },
+        status => {
+          if (status === 403) {
+            this.showErrMsg('您可能需要先登录，或申请授权')
+            this.$store.commit('jumpToLogin', this.$router)
+          }
         },
         () => this.hideLoading()
       )

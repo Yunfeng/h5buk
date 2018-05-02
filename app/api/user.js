@@ -1,3 +1,25 @@
+import { WEBAPP_NAME, callService } from '../common/common.js'
+
+export function getProfile(cbDone, cbFail, cbAlways) {
+  const url = WEBAPP_NAME + '/user/profile'
+  callService(url, {
+    type: 'get',
+    cbDone: cbDone,
+    cbFail: cbFail,
+    cbAlways: cbAlways
+  })
+}
+
+export function updateProfile(params, cbDone, cbFail, cbAlways) {
+  const url = WEBAPP_NAME + '/user/profile'
+  callService(url, {
+    data: params,
+    cbDone: cbDone,
+    cbFail: cbFail,
+    cbAlways: cbAlways
+  })
+}
+
 export function incPoints(params, done, fail, always) {
   $.ajax({
     type: 'post',

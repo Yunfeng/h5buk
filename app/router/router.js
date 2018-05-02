@@ -2,8 +2,11 @@ import Vue from 'vue';
 import Router from 'vue-router';
 
 import MyNav from '../pages/Nav.vue';
-
 import Login from '../pages/Login.vue';
+import Subscribe from '../pages/Register2.vue';
+import Profile from '../pages/Profile.vue';
+
+
 import Orders from '../pages/Orders.vue';
 import OrderDetail from '../pages/Order-detail.vue';
 import FlightDetail from '../pages/FlightDetail.vue';
@@ -23,6 +26,8 @@ export function createRouter () {
       { path: '/', component: MyNav},
 
       { path: '/login', component: Login},
+      { path: '/subscribe', component: Subscribe},
+      { path: '/profile', component: Profile},
 
       { path: '/recharge', component: Recharge},
       { path: '/payresult/:id', component: MyPayResult},
