@@ -39,6 +39,7 @@ export const state = {
   orderId: 0,
   orderDetail: null,
   policyDetail: null,
+  policyIdSelected: 0,
   pnrDetail: null,
 
   errAlert: false,

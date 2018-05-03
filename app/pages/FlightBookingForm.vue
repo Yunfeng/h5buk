@@ -9,7 +9,7 @@
 
     <!-- 航班信息 -->
     <div class="card col-12">
-      <div class="card-body pt-0" v-for="(flt, index) in bookFlights">
+      <div class="card-body pt-0" v-for="(flt, index) in flights">
         <div class="d-flex flex-row justify-content-between">
           <div>
             <span class="ml-2 small text-info">行程{{index+1}}</span>
@@ -58,7 +58,7 @@
     <form id="frmOrder" class="col-12">
       <input type="hidden" name="tmcPolicyApply.policyId" :value="policyId" />
       <input type="hidden" name="tmcPolicyApply.ticketAmount" value="0" />
-      <template v-for="(fltInfo, index) in bookFlights">
+      <template v-for="(fltInfo, index) in flights">
         <input type="hidden" :name="'tmcPolicyApply.flights[' + index + '].flightNo'" :value="fltInfo.flightNo" />
         <input type="hidden" :name="'tmcPolicyApply.flights[' + index + '].departureDate'" :value="fltInfo.ddate" />
         <input type="hidden" :name="'tmcPolicyApply.flights[' + index + '].subclass'" :value="fltInfo.subclass" />
@@ -179,7 +179,7 @@ import $ from 'jquery'
 
 export default {
   components: {
-    'my-psg-picker': MyPsgPicker
+    MyPsgPicker
   },
   data () {
     return {
@@ -196,11 +196,11 @@ export default {
     }
   },
   computed: {
-    bookFlights () { return this.$store.state.order.flights },
+    flights () { return this.$store.state.order.flights },
     psgInfos () { return this.$store.state.order.psgs },
     policyId () { return this.$store.state.order.policyId },
     ddate () { return this.$store.state.searchParams.ddate },
-    fltCount () { return this.bookFlights.length }
+    fltCount () { return this.flights.length }
   },
   mounted: function () {
     this.$store.commit('hideBottomTabBar')
@@ -230,12 +230,12 @@ export default {
     },
     removeFlightInfo: function (index) {
       this.$store.commit('deleteFlt', index)
-      if (this.bookFlights.length === 0) {
+      if (this.flights.length === 0) {
         this.$router.replace('/search')
       }
     },
     createFlightOrder: function () {
-      if (this.bookFlights.length === 0) {
+      if (this.flights.length === 0) {
         this.$router.push('/search')
         return
       }

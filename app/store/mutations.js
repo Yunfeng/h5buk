@@ -141,6 +141,9 @@ export const mutations = {
     setPolicyDetail(state, payload) {
       state.policyDetail = payload;
     },
+    setPolicyIdSelected(state, payload) {
+      state.policyIdSelected = payload;
+    },
     setPnrDetail(state, payload) {
       state.pnrDetail = payload;
     },

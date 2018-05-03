@@ -16,6 +16,10 @@ import MyPayResult from '../pages/Recharge-result.vue';
 
 import Policies from '../pages/Tmc-list.vue'
 import PolicyDetail from '../pages/Tmc-detail.vue'
+import BuyTmcPolicy from '../pages/Tmc-buy.vue'
+
+import FlightBookingForm1 from '../pages/FlightBookingForm.vue'
+import FlightBookingForm2 from '../pages/TmcPolicyBookingForm.vue'
 
 Vue.use(Router);
 
@@ -38,10 +42,12 @@ export function createRouter () {
       { path: '/search', component: () => System.import('../pages/FlightSearchForm.vue')},
       { path: '/searchResult', component: () => System.import('../pages/FlightSearchResult.vue')},
       { path: '/flight/detail', component: FlightDetail},
-      { path: '/booking', component: () => System.import('../pages/FlightBookingForm.vue')},
+      { path: '/booking', component: FlightBookingForm1},
 
       { path: '/policies', component: Policies},
-      { path: '/policy/:id', component: PolicyDetail}
+      { path: '/policy/:id', component: PolicyDetail},
+      { path: '/policy/:id/buy', component: BuyTmcPolicy},
+      { path: '/booking2', component: FlightBookingForm2}
     ]
   });
 }
