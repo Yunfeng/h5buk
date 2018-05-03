@@ -19,7 +19,6 @@ import PolicyDetail from '../pages/Tmc-detail.vue'
 import BuyTmcPolicy from '../pages/Tmc-buy.vue'
 
 import FlightBookingForm1 from '../pages/FlightBookingForm.vue'
-import FlightBookingForm2 from '../pages/TmcPolicyBookingForm.vue'
 
 Vue.use(Router);
 
@@ -46,8 +45,7 @@ export function createRouter () {
 
       { path: '/policies', component: Policies},
       { path: '/policy/:id', component: PolicyDetail},
-      { path: '/policy/:id/buy', component: BuyTmcPolicy},
-      { path: '/booking2', component: FlightBookingForm2}
+      { path: '/policy/:id/buy', component: BuyTmcPolicy}
     ]
   });
 }
