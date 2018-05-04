@@ -185,9 +185,11 @@
             <template v-if="info.totalPrice !== null && info.totalPrice > 0">
               <button type='button' class='btn btn-success w-100' @click.stop='commitTmcOrder(info.id)'>申请出票</button>  
             </template>
+            <template v-else>
+              <span class="text-info small float-right">请耐心等待工作人员核验价格</span>
+            </template>
             
-
-            <button type='button' class='btn btn-outline-danger w-100 mt-3' @click.stop='cancelTmcOrder(info.id)'>取消</button>
+            <button type='button' class='btn btn-outline-danger w-100 mt-1' @click.stop='cancelTmcOrder(info.id)'>取消</button>
           </div>
         </div>
       </template>
