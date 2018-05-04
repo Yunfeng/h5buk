@@ -57,7 +57,7 @@
             <td>
               <input type="text" class="form-control form-control-sm" maxlength="7" size="15" placeholder="航班号" v-model.trim="info.flight.flightNo" /></td>
             <td>
-              <input type="text" class="form-control form-control-sm" maxlength="10" size="15" placeholder="2050-12-31" v-model.trim="info.flight.departureDate" /></td>
+              <input type="text" class="form-control form-control-sm" maxlength="10" size="18" placeholder="格式:2018-10-01" v-model.trim="info.flight.departureDate" /></td>
             <td>
               <input type="text" class="form-control form-control-sm" maxlength="2" size="5" v-model.trim="info.flight.subclass" /></td>
             <td>

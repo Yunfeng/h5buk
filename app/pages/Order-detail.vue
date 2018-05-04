@@ -178,11 +178,14 @@
 
         <div class="card col-12 border-0 mb-2 px-0">
           <div class="card-body">
-            <template v-if="info.enterpriseId === info.seller">              
+            <template v-if="info.enterpriseId === info.seller && info.totalPrice !== null && info.totalPrice > 0">              
               <button type='button' class='btn btn-outline-danger w-100 mb-3' @click.stop='specifyBuyerPayOrder(info.id)'>通知买家付款</button>
             </template>
 
-            <button type='button' class='btn btn-success w-100' @click.stop='commitTmcOrder(info.id)'>申请出票</button>
+            <template v-if="info.totalPrice !== null && info.totalPrice > 0">
+              <button type='button' class='btn btn-success w-100' @click.stop='commitTmcOrder(info.id)'>申请出票</button>  
+            </template>
+            
 
             <button type='button' class='btn btn-outline-danger w-100 mt-3' @click.stop='cancelTmcOrder(info.id)'>取消</button>
           </div>
