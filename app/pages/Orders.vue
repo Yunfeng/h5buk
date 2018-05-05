@@ -24,7 +24,7 @@
               </td>
               <td class="text-center">{{info.flights[0].departureAirportName}}</td>
               <td class="text-center">{{info.flights[0].arrivalAirportName}}</td>
-              <td class="text-right">{{info.totalAmount}}</td>
+              <td class="text-right">{{info.ticketAmount}}</td>
               <td class="" :class="changeBgByStatus(info.status)">
                 {{showStatusDesc(info.status)}}
                 <i class="fa fa-angle-right fa-2 float-right" aria-hidden="true"></i>
