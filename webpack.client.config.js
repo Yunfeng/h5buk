@@ -7,7 +7,7 @@ const VueSSRClientPlugin = require('vue-server-renderer/client-plugin')
 module.exports = merge(baseWebpackConfig, {
   entry: './app/entry-client.js',
   output: {
-    filename: '[name].js'
+    filename: '[name].[chunkhash].js'
   },
   externals: {
     "jquery": "jQuery"

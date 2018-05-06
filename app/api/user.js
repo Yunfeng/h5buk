@@ -20,6 +20,13 @@ export function updateProfile(params, cbDone, cbFail, cbAlways) {
   })
 }
 
+export function checkIn(cbDone) {
+  const url = WEBAPP_NAME + '/user/checkIn'
+  callService(url, {
+    cbDone: cbDone
+  })
+}
+
 export function incPoints(params, done, fail, always) {
   $.ajax({
     type: 'post',
@@ -52,15 +59,4 @@ export function searchCustomers(params, done, fail, always) {
   })
 }
 
-export function checkIn(done) {
-  $.ajax({
-    type: 'post',
-    url: '/Flight/user/checkIn',
-    dataType: 'json',
-  }).done(function (jsonResult) {
-    done(jsonResult)
-  }).fail(function (jqXHR, textStatus, errorThrown) {
-    // fail(jqXHR.status, jqXHR.statusText)
-  }).always(function () {
-  })
-}
+

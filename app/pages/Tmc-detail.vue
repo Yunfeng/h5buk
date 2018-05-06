@@ -71,14 +71,6 @@
                 <td class="text-right text-info">每用户每天可开数量 </td>
                 <td>{{detail.maxCountUserDay}} </td>
             </tr>
-            <tr v-if="detail.returnPoint > 0">
-                <td class="text-right text-info">去程返点</td>
-                <td>{{detail.returnPoint}}</td>
-            </tr>
-            <tr class="backFlightInfo"  v-if="detail.routeType === 1">
-                <td class="text-right text-info">回程返点</td>
-                <td>{{detail.backReturnPoint}}</td>
-            </tr>
             <tr v-if="detail.returnMoney > 0">
                 <td class="text-right text-info">返钱</td>
                 <td>{{detail.returnMoney}}</td>
@@ -107,6 +99,25 @@
                 <td class="text-right text-info">可开数量</td>
                 <td>{{detail.ticketLimit}}</td>
             </tr>
+
+            <tr v-if="detail.returnPoint > 0">
+                <td class="text-right text-info">去程返点</td>
+                <td><big><strong>{{detail.returnPoint}}</strong></big></td>
+            </tr>
+            <tr class="backFlightInfo"  v-if="detail.routeType === 1">
+                <td class="text-right text-info">回程返点</td>
+                <td>{{detail.backReturnPoint}}</td>
+            </tr>
+
+          <tr>
+              <td class="text-right text-info">证件类型</td>
+              <td>{{getIdTypeLimitDesc(detail.idTypeLimit)}}</td>
+          </tr>
+          <tr>
+              <td class="text-right text-info">付款方式</td>
+              <td>{{getPayTypeLimitDesc(detail.payTypeLimit)}}</td>
+          </tr>
+
             <tr>
                 <td class="text-right text-info">备注</td>
                 <td>{{detail.remark}}</td>
@@ -134,6 +145,8 @@
 </template>
 
 <script>
+import { getPayTypeLimitDesc, getIdTypeLimitDesc, getPolicyTypeDesc, getIntlPolicyDesc, getRouteTypeDesc, getStatusDesc, getPortDesc } from '../api/kapolicy.js'
+
 export default {
   data () {
     return {
@@ -157,46 +170,27 @@ export default {
       this.$store.commit('setPolicyIdSelected', id)
       this.$router.push('/policy/' + id + '/buy')
     },
-    getPolicyTypeDesc: function (val) {
-      if (val === 1) {
-        return '特殊-票面低'
-      } else if (val === 0) {
-        return '普通-票面相符'
-      } else {
-        return ''
-      }
-    },
-    getIntlPolicyDesc: function (val) {
-      var desc = '国内'
-      if (val === 1) desc = '国际'
-
-      return desc
-    },
-    getRouteTypeDesc: function (val) {
-      var desc = '单程'
-      if (val === 1) desc = '往返'
-      return desc
+    getPortDesc: function (val) {
+      return getPortDesc(val)
     },
     getStatusDesc: function (val) {
-      var desc = '启用中'
-      if (val === 0) desc = '停用'
-      return desc
+      return getStatusDesc(val)
     },
-    getPortDesc: function (val) {
-      if (val === undefined || val === null) return ''
-
-      var desc = val
-      if (val === '*') desc = '全国'
-      if (val.length > 10) {
-        desc = val.substring(0, 11) + '...'
-      }
-      return desc
-    }
-  },
-  beforeRouteEnter (to, from, next) {
-    next(vm => {
-      // 通过 `vm` 访问组件实例
-    })
+    getRouteTypeDesc: function (routeType) {
+      return getRouteTypeDesc(routeType)
+    },
+    getIntlPolicyDesc: function (intlPolicy) {
+      return getIntlPolicyDesc(intlPolicy)
+    },
+    getPolicyTypeDesc: function (val) {
+      return getPolicyTypeDesc(val)
+    },
+    getIdTypeLimitDesc: function (val) {
+      return getIdTypeLimitDesc(val)
+    },
+    getPayTypeLimitDesc: function (val) {
+      return getPayTypeLimitDesc(val)
+    }    
   }
 }
 </script>

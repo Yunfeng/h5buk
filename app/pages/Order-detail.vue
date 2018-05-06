@@ -140,56 +140,16 @@
       </div>
 
       <template v-if='info.status === 1024 && info.enterpriseId > 0'>
-        <template v-if="policies.length > 0">
-          <div class="card-body py-0 bg-faded text-info">
-            特殊政策 <small>(票面低于实际付款金额)</small>
-          </div>
-          <table class='table table-sm table-striped table-condensive'>
-            <thead>
-                <tr>
-                    <th>航司</th>
-                    <th>舱位</th>
-                    <th class="text-right">返点</th>
-                    <th class="text-right">最低票面</th>
-                    <th></th>
-                </tr>                        
-            </thead>
-            <tbody>
-                <tr v-for='(info, index) in policies' @click='showPolicyDetail(info)'>
-                    <td>{{info.carrier}}</td>
-                    <td>{{info.subclass}}</td>
-                    <td class="text-right">{{info.returnPoint}}</td>
-                    <td class="text-right">{{info.minPrice}}</td>
-                    <td class="text-center"><button class='btn btn-success btn-sm' @click.stop='selectPolicy(info)'>选择</button></td>
-                </tr>
-            </tbody>
-          </table>
-          <div class="card-body py-0 bg-faded text-info">
-            <small>备注</small>
-          </div>
-          <table class="table">
-            <tr>
-              <td>
-                <input type="input" class="form-control" placeholder="请在此输入备注信息" v-model="remark">
-              </td>
-            </tr>                  
-          </table>                
-        </template>
-
         <div class="card col-12 border-0 mb-2 px-0">
           <div class="card-body">
-            <template v-if="info.enterpriseId === info.seller && info.totalPrice !== null && info.totalPrice > 0">              
-              <button type='button' class='btn btn-outline-danger w-100 mb-3' @click.stop='specifyBuyerPayOrder(info.id)'>通知买家付款</button>
-            </template>
-
             <template v-if="info.totalPrice !== null && info.totalPrice > 0">
-              <button type='button' class='btn btn-success w-100' @click.stop='commitTmcOrder(info.id)'>申请出票</button>  
+              <button type='button' class='btn btn-success w-100' @click.stop='commitTmcOrder(info.id)'>请求出票</button>  
             </template>
             <template v-else>
               <span class="text-info small float-right">请耐心等待工作人员核验价格</span>
             </template>
             
-            <button type='button' class='btn btn-outline-danger w-100 mt-1' @click.stop='cancelTmcOrder(info.id)'>取消</button>
+            <button type='button' class='btn btn-outline-danger w-100 mt-2' @click.stop='cancelTmcOrder(info.id)'>取消</button>
           </div>
         </div>
       </template>
@@ -249,30 +209,37 @@
         </div>
       </template>
     </template> 
+
+    <my-modal-prompt ref="modalPrompt">
+      <span slot="title">{{modalTitle}}</span>
+    </my-modal-prompt>
   </div>
 </template>
 
 <script>
+import MyModalPrompt from '../components/my-modal-prompt.vue'
 import { showIdTypeDesc,  } from '../common/common.js'
 import { getDomainUrl } from '../api/wx.js'
 import MyButton from '../components/my-button.vue'
 import MyInput from '../components/my-input.vue'
 import $ from 'jquery'
-import { searchPolicies, searchOrderDetail, cancelOrder, searchPayRates, processOrder } from '../api/order.js'
+import { searchOrderDetail, cancelOrder, searchPayRates, processOrder } from '../api/order.js'
 import { payForTmcOrder, showOrderStatusDesc } from '../api/order.js'
 
 export default {
   components: {
     'my-button': MyButton,
-    'my-input': MyInput
+    'my-input': MyInput,
+    MyModalPrompt
   },
   data () {
     return {
-      policies: [],
       remark: '',
       wxpayRate: 0,
       alipayRate: 0,
-      domain: ''
+      domain: '',
+
+      modalTitle: ''
     }
   },
   computed: {
@@ -310,47 +277,6 @@ export default {
     hideLoading: function () {
       this.$store.commit('showLoading', { 'loading': false })
     },
-    searchPolicies: function () {
-      var self = this
-
-      self.showLoading('查找政策...')
-
-      var flightNo = self.info.flights[0].flightNo
-      var subclass = self.info.flights[0].subclass
-      var dport = self.info.flights[0].departureAirport
-      var carrier = flightNo.substring(0, 2)
-
-      var params = { 'sc.pageNo': 1,
-        'sc.pageSzie': 5,
-        'sc.policyType': -1,
-        'sc.intlPolicy': -1,
-        'sc.searchMode': 0,
-        'sc.carrier': carrier,
-        'sc.subClass': subclass,
-        'sc.dport': dport
-      }
-
-      searchPolicies(params,
-        (jsonResult) => {
-          if (jsonResult !== null) {
-            self.policies = jsonResult.dataList
-          }
-        },
-        (status, statusText) => {
-          if (status === 403) {
-            self.$store.commit('jumpToLogin', self.$router)
-          }
-        },
-        () => self.hideLoading()
-      )
-    },
-    selectPolicy: function (info0) {
-      this.$store.commit('selectPolicy', { 'policyId': info0.id,
-        'returnPoint': info0.returnPoint,
-        'returnMoney': info0.returnMoney }
-      )
-      this.showErrMsg('选择成功', 'success')
-    },
     showStatusDesc: function (status) {
       return showOrderStatusDesc(status)
     },
@@ -363,10 +289,6 @@ export default {
       } else {
         return old
       }
-    },
-    showPolicyDetail: function (info) {
-      this.$store.commit('setPolicyDetail', info)
-      this.$router.push('/tmc/detail')
     },
     refreshOrderDetail: function (id) {
       if (id === undefined || id === null) {
@@ -395,25 +317,22 @@ export default {
       )
     },
     cancelTmcOrder: function (id) {
-      if (window.confirm('确定取消订单？') === false) {
-        return
-      }
-      // 买家：取消订单
-      this.showLoading('取消中...')
-      var params = { 'id': id }
+      this.modalTitle = '确定取消订单吗？'
+      this.$refs.modalPrompt.modal('YesOrNo').then(() => {
+        // 买家：取消订单
+        const params = { 'id': id }
 
-      cancelOrder(params,
-        (jsonResult) => {
-          if (jsonResult.status === 'OK') {
-            this.showErrMsg('操作成功', 'success')
-            this.refreshOrderDetail()
-          } else {
-            this.showErrMsg(jsonResult.errmsg)
-          }
-        },
-        null,
-        () => this.hideLoading()
-      )
+        cancelOrder(params, v => {
+            if (v.status === 'OK') {
+              this.showErrMsg('操作成功', 'success')
+              this.refreshOrderDetail()
+            } else {
+              this.showErrMsg(v.errmsg)
+            }
+          }, null,
+          () => this.hideLoading()
+        )
+      }).catch((ex) => {})
     },
     commitTmcOrder: function (id) {
       // 买家

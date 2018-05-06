@@ -167,8 +167,8 @@ export default {
     }
   },
   methods: {
-    showErrMsg: function (msg) {
-      this.$store.dispatch('showAlertMsg', { 'errMsg': msg })
+    showErrMsg: function (msg, msgType) {
+      this.$store.dispatch('showAlertMsg', { 'errMsg': msg, 'errMsgType': msgType })
     },
     login: function () {
       var self = this
@@ -276,10 +276,12 @@ export default {
         '/Flight/captcha/getCaptchaCode.do?' + Math.floor(Math.random() * 100)).fadeIn()
     },
     checkIn: function () {
-      checkIn((jsonResult) => {
-        this.showErrMsg(jsonResult.desc)
-        if (jsonResult.status === 'OK') {
+      checkIn(v => {        
+        if (v.status === 'OK') {
+          this.showErrMsg(v.desc)  
           this.searchBalance()
+        } else {
+          this.showErrMsg('操作失败 ' + v.errmsg, 'danger')  
         }
       })
     }
