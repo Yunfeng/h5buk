@@ -88,7 +88,7 @@ import MyButton from '../components/my-button.vue'
 import MyInput from '../components/my-input.vue'
 import MyVcodeInput from '../components/my-vcode.vue'
 import $ from 'jquery'
-import { checkIn } from '../api/user.js'
+import { checkIn, checkLoginStatus } from '../api/user.js'
 
 export default {
   components: {
@@ -210,26 +210,19 @@ export default {
       })
     },
     checkLoginStatus: function () {
-      var self = this
+      checkLoginStatus(v => {
+        if (v.status !== 'OK') return
 
-      $.ajax({
-        type: 'post',
-        url: '/Flight/chklogin',
-        dataType: 'json',
-        success: function (jsonResult) {
-          if (jsonResult.status === 'OK') {
-            self.$store.commit('setUsername', { 'username': jsonResult.username, 'logined': true })
+        this.$store.commit('setUsername', {
+          'username': v.username,
+          'fullName': v.fullName,
+          'logined': true
+        })
 
-            $.cookie('username', jsonResult.username, { expires: 30, path: '/' })
-            $.cookie('fullName', jsonResult.fullName, { expires: 30, path: '/' })
+        $.cookie('username', v.username, { expires: 30, path: '/' })
+        $.cookie('fullName', v.fullName, { expires: 30, path: '/' })
 
-            self.searchBalance()
-          }
-        },
-        error: function (XMLHttpRequest, textStatus, errorThrown) {
-        },
-        complete: function (XMLHttpRequest, textStatus) {
-        }
+        this.searchBalance()
       })
     },
     logout: function () {

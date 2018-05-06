@@ -1,3 +1,21 @@
+import { WEBAPP_NAME, callService } from '../common/common.js'
+
+export function getWxOpenid(params, cbDone) {
+  const url = WEBAPP_NAME + '/weixin/getOpenId'
+  callService(url, {
+    data: parasm,
+    cbDone: cbDone
+  })
+}
+
+export function getWxUserInfo(params, cbDone) {
+  const url = WEBAPP_NAME + '/weixin/getUserInfo'
+  callService(url, {
+    data: parasm,
+    cbDone: cbDone
+  })
+}
+
 export function initJsSdkParam(url, done, fail, always) {
   $.ajax({
     type: "post",

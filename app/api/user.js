@@ -27,6 +27,13 @@ export function checkIn(cbDone) {
   })
 }
 
+export function checkLoginStatus(cbDone) {
+  const url = WEBAPP_NAME + '/chklogin'
+  callService(url, {
+    cbDone: cbDone
+  })
+}
+
 export function incPoints(params, done, fail, always) {
   $.ajax({
     type: 'post',
