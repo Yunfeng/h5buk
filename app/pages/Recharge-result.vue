@@ -61,7 +61,7 @@ export default {
       setTimeout(() => { this.errAlert = false }, 2500)
     },
     jumpTo: function (id) {
-      var uri = '/order/detail/' + id
+      var uri = '/order/' + id
       this.$router.replace(uri)
     },
     searchPayOrder: function () {
