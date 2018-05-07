@@ -91,7 +91,7 @@
           <small>结算信息</small>
         </div>
         <dl class="row mb-0">
-          <dt class='col-4 text-right px-0'>总价</dt>
+          <dt class='col-4 text-right px-0'>原价</dt>
           <dd class='col-8'>
             <i class="fa fa-rmb text-warning"></i><span class="text-info fa-2"> {{info.totalPrice}}</span>
           </dd>
@@ -103,16 +103,10 @@
               </dd>
             </template>
             <template v-if="info.ticketAmount > 0">
-              <dt class='col-4 text-right px-0'>应付票款</dt>
+              <dt class='col-4 text-right px-0'>应付</dt>
               <dd class='col-8'>
                 <i class='fa fa-rmb text-warning'></i>
                 <span class="text-danger fa-2"> {{info.ticketAmount}}</span>
-              </dd>
-            </template>
-            <template v-if="info.serviceFee > 0">
-              <dt class='col-4 text-right px-0'>服务费</dt>
-              <dd class='col-8'>
-                <span class="text-danger"><i class='fa fa-rmb text-warning'></i> {{info.serviceFee}}</span>
               </dd>
             </template>
             <template v-if="info.ticketAmount > 0 && costSaving > 0">
@@ -159,15 +153,6 @@
           <button type='button' class='btn btn-success w-100' @click.stop='payForTmcOrder(info.id)'>支付</button>
           <button type='button' class='btn btn-outline-success w-100 invisible' @click.stop='weixinPay1(info.id)'>
             微信支付
-            <template v-if="wxpayRate>0">
-              <small>支付费率千分之 {{wxpayRate}}</small>
-            </template>
-          </button>
-          <button type='button' class='btn btn-outline-info w-100 invisible' @click.stop="aliPay1(info.id)">
-            支付宝
-            <template v-if="alipayRate>0">
-              <span class="small align-bottom">支付费率千分之 {{alipayRate}}</span>
-            </template>
           </button>
         </div>
       </template>
@@ -223,7 +208,7 @@ import { getDomainUrl } from '../api/wx.js'
 import MyButton from '../components/my-button.vue'
 import MyInput from '../components/my-input.vue'
 import $ from 'jquery'
-import { searchOrderDetail, cancelOrder, searchPayRates, processOrder } from '../api/order.js'
+import { searchOrderDetail, cancelOrder, processOrder } from '../api/order.js'
 import { payForTmcOrder, showOrderStatusDesc } from '../api/order.js'
 
 export default {
@@ -235,8 +220,6 @@ export default {
   data () {
     return {
       remark: '',
-      wxpayRate: 0,
-      alipayRate: 0,
       domain: '',
 
       modalTitle: ''
@@ -299,17 +282,9 @@ export default {
 
       var params = { 'id': id }
 
-      searchOrderDetail(params,
-        (jsonResult) => {
-          if (jsonResult !== null && jsonResult.id === id) {
-            this.$store.commit('setOrderDetail', jsonResult)
-
-            if (jsonResult.status === 1024) {
-              // this.searchPolicies()
-            } else if (jsonResult.status === 1) {
-              // 查找支付费率
-              this.searchPayRate()
-            }
+      searchOrderDetail(params, v => {
+          if (v !== null && v.id === id) {
+            this.$store.commit('setOrderDetail', v)
           }
         },
         (status, statusText) => { this.showErrMsg(status + ', ' + statusText, 'danger') },
@@ -358,11 +333,6 @@ export default {
     },
     payForTmcOrder: function (id) {
       // 买家：支付订单
-      // var url = '/Flight/orders/payForTmcOrder.do'
-      // var postData = { id: id }
-      // var successHandler = this.refreshOrderDetail
-
-      // this.executeOrderOp(url, postData, successHandler)
       payForTmcOrder({ id }, v => {
         console.log(v)
         if (v.status === 'OK') {
@@ -496,13 +466,6 @@ export default {
       // 申请改期
       this.$store.commit('setChangeInfo', { 'ticketNo': ticketNo, 'psgName': psgName, 'orderId': orderId })
       this.$router.push('/change/apply')
-    },
-    searchPayRate: function () {
-      searchPayRates((jsonResult) => {
-        // console.log(jsonResult)
-        this.wxpayRate = jsonResult.wxpayRate
-        this.alipayRate = jsonResult.alipayRate
-      })
     },
     specifyBuyerPayOrder: function (id) {
       // 指定买家并通知买家付款

@@ -31,7 +31,7 @@ export default {
   data () {
     return {
       total: 0,
-      total0: null,
+      total0: 5000,
 
       appid: '',
       redirectUrl: '',
