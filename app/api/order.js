@@ -19,6 +19,32 @@ export function searchOrders(params, cbDone, cbFail, cbAlways) {
   })
 }
 
+export function cancelOrder(params, cbDone, cbFail, cbAlways) {
+  const url = WEBAPP_NAME + '/orders/cancelTmcOrder.do'
+  callService(url, {
+    data: params,
+    cbDone: cbDone,
+    cbFail: cbFail,
+    cbAlways: cbAlways
+  })
+}
+
+export function confirmTicketNoCorrect(params, cbDone) {
+  const url = WEBAPP_NAME + '/orders/confirmOrderTicketCorrect.do'
+  callService(url, {
+    data: params,
+    cbDone: cbDone
+  })
+}
+
+export function confirmTicketNoWrong(params, cbDone) {
+  const url = WEBAPP_NAME + '/orders/confirmOrderTicketWrong.do'
+  callService(url, {
+    data: params,
+    cbDone: cbDone
+  })
+}
+
 export function processOrder(url, params, done, fail, always) {
   $.ajax({
     type: 'post',
@@ -70,21 +96,7 @@ export function searchPolicies(params, done, fail, always) {
   })
 }
 
-export function cancelOrder(params, done, fail, always) {
-  $.ajax({
-    type: 'post',
-    url: '/Flight/orders/cancelTmcOrder.do',
-    data: params,
-    dataType: 'json',
-  }).done(function (jsonResult) {
-    done(jsonResult)
-  }).fail(function (jqXHR, textStatus, errorThrown) {
-    fail(jqXHR.status, jqXHR.statusText)
-  }).always(function () {
-    always()
-    // setTimeout(() => { always() }, 5000)
-  })
-}
+
 
 export function commitRefundRequest(params, done, fail, always) {
   $.ajax({

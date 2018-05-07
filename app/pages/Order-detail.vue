@@ -151,9 +151,6 @@
       <template v-if='info.status === 1  && info.enterpriseId > 0'>          
         <div class='card col-12 border-0 mb-5'>
           <button type='button' class='btn btn-success w-100' @click.stop='payForTmcOrder(info.id)'>支付</button>
-          <button type='button' class='btn btn-outline-success w-100 invisible' @click.stop='weixinPay1(info.id)'>
-            微信支付
-          </button>
         </div>
       </template>
       <template v-if='info.status === 4  && info.enterpriseId > 0'>
@@ -176,9 +173,9 @@
       </template>
       <template v-if='info.status === 16  && info.enterpriseId > 0 && info.policyId > 0'>
         <div class='card col-12 border-0 mb-2'>
-          <button type='button' class='weui-btn weui-btn_primary' @click='confirmOrderTicketRight(info.id)'>票号正确 ({{ticketCorrectConfirmTimes}})</button>
+          <button type='button' class='weui-btn weui-btn_primary' @click='confirmOrderTicketRight(info.id)'>票号正确</button>
 
-          <button type='button' class='weui-btn weui-btn_warn' @click='confirmOrderTicketWrong(info.id)'>票号有误 ({{ticketWrongConfirmTimes}})</button>
+          <button type='button' class='weui-btn weui-btn_warn' @click='confirmOrderTicketWrong(info.id)'>票号有误</button>
         </div>
       </template>
       <template v-if='info.status === 8  && info.enterpriseId === 0 && info.seller > 0'>          
@@ -209,7 +206,7 @@ import MyButton from '../components/my-button.vue'
 import MyInput from '../components/my-input.vue'
 import $ from 'jquery'
 import { searchOrderDetail, cancelOrder, processOrder } from '../api/order.js'
-import { payForTmcOrder, showOrderStatusDesc } from '../api/order.js'
+import { payForTmcOrder, showOrderStatusDesc, confirmTicketNoWrong, confirmTicketNoCorrect } from '../api/order.js'
 
 export default {
   components: {
@@ -364,32 +361,37 @@ export default {
       this.$router.push('/order/ticket')
     },
     confirmOrderTicketWrong: function (id) {
-      this.ticketWrongConfirmTimes--
-      if (this.ticketWrongConfirmTimes > 0) {
-        console.log(this.ticketWrongConfirmTimes)
-        return
-      }
+      this.modalTitle = '确定票号有错误吗？'
+      this.$refs.modalPrompt.modal('YesOrNo').then(() => {
+        const params = { 'id': id }
 
-      // 买家：票号错误
-      var url = '/Flight/orders/confirmOrderTicketWrong.do'
-      var postData = { id: id }
-      var successHandler = this.refreshOrderDetail
-
-      this.executeOrderOp(url, postData, successHandler)
+        confirmTicketNoWrong(params, v => {
+            if (v.status === 'OK') {
+              this.showErrMsg('操作成功', 'success')
+              this.refreshOrderDetail()
+            } else {
+              this.showErrMsg(v.errmsg)
+            }
+          }
+        )
+      }).catch((ex) => {})      
     },
     confirmOrderTicketRight: function (id) {
-      this.ticketCorrectConfirmTimes--
-      if (this.ticketCorrectConfirmTimes > 0) {
-        console.log(this.ticketCorrectConfirmTimes)
-        return
-      }
-
       // 买家：票号正确
-      var url = '/Flight/orders/confirmOrderTicketCorrect.do'
-      var postData = { id: id }
-      var successHandler = this.refreshOrderDetail
+      this.modalTitle = '已确认票号正确了吗？'
+      this.$refs.modalPrompt.modal('YesOrNo').then(() => {
+        const params = { 'id': id }
 
-      this.executeOrderOp(url, postData, successHandler)
+        confirmTicketNoCorrect(params, v => {
+            if (v.status === 'OK') {
+              this.showErrMsg('操作成功', 'success')
+              this.refreshOrderDetail()
+            } else {
+              this.showErrMsg(v.errmsg)
+            }
+          }
+        )
+      }).catch((ex) => {})      
     },
     executeOrderOp: function (url, postData, successHandler) {
       this.showLoading('处理中......')
