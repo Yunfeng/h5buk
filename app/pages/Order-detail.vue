@@ -136,7 +136,7 @@
       <template v-if='info.status === 1024 && info.enterpriseId > 0'>
         <div class="card col-12 border-0 mb-2 px-0">
           <div class="card-body">
-            <template v-if="info.totalPrice !== null && info.totalPrice > 0">
+            <template v-if="info.totalPrice > 0 && info.ticketAmount > 0">
               <button type='button' class='btn btn-success w-100' @click.stop='commitTmcOrder(info.id)'>请求出票</button>  
             </template>
             <template v-else>
