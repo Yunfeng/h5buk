@@ -3,7 +3,7 @@ import { WEBAPP_NAME, callService } from '../common/common.js'
 export function getWxOpenid(params, cbDone) {
   const url = WEBAPP_NAME + '/weixin/getOpenId'
   callService(url, {
-    data: parasm,
+    data: params,
     cbDone: cbDone
   })
 }
@@ -11,7 +11,7 @@ export function getWxOpenid(params, cbDone) {
 export function getWxUserInfo(params, cbDone) {
   const url = WEBAPP_NAME + '/weixin/getUserInfo'
   callService(url, {
-    data: parasm,
+    data: params,
     cbDone: cbDone
   })
 }
