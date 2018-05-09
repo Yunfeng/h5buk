@@ -12,7 +12,11 @@
         <img src="/public/images/qrcode_for_gh_5066f04ad73b_258.jpg" class="rounded mx-auto d-block" alt="迎航商旅通">
       </div>
       <div class="card-body text-center">
-        请先关注微信公众号，再设置登录用户名和密码。
+        1. 请打开微信，扫描上方二维码，关注我们的微信公众号<br />
+        2. 进入公众号 <br />
+        3. 点"会员享" -> "我" <br />
+        4. 点“修改”，设置登录用户名和密码 <br />
+        5. 使用用户名和密码登录系统
       </div>
     </div>
     

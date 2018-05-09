@@ -73,10 +73,13 @@
           <li class="list-group-item">
             <router-link to="/orders" class="card-link">我的订单</router-link>
           </li>
+          <li class="list-group-item">
+            <span class="small text-info">联系我们：</span><strong class="text-success">021-64787108</strong>
+          </li>
         </ul>
           
-        <div class="card-footer">
-          <button class="btn btn-danger btn-block" @click="logout()">退出</button>
+        <div class="card-footer mt-5">
+          <button class="btn btn-warning text-white btn-block" @click="logout()">退出</button>
         </div>         
       </div>      
     </template>
