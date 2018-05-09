@@ -217,8 +217,9 @@
           'pnrDetail': this.pnrDetail,
           'policyId': this.policyId,
           'policyReturnPoint': this.policyDetail.returnPoint,
-          'linkman': this.linkman,
+          'linkMan': this.linkman,
           'linkPhone': this.linkPhone,
+          'remark': this.memo,
           'flights': tempFlights,
           'passengers': this.pnr.passengers
         }
