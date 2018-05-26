@@ -2,6 +2,9 @@ var path = require('path')
 var webpack = require('webpack')
 const HTMLWebpackPlugin = require('html-webpack-plugin');
 
+const { VueLoaderPlugin } = require('vue-loader')
+
+
 module.exports = {
   output: {
     path: path.resolve(__dirname, './dist'),
@@ -52,7 +55,10 @@ module.exports = {
   performance: {
     hints: false
   },
-  devtool: '#eval-source-map'
+  devtool: '#eval-source-map',
+  plugins: [
+    new VueLoaderPlugin()
+  ]
 }
 
 if (process.env.NODE_ENV === 'production') {
