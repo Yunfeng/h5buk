@@ -1,9 +1,9 @@
 {
-  "name": "vue-ssr",
-  "description": "A Vue.js project",
+  "name": "flight-h5-ssr",
+  "description": "flight H5 website",
   "version": "1.0.0",
   "author": "yfdai <1410439635@qq.com>",
-  "license": "MIT",
+  "license": "GPL-3.0",
   "private": true,
   "scripts": {
     "dev": "node server.js",
