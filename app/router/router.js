@@ -3,25 +3,25 @@ import Router from 'vue-router';
 
 import MyNav from '../pages/Nav.vue';
 
-const Login = () => System.import('../pages/Login.vue')
-const Subscribe = () => System.import('../pages/Register2.vue')
-const Profile = () => System.import('../pages/Profile.vue')
+const Login = () => import('../pages/Login.vue')
+const Subscribe = () => import('../pages/Register2.vue')
+const Profile = () => import('../pages/Profile.vue')
 
-const Orders = () => System.import('../pages/Orders.vue')
-const OrderDetail = () => System.import('../pages/Order-detail.vue')
-const FlightDetail = () => System.import('../pages/FlightDetail.vue')
+const Orders = () => import('../pages/Orders.vue')
+const OrderDetail = () => import('../pages/Order-detail.vue')
+const FlightDetail = () => import('../pages/FlightDetail.vue')
 
-const Recharge = () => System.import('../pages/Recharge.vue')
-const MyPayResult = () => System.import('../pages/Recharge-result.vue')
+const Recharge = () => import('../pages/Recharge.vue')
+const MyPayResult = () => import('../pages/Recharge-result.vue')
 
-const Policies = () => System.import('../pages/Tmc-list.vue')
-const PolicyDetail = () => System.import('../pages/Tmc-detail.vue')
-const BuyTmcPolicy = () => System.import('../pages/Tmc-buy.vue')
+const Policies = () => import('../pages/Tmc-list.vue')
+const PolicyDetail = () => import('../pages/Tmc-detail.vue')
+const BuyTmcPolicy = () => import('../pages/Tmc-buy.vue')
 
-const FlightBookingForm1 = () => System.import('../pages/FlightBookingForm.vue')
+const FlightBookingForm1 = () => import('../pages/FlightBookingForm.vue')
 
-const FlightSearchForm = () => System.import('../pages/FlightSearchForm.vue')
-const FlightSearchResult = () => System.import('../pages/FlightSearchResult.vue')
+const FlightSearchForm = () => import('../pages/FlightSearchForm.vue')
+const FlightSearchResult = () => import('../pages/FlightSearchResult.vue')
 
 Vue.use(Router);
 
