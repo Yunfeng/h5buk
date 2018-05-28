@@ -2,23 +2,26 @@ import Vue from 'vue';
 import Router from 'vue-router';
 
 import MyNav from '../pages/Nav.vue';
-import Login from '../pages/Login.vue';
-import Subscribe from '../pages/Register2.vue';
-import Profile from '../pages/Profile.vue';
 
+const Login = () => System.import('../pages/Login.vue')
+const Subscribe = () => System.import('../pages/Register2.vue')
+const Profile = () => System.import('../pages/Profile.vue')
 
-import Orders from '../pages/Orders.vue';
-import OrderDetail from '../pages/Order-detail.vue';
-import FlightDetail from '../pages/FlightDetail.vue';
+const Orders = () => System.import('../pages/Orders.vue')
+const OrderDetail = () => System.import('../pages/Order-detail.vue')
+const FlightDetail = () => System.import('../pages/FlightDetail.vue')
 
-import Recharge from '../pages/Recharge.vue';
-import MyPayResult from '../pages/Recharge-result.vue';
+const Recharge = () => System.import('../pages/Recharge.vue')
+const MyPayResult = () => System.import('../pages/Recharge-result.vue')
 
-import Policies from '../pages/Tmc-list.vue'
-import PolicyDetail from '../pages/Tmc-detail.vue'
-import BuyTmcPolicy from '../pages/Tmc-buy.vue'
+const Policies = () => System.import('../pages/Tmc-list.vue')
+const PolicyDetail = () => System.import('../pages/Tmc-detail.vue')
+const BuyTmcPolicy = () => System.import('../pages/Tmc-buy.vue')
 
-import FlightBookingForm1 from '../pages/FlightBookingForm.vue'
+const FlightBookingForm1 = () => System.import('../pages/FlightBookingForm.vue')
+
+const FlightSearchForm = () => System.import('../pages/FlightSearchForm.vue')
+const FlightSearchResult = () => System.import('../pages/FlightSearchResult.vue')
 
 Vue.use(Router);
 
@@ -38,8 +41,8 @@ export function createRouter () {
       { path: '/orders', component: Orders, meta: { keepAlive: true } },
       { path: '/order/:id', component: OrderDetail },
 
-      { path: '/search', component: () => System.import('../pages/FlightSearchForm.vue')},
-      { path: '/searchResult', component: () => System.import('../pages/FlightSearchResult.vue')},
+      { path: '/search', component: FlightSearchForm},
+      { path: '/searchResult', component: FlightSearchResult},
       { path: '/flight/detail', component: FlightDetail},
       { path: '/booking', component: FlightBookingForm1},
 
