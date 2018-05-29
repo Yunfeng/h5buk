@@ -3,7 +3,10 @@ var webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
+
 const { VueLoaderPlugin } = require('vue-loader')
+
+const nodeExternals = require('webpack-node-externals')
 
 
 module.exports = {
@@ -19,7 +22,8 @@ module.exports = {
           'vue-style-loader',
           'css-loader'
         ],
-      },      {
+      },      
+      {
         test: /\.vue$/,
         loader: 'vue-loader',
         options: {
@@ -44,7 +48,8 @@ module.exports = {
   },
   resolve: {
     alias: {
-      'vue$': 'vue/dist/vue.esm.js'
+      'vue$': 'vue/dist/vue.esm.js',
+      '@': path.resolve(__dirname, 'src')
     },
     extensions: ['*', '.js', '.vue', '.json']
   },
@@ -61,7 +66,9 @@ module.exports = {
     new VueLoaderPlugin(),
     // new HtmlWebpackPlugin(),
     // new UglifyJsPlugin()
-  ]
+  ],
+  externals: [nodeExternals()],
+  devtool: 'inline-cheap-module-source-map'
 }
 
 if (process.env.NODE_ENV === 'production') {

@@ -4,5 +4,16 @@
   ],
   "plugins": [
     "syntax-dynamic-import"
-	]
+	],
+	"env": {
+    "test": {
+      "presets": [
+        ["env", {
+          "modules": false,
+          "targets": { "node": "current" }
+        }]
+      ],    
+      "plugins": ["istanbul"]
+    }
+  }
 }

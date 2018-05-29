@@ -5,7 +5,7 @@ var baseWebpackConfig = require('./webpack.base.config')
 const VueSSRClientPlugin = require('vue-server-renderer/client-plugin')
 
 module.exports = merge(baseWebpackConfig, {
-  entry: './app/entry-client.js',
+  entry: './src/entry-client.js',
   output: {
     filename: '[name].[chunkhash].js'
   },
