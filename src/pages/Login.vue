@@ -77,8 +77,8 @@
             <span class="small text-info">电话：</span><strong class="text-success">021-64787108</strong>
           </li>
           <li class="list-group-item">
-            <span class="small text-info">网址 ：</span>
-            <strong class="text-success">http://yh.90sky.com</strong>
+            <span class="small text-info">网址：</span>
+            <strong class="text-success">yh.90sky.com</strong>
           </li>
         </ul>
           
