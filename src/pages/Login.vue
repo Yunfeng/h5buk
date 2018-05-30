@@ -81,7 +81,7 @@
           </li>
           <li class="list-group-item">
             <span class="small text-muted">网址：</span>
-            <strong class="text-success">http://yh.90sky.com</strong>
+            <strong class="text-success">yh.90sky.com</strong>
           </li>
         </ul>
           
