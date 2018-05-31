@@ -279,7 +279,7 @@ export default {
       this.avCount = this.avCount + 1
       if ((this.avCount > 5 && this.totalCount === 0) || this.avCount > 10) {
         this.searching = false
-        this.showErrMsg('时间有点长了，过会再试试吧')
+        // this.showErrMsg('时间有点长了，过会再试试吧')
         return
       }
 
