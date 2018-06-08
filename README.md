@@ -4,6 +4,9 @@ vue<br />
 vuex<br />
 vue-router<br />
 
+##SSR
+目前只更新SSR分支的代码
+
 # 如何运行
 npm install<br />
 npm run dev
