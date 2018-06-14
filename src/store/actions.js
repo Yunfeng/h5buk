@@ -70,7 +70,7 @@ export const actions = {
       }        
     })
   },
-  setOpenWorkWxAuthCode(context, payload) {
+  setWwopenAuthCode(context, payload) {
     context.state.wwopen.authCode = payload
     // context.dispatch('getWxOpenid')
   }  

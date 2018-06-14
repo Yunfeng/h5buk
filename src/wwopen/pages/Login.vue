@@ -62,6 +62,7 @@
 import MyButton from '../../components/my-button.vue'
 import MyInput from '../../components/my-input.vue'
 import MyVcodeInput from '../../components/my-vcode.vue'
+import { getLoginInfo } from '../../api/wwopen.js'
 import $ from 'jquery'
 
 export default {
@@ -128,11 +129,8 @@ export default {
       }
     }
 
-    if (this.logined) {
-      // this.searchBalance()
-    } else {
-      this.checkLoginStatus()
-      this.refreshKaptcha()
+    if (!this.logined) {
+      this.getLoginInfo()
     }
     console.log(this.authCode)
   },
@@ -233,6 +231,15 @@ export default {
     refreshKaptcha: function () {
       $('#kaptchaImage').attr('src',
         '/Flight/captcha/getCaptchaCode.do?' + Math.floor(Math.random() * 100)).fadeIn()
+    },
+    getLoginInfo: function () {
+      const params = {
+        'authCode': this.authCode
+      }
+
+      getLoginInfo(params, v => {
+        console.log(v)
+      })
     }
   }
 }
