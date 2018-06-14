@@ -1,15 +1,13 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 
-import MyNav from '../pages/Nav.vue';
-
 Vue.use(Router);
 
 export function createRouter () {
   return new Router({
     mode: 'history',
     routes: [
-      { path: '/', component: MyNav},
+      { path: '/', component: () => import('../pages/Nav.vue')},
 
       { path: '/login', component: () => import('../pages/Login.vue')},
       { path: '/subscribe', component: () => import('../pages/Register2.vue')},
@@ -28,7 +26,10 @@ export function createRouter () {
 
       { path: '/policies', component: () => import('../pages/Tmc-list.vue')},
       { path: '/policy/:id', component: () => import('../pages/Tmc-detail.vue')},
-      { path: '/policy/:id/buy', component: () => import('../pages/Tmc-buy.vue')}
+      { path: '/policy/:id/buy', component: () => import('../pages/Tmc-buy.vue')},
+
+      { path: '/wwopen', component: () => import('../wwopen/pages/Nav.vue')},
+      { path: '/wwopen/login', component: () => import('../wwopen/pages/Login.vue')}
     ]
   });
 }

@@ -69,5 +69,9 @@ export const actions = {
         context.state.wxInfo.subscribe = v.subscribe
       }        
     })
+  },
+  setOpenWorkWxAuthCode(context, payload) {
+    context.state.wwopen.authCode = payload
+    // context.dispatch('getWxOpenid')
   }  
 }

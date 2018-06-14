@@ -56,6 +56,9 @@ export const state = {
     headimgurl: '',
     subscribe: 0
   },
+  wwopen: {
+    authCode: ''
+  },
   // 申请退票信息
   refundInfo: {
     ticketNo: '',
