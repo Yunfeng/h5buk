@@ -12,7 +12,7 @@ export default {
     const authCode = getURLParameter('auth_code')
 
     if (authCode !== undefined && authCode !== null && authCode.length > 0) {
-      this.$store.dispatch('setOpenWorkWxAuthCode', { authCode })
+      this.$store.dispatch('setOpenWorkWxAuthCode', authCode)
     } else {
       // 方便开发测试的时候直接使用openid 参数
       var openid = getURLParameter('userid')

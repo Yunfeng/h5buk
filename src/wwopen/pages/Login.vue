@@ -26,6 +26,8 @@
         </div>
         <div class="card-block text-center bg-faded text-white">
           <button class="btn btn-success btn-block" @click.stop="login()">登录</button> 
+        </div>
+        <div class="card-block text-center bg-faded">
           {{authCode}}
         </div>
 
@@ -79,7 +81,7 @@ export default {
     }
   },
   computed: {
-    authCode () { return this.$store.wwopen.authCode },
+    authCode () { return this.$store.state.wwopen.authCode },
     logined () { return this.$store.state.logined },
     sessionUsername () {
       var username = this.$store.state.username
@@ -132,6 +134,7 @@ export default {
       this.checkLoginStatus()
       this.refreshKaptcha()
     }
+    console.log(this.authCode)
   },
   updated: function () {
     if (this.logined === false && this.justLogout) {
