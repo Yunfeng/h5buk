@@ -30,6 +30,10 @@
         <div class="card-block text-center bg-faded">
           {{authCode}}
         </div>
+        <div class="card-block text-center">
+          <a href="https://open.work.weixin.qq.com/wwopen/sso/3rd_qrConnect?appid=wx22ef108e02eb000b&redirect_uri=http%3a%2f%2fyh.90sky.com%2fwwopen&state=wwopen_login&usertype=admin">
+            <img src="//rescdn.qqmail.com/node/wwopen/wwopenmng/style/images/independent/brand/150x30_white$49bdfaf6.png" srcset="//rescdn.qqmail.com/node/wwopen/wwopenmng/style/images/independent/brand/150x30_white_2x$dc1f5509.png 2x" alt="企业微信登录"></a>
+        </div>
 
       </div>
     </template>
