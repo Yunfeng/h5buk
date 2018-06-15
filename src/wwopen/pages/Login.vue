@@ -193,6 +193,12 @@ export default {
             $.cookie('username', jsonResult.username, { expires: 30, path: '/' })
             $.cookie('fullname', jsonResult.fullname, { expires: 30, path: '/' })
 
+            const avatar = $.cookie('avatar')
+            if (avatar !== null) {
+              console.log("avatar: " + avatar)
+              this.$store.dispatch('setWwopenAvatar', avatar)  
+            }
+
             self.searchBalance()
           }
         },
@@ -226,6 +232,11 @@ export default {
         '/Flight/captcha/getCaptchaCode.do?' + Math.floor(Math.random() * 100)).fadeIn()
     },
     getLoginInfo: function () {
+      if (this.authCode === null || this.authCode.length === 0) {
+        console.log("authCode:" + this.authCode)
+        return
+      }
+
       const params = {
         'authCode': this.authCode
       }
@@ -245,6 +256,7 @@ export default {
           $.cookie('token', v.token, { expires: 30, path: '/' })
           $.cookie('username', v.username, { expires: 30, path: '/' })
           $.cookie('fullname', v.fullname, { expires: 30, path: '/' })
+          $.cookie('avatar', v.avatar, { expires: 30, path: '/' })
         }        
       })
     }
