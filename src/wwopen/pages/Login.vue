@@ -239,6 +239,25 @@ export default {
 
       getLoginInfo(params, v => {
         console.log(v)
+        if (v.status === 'OK') {
+          // 登录成功
+          const u = {
+              'username': v.username,
+              'logined': true,
+              'fullname': v.fullname
+            }
+            this.$store.commit('setUsername', u)
+            this.$stort.dispatch('setWwopenAvatar', v.avatar)
+
+            $.cookie('token', v.token, { expires: 30, path: '/' })
+            $.cookie('username', v.username, { expires: 30, path: '/' })
+            $.cookie('fullname', v.fullname, { expires: 30, path: '/' })
+
+            if (self.historyStep !== 0) {
+              self.$router.go(self.historyStep)
+            }          
+        }
+        
       })
     }
   }

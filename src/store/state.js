@@ -57,7 +57,8 @@ export const state = {
     subscribe: 0
   },
   wwopen: {
-    authCode: ''
+    authCode: '',
+    avatar: ''
   },
   // 申请退票信息
   refundInfo: {
