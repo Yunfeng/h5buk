@@ -7,3 +7,11 @@ export function getLoginInfo(params, cbDone) {
     cbDone: cbDone
   })
 }
+
+export function getUserInfo(params, cbDone) {
+  const url = WEBAPP_NAME + '/wwopen/user'
+  callService(url, {
+    data: params,
+    cbDone: cbDone
+  })
+}

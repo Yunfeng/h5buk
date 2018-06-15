@@ -10,9 +10,13 @@ export default {
     var id = getURLParameter('id')
 
     const authCode = getURLParameter('auth_code')
+    const code = getURLParameter('code')
+    const state = getURLParameter('state')
 
     if (authCode !== undefined && authCode !== null && authCode.length > 0) {
       this.$store.dispatch('setWwopenAuthCode', authCode)
+    } else if (code !== undefined && code !== null && code.length > 0) {
+      this.$store.dispatch('setWwopenCode', code)
     }
 
     if (to !== undefined && to.length > 0) {

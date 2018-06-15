@@ -27,10 +27,12 @@
         <div class="card-block text-center bg-faded text-white">
           <button class="btn btn-success btn-block" @click.stop="login()">登录</button> 
         </div>
-        <div class="card-block text-center bg-faded">
+        <div class="card-body text-center bg-faded">
           {{authCode}}
         </div>
-        <div class="card-block text-center">
+        <div class="card-body text-center">
+
+          扫码登录 适用于PC
           <a href="https://open.work.weixin.qq.com/wwopen/sso/3rd_qrConnect?appid=wx22ef108e02eb000b&redirect_uri=http%3a%2f%2fyh.90sky.com%2fwwopen&state=wwopen_login&usertype=admin">
             <img src="//rescdn.qqmail.com/node/wwopen/wwopenmng/style/images/independent/brand/150x30_white$49bdfaf6.png" srcset="//rescdn.qqmail.com/node/wwopen/wwopenmng/style/images/independent/brand/150x30_white_2x$dc1f5509.png 2x" alt="企业微信登录"></a>
         </div>
@@ -66,7 +68,7 @@
 import MyButton from '../../components/my-button.vue'
 import MyInput from '../../components/my-input.vue'
 import MyVcodeInput from '../../components/my-vcode.vue'
-import { getLoginInfo } from '../../api/wwopen.js'
+import { getLoginInfo, getUserInfo } from '../../api/wwopen.js'
 import $ from 'jquery'
 
 export default {
@@ -87,6 +89,7 @@ export default {
   },
   computed: {
     authCode () { return this.$store.state.wwopen.authCode },
+    code () { return this.$store.state.wwopen.code },
     headimgurl () { return this.$store.state.wwopen.avatar },
     logined () { return this.$store.state.logined },
     sessionUsername () {
@@ -127,7 +130,11 @@ export default {
     }
 
     if (!this.logined) {
-      this.getLoginInfo()
+      if (this.authCode !== null && this.authCode.length > 0) {
+        this.getLoginInfo()  
+      } else if (this.code !== null && this.code.length > 0) {
+        this.getWwUserInfo()
+      }      
     }
     console.log(this.authCode)
   },
@@ -262,6 +269,15 @@ export default {
           $.cookie('fullname', v.fullname, { expires: 30, path: '/' })
           $.cookie('avatar', v.avatar, { expires: 30, path: '/' })
         }        
+      })
+    },
+    getWwUserInfo: function () {
+      const params = {
+        'code': this.code,
+        'state': ''
+      }
+      getUserInfo(params, v => {
+        console.log(v)      
       })
     }
   }

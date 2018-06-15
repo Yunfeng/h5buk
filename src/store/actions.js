@@ -72,10 +72,11 @@ export const actions = {
   },
   setWwopenAuthCode(context, payload) {
     context.state.wwopen.authCode = payload
-    // context.dispatch('getWxOpenid')
   },
   setWwopenAvatar(context, payload) {
     context.state.wwopen.avatar = payload
-    // context.dispatch('getWxOpenid')
-  }  
+  },
+  setWwopenCode(context, payload) {
+    context.state.wwopen.code = payload
+  }
 }
