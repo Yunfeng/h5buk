@@ -19,6 +19,8 @@ export default {
       this.$store.dispatch('setWwopenCode', code)
     }
 
+    this.$store.commit('setWorkMode', 8)
+
     if (to !== undefined && to.length > 0) {
       var path = '/wwopen/' + to
       if (id !== undefined && id.length > 0) {

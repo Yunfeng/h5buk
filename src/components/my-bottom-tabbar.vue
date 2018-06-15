@@ -23,8 +23,15 @@
         </div>
         <p class="weui-tabbar__label">订单</p>
       </router-link>
-      
-      <router-link to="/login" class="weui-tabbar__item">
+
+      <router-link to="/wwopen/login" class="weui-tabbar__item" v-if="workMode === 8">
+        <div class="weui-tabbar__icon">
+          <i class="fa fa-user-circle fa-2" aria-hidden="true"></i>
+        </div>                    
+        <p class="weui-tabbar__label">我</p>
+      </router-link>      
+
+      <router-link to="/login" class="weui-tabbar__item" v-else>
         <div class="weui-tabbar__icon">
           <i class="fa fa-user-circle fa-2" aria-hidden="true"></i>
         </div>                    
@@ -37,7 +44,8 @@
 <script>
 export default {
   computed: {
-    flightCount () { return 1 }
+    flightCount () { return 1 },
+    workMode () { return this.$store.state.workMode }
   }
 }
 </script>

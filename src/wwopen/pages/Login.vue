@@ -129,6 +129,8 @@ export default {
       }
     }
 
+    console.log(this.authCode)
+    console.log(this.code)
     if (!this.logined) {
       if (this.authCode !== null && this.authCode.length > 0) {
         this.getLoginInfo()  
@@ -151,6 +153,12 @@ export default {
     showErrMsg: function (msg) {
       this.$store.dispatch('showAlertMsg', { 'errMsg': msg })
     },
+    showLoading: function (loadingText) {
+      this.$store.commit('showLoading', { 'loading': true, 'loadingText': loadingText })
+    },
+    hideLoading: function () {
+      this.$store.commit('showLoading', { 'loading': false })
+    },    
     login: function () {
       var self = this
 
@@ -244,7 +252,7 @@ export default {
     },
     getLoginInfo: function () {
       if (this.authCode === null || this.authCode.length === 0) {
-        console.log("authCode:" + this.authCode)
+        // console.log("authCode:" + this.authCode)
         return
       }
 
@@ -252,48 +260,59 @@ export default {
         'authCode': this.authCode
       }
 
-      getLoginInfo(params, v => {
-        console.log(v)
-        if (v.status === 'OK') {
-          // 登录成功
-          const u = {
-            'username': v.username,
-            'logined': true,
-            'fullname': v.fullname
-          }
-          this.$store.commit('setUsername', u)
-          this.$store.dispatch('setWwopenAvatar', v.avatar)
+      this.showLoading('自动登录中...')
 
-          $.cookie('token', v.token, { expires: 30, path: '/' })
-          $.cookie('username', v.username, { expires: 30, path: '/' })
-          $.cookie('fullname', v.fullname, { expires: 30, path: '/' })
-          $.cookie('avatar', v.avatar, { expires: 30, path: '/' })
-        }        
-      })
+      getLoginInfo(params,
+        v => {
+          if (v.status === 'OK') {
+            // 登录成功
+            const u = {
+              'username': v.username,
+              'logined': true,
+              'fullname': v.fullname
+            }
+            this.$store.commit('setUsername', u)
+            this.$store.dispatch('setWwopenAvatar', v.avatar)
+
+            $.cookie('token', v.token, { expires: 30, path: '/' })
+            $.cookie('username', v.username, { expires: 30, path: '/' })
+            $.cookie('fullname', v.fullname, { expires: 30, path: '/' })
+            $.cookie('avatar', v.avatar, { expires: 30, path: '/' })
+          } else {
+            this.showErrMsg('请手工登录')
+          }
+        },
+        () => { this.hideLoading() }
+      )
     },
     getWwUserInfo: function () {
       const params = {
         'code': this.code,
         'state': ''
       }
-      getUserInfo(params, v => {
-        console.log(v)     
-        if (v.status === 'OK') {
-          // 登录成功
-          const u = {
-            'username': v.username,
-            'logined': true,
-            'fullname': v.fullname
-          }
-          this.$store.commit('setUsername', u)
-          this.$store.dispatch('setWwopenAvatar', v.avatar)
+      this.showLoading('自动登录中...')
+      getUserInfo(params,
+        v => {
+          if (v.status === 'OK') {
+            // 登录成功
+            const u = {
+              'username': v.username,
+              'logined': true,
+              'fullname': v.fullname
+            }
+            this.$store.commit('setUsername', u)
+            this.$store.dispatch('setWwopenAvatar', v.avatar)
 
-          $.cookie('token', v.token, { expires: 30, path: '/' })
-          $.cookie('username', v.username, { expires: 30, path: '/' })
-          $.cookie('fullname', v.fullname, { expires: 30, path: '/' })
-          $.cookie('avatar', v.avatar, { expires: 30, path: '/' })
-        }    
-      })
+            $.cookie('token', v.token, { expires: 30, path: '/' })
+            $.cookie('username', v.username, { expires: 30, path: '/' })
+            $.cookie('fullname', v.fullname, { expires: 30, path: '/' })
+            $.cookie('avatar', v.avatar, { expires: 30, path: '/' })
+          } else {
+            this.showErrMsg('请手工登录')
+          }   
+        },
+        () => { this.hideLoading() }
+      )
     }
   }
 }

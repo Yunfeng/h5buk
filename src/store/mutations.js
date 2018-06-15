@@ -187,5 +187,8 @@ export const mutations = {
     },
     showBottomTabBar(state) {
       state.bottomTabBarShowed = true
+    },
+    setWorkMode(state, p) {
+      state.workMode = p
     }
 }
