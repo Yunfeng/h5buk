@@ -83,6 +83,7 @@ export default {
   },
   computed: {
     authCode () { return this.$store.state.wwopen.authCode },
+    headimgurl () { return this.$store.state.wwopen.avatar },
     logined () { return this.$store.state.logined },
     sessionUsername () {
       var username = this.$store.state.username
@@ -110,15 +111,7 @@ export default {
         if (nickname === undefined) nickname = ''
       }
       return nickname
-    },
-    headimgurl () {
-      var headimgurl = this.$store.state.wxInfo.headimgurl
-      if (headimgurl.length === 0) {
-        // headimgurl = $.cookie('headimgurl')
-        if (headimgurl === undefined) headimgurl = ''
-      }
-      return headimgurl
-    }
+    }    
   },
   mounted: function () {
     if (this.logined === false) {
