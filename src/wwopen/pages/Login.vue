@@ -277,7 +277,22 @@ export default {
         'state': ''
       }
       getUserInfo(params, v => {
-        console.log(v)      
+        console.log(v)     
+        if (v.status === 'OK') {
+          // 登录成功
+          const u = {
+            'username': v.username,
+            'logined': true,
+            'fullname': v.fullname
+          }
+          this.$store.commit('setUsername', u)
+          this.$store.dispatch('setWwopenAvatar', v.avatar)
+
+          $.cookie('token', v.token, { expires: 30, path: '/' })
+          $.cookie('username', v.username, { expires: 30, path: '/' })
+          $.cookie('fullname', v.fullname, { expires: 30, path: '/' })
+          $.cookie('avatar', v.avatar, { expires: 30, path: '/' })
+        }    
       })
     }
   }
