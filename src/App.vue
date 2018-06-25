@@ -22,6 +22,9 @@
       BottomTabbar,
       TopTips,
       MyLoading
+    },
+    computed: {
+      workMode () { return this.$store.state.workMode }
     }
   }
 </script>

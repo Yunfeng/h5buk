@@ -1,14 +1,4 @@
 export const mutations = {
-  setItem (state, { id, item }) {
-    Vue.set(state.items, id, item)
-    // console.log('setItem')
-  },
-  setAirports (state, v) {
-    // Vue.set(state.airports, airports)
-    // console.log(v)
-    state.airports = v.dataList
-    state.sc = v.page
-  },
   init (state) {
     // 初始化，读取cookie中的数据
     var username = $.cookie('username')
@@ -58,9 +48,11 @@ export const mutations = {
       $.removeCookie('token', { path: '/' }); 
     },
     setUsername (state, payload) {
+      console.log(payload)
       state.username = payload.username
       state.fullName = payload.fullName
       state.logined = payload.logined
+      state.isAdmin = payload.isAdmin
     },
     setUserInfo(state, payload) {
       state.userInfo.freeBalance = payload.balance;

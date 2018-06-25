@@ -11,6 +11,7 @@ export const state = {
 
   bottomTabBarShowed: true,
   logined: false,
+  isAdmin: false,
   username: '',
   fullname: '',
   searchParams: {

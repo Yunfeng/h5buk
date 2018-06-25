@@ -43,13 +43,15 @@
           <div class="media-body">
             <h5 class="mt-0">{{fullname}}</h5>
             <small>当前用户：{{sessionUsername}}</small>
+            <small v-if="isAdmin">管理员</small>
           </div>
         </div>
         <div class="media card-body border-0"  v-if="openid.length > 0">
           <img class="d-flex align-self-center mr-3" :src="headimgurl" style="width: 5rem; height: 5rem">
           <div class="media-body">
             <h5 class="mt-0">{{nickname}}</h5>
-            <small>当前用户：{{sessionUsername}}</small>
+            <small>当前用户：{{sessionUsername}}</small> 
+            <small v-if="isAdmin">管理员</small>
           </div>
         </div>  
           
@@ -89,6 +91,7 @@ export default {
     code () { return this.$store.state.wwopen.code },
     headimgurl () { return this.$store.state.wwopen.avatar },
     logined () { return this.$store.state.logined },
+    isAdmin () { return this.$store.state.isAdmin },
     sessionUsername () {
       var username = this.$store.state.username
       if (username.length === 0) {
@@ -126,8 +129,8 @@ export default {
       }
     }
 
-    console.log(this.authCode)
-    console.log(this.code)
+    // console.log(this.authCode)
+    // console.log(this.code)
     if (!this.logined) {
       if (this.authCode !== null && this.authCode.length > 0) {
         this.getLoginInfo()  
@@ -135,7 +138,7 @@ export default {
         this.getWwUserInfo()
       }      
     }
-    console.log(this.authCode)
+    // console.log(this.authCode)
   },
   updated: function () {
     if (this.logined === false && this.justLogout) {
@@ -170,7 +173,8 @@ export default {
             var u = {
               'username': jsonResult.username,
               'logined': true,
-              'fullname': jsonResult.fullname
+              'fullname': jsonResult.fullname,
+              'isAdmin': jsonResult.userId === jsonResult.enterpriseId
             }
             self.$store.commit('setUsername', u)
 
@@ -249,7 +253,6 @@ export default {
     },
     getLoginInfo: function () {
       if (this.authCode === null || this.authCode.length === 0) {
-        // console.log("authCode:" + this.authCode)
         return
       }
 
@@ -266,7 +269,8 @@ export default {
             const u = {
               'username': v.username,
               'logined': true,
-              'fullname': v.fullname
+              'fullname': v.fullname,
+              'isAdmin': v.userId === v.enterpriseId
             }
             this.$store.commit('setUsername', u)
             this.$store.dispatch('setWwopenAvatar', v.avatar)
@@ -295,7 +299,8 @@ export default {
             const u = {
               'username': v.username,
               'logined': true,
-              'fullname': v.fullname
+              'fullname': v.fullname,
+              'isAdmin': v.userId === v.enterpriseId
             }
             this.$store.commit('setUsername', u)
             this.$store.dispatch('setWwopenAvatar', v.avatar)
