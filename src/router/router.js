@@ -29,7 +29,8 @@ export function createRouter () {
       { path: '/policy/:id/buy', component: () => import('../pages/Tmc-buy.vue')},
 
       { path: '/wwopen', component: () => import('../wwopen/pages/Nav.vue')},
-      { path: '/wwopen/login', component: () => import('../wwopen/pages/Login.vue')}
+      { path: '/wwopen/login', component: () => import('../wwopen/pages/Login.vue')},
+      { path: '/wwopen/departments', component: () => import('../wwopen/pages/Departments.vue')}
     ]
   });
 }

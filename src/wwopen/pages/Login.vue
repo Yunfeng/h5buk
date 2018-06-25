@@ -54,6 +54,13 @@
             <small v-if="isAdmin">管理员</small>
           </div>
         </div>  
+
+        <ul class="list-group list-group-flush" v-if="isAdmin">
+          <li class="list-group-item">
+            <router-link to="/wwopen/departments" class="card-link">部门</router-link>
+          </li>
+        </ul>
+
           
         <div class="card-footer">
           <button class="btn btn-danger btn-block" @click="logout()">退出</button>
@@ -136,7 +143,9 @@ export default {
         this.getLoginInfo()  
       } else if (this.code !== null && this.code.length > 0) {
         this.getWwUserInfo()
-      }      
+      } else {
+        this.refreshKaptcha()
+      }     
     }
     // console.log(this.authCode)
   },

@@ -1,4 +1,4 @@
-import { WEBAPP_NAME } from '../common/common.js'
+import { WEBAPP_NAME, callService } from '../common/common.js'
 
 export function searchSubscribers(params, done, fail, always) {
   $.ajax({
@@ -116,5 +116,22 @@ export function searchHistoryRav(params, done, fail, always) {
     // fail(jqXHR.status, jqXHR.statusText)
   }).always(function () {
     always()
+  })
+}
+
+export function searchDepartments(params, cbDone) {
+  const url = WEBAPP_NAME + '/admin/ent/departments'
+  callService(url, {
+    data: params,
+    cbDone: cbDone
+  })
+}
+
+//从企业微信获取部门成员
+export function syncDeptUsers(id, cbDone, cbAlways) {
+  const url = WEBAPP_NAME + '/admin/ent/department/' + id + '/users'
+  callService(url, {
+    cbDone: cbDone,
+    cbAlways: cbAlways
   })
 }
