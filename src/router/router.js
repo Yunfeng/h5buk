@@ -30,7 +30,8 @@ export function createRouter () {
 
       { path: '/wwopen', component: () => import('../wwopen/pages/Nav.vue')},
       { path: '/wwopen/login', component: () => import('../wwopen/pages/Login.vue')},
-      { path: '/wwopen/departments', component: () => import('../wwopen/pages/Departments.vue')}
+      { path: '/wwopen/departments', component: () => import('../wwopen/pages/Departments.vue')},
+      { path: '/wwopen/users', component: () => import('../wwopen/pages/Users.vue')}
     ]
   });
 }

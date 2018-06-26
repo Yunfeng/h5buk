@@ -127,6 +127,14 @@ export function searchDepartments(params, cbDone) {
   })
 }
 
+export function searchUsers(params, cbDone) {
+  const url = WEBAPP_NAME + '/admin/users'
+  callService(url, {
+    data: params,
+    cbDone: cbDone
+  })
+}
+
 //从企业微信获取部门成员
 export function syncDeptUsers(id, cbDone, cbAlways) {
   const url = WEBAPP_NAME + '/admin/ent/department/' + id + '/users'

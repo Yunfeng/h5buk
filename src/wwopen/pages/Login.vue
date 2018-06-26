@@ -59,6 +59,9 @@
           <li class="list-group-item">
             <router-link to="/wwopen/departments" class="card-link">部门</router-link>
           </li>
+          <li class="list-group-item">
+            <router-link to="/wwopen/users" class="card-link">成员</router-link>
+          </li>
         </ul>
 
           
