@@ -39,6 +39,8 @@
             <dd class='col-8'>{{flt.price}}</dd>
             <dt class='col-4 text-right px-0'>机场税</dt>
             <dd class='col-8'>{{flt.taxCn}}</dd>
+            <dt class='col-4 text-right px-0'>燃油附加费</dt>
+            <dd class='col-8'>{{flt.taxYq}}</dd>
           </dl>
         </template>       
         <div class="card-body py-0 bg-info text-warning">
