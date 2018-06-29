@@ -20,7 +20,7 @@ export function createRouter () {
       { path: '/order/:id', component: () => import('../pages/Order-detail.vue') },
 
       { path: '/search', component: () => import('../pages/FlightSearchForm.vue')},
-      { path: '/searchResult', component: () => import('../pages/FlightSearchResult.vue')},
+      { path: '/searchResult', component: () => import('../pages/FlightSearchResult.vue'), meta: { keepAlive: true }},
       { path: '/flight/detail', component: () => import('../pages/FlightDetail.vue')},
       { path: '/booking', component: () => import('../pages/FlightBookingForm.vue')},
 

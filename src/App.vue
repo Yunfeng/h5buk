@@ -3,7 +3,15 @@
     <my-loading></my-loading>
     <top-tips></top-tips>
 
-    <router-view></router-view>
+    <transition name="fade">
+      <keep-alive>
+        <router-view v-if="$route.meta.keepAlive"></router-view>
+      </keep-alive>
+    </transition>
+    <transition  name="fade" mode="out-in" :duration="{ enter: 50, leave: 300 }">
+      <router-view v-if="!$route.meta.keepAlive"></router-view>
+    </transition>
+
 
     <div class="row mb-5">
       &nbsp;

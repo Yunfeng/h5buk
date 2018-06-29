@@ -22,6 +22,7 @@ export const state = {
     ddate: '',
     sortBy: 0,
     onlyCarrier: '',
+    searchDone: 0
   },
   order: {
     flights: [],

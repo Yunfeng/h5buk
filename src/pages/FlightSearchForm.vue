@@ -1,5 +1,5 @@
 <template>
-	<div id="searching" class="row">
+	<div id="searchForm" class="row">
     <div class="col-12 bg-info text-center text-white mb-1">
       <span class="fa-2">机票</span>
     </div> 
@@ -84,13 +84,6 @@
 
     <my-city-picker :show="showPicker" @close="cityPickerClosed(false)" :target="targetName"></my-city-picker>
 
-    <div id="loadingToast" v-show="searching">
-      <div class="weui-mask_transparent"></div>
-      <div class="weui-toast">
-        <i class="weui-loading weui-icon_toast"></i>
-        <p class="weui-toast__content">数据加载中</p>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -107,7 +100,6 @@ export default {
   },
   data () {
     return {
-      searching: false,
       targetName: '',
       showDialog: false,
       showPicker: false,
@@ -132,9 +124,6 @@ export default {
     sortBy (curVal, oldVal) {
       this.$store.commit('setSortBy', parseInt(curVal))
     }
-  },
-  created: function () {
-
   },
   mounted: function () {
     if (this.dcity == null || this.dcity.length === 0) {
@@ -243,7 +232,7 @@ export default {
       $.cookie('ddate', this.ddate)
 
       // 查询航班
-      this.searching = true
+      this.$store.commit('setNewFlightSearch')
       this.$router.push('/searchResult')
     },
     cityPickerClosed: function (val) {

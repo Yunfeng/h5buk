@@ -81,6 +81,12 @@ export const mutations = {
       state.searchParams.dcity = cityCode
       state.searchParams.dcityName = cityName
     },
+    setNewFlightSearch(state) {
+      state.searchParams.searchDone = 0
+    },
+    setFlightSearchDone(state) {
+      state.searchParams.searchDone = 1
+    },
     setOnlyCarrier(state, payload) {
       state.searchParams.onlyCarrier = payload
     },

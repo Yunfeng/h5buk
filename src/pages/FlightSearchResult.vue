@@ -139,6 +139,7 @@ export default {
       avCount: 0,
       totalCount: 0,
       showCount: 0,
+      tryCount: 3,
 
       dataLength: 0, // 每次来的数据长度
       isReplacing: false, // 航班数据是否开始替换了,
@@ -151,6 +152,7 @@ export default {
     dcity () { return this.$store.state.searchParams.dcity },
     acity () { return this.$store.state.searchParams.acity },
     ddate () { return this.$store.state.searchParams.ddate },
+    searchDone () { return this.$store.state.searchParams.searchDone },
     dcityName () { return this.$store.state.searchParams.dcityName },
     acityName () { return this.$store.state.searchParams.acityName },
     onlyCarrier () { return this.$store.state.searchParams.onlyCarrier },
@@ -162,13 +164,23 @@ export default {
     }
   },
   mounted: function () {
+    console.log('mounted')
     this.$store.commit('hideBottomTabBar')
 
-    this.avCount = 0
     this.filter.sortBy = this.sortBy
     this.filter.filterByCarrier = this.onlyCarrier
 
     this.readyToSearch()
+  },
+  activated: function () {
+    console.log('activated')
+    if (this.searchDone === 0 && this.searching === false) {
+      console.log('activated: readyToSearch')
+      this.readyToSearch()
+    }
+  },
+  deactivated: function () {
+    console.log('deactivated')
   },
   beforeDestroy: function () {
     this.$store.commit('showBottomTabBar')
@@ -185,37 +197,37 @@ export default {
       this.isReplacing = false
       this.avCount = 0
       this.dataLength = 0
+      this.tryCount = 3
       this.searchFlightResults.splice(0)
       this.search()
     },
     search: function () {
-      var self = this
+      this.searching = true
 
-      if (self.dcity.length === 0 || self.acity.length === 0) {
-        this.showErrMsg('请先选择出发、到达城市', 'danger')
-        return
+      if (this.isReplacing) {
+        // 开始替换旧的航班信息了，则关闭加载框，允许用户操作，后台更新数据
+        this.searchFinished()
       }
 
-      self.searching = true
-      if (self.isReplacing) {
-        self.searching = false // 开始替换旧的航班信息了，则关闭加载框，允许用户操作，后台更新数据
-        // console.log('flight is replacing...')
-      }
-
-      var params = { 'startPosition': self.startPosition,
-        'dcity': self.dcity,
-        'acity': self.acity,
-        'ddate': self.ddate
+      var params = { 'startPosition': this.startPosition,
+        'dcity': this.dcity,
+        'acity': this.acity,
+        'ddate': this.ddate
       }
 
       rav(params, this.ravDone, this.ravFail, this.ravAlways)
+    },
+    searchFinished: function () {
+      this.searching = false 
+      this.$store.commit('setFlightSearchDone')
     },
     ravDone: function (jsonResult) {
       var self = this
       if (jsonResult !== null) {
         if (jsonResult.status === -1) {
-          self.showErrMsg('系统错误，请与管理员联系。')
+          // self.showErrMsg('系统错误，请与管理员联系。')
           self.searching = false
+          this.$store.commit('setFlightSearchDone')
           return
         }
 
@@ -256,17 +268,24 @@ export default {
           self.carrierInfos.sort()
           self.searching = false
           self.isReplacing = false
+          this.$store.commit('setFlightSearchDone')
         } else if (jsonResult.status === 101) {
           self.searching = false
           self.showErrMsg('无直飞航班', 'danger')
+          this.$store.commit('setFlightSearchDone')
         } else {
           setTimeout(self.continueSearchFlight, 1500)
         }
       }
     },
     ravFail: function (status, statusText) {
-      this.searching = false
-      this.showErrMsg(status + ' ' + statusText, 'danger')
+      this.tryCount--;
+      if (this.tryCount > 0) {
+        console.log('ravFail: ' + this.tryCount)
+        setTimeout(this.continueSearchFlight, 1500)
+      } else {
+        this.searchFinished()
+      }
     },
     ravAlways: function () {
 
@@ -279,6 +298,7 @@ export default {
       this.avCount = this.avCount + 1
       if ((this.avCount > 5 && this.totalCount === 0) || this.avCount > 10) {
         this.searching = false
+        this.$store.commit('setFlightSearchDone')
         // this.showErrMsg('时间有点长了，过会再试试吧')
         return
       }
@@ -287,19 +307,8 @@ export default {
     },
     showFlightDetail: function (fltInfo) {
       // 显示某一航班详情
-      console.log(fltInfo)
       this.$store.commit('setFlightInfo', fltInfo)
       this.$router.push('/flight/detail')
-
-      // this.listShowing = false
-      // this.detailShowing = true
-      // this.flt = fltInfo
-
-      // window.scroll(0, 0)
-    },
-    closeDetail: function () {
-      this.detailShowing = false
-      this.listShowing = true
     },
     execSort: function (searchResults) {
       var data = this.filter
@@ -409,7 +418,6 @@ export default {
       }
     },
     bookFlight: function (flt0, subclass0) {
-      console.log(flt0)
       var fltInfo = {
         'flightNo': flt0.flightNo,
         'carrierName': flt0.carrierName,
