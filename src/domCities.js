@@ -329,6 +329,7 @@ citys[156] = new Array('BJS','北京','BEIJING','BJ');
 citys[157] = new Array('YUS','玉树','YUSHU','YS');
 citys[158] = new Array('WDS','十堰武当山机场','SHIYAN','SY');
 citys[159] = new Array('RIZ','日照','RIZHAO','RZ');
+citys[160] = new Array('JXA','鸡西','JIXI','JX');
 
 module.exports = {
 	hotCities, citys
