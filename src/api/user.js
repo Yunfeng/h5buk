@@ -66,4 +66,11 @@ export function searchCustomers(params, done, fail, always) {
   })
 }
 
+//获取预授权码
+export function getWwopenPreAuthCode(cbDone) {
+  const url = WEBAPP_NAME + '/wwopen/getPreAuthCode'
+  callService(url, {
+    cbDone: cbDone
+  })
+}
 

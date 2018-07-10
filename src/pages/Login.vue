@@ -29,7 +29,8 @@
       </div>
       <div class="card col-12">
         <div class="card-body">
-          <router-link to="/subscribe">如何注册</router-link>
+          <router-link to="/subscribe" class="ml-auto">个人注册</router-link>
+          <router-link to="/corp-subscribe" class="float-right mr-auto">企业注册</router-link>
         </div>
       </div>
     </template>

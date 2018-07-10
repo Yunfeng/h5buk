@@ -16,7 +16,7 @@
     <div class="row mb-5">
       &nbsp;
     </div>
-    <bottom-tabbar></bottom-tabbar>
+    <bottom-tabbar v-if="logined"></bottom-tabbar>
   </div>
 </template>
 
@@ -32,7 +32,7 @@
       MyLoading
     },
     computed: {
-      workMode () { return this.$store.state.workMode }
+      logined () { return this.$store.state.logined }
     }
   }
 </script>
