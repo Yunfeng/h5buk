@@ -70,6 +70,7 @@ export function searchCustomers(params, done, fail, always) {
 export function getWwopenPreAuthCode(cbDone) {
   const url = WEBAPP_NAME + '/wwopen/getPreAuthCode'
   callService(url, {
+    dataType: 'text',
     cbDone: cbDone
   })
 }
