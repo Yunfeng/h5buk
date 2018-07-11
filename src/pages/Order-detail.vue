@@ -134,7 +134,7 @@
           </dd>
         </dl>
       </div>
-
+{{workMode}}
       <template v-if='info.status === 1024 && info.enterpriseId > 0'>
         <div class="card col-12 border-0 mb-2 px-0">
           <div class="card-body">
@@ -229,7 +229,8 @@ export default {
     orderId () { return this.$store.state.orderId },
     costSaving () {
       return this.info.totalPrice - this.info.ticketAmount - this.info.serviceFee
-    }
+    },
+    workMode () { return this.$store.state.workMode }
   },
   mounted: function () {
     this.ticketWrongConfirmTimes = 3

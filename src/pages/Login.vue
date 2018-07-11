@@ -3,7 +3,7 @@
     <template v-if="logined === false">
       <div class="card col-12 no-gutters">
         <div class="card-header text-center text-success"  v-if="openid.length === 0">
-            登录
+            用户登录
         </div>
         <div class="media card-block border-0"  v-if="openid.length > 0">
           <img class="d-flex align-self-center mr-3" :src="headimgurl" style="width: 5rem; height: 5rem">
@@ -28,6 +28,9 @@
         </div>
       </div>
       <div class="card col-12">
+        <div class="card-body text-center bg-info text-white">
+          <router-link to="/wwopen/login" class="text-white">企业用户登录</router-link>
+        </div>
         <div class="card-body">
           <router-link to="/subscribe" class="ml-auto">个人注册</router-link>
           <router-link to="/corp-subscribe" class="float-right mr-auto">企业注册</router-link>

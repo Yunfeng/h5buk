@@ -4,7 +4,7 @@
     <template v-if="logined === false">
       <div class="card col-12 no-gutters">
         <div class="card-header text-center text-success"  v-if="openid.length === 0">
-            登录
+            企业用户登录
         </div>
         <div class="media card-body border-0"  v-if="openid.length > 0">
           <img class="d-flex align-self-center mr-3" :src="headimgurl" style="width: 5rem; height: 5rem">
@@ -29,7 +29,6 @@
         </div>
         <div class="card-body text-center">
 
-          扫码登录 适用于PC
           <a href="https://open.work.weixin.qq.com/wwopen/sso/3rd_qrConnect?appid=wx22ef108e02eb000b&redirect_uri=http%3a%2f%2fyh.90sky.com%2fwwopen&state=wwopen_login&usertype=member">
             <img src="//rescdn.qqmail.com/node/wwopen/wwopenmng/style/images/independent/brand/150x30_white$49bdfaf6.png" srcset="//rescdn.qqmail.com/node/wwopen/wwopenmng/style/images/independent/brand/150x30_white_2x$dc1f5509.png 2x" alt="企业微信登录"></a>
         </div>
