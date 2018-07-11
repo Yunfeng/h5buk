@@ -61,6 +61,9 @@ export default {
     // info () { return this.$store.state.orderDetail }
   },
   mounted: function () {
+    // this.search()
+  },
+  activated: function () {
     this.search()
   },
   methods: {

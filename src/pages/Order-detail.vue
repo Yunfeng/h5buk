@@ -134,7 +134,7 @@
           </dd>
         </dl>
       </div>
-{{workMode}}
+  {{workMode}}
       <template v-if='info.status === 1024 && info.enterpriseId > 0'>
         <div class="card col-12 border-0 mb-2 px-0">
           <div class="card-body">
@@ -337,6 +337,7 @@ export default {
         console.log(v)
         if (v.status === 'OK') {
           this.showErrMsg('支付成功')
+          this.refreshOrderDetail()
         } else if (v.errcode === -4) {
           // 调用微信支付
           this.showErrMsg(v.errmsg + ', 使用微信支付', 'danger')
