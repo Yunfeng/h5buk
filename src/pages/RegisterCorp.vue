@@ -5,16 +5,17 @@
         <i class="fa fa-angle-left fa-2" aria-hidden="true"></i>
         <small>返回</small>
       </span>
-      企业微信免费安装应用
+      企业微信
     </div> 
     <div class="card col-12">
       <div class="card-body text-center">
-        已有企业微信
-        <button class="btn btn-warning" @click.stop="getRedirect1()">免费安装</button>
+        <h6>有企业微信</h6>
+        <button class="btn btn-warning text-white" @click.stop="getRedirect(0)">免费安装</button>
       </div>
-      <div class="card-body text-center">
-        暂无企业微信
-        <button class="btn btn-primary">注册企业微信</button>
+      <div class="card-body text-center bg-light">
+        <h6>无企业微信</h6>
+
+        <a href="javascript:void(0);" @click.stop="getRedirect(1)"><img src="//rescdn.qqmail.com/node/wwopen/wwopenmng/style/images/independent/brand/register_200x40_blue$5c038723.png" srcset="//rescdn.qqmail.com/node/wwopen/wwopenmng/style/images/independent/brand/register_200x40_blue_2x$a6d254ea.png 2x" alt="注册企业微信"></a>
       </div>
     </div>
     
@@ -30,8 +31,11 @@ export default {
     back: function () {
       this.$router.go(-1)
     },
-    getRedirect1: function (val) {
-      getWwopenPreAuthCode( v => {
+    getRedirect: function (mode) {
+      const params = {
+        'register_mode': mode
+      }
+      getWwopenPreAuthCode(params, v => {
         console.log(v)
         window.open(v)
       })
