@@ -134,7 +134,6 @@
           </dd>
         </dl>
       </div>
-  {{workMode}}
       <template v-if='info.status === 1024 && info.enterpriseId > 0'>
         <div class="card col-12 border-0 mb-2 px-0">
           <div class="card-body">
@@ -194,6 +193,8 @@
       </template>
     </template> 
 
+  <small>{{workMode}}</small>
+
     <my-modal-prompt ref="modalPrompt">
       <span slot="title">{{modalTitle}}</span>
     </my-modal-prompt>
@@ -209,6 +210,7 @@ import MyInput from '../components/my-input.vue'
 import $ from 'jquery'
 import { searchOrderDetail, cancelOrder, processOrder } from '../api/order.js'
 import { payForTmcOrder, showOrderStatusDesc, confirmTicketNoWrong, confirmTicketNoCorrect } from '../api/order.js'
+import { createFlightPaymentOrder } from '../api/order.js'
 
 export default {
   components: {
@@ -431,19 +433,18 @@ export default {
 
       this.showLoading('支付准备中...')
 
-      // get weixin appid
-      $.ajax({
-        type: 'post',
-        url: '/Flight/pay/createPayOrder/01/' + orderId + '/' + payType,
-        dataType: 'json',
-        success: function (jsonResult) {
-          if (jsonResult.status === 'OK') {
-            if (payType === 0) {
-              var appid = jsonResult.attach
-              var payOrderId = jsonResult.desc
+      const params = {
+        'workMode': this.workMode
+      }
 
-              var redirectUrl = 'http://' + self.domain + '/wxp/wxp.html'
-              var url0 = escape(redirectUrl)
+      createFlightPaymentOrder(orderId, payType, params, v => {
+          if (v.status === 'OK') {
+            if (payType === 0) {
+              const appid = jsonResult.attach
+              const payOrderId = jsonResult.desc
+
+              const redirectUrl = 'http://' + self.domain + '/wxp/wxp.html'
+              const url0 = escape(redirectUrl)
 
               const url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + appid + '&redirect_uri=' + url0 + '&response_type=code&scope=snsapi_base&state=' + payOrderId + '#wechat_redirect'
               window.location.href = url
@@ -451,17 +452,12 @@ export default {
               const url = jsonResult.attach
               window.location.href = url
             }
+          } else {
+            this.showLoading(v.errmsg)
           }
         },
-        error: function (XMLHttpRequest, textStatus, errorThrown) {
-          if (XMLHttpRequest.status === 403) {
-            self.$store.commit('jumpToLogin', self.$router)
-          }
-        },
-        complete: function () {
-          self.hideLoading()
-        }
-      })
+        () => { this.hideLoading() }
+      )
     },
     applyRefund: function (ticketNo, psgName, orderId) {
       // 申请退票

@@ -45,6 +45,16 @@ export function confirmTicketNoWrong(params, cbDone) {
   })
 }
 
+// 机票订单的付款单
+export function createFlightPaymentOrder(orderId, payType, params, cbDone, cbAlways) {
+  const url = WEBAPP_NAME + '/pay/createPayOrder/01/' + orderId + '/' + payType
+  callService(url, {
+    data: params,
+    cbDone: cbDone,
+    cbAlways: cbAlways
+  })  
+}
+
 export function processOrder(url, params, done, fail, always) {
   $.ajax({
     type: 'post',

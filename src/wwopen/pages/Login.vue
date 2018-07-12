@@ -193,9 +193,6 @@ export default {
             $.cookie('username', jsonResult.username, { expires: 30, path: '/' })
             $.cookie('fullname', jsonResult.fullname, { expires: 30, path: '/' })
 
-            if (self.historyStep !== 0) {
-              self.$router.go(self.historyStep)
-            }
           } else {
             if (jsonResult.errMsg !== null) {
               self.showErrMsg(jsonResult.errMsg)
