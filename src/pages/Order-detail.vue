@@ -440,8 +440,8 @@ export default {
       createFlightPaymentOrder(orderId, payType, params, v => {
           if (v.status === 'OK') {
             if (payType === 0) {
-              const appid = jsonResult.attach
-              const payOrderId = jsonResult.desc
+              const appid = v.attach
+              const payOrderId = v.desc
 
               const redirectUrl = 'http://' + self.domain + '/wxp/wxp.html'
               const url0 = escape(redirectUrl)
@@ -449,7 +449,7 @@ export default {
               const url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + appid + '&redirect_uri=' + url0 + '&response_type=code&scope=snsapi_base&state=' + payOrderId + '#wechat_redirect'
               window.location.href = url
             } else if (payType === 1) {
-              const url = jsonResult.attach
+              const url = v.attach
               window.location.href = url
             }
           } else {
