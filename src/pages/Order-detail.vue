@@ -443,7 +443,14 @@ export default {
               const appid = v.attach
               const payOrderId = v.desc
 
-              const redirectUrl = 'http://' + self.domain + '/wxp/wxp.html'
+              let redirectUrl
+              if (this.workMode === 8) {
+                redirectUrl = 'http://' + self.domain + '/wxp/wxp-corp.html'
+              } else {
+                redirectUrl = 'http://' + self.domain + '/wxp/wxp.html'
+              }
+
+              
               const url0 = escape(redirectUrl)
 
               const url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + appid + '&redirect_uri=' + url0 + '&response_type=code&scope=snsapi_base&state=' + payOrderId + '#wechat_redirect'
