@@ -1,74 +1,77 @@
 <template>
   <div id="login" class="row">
 
-    <template v-if="logined === false">
-      <div class="card col-12 no-gutters">
-        <div class="card-header text-center text-success"  v-if="openid.length === 0">
-            企业用户登录
-        </div>
-        <div class="media card-body border-0"  v-if="openid.length > 0">
-          <img class="d-flex align-self-center mr-3" :src="headimgurl" style="width: 5rem; height: 5rem">
-          <div class="media-body">
-            <h5 class="mt-0">{{nickname}}</h5>
-            未登录
-          </div>
-        </div>        
-        <div class="card-body no-gutters pb-0">
-          <div class="form-group">
-              <input class="form-control" type="text" placeholder="用户名" v-model="username">
-          </div>
-          <div class="form-group">
-              <input class="form-control" type="password" placeholder="密码" v-model="password">
-          </div>
-          <template v-if="openid.length === 0">
-            <my-vcode label-text="验证码" img-id="kaptchaImage" v-model="vcode"></my-vcode>
-          </template>
-        </div>
-        <div class="card-body text-center bg-faded text-white">
-          <button class="btn btn-success btn-block" @click.stop="login()">登录</button> 
-        </div>
-        <div class="card-body text-center">
+    <div class="container">
+      <div class="row no-gutters">
+        <div class="col-md-8 col-lg-7 col-xl-6 offset-md-2 offset-lg-2 offset-xl-3 u-space-3 u-space-0--lg">
+          <!-- Form -->
+          <form class="js-validate mt-5">
+            <!-- Title -->
+            <div class="mb-7">
+              <h2 class="h3 text-primary font-weight-normal mb-0">欢迎 <span class="font-weight-bold">回来</span></h2>
+              <p>登录您的账户</p>
+            </div>
+            <!-- End Title -->
 
-          <a href="https://open.work.weixin.qq.com/wwopen/sso/3rd_qrConnect?appid=wx22ef108e02eb000b&redirect_uri=http%3a%2f%2fyh.90sky.com%2fwwopen&state=wwopen_login&usertype=member">
-            <img src="//rescdn.qqmail.com/node/wwopen/wwopenmng/style/images/independent/brand/150x30_white$49bdfaf6.png" srcset="//rescdn.qqmail.com/node/wwopen/wwopenmng/style/images/independent/brand/150x30_white_2x$dc1f5509.png 2x" alt="企业微信登录"></a>
-        </div>
+            <!-- Input -->
+            <div class="js-form-message mb-4">
+              <label class="h6 small d-block text-uppercase">用户名</label>
 
+              <div class="js-focus-state input-group u-form">
+                <input type="text" class="form-control u-form__input" name="username" required
+                       v-model="username"
+                       placeholder="请输入用户名"
+                       aria-label=""
+                       data-msg=""
+                       data-error-class="u-has-error"
+                       data-success-class="u-has-success">
+              </div>
+            </div>
+            <!-- End Input -->
+
+            <!-- Input -->
+            <div class="js-form-message mb-4">
+              <div class="d-flex justify-content-between align-items-center">
+                <label class="h6 small d-block text-uppercase">密码</label>
+              </div>
+
+              <div class="js-focus-state input-group u-form">
+                <input type="password" class="form-control u-form__input" name="password" required
+                       v-model="password"
+                       placeholder="请输入密码"
+                       aria-label="********"
+                       data-msg=""
+                       data-error-class="u-has-error"
+                       data-success-class="u-has-success">
+              </div>
+            </div>
+            <!-- End Input -->
+
+            <!-- Input -->
+            <div class="js-form-message mb-4">
+              <div class="d-flex justify-content-between align-items-center">
+                <label class="h6 small d-block text-uppercase">验证码</label>
+              </div>
+
+              <div class="js-focus-state input-group u-form">
+                <my-vcode label-text="" img-id="kaptchaImage" v-model="vcode"></my-vcode>
+              </div>
+            </div>
+            <!-- End Input -->
+
+            <!-- Button -->
+            <div class="row align-items-center mb-5">
+              <div class="col-12 text-center">
+                <button type="button" class="btn btn-primary u-btn-primary transition-3d-hover" @click.stop="login()">登录</button>
+              </div>
+            </div>
+            <!-- End Button -->
+          </form>
+          <!-- End Form -->
+        </div>
       </div>
-    </template>
-    <template v-else>
-      <div class="card col-12">
-        <div class="media card-body border-0" v-if="openid.length === 0">
-          <img class="d-flex align-self-center mr-3" :src="headimgurl" style="width: 5rem; height: 5rem">
-          <div class="media-body">
-            <h5 class="mt-0">{{fullname}}</h5>
-            <small>当前用户：{{sessionUsername}}</small>
-            <small v-if="isAdmin">管理员</small>
-          </div>
-        </div>
-        <div class="media card-body border-0"  v-if="openid.length > 0">
-          <img class="d-flex align-self-center mr-3" :src="headimgurl" style="width: 5rem; height: 5rem">
-          <div class="media-body">
-            <h5 class="mt-0">{{nickname}}</h5>
-            <small>当前用户：{{sessionUsername}}</small> 
-            <small v-if="isAdmin">管理员</small>
-          </div>
-        </div>  
+    </div>
 
-        <ul class="list-group list-group-flush" v-if="isAdmin">
-          <li class="list-group-item">
-            <router-link to="/wwopen/departments" class="card-link">部门</router-link>
-          </li>
-          <li class="list-group-item">
-            <router-link to="/wwopen/users" class="card-link">成员</router-link>
-          </li>
-        </ul>
-
-          
-        <div class="card-footer">
-          <button class="btn btn-danger btn-block" @click="logout()">退出</button>
-        </div>         
-      </div>      
-    </template>
   </div>
 </template>
 
@@ -192,6 +195,8 @@ export default {
             $.cookie('token', jsonResult.token, { expires: 30, path: '/' })
             $.cookie('username', jsonResult.username, { expires: 30, path: '/' })
             $.cookie('fullname', jsonResult.fullname, { expires: 30, path: '/' })
+
+            self.$router.push("/orders")
 
           } else {
             if (jsonResult.errMsg !== null) {

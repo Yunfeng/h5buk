@@ -10,6 +10,7 @@ export function createRouter () {
       { path: '/', component: () => import('../pages/Nav.vue')},
 
       { path: '/login', component: () => import('../pages/Login.vue')},
+
       { path: '/subscribe', component: () => import('../pages/Register2.vue')},
       { path: '/corp-subscribe', component: () => import('../pages/RegisterCorp.vue')},
       { path: '/profile', component: () => import('../pages/Profile.vue')},

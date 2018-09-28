@@ -2,6 +2,9 @@
   <div id="app" class="container">
     <my-loading></my-loading>
     <top-tips></top-tips>
+    <TopBar />
+
+  
 
     <transition name="fade">
       <keep-alive>
@@ -16,7 +19,7 @@
     <div class="row mb-5">
       &nbsp;
     </div>
-    <bottom-tabbar v-if="logined"></bottom-tabbar>
+    <!-- // <bottom-tabbar v-if="logined"></bottom-tabbar> -->
   </div>
 </template>
 
@@ -24,12 +27,14 @@
   import BottomTabbar from './components/my-bottom-tabbar.vue'  
   import TopTips from './components/my-top-tips.vue'	
   import MyLoading from './components/my-loading.vue'
+  import TopBar from './components/TopBar.vue'
 
   export default {
     components: {
       BottomTabbar,
       TopTips,
-      MyLoading
+      MyLoading,
+      TopBar
     },
     computed: {
       logined () { return this.$store.state.logined }

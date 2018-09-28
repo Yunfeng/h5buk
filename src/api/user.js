@@ -34,6 +34,13 @@ export function checkLoginStatus(cbDone) {
   })
 }
 
+export function logout(cbDone) {
+  const url = WEBAPP_NAME + '/logout0'
+  callService(url, {
+    cbDone: cbDone
+  })
+}
+
 export function incPoints(params, done, fail, always) {
   $.ajax({
     type: 'post',
