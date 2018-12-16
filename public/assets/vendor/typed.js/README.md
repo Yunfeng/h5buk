@@ -35,6 +35,12 @@ yarn add typed.js
 bower install typed.js
 ~~~
 
+#### CDN
+
+~~~
+<script href=" https://cdn.jsdelivr.net/npm/typed.js@2"></script>
+~~~
+
 #### Setup
 
 This is really all you need to get going.
@@ -88,7 +94,7 @@ This allows bots and search engines, as well as users with JavaScript disabled, 
 
 ~~~ javascript
 <script>
-  var typed = new Typed('.element', {
+  var typed = new Typed('#typed', {
     stringsElement: '#typed-strings'
   });
 </script>
@@ -138,7 +144,7 @@ var typed = new Typed(".element", {
 
 ### CSS
 
-CSS animations are build upon initialzation in JavaScript. But, you can customize them at your will! These classes are:
+CSS animations are built upon initialzation in JavaScript. But, you can customize them at your will! These classes are:
 ```css
 /* Cursor */
 .typed-cursor {}
@@ -151,6 +157,9 @@ CSS animations are build upon initialzation in JavaScript. But, you can customiz
 
 Check out this example React app using Typed.js in a component: https://jsfiddle.net/mattboldt/ovat9jmp/
 
+### Use with Vue.js
+
+Check out the Vue.js component: https://github.com/Orlandster1998/vue-typed-js
 
 Customization
 ----

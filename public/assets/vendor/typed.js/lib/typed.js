@@ -2,7 +2,7 @@
  * 
  *   typed.js - A JavaScript Typing Animation Library
  *   Author: Matt Boldt <me@mattboldt.com>
- *   Version: v2.0.6
+ *   Version: v2.0.9
  *   Url: https://github.com/mattboldt/typed.js
  *   License(s): MIT
  * 
@@ -439,8 +439,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	      if (this.pause.status) return;
 	      if (this.cursorBlinking === isBlinking) return;
 	      this.cursorBlinking = isBlinking;
-	      var status = isBlinking ? 'infinite' : 0;
-	      this.cursor.style.animationIterationCount = status;
+	      if (isBlinking) {
+	        this.cursor.classList.add('typed-cursor--blink');
+	      } else {
+	        this.cursor.classList.remove('typed-cursor--blink');
+	      }
 	    }
 	
 	    /**
@@ -738,27 +741,33 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'appendAnimationCss',
 	    value: function appendAnimationCss(self) {
+	      var cssDataName = 'data-typed-js-css';
 	      if (!self.autoInsertCss) {
 	        return;
 	      }
-	      if (!self.showCursor || !self.fadeOut) {
+	      if (!self.showCursor && !self.fadeOut) {
+	        return;
+	      }
+	      if (document.querySelector('[' + cssDataName + ']')) {
 	        return;
 	      }
 	
 	      var css = document.createElement('style');
 	      css.type = 'text/css';
+	      css.setAttribute(cssDataName, true);
+	
 	      var innerCss = '';
 	      if (self.showCursor) {
-	        innerCss += '\n        .typed-cursor{\n          opacity: 1;\n          animation: typedjsBlink 0.7s infinite;\n          -webkit-animation: typedjsBlink 0.7s infinite;\n                  animation: typedjsBlink 0.7s infinite;\n        }\n        @keyframes typedjsBlink{\n          50% { opacity: 0.0; }\n        }\n        @-webkit-keyframes typedjsBlink{\n          0% { opacity: 1; }\n          50% { opacity: 0.0; }\n          100% { opacity: 1; }\n        }\n      ';
+	        innerCss += '\n        .typed-cursor{\n          opacity: 1;\n        }\n        .typed-cursor.typed-cursor--blink{\n          animation: typedjsBlink 0.7s infinite;\n          -webkit-animation: typedjsBlink 0.7s infinite;\n                  animation: typedjsBlink 0.7s infinite;\n        }\n        @keyframes typedjsBlink{\n          50% { opacity: 0.0; }\n        }\n        @-webkit-keyframes typedjsBlink{\n          0% { opacity: 1; }\n          50% { opacity: 0.0; }\n          100% { opacity: 1; }\n        }\n      ';
 	      }
 	      if (self.fadeOut) {
-	        innerCss += '\n        .typed-fade-out{\n          opacity: 0;\n          transition: opacity .25s;\n          -webkit-animation: 0;\n                  animation: 0;\n        }\n      ';
+	        innerCss += '\n        .typed-fade-out{\n          opacity: 0;\n          transition: opacity .25s;\n        }\n        .typed-cursor.typed-cursor--blink.typed-fade-out{\n          -webkit-animation: 0;\n          animation: 0;\n        }\n      ';
 	      }
 	      if (css.length === 0) {
 	        return;
 	      }
 	      css.innerHTML = innerCss;
-	      document.head.appendChild(css);
+	      document.body.appendChild(css);
 	    }
 	  }]);
 	

@@ -1,26 +1,27 @@
 {
-  "_from": "animate.css@^3.6.1",
-  "_id": "animate.css@3.6.1",
+  "_from": "animate.css@3.7.0",
+  "_id": "animate.css@3.7.0",
   "_inBundle": false,
-  "_integrity": "sha512-xEIzzKyQvQSIldgrtC2d/qptAEQLVlMb6xQrjQ6HU6NyGhF7LAIivRZVmhSAg4EICRASNiS+A1G+wvAKTCoC7A==",
+  "_integrity": "sha512-u3iMXDJr0cxMdQocIciDiou9Au4L5f9uT+/jCtprw3s1j3HcfCuI+khF+90Ps2KdsEhM2soF7SXB4WUvI3HlXg==",
   "_location": "/animate.css",
   "_phantomChildren": {},
   "_requested": {
-    "type": "range",
+    "type": "version",
     "registry": true,
-    "raw": "animate.css@^3.6.1",
+    "raw": "animate.css@3.7.0",
     "name": "animate.css",
     "escapedName": "animate.css",
-    "rawSpec": "^3.6.1",
+    "rawSpec": "3.7.0",
     "saveSpec": null,
-    "fetchSpec": "^3.6.1"
+    "fetchSpec": "3.7.0"
   },
   "_requiredBy": [
+    "#USER",
     "/"
   ],
-  "_resolved": "https://registry.npmjs.org/animate.css/-/animate.css-3.6.1.tgz",
-  "_shasum": "4ea8a48556378bc8d7535224296c4c0dac9229de",
-  "_spec": "animate.css@^3.6.1",
+  "_resolved": "https://registry.npmjs.org/animate.css/-/animate.css-3.7.0.tgz",
+  "_shasum": "5de25d1ee5fba11ba6a1e2c4fa568f512eb7d4da",
+  "_spec": "animate.css@3.7.0",
   "_where": "D:\\wamp\\www\\front-v1.0",
   "author": {
     "name": "Daniel Eden"
@@ -32,19 +33,19 @@
   "deprecated": false,
   "description": "_Just-add-water CSS animation_",
   "devDependencies": {
-    "autoprefixer": "^7.1.6",
-    "cssnano": "^3.5.1",
-    "eslint": "^4.11.0",
-    "gulp": "^3.9.1",
-    "gulp-concat": "^2.6.0",
-    "gulp-header": "^1.7.1",
-    "gulp-postcss": "^7.0.0",
+    "autoprefixer": "^9.0.1",
+    "cssnano": "^4.0.3",
+    "eslint": "^5.2.0",
+    "gulp": "^4.0.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-header": "^2.0.1",
+    "gulp-postcss": "^7.0.1",
     "gulp-rename": "^1.2.2",
-    "gulp-util": "^3.0.7",
+    "gulp-util": "^3.0.8",
     "husky": "^0.14.3",
-    "lint-staged": "^6.0.0",
-    "prettier": "^1.9.1",
-    "run-sequence": "^2.2.0"
+    "lint-staged": "^7.0.0",
+    "prettier": "^1.10.2",
+    "run-sequence": "^2.2.1"
   },
   "homepage": "http://daneden.me/animate",
   "jspm": {
@@ -74,6 +75,7 @@
     "url": "git+https://github.com/daneden/animate.css.git"
   },
   "scripts": {
+    "gulp": "./node_modules/gulp/bin/gulp.js",
     "precommit": "lint-staged",
     "prettier": "prettier --write \"**/*.{js,json,md,css}\"",
     "start": "gulp"
@@ -82,5 +84,5 @@
     "main": "./animate.css"
   },
   "style": "./animate.css",
-  "version": "3.6.1"
+  "version": "3.7.0"
 }
