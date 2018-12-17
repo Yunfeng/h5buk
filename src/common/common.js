@@ -77,6 +77,14 @@ function copySelectionText(){
     return copysuccess
 }
 
+// function copySelectionText(id){
+//   var para = document.getElementById(id);
+//   selectElementText(para);
+//   var paratext = getSelectionText();
+//   //alert(paratext) // alerts "My mama always says..."
+//   document.execCommand("copy");
+// }
+
 function copyfieldvalue(e, id){
     var field = document.getElementById(id)
     field.focus()
@@ -100,13 +108,7 @@ function selectElementText(el){
     selection.addRange(range) // add range to Selection object to select it
 }
 
- function copySelectionText(id){
-  var para = document.getElementById(id);
-  selectElementText(para);
-  var paratext = getSelectionText();
-  //alert(paratext) // alerts "My mama always says..."
-  document.execCommand("copy");
-}
+ 
 
  function getCabinClassDesc (cabinClass, offset) {
   if (cabinClass === 'F') {

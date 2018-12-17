@@ -15,7 +15,7 @@
           </span>   
       </div>         
 
-      <div class="col-12 sticky-top text-center bg-primary border-1" style="opacity:0.8">
+      <div class="col-12 text-center bg-primary border-1" style="opacity:0.8">
         <span class="float-left" v-if="isToday">
           <a href="javascript:void(0)" @click.stop="changeDdate(-1)" class="text-white">前一天</a>
         </span>

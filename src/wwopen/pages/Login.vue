@@ -62,7 +62,7 @@
             <!-- Button -->
             <div class="row align-items-center mb-5">
               <div class="col-12 text-center">
-                <button type="button" class="btn btn-primary u-btn-primary transition-3d-hover" @click.stop="login()">登录</button>
+                <button type="button" class="btn btn-primary transition-3d-hover" @click.stop="login()"> 登 录 </button>
               </div>
             </div>
             <!-- End Button -->

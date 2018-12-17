@@ -1,7 +1,7 @@
 <template>
 	<header id="header" class="u-header">
 
-	  <div class="u-header__section">
+	  <div class="u-header__section" v-if="logined">
 	  	<!-- Topbar -->
 	    <div class="container u-header__hide-content py-1">
 	      <div class="d-flex align-items-center mb-0">
