@@ -1,17 +1,4 @@
 {
   "presets": ["@babel/preset-env"],
-  "plugins": [
-    "syntax-dynamic-import"
-	],
-	"env": {
-    "test": {
-      "presets": [
-        ["env", {
-          "modules": false,
-          "targets": { "node": "current" }
-        }]
-      ],    
-      "plugins": ["istanbul"]
-    }
-  }
+  "plugins": ["@babel/plugin-syntax-dynamic-import"]
 }
