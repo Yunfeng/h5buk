@@ -134,11 +134,12 @@ export default {
   },
   mounted: function () {
     if (this.logined === false) {
-      var username = $.cookie('username')
-      var token = $.cookie('token')
-      if (username !== undefined && token !== undefined) {
-        this.$store.commit('setUsername', { 'username': username, 'logined': true })
-      }
+      this.checkLoginStatus()
+      // var username = $.cookie('username')
+      // var token = $.cookie('token')
+      // if (username !== undefined && token !== undefined) {
+      //   this.$store.commit('setUsername', { 'username': username, 'logined': true })
+      // }
     }
 
     // console.log(this.authCode)
@@ -149,10 +150,10 @@ export default {
       } else if (this.code !== null && this.code.length > 0) {
         this.getWwUserInfo()
       } else {
-        this.refreshKaptcha()
+        
       }     
     }
-    // console.log(this.authCode)
+    this.refreshKaptcha()
   },
   updated: function () {
     if (this.logined === false && this.justLogout) {
