@@ -7,14 +7,14 @@ export function createRouter () {
   return new Router({
     mode: 'history',
     routes: [
-      // { path: '/', component: () => import('../pages/Nav.vue')},
-      { path: '/', redirect: '/wwopen'},
+      { path: '/', component: () => import('../pages/Nav.vue')},
+      // { path: '/', redirect: '/wwopen'},
 
       { path: '/login', component: () => import('../pages/Login.vue')},
 
       // { path: '/subscribe', component: () => import('../pages/Register2.vue')},
       // { path: '/corp-subscribe', component: () => import('../pages/RegisterCorp.vue')},
-      // { path: '/profile', component: () => import('../pages/Profile.vue')},
+      { path: '/profile', component: () => import('../pages/Profile.vue')},
 
       // { path: '/recharge', component: () => import('../pages/Recharge.vue')},
       // { path: '/payresult/:id', component: () => import('../pages/Recharge-result.vue')},
@@ -31,10 +31,10 @@ export function createRouter () {
       // { path: '/policy/:id', component: () => import('../pages/Tmc-detail.vue')},
       // { path: '/policy/:id/buy', component: () => import('../pages/Tmc-buy.vue')},
 
-      { path: '/wwopen', component: () => import('../wwopen/pages/Nav.vue')},
-      { path: '/wwopen/login', component: () => import('../wwopen/pages/Login.vue')},
-      { path: '/wwopen/departments', component: () => import('../wwopen/pages/Departments.vue')},
-      { path: '/wwopen/users', component: () => import('../wwopen/pages/Users.vue')}
+      // { path: '/wwopen', component: () => import('../wwopen/pages/Nav.vue')},
+      // { path: '/wwopen/login', component: () => import('../wwopen/pages/Login.vue')},
+      // { path: '/wwopen/departments', component: () => import('../wwopen/pages/Departments.vue')},
+      // { path: '/wwopen/users', component: () => import('../wwopen/pages/Users.vue')}
     ]
   });
 }

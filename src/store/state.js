@@ -1,5 +1,5 @@
 export const state = {
-  workMode: 0, // 0 - 普通网站, 1- 微信公众号, 2-企业微信, 8-企业微信服务商
+  workMode: 1, // 0 - 普通网站, 1- 微信公众号, 2-企业微信, 8-企业微信服务商
   items: {},
   airports: [],
   sc: {

@@ -19,7 +19,7 @@
     <div class="row mb-5">
       &nbsp;
     </div>
-    <!-- // <bottom-tabbar v-if="logined"></bottom-tabbar> -->
+    <bottom-tabbar v-if="logined"></bottom-tabbar>
   </div>
 </template>
 

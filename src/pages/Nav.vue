@@ -10,6 +10,7 @@ export default {
     var id = getURLParameter('id')
 
     this.$store.commit('init')
+    this.$store.commit('setWorkMode', 1)
 
     var code = getURLParameter('code')
 

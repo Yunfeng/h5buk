@@ -27,15 +27,6 @@
           <button class="btn btn-success btn-block" @click.stop="login()">登录</button> 
         </div>
       </div>
-      <div class="card col-12">
-        <div class="card-body text-center bg-info text-white">
-          <router-link to="/wwopen/login" class="text-white">企业用户登录</router-link>
-        </div>
-        <div class="card-body">
-          <router-link to="/subscribe" class="ml-auto">个人注册</router-link>
-          <router-link to="/corp-subscribe" class="float-right mr-auto">企业注册</router-link>
-        </div>
-      </div>
     </template>
     <template v-else>
       <div class="card col-12">
@@ -81,11 +72,11 @@
             <span class="text-info">联系我们</span>
           </li>
           <li class="list-group-item">
-            <span class="small text-muted">电话：</span><strong class="text-success">021-64787108</strong>
+            <span class="small text-muted">电话：</span><strong class="text-success"></strong>
           </li>
           <li class="list-group-item">
             <span class="small text-muted">网址：</span>
-            <strong class="text-success">yh.90sky.com</strong>
+            <strong class="text-success"></strong>
           </li>
         </ul>
           

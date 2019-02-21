@@ -10,7 +10,7 @@
         </p>
       </router-link>
 
-      <router-link to="/policies" class="weui-tabbar__item"  v-if="workMode !== 8">
+      <router-link to="/policies" class="weui-tabbar__item"  v-if="false">
         <div class="weui-tabbar__icon">
           <i class="fa fa-home fa-2" aria-hidden="true"></i>
         </div>
