@@ -1,5 +1,26 @@
 import { WEBAPP_NAME, callService } from '../common/common.js'
 
+// 查找订单列表
+export function searchOrders(params, cbDone, cbAlways, cbFail) {
+  // const url = WEBAPP_NAME + '/orders/search.do'
+  const url = WEBAPP_NAME + '/self-service/orders'
+  callService(url, {
+    data: params,
+    cbDone: cbDone,
+    cbFail: cbFail,
+    cbAlways: cbAlways
+  })
+}
+
+// 订单详情
+export function searchOrderDetail(id, cbDone, cbAlways, cbFail) {
+  const url = WEBAPP_NAME + '/self-service/order/' + id
+  callService(url, {
+    cbDone: cbDone,
+    cbFail: cbFail,
+    cbAlways: cbAlways
+  })
+}
 
 export function payForTmcOrder(params, cbDone) {
   const url = WEBAPP_NAME + '/orders/payForTmcOrder.do'
@@ -9,15 +30,7 @@ export function payForTmcOrder(params, cbDone) {
   })
 }
 
-export function searchOrders(params, cbDone, cbFail, cbAlways) {
-  const url = WEBAPP_NAME + '/orders/search.do'
-  callService(url, {
-    data: params,
-    cbDone: cbDone,
-    cbFail: cbFail,
-    cbAlways: cbAlways
-  })
-}
+
 
 export function cancelOrder(params, cbDone, cbFail, cbAlways) {
   const url = WEBAPP_NAME + '/orders/cancelTmcOrder.do'
@@ -74,21 +87,7 @@ export function processOrder(url, params, done, fail, always) {
 
 
 
-export function searchOrderDetail(params, done, fail, always) {
-  $.ajax({
-    type: 'post',
-    url: '/Flight/orders/searchOrderDetail',
-    data: params,
-    dataType: 'json',
-  }).done(function (jsonResult) {
-    done(jsonResult)
-  }).fail(function (jqXHR, textStatus, errorThrown) {
-    fail(jqXHR.status, jqXHR.statusText)
-  }).always(function () {
-    always()
-    // setTimeout(() => { always() }, 5000)
-  })
-}
+
 
 export function searchPolicies(params, done, fail, always) {
   $.ajax({

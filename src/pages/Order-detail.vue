@@ -3,7 +3,7 @@
     <template v-if="info !== null">
       <div class="col-12 bg-info text-center text-white sticky-top">
         <span @click="back()" class="float-left fa-2">
-          <i class="fa fa-angle-left"aria-hidden="true"></i>
+          <i class="fa fa-angle-left" aria-hidden="true"></i>
           <small>返回</small>
         </span>
         <span class="fa-2">订单详情</span> <small>订单号:{{info.id}}</small>
@@ -19,40 +19,40 @@
           <small>行程信息</small>
         </div>
         <template v-for='(flt, index) in info.flights'>
-          <dl class='row mb-0'>
+          <dl class='row mb-0' :key="index">
             <dt class='col-4 text-right px-0'>
               <span class="d-inline-block text-info">{{index+1}}.</span> 
               出发日期
             </dt>
-            <dd class='col-8 text-info'>{{flt.departureDate}}</dd>
+            <dd class='col-8 text-info'>{{flt.flight.departureDate}}</dd>
             <dt class='col-4 text-right px-0'>出发</dt>
-            <dd class='col-8 text-info'>{{showTime(flt.departureTime)}} {{flt.departureAirportName}} <small>{{flt.departureTerminal}}</small></dd>
+            <dd class='col-8 text-info'>{{showTime(flt.flight.departureTime)}} {{flt.flight.departureAirportName}} <small>{{flt.flight.departureTerminal}}</small></dd>
 
             <dt class='col-4 text-right px-0'>到达</dt>
-            <dd class='col-8'>{{showTime(flt.arrivalTime)}} {{flt.arrivalAirportName}} <small>{{flt.arrivalTerminal}}</small></dd>
+            <dd class='col-8'>{{showTime(flt.flight.arrivalTime)}} {{flt.flight.arrivalAirportName}} <small>{{flt.flight.arrivalTerminal}}</small></dd>
 
             <dt class='col-4 text-right px-0'>航班</dt>
-            <dd class='col-8 text-info'>{{flt.flightNo}}</dd>
+            <dd class='col-8 text-info'>{{flt.flight.flightNo}}</dd>
             <dt class='col-4 text-right px-0'>舱位</dt>
-            <dd class='col-8'>{{flt.subclass}}</dd>
+            <dd class='col-8'>{{flt.flight.subclass}}</dd>
             <dt class='col-4 text-right px-0'>价格</dt>
-            <dd class='col-8'>{{flt.price}}</dd>
+            <dd class='col-8'>{{flt.flight.price}}</dd>
             <dt class='col-4 text-right px-0'>机场税</dt>
-            <dd class='col-8'>{{flt.taxCn}}</dd>
+            <dd class='col-8'>{{flt.flight.taxCn}}</dd>
             <dt class='col-4 text-right px-0'>燃油附加费</dt>
-            <dd class='col-8'>{{flt.taxYq}}</dd>
+            <dd class='col-8'>{{flt.flight.taxYq}}</dd>
           </dl>
         </template>       
         <div class="card-body py-0 bg-info text-warning">
           <small>乘机人信息</small>
         </div>
         <template v-for='(psg, index) in info.passengers'>
-          <dl class='row mb-0'>
+          <dl class='row mb-0' :key="index">
             <dt class='col-4 text-right px-0'>
               <span class="d-inline-block text-info">{{index+1}}.</span> 
               姓名
             </dt>
-            <dd class='col-8'>{{psg.psgName}}</dd>
+            <dd class='col-8'>{{psg.name}}</dd>
 
             <dt class='col-4 text-right px-0'>证件</dt>
             <dd class='col-8'>{{showIdTypeDesc(psg.idType)}} {{psg.idNo}}</dd>
@@ -70,11 +70,11 @@
           </dl>
         </template>
 
-        <template v-if="info.insurances.length > 0">
+        <template v-if="info.insurances !== undefined && info.insurances.length > 0">
           <div class="card-body py-0 bg-info text-warning">
             <small>保险</small>
           </div>
-          <dl class='row mb-0' v-for='(info, index) in info.insurances'>
+          <dl class='row mb-0' v-for='(info, index) in info.insurances' :key="index">
             <dt class='col-4 text-right px-0'>              
             </dt>
             <dd class='col-8'>{{info.productName}}</dd>
@@ -193,8 +193,6 @@
       </template>
     </template> 
 
-  <small>{{workMode}}</small>
-
     <my-modal-prompt ref="modalPrompt">
       <span slot="title">{{modalTitle}}</span>
     </my-modal-prompt>
@@ -247,7 +245,7 @@ export default {
       }
     }
 
-    this.getDomain()
+    // this.getDomain()
   },
   methods: {
     back: function () {
@@ -282,15 +280,13 @@ export default {
 
       this.showLoading('订单查询中...')
 
-      var params = { 'id': id }
-
-      searchOrderDetail(params, v => {
+      searchOrderDetail(id, v => {
           if (v !== null && v.id === id) {
             this.$store.commit('setOrderDetail', v)
           }
         },
-        (status, statusText) => { this.showErrMsg(status + ', ' + statusText, 'danger') },
-        () => this.hideLoading()
+        () => this.hideLoading(),
+        (status, statusText) => { this.showErrMsg(status + ', ' + statusText, 'danger') }      
       )
     },
     cancelTmcOrder: function (id) {

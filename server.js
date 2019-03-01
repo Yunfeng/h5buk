@@ -103,7 +103,7 @@ server.get('*', (req, res) => {
       }
     } else {
       res.end(html)
-      console.log(`whole request: ${Date.now() - s}ms`)
+      console.log(`whole request: ${Date.now() - s}ms --- `)
     }
   })
 })

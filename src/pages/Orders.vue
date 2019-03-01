@@ -18,13 +18,13 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="info in orders" @click="showDetail(info)">
+            <tr v-for="(info, index) in orders" @click="showDetail(info)" :key="index">
               <td class="text-center">
-                {{info.flights[0].departureDate}}
+                {{info.flights[0].flight.departureDate}}
               </td>
-              <td class="text-center">{{info.flights[0].departureAirportName}}</td>
-              <td class="text-center">{{info.flights[0].arrivalAirportName}}</td>
-              <td class="text-right">{{info.ticketAmount}}</td>
+              <td class="text-center">{{info.flights[0].flight.departureAirportName}}</td>
+              <td class="text-center">{{info.flights[0].flight.arrivalAirportName}}</td>
+              <td class="text-right">{{info.totalAmount}}</td>
               <td class="" :class="changeBgByStatus(info.status)">
                 {{showStatusDesc(info.status)}}
                 <i class="fa fa-angle-right fa-2 float-right" aria-hidden="true"></i>
@@ -100,13 +100,13 @@ export default {
         (jsonResult) => {
           if (jsonResult !== null) { this.orders = jsonResult.dataList }
         },
+        () => this.hideLoading(),
         status => {
           if (status === 403) {
             this.showErrMsg('您可能需要先登录，或申请授权')
             this.$store.commit('jumpToLogin', this.$router)
           }
-        },
-        () => this.hideLoading()
+        }        
       )
     },
     showDetail: function (orderInfo) {
