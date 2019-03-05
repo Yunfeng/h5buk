@@ -2,7 +2,7 @@
 	<div id="order-detail" class="row">
     <template v-if="info !== null">
       <div class="col-12 bg-success text-center text-white sticky-top">
-        <span @click="back()" class="float-left">
+        <span @click="back()" class="float-left" v-if="logined">
           <i class="fa fa-angle-left fa-2" aria-hidden="true"></i>
         </span>
         <span class="fa-2">订单详情</span> <small>订单号:{{info.orderNo}}</small>
@@ -75,7 +75,7 @@
           </dd>
           <dt class='col-4 text-right px-0 font-weight-light'>状态</dt>
           <dd class='col-8'>
-            <p>{{showStatusDesc(info.status)}}</p>
+            <p>{{showStatusDesc(info.orderStatus)}}</p>
           </dd>
         </dl>
       </div>
@@ -170,12 +170,9 @@ export default {
     }
   },
   computed: {
+    logined () { return this.$store.state.logined },
     info () { return this.$store.state.orderDetail },
-    orderId () { return this.$store.state.orderId },
-    costSaving () {
-      return this.info.totalPrice - this.info.ticketAmount - this.info.serviceFee
-    },
-    workMode () { return this.$store.state.workMode }
+    orderId () { return this.$store.state.orderId }
   },
   mounted: function () {
     this.ticketWrongConfirmTimes = 3
@@ -183,12 +180,14 @@ export default {
 
     var id = this.$route.params.id
     if (id !== undefined) {
-      this.refreshOrderDetail(parseInt(id))
+      this.refreshOrderDetail(parseInt(id), this.$route.query.auth_code)
     } else {
       if (this.orderId > 0) {
         this.refreshOrderDetail(this.orderId)
       }
     }
+
+    console.log()
 
     // this.getDomain()
   },
@@ -218,20 +217,29 @@ export default {
         return old
       }
     },
-    refreshOrderDetail: function (id) {
+    refreshOrderDetail: function (id, authCode) {
       if (id === undefined || id === null) {
         id = this.orderId
       }
 
       this.showLoading('订单查询中...')
 
-      searchOrderDetail(id, v => {
-          if (v !== null && v.id === id) {
+      const params = {
+        'code': authCode
+      }
+
+      searchOrderDetail(id, params, v => {
+          if (v.errCode === 0) {
             this.$store.commit('setOrderDetail', v)
+          } else {
+            this.showErrMsg(v.errMsg, 'danger') 
           }
         },
         () => this.hideLoading(),
-        (status, statusText) => { this.showErrMsg(status + ', ' + statusText, 'danger') }      
+        (status, statusText) => { 
+          console.log(status)
+          this.showErrMsg(status + ', ' + statusText, 'danger') 
+        }      
       )
     },
     cancelTmcOrder: function (id) {
