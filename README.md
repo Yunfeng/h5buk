@@ -4,8 +4,8 @@ vue<br />
 vuex<br />
 vue-router<br />
 
-# SSR 分支
-目前只更新SSR分支的代码
+# master 分支
+master分支用于微信服务号的开发
 
 # 如何运行
 npm install<br />
