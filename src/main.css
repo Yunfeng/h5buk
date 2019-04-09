@@ -1,0 +1,24 @@
+/*html,body{height: 100%;}*/
+
+a:link,a:visited{
+ text-decoration:none;
+}
+a:hover{
+ text-decoration:none;
+}
+
+.fa-2 {
+    font-size: 1.25rem
+}
+
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .3s
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active in <2.1.8 */ {
+  opacity: 0
+}
+
+.border-bottom-1 {
+  border-bottom: 1px solid #5bc0de;  
+}
