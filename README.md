@@ -12,8 +12,6 @@ npm install<br />
 npm run dev
 
 # 在线演示
-请关注微信公众号 yinghang1888<br />
-请关注微信公众号 yinghang1888
 
 # 技术交流
 QQ群：497175472
